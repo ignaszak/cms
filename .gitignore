@@ -1,0 +1,11 @@
+$ cat .gitignore
+vendor/
+logs/
+conf/DB/DBSettings.php
+.htaccess
+.git
+.metadata
+composer.lock
+.project
+.settings
+.buildpath

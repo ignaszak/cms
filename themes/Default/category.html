@@ -1,0 +1,20 @@
+<?php foreach ($cms->display() as $row) : ?>
+
+    <b>Kategoria:</b> <?php echo $row->getCategoryTitle(); ?><hr>
+
+    <?php foreach ($row->getPost() as $post) : ?>
+
+        <b><?php echo $post->getPostTitle(); ?></b> <?php echo $post->getPostDate(); ?><br>
+        <b>Użytkownik:</b>
+        <?php echo $post->getUserLogin(); ?>,
+        <?php echo $post->getUserEmail(); ?>,
+        <?php echo $post->getUserRole(); ?><br>
+        <?php echo $post->getPostContent() ?><br><br>
+
+    <?php  endforeach; ?>
+
+    <br>
+
+<?php endforeach; ?>
+
+<?php echo $cms->getPaginationTheme('pager-align'); ?>

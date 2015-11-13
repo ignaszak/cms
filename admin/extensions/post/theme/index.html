@@ -1,0 +1,13 @@
+<link href="<?php echo $cms->getAdminAdress(); ?>/extensions/post/theme/css/style.css" rel="stylesheet">
+
+<?php
+    switch ($cms->getRoute('adminPostAction')) {
+        case 'view':
+            loadExtensionFile('theme/view.html');
+            break;
+        case 'edit':
+        case 'add':
+            loadExtensionFile('theme/edit.html');
+            break;
+    }
+?>

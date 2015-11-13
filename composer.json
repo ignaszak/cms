@@ -1,0 +1,28 @@
+{
+	"type" : "library",
+	"description" : "Simple CMS",
+	"keywords" : [
+		"cms"
+	],
+	"license" : "MIT",
+	"authors" : [{
+			"name" : "Tomasz Ignaszak",
+			"email" : "tomek.ignaszak@gmail.com"
+		}
+	],
+	"require" : {
+		"doctrine/orm" : ">=2.5.1",
+		"aura/filter" : "2.0.0-beta2",
+		"ircmaxell/password-compat" : ">=1.0.4",
+		"ignaszak/exception" : "*",
+		"ignaszak/router" : "*"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"" : "modules/",
+			"Admin\\" : "admin/modules",
+			"Conf\\" : "conf"
+		}
+	},
+	"name" : "ignaszak/cms"
+}

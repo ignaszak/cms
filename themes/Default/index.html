@@ -1,0 +1,17 @@
+<?php loadFile('header.html'); ?>
+
+<?php
+    switch ($cms->getRouteName()) {
+        case 'post':
+            loadFile('post.html');
+            break;
+        case 'category':
+            loadFile('category.html');
+            break;
+        case 'user':
+            loadFile('user.html');
+            break;
+    }
+?>
+
+<?php loadFile('footer.html'); ?>

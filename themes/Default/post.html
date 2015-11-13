@@ -1,0 +1,39 @@
+<?php
+    $content = $cms->setContent('post');
+    $content->buildQuery()
+        ->paginate(false)
+        ->contentLike('a');
+    $content->force();
+    foreach ($cms->getContent() as $row) :
+?>
+
+    <b>Kategoria:</b> <?php echo $row->getCategoryTitle(); ?><br>
+    <b><?php echo $row->getPostTitle(); ?></b> <?php echo $row->getPostDate(); ?><br>
+    <b>Użytkownik:</b>
+    <?php echo $row->getUserLogin(); ?>,
+    <?php echo $row->getUserEmail(); ?>,
+    <?php echo $row->getUserRole(); ?><br>
+    <?php echo $row->getPostContent() ?><br><br>
+
+<?php endforeach; ?>
+
+<hr>
+
+<?php
+    $content = $cms->setContent('post');
+    $content->buildQuery()
+        ->paginate(true);
+    foreach ($cms->getContent() as $row) :
+?>
+
+    <b>Kategoria:</b> <?php echo $row->getCategoryTitle(); ?><br>
+    <b><?php echo $row->getPostTitle(); ?></b> <?php echo $row->getPostDate(); ?><br>
+    <b>Użytkownik:</b>
+    <?php echo $row->getUserLogin(); ?>,
+    <?php echo $row->getUserEmail(); ?>,
+    <?php echo $row->getUserRole(); ?><br>
+    <?php echo $row->getPostContent(); ?><br><br>
+
+<?php endforeach; ?>
+
+<?php echo $cms->getPaginationTheme('pager-align'); ?>

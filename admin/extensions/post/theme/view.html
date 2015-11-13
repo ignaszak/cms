@@ -1,0 +1,78 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">Posts list</div>
+    <div class="panel-body">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th class="visible-xs">Inf</th>
+                <th class="hidden-xs">Alias</th>
+                <th class="hidden-xs">Category</th>
+                <th class="hidden-xs">Author</th>
+                <th class="hidden-xs">Date</th>
+                <th></th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <?php
+                $page = $cms->getRoute('page');
+
+                if ($page == 1 || empty($page)) {
+                    $i = 1;
+                } else {
+                    $i = ($page - 1)*$cms->getPageLimit() + 1;
+                }
+
+                $content = $cms->setContent('post');
+                foreach ($cms->getContent() as $row) :
+            ?>
+
+            <tr>
+                <th scope="row"><?php echo $i; ?></th>
+                <td>
+                    <a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $row->getPostAlias(); ?>"><b><?php echo $row->getPostTitle(); ?></b></a>
+                    <p class="visible-xs">
+                        <small><?php echo $row->getPostDate(); ?></small>
+                    </p>
+                </td>
+                <td class="visible-xs">
+                    <small>
+                        Cat: <?php echo $row->getCategoryTitle(); ?><br>
+                        Author: <?php echo $row->getUserLogin(); ?>
+                    </small>
+                </td>
+                <td class="hidden-xs"><?php echo $row->getPostAlias(); ?></td>
+                <td class="hidden-xs"><?php echo $row->getCategoryTitle(); ?></td>
+                <td class="hidden-xs"><?php echo $row->getUserLogin(); ?></td>
+                <td class="hidden-xs"><?php echo $row->getPostDate(); ?></td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle" type="button"
+                            id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <span class="glyphicon glyphicon-menu-hamburger"></span>
+                        </button>
+                        <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $row->getPostAlias(); ?>">Edit</a></li>
+                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/delete/<?php echo $row->getPostAlias(); ?>">Delete</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+
+            <?php
+                ++$i;
+                endforeach;
+            ?>
+
+        </tbody>
+
+    </table>
+
+    <?php echo $cms->getPaginationTheme('pagination'); ?>
+
+    </div>
+</div>

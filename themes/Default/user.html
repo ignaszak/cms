@@ -1,0 +1,75 @@
+<?php if ($cms->getFormResponseData('registrationSuccess')): ?>
+
+<p>Registration Success!!!</p>
+
+<?php elseif ($cms->getFormResponseData('userMustBeLogout')): ?>
+
+<p>Please log out before registration.</p>
+
+<?php else: ?>
+
+<div class="row">
+
+    <div class="col-sm-6">
+
+        <?php $form = $cms->createForm('user-registration'); ?>
+
+        <h1>Registration</h1>
+
+        <form action="<?php echo $form->getFormActionAdress(); ?>" method="post">
+
+            <div class="form-group">
+                <label for="InputName">Enter Login</label>
+                <?php echo $form->inputLogin(); ?>
+            </div>
+
+            <div class="form-group">
+                <label for="InputName">Enter Email</label>
+                <?php echo $form->inputEmail(); ?>
+            </div>
+
+            <div class="form-group">
+                <label for="InputName">Enter Password</label>
+                <?php echo $form->inputPassword(); ?>
+            </div>
+
+            <div class="form-group">
+                <label for="InputName">Confirm Password</label>
+                <?php echo $form->inputRePassword(); ?>
+            </div>
+
+            <div class="input-group">
+                <button class="btn">Sign up</button>
+            </div>
+
+        </form>
+
+    </div>
+    
+        <div class="col-sm-6">
+
+        <?php $form = $cms->createForm('user-remind'); ?>
+
+        <h1>Remind password</h1>
+
+        <form action="<?php echo $form->getFormActionAdress(); ?>" method="post">
+
+            <div class="form-group">
+                <label for="InputName">Enter Email</label>
+                <?php echo $form->inputEmail(); ?>
+            </div>
+
+            <div class="input-group">
+                <button class="btn">Send</button>
+            </div>
+
+        </form>
+
+    </div>
+    
+    <div class="col-sm-4">
+    </div>
+
+</div>
+
+<?php endif; ?>

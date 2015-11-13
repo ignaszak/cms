@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conf>
+
+    <title>Post</title>
+    
+    <file>
+        <script>index.php</script>
+        <theme>theme/index.html</theme>
+    </file>
+
+    <router>
+        <rout>
+            <item>
+                <pattern>(post)/{adminPostAction}/{page}</pattern>
+            </item>
+            <item>
+                <pattern>(post)/{adminPostAction}/{alias}</pattern>
+            </item>
+        </rout>
+        <token>
+            <item>
+                <name>adminPostAction</name>
+                <pattern>(add|view|edit|delete)</pattern>
+            </item>
+        </token>
+    </router>
+
+    <menu>
+        <item>
+            <title>Add</title>
+            <link>post/add/</link>
+        </item>
+        <item>
+            <title>View</title>
+            <link>post/view/</link>
+        </item>
+    </menu>
+
+</conf>
