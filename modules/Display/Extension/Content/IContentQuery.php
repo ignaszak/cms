@@ -7,7 +7,6 @@ abstract class IContentQuery
 
     protected static $countQuery;
     protected $contentQuery;
-    protected $isPaginationEnabled = true;
 
     abstract public function getContent();
     abstract public function buildQuery();

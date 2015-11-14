@@ -14,6 +14,7 @@ class ContentQuery extends IContentQuery
     private $entityName;
     private $isResultForced = false;
     private $entityContentArray = array();
+    private $isPaginationEnabled = true;
 
     public function __construct($entityName)
     {
@@ -41,9 +42,16 @@ class ContentQuery extends IContentQuery
         return $this->_contentQueryBuilder;
     }
 
+    public function paginate($paginate = true)
+    {
+        $this->isPaginationEnabled = $paginate;
+        return $this;
+    }
+
     public function force()
     {
         $this->isResultForced = true;
+        return $this;
     }
 
     private function countQuery()
@@ -87,7 +95,7 @@ class ContentQuery extends IContentQuery
         if (empty($alias)) {
             return true;
         } else {
-            return ($this->isResultForced ? true : false);
+            return $this->isResultForced;
         }
     }
 

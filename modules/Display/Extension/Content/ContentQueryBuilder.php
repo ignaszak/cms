@@ -12,12 +12,6 @@ class ContentQueryBuilder implements IContentQueryBuilder
         $this->_contentQuery = $_contentQuery;
     }
 
-    public function paginate($paginate = true)
-    {
-        $this->isPaginationEnabled = $paginate;
-        return $this;
-    }
-
     public function id($value)
     {
         $this->set('c.id', $value);

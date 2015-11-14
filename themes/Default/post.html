@@ -1,9 +1,9 @@
 <?php
-    $content = $cms->setContent('post');
-    $content->buildQuery()
+    $content = $cms->setContent('post')
         ->paginate(false)
-        ->contentLike('a');
-    $content->force();
+        ->force()
+        ->buildQuery()
+            ->contentLike('a');
     foreach ($cms->getContent() as $row) :
 ?>
 
@@ -21,8 +21,6 @@
 
 <?php
     $content = $cms->setContent('post');
-    $content->buildQuery()
-        ->paginate(true);
     foreach ($cms->getContent() as $row) :
 ?>
 
