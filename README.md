@@ -7,7 +7,7 @@ Simple CMS
 Via Composer Create-Project:
 
 ```sh
-composer create-project ignaszak/cms {directory} dev-master --prefer-dist
+composer create-project ignaszak/cms {directory} dev-master
 ```
 
 Via Download
