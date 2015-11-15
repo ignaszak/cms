@@ -15,7 +15,8 @@
 		"aura/filter" : "2.0.0-beta2",
 		"ircmaxell/password-compat" : ">=1.0.4",
 		"ignaszak/exception" : "*",
-		"ignaszak/router" : "*"
+		"ignaszak/router" : "*",
+		"vipsoft/unzip" : "1.1"
 	},
 	"autoload" : {
 		"psr-4" : {

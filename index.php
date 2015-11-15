@@ -11,13 +11,13 @@ try {
 
     require __DIR__ . '/routs-loader.php';
     require __DIR__ . '/modules-loader.php';
-    require __DIR__ . '/theme-constants.php';
+    require __DIR__ . '/themes/theme-constants.php';
 
     $controllerFile = Ignaszak\Router\Client::getControllerFile();
     if (file_exists($controllerFile) && is_file($controllerFile) && is_readable($controllerFile))
         require_once $controllerFile;
 
-    require __DIR__ . '/theme-loader.php';
+    require __DIR__ . '/themes/theme-loader.php';
 
 }
 catch (CMSException\DBException $e) {
