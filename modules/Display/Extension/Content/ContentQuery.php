@@ -4,6 +4,8 @@ namespace Display\Extension\Content;
 
 use Conf\Conf;
 use Conf\DB\DBDoctrine;
+use Ignaszak\Router\Client as Router;
+use CMSException\InvalidQueryException;
 
 class ContentQuery extends IContentQuery
 {
@@ -34,7 +36,11 @@ class ContentQuery extends IContentQuery
 
         $this->countQuery();
 
-        return $this->entityContentArray;
+        //if (empty($this->entityContentArray)) {
+        //    throw new InvalidQueryException('dupa');
+        //} else {
+            return $this->entityContentArray;
+        //}
     }
 
     public function buildQuery()
@@ -90,7 +96,7 @@ class ContentQuery extends IContentQuery
 
     private function isAliasEmptyOrIsResultForced()
     {
-        $alias = \Ignaszak\Router\Client::getRoute('alias');
+        $alias = Router::getRoute('alias');
 
         if (empty($alias)) {
             return true;
@@ -102,7 +108,7 @@ class ContentQuery extends IContentQuery
     private function setAliasIfResultIsNotForced()
     {
         if (!$this->isResultForced) {
-            $alias = \Ignaszak\Router\Client::getRoute('alias');
+            $alias = Router::getRoute('alias');
             $this->_contentQueryBuilder->alias($alias);
             $this->getQueryAndResult();
         }
@@ -110,7 +116,7 @@ class ContentQuery extends IContentQuery
 
     private function paginateQuery()
     {
-        $page = \Ignaszak\Router\Client::getRoute('page');
+        $page = Router::getRoute('page');
         $limit = $this->_conf->getPostLimit();
         $offset = $limit * (($page ? $page : 1) - 1);
 
