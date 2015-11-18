@@ -26,21 +26,30 @@ $(document).ready(function() {
 <?php
 
 $title = '';
-$content = 'dupa';
+$content = '';
+$id = null;
+$formTitle = 'Add new post';
 
-$content = $cms->setContent('post');
-$content->buildQuery();
-foreach ($cms->getContent() as $row) {
-    $id = $row->getPostId();
-    $title = $row->getPostTitle();
-    $content = $row->getPostContent();
+if ($cms->getRoute('adminPostAction') == 'edit') {
+
+    $formTitle = 'Edit post';
+
+    $cms->setContent('post')->buildQuery()->alias($cms->getRoute('alias'));
+
+    foreach ($cms->getContent() as $row) {
+        $id = $row->getPostId();
+        $title = $row->getPostTitle();
+        $content = $row->getPostContent();
+    }
+
 }
+
 
 ?>
 
 <div class="container-fluid">
 
-    <h2>Add new post</h2>
+    <h2><?php echo $formTitle; ?></h2>
 
     <form method="post">
 
