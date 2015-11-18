@@ -2,7 +2,6 @@
 
 $exception = new Ignaszak\Exception\Start;
 
-
 $exception->errorReporting = E_ALL;
 $exception->display = 'dev';
 $exception->userReporting = E_ALL & ~E_NOTICE;

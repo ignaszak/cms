@@ -14,8 +14,8 @@
 		"doctrine/orm" : ">=2.5.1",
 		"aura/filter" : "2.0.0-beta2",
 		"ircmaxell/password-compat" : ">=1.0.4",
-		"ignaszak/exception" : "*",
-		"ignaszak/router" : "*"
+		"ignaszak/exception" : "dev-master",
+		"ignaszak/router" : "dev-master"
 	},
 	"autoload" : {
 		"psr-4" : {

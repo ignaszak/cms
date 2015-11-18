@@ -14,9 +14,9 @@ defined('ACCESS') or die();
 function loadFile($file)
 {
     global $cms;
-    
+
     $file = THEME_PATH . '/' . $file;
-    
+
     if (file_exists($file) && is_file($file) && is_readable($file)) {
         include_once($file);
     } else {
@@ -24,10 +24,15 @@ function loadFile($file)
     }
 }
 
+/**
+ * 
+ * @param unknown $file
+ * @throws Exception
+ */
 function loadExtensionFile($file)
 {
     global $cms;
-    
+
     $adminExtensionDir = $cms->getAdminExtensionDir();
 
     $file = "$adminExtensionDir/$file";

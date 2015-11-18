@@ -9,4 +9,4 @@ if (Ignaszak\Router\Client::isRouteName('admin')) {
     define('THEME_FOLDER', 'themes/' . $conf->getTheme());
 }
 
-define('THEME_PATH', __DIR__ . '/' . THEME_FOLDER);
+define('THEME_PATH', dirname(__DIR__) . '/' . THEME_FOLDER);
