@@ -21,6 +21,9 @@ $(document).ready(function() {
         height: 150px;
         overflow-y: scroll;
     }
+    .note-editor .btn {
+        height: 30px;
+    }
 </style>
 
 <?php
@@ -29,10 +32,12 @@ $title = '';
 $content = '';
 $id = null;
 $formTitle = 'Add new post';
+$formAction = 'new';
 
 if ($cms->getRoute('adminPostAction') == 'edit') {
 
     $formTitle = 'Edit post';
+    $formAction = 'edit';
 
     $cms->setContent('post')->buildQuery()->alias($cms->getRoute('alias'));
 
@@ -44,16 +49,16 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
 
 }
 
-
 ?>
 
 <div class="container-fluid">
 
     <h2><?php echo $formTitle; ?></h2>
 
-    <form method="post">
+    <form method="post" action="<?php echo $cms->getAdminAdress(); ?>/post/form/<?php echo $formAction; ?>">
 
         <div class="well well-controls input-group">
+            <button type="submit" class="btn btn-success">Public</button>
             <button type="submit" class="btn btn-primary">Save</button>
             <button type="submit" class="btn btn-default">View</button>
         </div>
@@ -74,9 +79,7 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
                     <div class="panel-body div-scroll">
 
                     <?php 
-                    $content = $cms->setContent('category');
-                    $content->buildQuery();
-                    $content->force();
+                    $cms->setContent('category')->force();
                     foreach ($cms->getContent() as $row) :
                     ?>
 

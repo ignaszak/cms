@@ -9,11 +9,11 @@
     </file>
 
     <router>
-        <rout>
+        <route>
             <item>
                 <pattern>(error-handler)</pattern>
             </item>
-        </rout>
+        </route>
     </router>
 
     <menu>

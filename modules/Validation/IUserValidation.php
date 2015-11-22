@@ -1,11 +1,13 @@
 <?php
 
-namespace UserAuth\Validation;
+namespace Validation;
 
-interface UserValidationInterface
+interface IUserValidation
 {
+
     public function validUserName($userName);
     public function validUserPassword($userPassword, $userPasswordConfirm = '', $isRegistration = '');
     public function validUserEmail($userEmail);
     public function validEmailOrUserName($value);
+
 }

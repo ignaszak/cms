@@ -3,6 +3,7 @@
 namespace UserAuth;
 
 use Conf\DB\DBDoctrine;
+use Validation\UserValidation;
 
 class UserAuth
 {
@@ -15,7 +16,7 @@ class UserAuth
     public function __construct()
     {
         $this->_em = DBDoctrine::getEntityManager();
-        $this->_userValid = new Validation\UserValidation;
+        $this->_userValid = new UserValidation;
     }
 
     public function getUserEntity()

@@ -46,9 +46,23 @@ class ExtensionLoader extends ExtensionInstances
             $xml = $xmlArray['xml'];
 
             $controllerName = 'admin'.$xml->title;
+            $router->addController($controllerName, array(
+                'file' => "{$xmlArray['extensionDir']}/{$xml->file->script}"
+            ));
 
-            foreach ($xml->router->rout->item as $item) {
-                $router->add('admin', '(' . ADMIN_URL . ')/' . $item->pattern, $controllerName);
+            $count = 1;
+
+            foreach ($xml->router->route->item as $item) {
+                
+                if (isset($item->file)) {
+                    $itemControllerName = $controllerName . $count;
+                    $router->addController($itemControllerName, array(
+                        'file' => "{$xmlArray['extensionDir']}/{$item->file}"
+                    ));
+                } else {
+                    $itemControllerName = $controllerName;
+                }
+                $router->add('admin', '(' . ADMIN_URL . ')/' . $item->pattern, $itemControllerName);
             }
 
             if (isset($xml->router->token->item)) {
@@ -56,10 +70,6 @@ class ExtensionLoader extends ExtensionInstances
                     $router->addToken("$item->name", $item->pattern);
                 }
             }
-
-            $router->addController($controllerName, array(
-                'file' => "{$xmlArray['extensionDir']}/{$xml->file->script}"
-            ));
         }
     }
 

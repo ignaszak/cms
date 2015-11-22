@@ -31,6 +31,11 @@ class MenuCreator extends ExtensionInstances
         self::$sidebarMenu = $menu;
     }
 
+    public static function getMenu()
+    {
+        return self::$sidebarMenu;
+    }
+
     private static function returnActiveMenuClass($link)
     {
         $link = str_replace('/', '\\/', $link);
@@ -39,11 +44,6 @@ class MenuCreator extends ExtensionInstances
         if (preg_match("/($link)/", $request)) {
             return 'class="active"';
         }
-    }
-
-    public static function getMenu()
-    {
-        return self::$sidebarMenu;
     }
 
 }
