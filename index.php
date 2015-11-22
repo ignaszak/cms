@@ -19,6 +19,9 @@ try {
 
     require __DIR__ . '/themes/theme-loader.php';
 
+    echo '<pre>';
+    print_r(\System\System::getReferData());
+    echo '</pre>';
 }
 catch (CMSException\DBException $e) {
     $exception->catchException($e);
