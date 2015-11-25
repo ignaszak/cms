@@ -1,5 +1,5 @@
 <?php
-    $content = $cms->setContent('post')
+    $cms->setContent('post')
         ->paginate(false)
         ->force()
         ->buildQuery()
@@ -20,7 +20,7 @@
 <hr>
 
 <?php
-    $content = $cms->setContent('post');
+    $cms->setContent('post');
     foreach ($cms->getContent() as $row) :
 ?>
 

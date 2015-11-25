@@ -13,8 +13,8 @@ class UserRegistrationAuth extends UserAuth
     public function registration(User $_user, $userLogin, $userEmail, $userPassword, $userRePassword)
     {
         if ($_user->isUserLoggedIn()) {
-            \System\System::setReferData(array('userMustBeLogout'=>1));
-            \System\System::headerLocationReferer();
+            \System\Server::setReferData(array('userMustBeLogout'=>1));
+            \System\Server::headerLocationReferer();
         }
 
         $this->setUserRegistrationData($userLogin, $userEmail, $userPassword, $userRePassword);
@@ -48,8 +48,8 @@ class UserRegistrationAuth extends UserAuth
         if (!$isValidPassword) $registrationErrorArray['incorrectPassword'] = 1;
 
         if (!$isValidLogin or !$isValidEmail or !$isValidPassword) {
-            \System\System::setReferData($registrationErrorArray);
-            \System\System::headerLocationReferer();
+            \System\Server::setReferData($registrationErrorArray);
+            \System\Server::headerLocationReferer();
         }
     }
 
@@ -68,8 +68,8 @@ class UserRegistrationAuth extends UserAuth
     private function sendErrorsIfExists()
     {
         if (count($this->errorDoubledDataArray) > 0) {
-            \System\System::setReferData($this->errorDoubledDataArray);
-            \System\System::headerLocationReferer();
+            \System\Server::setReferData($this->errorDoubledDataArray);
+            \System\Server::headerLocationReferer();
         }
     }
 
@@ -89,7 +89,7 @@ class UserRegistrationAuth extends UserAuth
     
     private function setRefererMessage()
     {
-        \System\System::setReferData(array('registrationSuccess'=>1));
+        \System\Server::setReferData(array('registrationSuccess'=>1));
     }
 
 }

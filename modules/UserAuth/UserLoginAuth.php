@@ -35,8 +35,8 @@ class UserLoginAuth extends UserAuth
         $isValidUserPassword = $this->_userValid->validUserPassword($this->userPassword);
     
         if (!$isValidEmailOrLogin or !$isValidUserPassword) {
-            \System\System::setReferData(array('incorrectLoginData'=>1));
-            \System\System::headerLocationReferer();
+            \System\Server::setReferData(array('incorrectLoginData'=>1));
+            \System\Server::headerLocationReferer();
         }
     }
 
@@ -49,8 +49,8 @@ class UserLoginAuth extends UserAuth
         if (count($user) == 1 && HashPass::verifyPassword($this->userPassword, $user[0]->getPassword())) {
             $this->_userEntity = $user[0];
         } else {
-            \System\System::setReferData(array('incorrectLoginData'=>1));
-            \System\System::headerLocationReferer();
+            \System\Server::setReferData(array('incorrectLoginData'=>1));
+            \System\Server::headerLocationReferer();
         }
     }
 

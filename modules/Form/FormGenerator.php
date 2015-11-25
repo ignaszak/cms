@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Extension\Form;
+namespace Form;
 
 /**
  *

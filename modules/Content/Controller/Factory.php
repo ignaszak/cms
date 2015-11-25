@@ -1,6 +1,6 @@
 <?php
 
-namespace ContentController;
+namespace Content\Controller;
 
 class Factory
 {

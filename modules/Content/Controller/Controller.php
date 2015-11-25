@@ -1,6 +1,6 @@
 <?php
 
-namespace ContentController;
+namespace Content\Controller;
 
 use Conf\DB\DBDoctrine;
 use CMSException\InvalidMethodException;
@@ -25,7 +25,7 @@ abstract class Controller
     public function setToDataArray($name, $arguments)
     {
         if (method_exists($this->_entity, $name)) {
-            $this->dataArray[$name] = $arguments[0];
+            $this->dataArray[$name] = @$arguments[0];
         } else {
             throw new InvalidMethodException("Method '$name' does not exist.");
         }
@@ -42,6 +42,7 @@ abstract class Controller
     private function callEntitySetters()
     {
         foreach ($this->dataArray as $name => $arguments) {
+            //echo "$name => $arguments<br>";
             $this->_entity->$name($arguments);
         }
     }
@@ -67,8 +68,8 @@ abstract class Controller
     private function sendErrorsIfExists()
     {
         if (count($this->errorArray) > 0) {
-            \System\System::setReferData(array('data'=>$this->dataArray,'error'=>$this->errorArray));
-            \System\System::headerLocationReferer();
+            \System\Server::setReferData(array('data'=>$this->dataArray,'error'=>$this->errorArray));
+            \System\Server::headerLocationReferer();
         }
     }
 

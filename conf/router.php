@@ -61,5 +61,5 @@ $router->addController('user', array(
 $router->run();
 
 echo "<pre>";
-print_r(Ignaszak\Router\Client::getAllRoutes());
+print_r(System\Router\Storage::getAllRoutes());
 echo "</pre>";

@@ -15,7 +15,7 @@ class Users
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,51 +24,50 @@ class Users
     /**
      * @var string
      *
-     * @ORM\Column(name="login", type="string", length=255, nullable=false)
+     * @ORM\Column(name="login", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $login;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="email", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $email;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
+     * @ORM\Column(name="password", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $password;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="reg_date", type="datetime", nullable=false)
+     * @ORM\Column(name="reg_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $reg_date;
+    private $regDate;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="log_date", type="datetime", nullable=false)
+     * @ORM\Column(name="log_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $log_date;
+    private $logDate;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="role", type="string", nullable=false)
+     * @ORM\Column(name="role", type="string", precision=0, scale=0, nullable=false, unique=false)
      */
     private $role;
-
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -79,6 +78,7 @@ class Users
      * Set login
      *
      * @param string $login
+     *
      * @return Users
      */
     public function setLogin($login)
@@ -91,7 +91,7 @@ class Users
     /**
      * Get login
      *
-     * @return string 
+     * @return string
      */
     public function getLogin()
     {
@@ -102,6 +102,7 @@ class Users
      * Set email
      *
      * @param string $email
+     *
      * @return Users
      */
     public function setEmail($email)
@@ -114,7 +115,7 @@ class Users
     /**
      * Get email
      *
-     * @return string 
+     * @return string
      */
     public function getEmail()
     {
@@ -125,6 +126,7 @@ class Users
      * Set password
      *
      * @param string $password
+     *
      * @return Users
      */
     public function setPassword($password)
@@ -137,7 +139,7 @@ class Users
     /**
      * Get password
      *
-     * @return string 
+     * @return string
      */
     public function getPassword()
     {
@@ -145,55 +147,58 @@ class Users
     }
 
     /**
-     * Set reg_date
+     * Set regDate
      *
-     * @param \DateTime $reg_date
+     * @param \DateTime $regDate
+     *
      * @return Users
      */
-    public function setRegDate($reg_date)
+    public function setRegDate($regDate)
     {
-        $this->reg_date = $reg_date;
+        $this->regDate = $regDate;
 
         return $this;
     }
 
     /**
-     * Get reg_date
+     * Get regDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getRegDate($format = "")
+    public function getRegDate()
     {
-        return $this->reg_date->format( (empty($format) ? \Conf\Conf::instance()->getDateFormat() : $format));
+        return $this->regDate;
     }
 
     /**
-     * Set log_date
+     * Set logDate
      *
-     * @param \DateTime $log_date
+     * @param \DateTime $logDate
+     *
      * @return Users
      */
-    public function setLogDate($log_date)
+    public function setLogDate($logDate)
     {
-        $this->log_date = $log_date;
+        $this->logDate = $logDate;
 
         return $this;
     }
 
     /**
-     * Get log_date
+     * Get logDate
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getLogDate($format = "")
+    public function getLogDate()
     {
-        return $this->log_date->format( (empty($format) ? \Conf\Conf::instance()->getOptions()->getDateFormat() : $format));
+        return $this->logDate;
     }
 
     /**
      * Set role
      *
      * @param string $role
+     *
      * @return Users
      */
     public function setRole($role)
@@ -206,10 +211,11 @@ class Users
     /**
      * Get role
      *
-     * @return string 
+     * @return string
      */
     public function getRole()
     {
         return $this->role;
     }
 }
+

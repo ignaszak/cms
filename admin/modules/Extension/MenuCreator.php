@@ -39,7 +39,7 @@ class MenuCreator extends ExtensionInstances
     private static function returnActiveMenuClass($link)
     {
         $link = str_replace('/', '\\/', $link);
-        $request = \System\System::getHttpRequest();
+        $request = \System\Server::getHttpRequest();
 
         if (preg_match("/($link)/", $request)) {
             return 'class="active"';

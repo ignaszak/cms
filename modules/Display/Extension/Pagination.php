@@ -3,7 +3,7 @@
 namespace Display\Extension;
 
 use Conf\Conf;
-use Display\Extension\Content\IContentQuery;
+use Content\Query\IContentQuery;
 
 class Pagination
 {
@@ -147,15 +147,15 @@ class Pagination
 
     private function getLinkWhitoutPage()
     {
-        $request = \System\System::getHttpRequest();
-        $request = (empty($request) ? $request . \Ignaszak\Router\Client::getDefaultRoute() . '/' : $request);
+        $request = \System\Server::getHttpRequest();
+        $request = (empty($request) ? $request . \System\Router\Storage::getDefaultRoute() . '/' : $request);
         $link = $this->_conf->getBaseUrl() . $request;
         return preg_replace('/([0-9]*)$/', '', $link);
     }
 
     private function getCurrentPage()
     {
-        $currentPage = \Ignaszak\Router\Client::getRoute('page');
+        $currentPage = \System\Router\Storage::getRoute('page');
 
         return (empty($currentPage) ? 1 : $currentPage);
     }

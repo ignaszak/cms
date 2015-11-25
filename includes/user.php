@@ -1,6 +1,6 @@
 <?php
 
-define('USER_ACTION', Ignaszak\Router\Client::getRoute('userAction')) ;
+define('USER_ACTION', System\Router\Storage::getRoute('userAction')) ;
 
 $userLogin      = @$_POST['userLogin'];
 $userEmail      = @$_POST['userEmail'];
@@ -21,4 +21,4 @@ switch (USER_ACTION) {
         break;
 }
 
-if (USER_ACTION) System\System::headerLocationReferer();
+if (USER_ACTION) System\Server::headerLocationReferer();

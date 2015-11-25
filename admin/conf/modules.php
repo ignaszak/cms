@@ -10,7 +10,7 @@ if (!$user->isUserLoggedIn()) {
 }
 
 if ($cms->getUserRole() != 'admin') {
-    System\System::headerLocation('');
+    System\Server::headerLocation('');
 }
 
 Display\DisplayExtension::addExtensionClass(array(

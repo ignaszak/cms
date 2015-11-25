@@ -23,7 +23,7 @@ class DBDoctrine
 
     private static function setConnectionConfigurationAndEntityManager()
     {
-        $paths = array(__DIR__ . '/modules/Entity');
+        $paths = array(dirname(dirname(__DIR__)) . '/modules/Entity');
         $isDevMode = true;
 
         $dbParams = array(
@@ -35,7 +35,7 @@ class DBDoctrine
             'charset'   => 'utf8'
         );
 
-        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null, false);
         self::$entityManager = EntityManager::create($dbParams, $config);
     }
 

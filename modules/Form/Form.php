@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Extension\Form;
+namespace Form;
 
 class Form
 {
@@ -10,7 +10,7 @@ class Form
 
     public function getFormResponseData($key='')
     {
-        $responseArray = \System\System::getReferData();
+        $responseArray = \System\Server::getReferData();
         return (!empty($key) ? @$responseArray[$key] : @$responseArray);
     }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Extension\Content;
+namespace Content\Query;
 
 class ContentQueryBuilder implements IContentQueryBuilder
 {

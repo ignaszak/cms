@@ -1,7 +1,7 @@
 <?php
 
-use ContentController\Factory;
-use ContentController\PostController;
+use Content\Controller\Factory;
+use Content\Controller\PostController;
 
 $title = 'title';
 

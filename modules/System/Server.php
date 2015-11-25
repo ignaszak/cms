@@ -2,7 +2,7 @@
 
 namespace System;
 
-class System
+class Server
 {
 
     private static $sendReferDataArray = array();
@@ -54,4 +54,5 @@ class System
         self::$readReferDataArray = unserialize(@$_SESSION['systemReferData']);
         unset($_SESSION['systemReferData']);
     }
+
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Display\Extension\Content;
+namespace Content\Query;
 
 use Conf\Conf;
 use Conf\DB\DBDoctrine;
-use Ignaszak\Router\Client as Router;
+use System\Router\Storage as Router;
 use CMSException\InvalidQueryException;
 
 class ContentQuery extends IContentQuery

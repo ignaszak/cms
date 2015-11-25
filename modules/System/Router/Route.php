@@ -1,6 +1,6 @@
 <?php
 
-namespace Display\Extension;
+namespace System\Router;
 
 class Route
 {
@@ -13,7 +13,7 @@ class Route
      */
     public function getRoute($route = null)
     {
-        return \Ignaszak\Router\Client::getRoute($route);
+        return \System\Router\Storage::getRoute($route);
     }
 
     /**
@@ -22,11 +22,12 @@ class Route
      */
     public function getRouteName($name = null)
     {
-        return \Ignaszak\Router\Client::getRouteName($name);
+        return \System\Router\Storage::getRouteName($name);
     }
 
     public function getRouteDefault()
     {
-        return \Ignaszak\Router\Client::getDefaultRoute();
+        return \System\Router\Storage::getDefaultRoute();
     }
+
 }

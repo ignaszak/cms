@@ -13,11 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Posts
 {
-
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -26,126 +25,130 @@ class Posts
     /**
      * @var integer
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=false)
+     * @ORM\Column(name="category_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $category_id;
+    private $categoryId;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="author_id", type="integer", nullable=false)
+     * @ORM\Column(name="author_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $author_id;
+    private $authorId;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime", nullable=false)
+     * @ORM\Column(name="date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $date = 'CURRENT_TIMESTAMP';
+    private $date;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="alias", type="string", length=255, nullable=false)
+     * @ORM\Column(name="alias", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $alias;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="content", type="text", nullable=false)
+     * @ORM\Column(name="content", type="text", precision=0, scale=0, nullable=false, unique=false)
      */
     private $content;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Users")
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
+     * @ManyToOne(targetEntity="Entity\Users")
+     * @JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Categories")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
+     * @ManyToOne(targetEntity="Entity\Categories")
+     * @JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Categories", inversedBy="post")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Entity\Categories", inversedBy="post")
+     * @JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $categories;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getPostId()
+    public function getId()
     {
         return $this->id;
     }
 
     /**
-     * Set category_id
+     * Set categoryId
      *
-     * @param integer $category_id
+     * @param integer $categoryId
+     *
      * @return Posts
      */
-    public function setPostCategoryId($category_id)
+    public function setCategoryId($categoryId)
     {
-        $this->category_id = $category_id;
+        $this->categoryId = $categoryId;
 
         return $this;
     }
 
     /**
-     * Get category_id
+     * Get categoryId
      *
-     * @return integer 
+     * @return integer
      */
-    public function getPostCategoryId()
+    public function getCategoryId()
     {
-        return $this->category_id;
+        return $this->categoryId;
     }
 
     /**
-     * Set author_id
+     * Set authorId
      *
-     * @param integer $author_id
+     * @param integer $authorId
+     *
      * @return Posts
      */
-    public function setPostAuthorId($author_id)
+    public function setAuthorId($authorId)
     {
-        $this->author_id = $author_id;
+        $this->authorId = $authorId;
 
         return $this;
     }
 
     /**
-     * Get author_id
+     * Get authorId
      *
-     * @return integer 
+     * @return integer
      */
-    public function getPostAuthorId()
+    public function getAuthorId()
     {
-        return $this->author_id;
+        return $this->authorId;
     }
 
     /**
      * Set date
      *
      * @param \DateTime $date
+     *
      * @return Posts
      */
-    public function setPostDate($date)
+    public function setDate($date)
     {
         $this->date = $date;
 
@@ -155,10 +158,9 @@ class Posts
     /**
      * Get date
      *
-     * @param $format
-     * @return \DateTime 
+     * @return \DateTime
      */
-    public function getPostDate($format = "")
+    public function getDate($format = "")
     {
         return $this->date->format( (empty($format) ? \Conf\Conf::instance()->getDateFormat() : $format));
     }
@@ -167,9 +169,10 @@ class Posts
      * Set title
      *
      * @param string $title
+     *
      * @return Posts
      */
-    public function setPostTitle($title)
+    public function setTitle($title)
     {
         $this->title = $title;
 
@@ -179,9 +182,9 @@ class Posts
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
-    public function getPostTitle()
+    public function getTitle()
     {
         return $this->title;
     }
@@ -190,9 +193,10 @@ class Posts
      * Set alias
      *
      * @param string $alias
+     *
      * @return Posts
      */
-    public function setPostAlias($alias)
+    public function setAlias($alias)
     {
         $this->alias = $alias;
 
@@ -202,9 +206,9 @@ class Posts
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
-    public function getPostAlias()
+    public function getAlias()
     {
         return $this->alias;
     }
@@ -213,9 +217,10 @@ class Posts
      * Set content
      *
      * @param string $content
+     *
      * @return Posts
      */
-    public function setPostContent($content)
+    public function setContent($content)
     {
         $this->content = $content;
 
@@ -225,9 +230,9 @@ class Posts
     /**
      * Get content
      *
-     * @return string 
+     * @return string
      */
-    public function getPostContent()
+    public function getContent()
     {
         return $this->content;
     }
@@ -297,3 +302,4 @@ class Posts
     }
 
 }
+

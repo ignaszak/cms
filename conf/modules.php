@@ -4,12 +4,12 @@ defined('ACCESS') or die();
 
 Display\DisplayExtension::addExtensionClass(array(
     'Display\\Extension\\User',
-    'Display\\Extension\\Form\\Form',
+    'Form\\Form',
     'Display\\Extension\\Pagination',
-    'Display\\Extension\\Route',
-    'Display\\Extension\\Content\\Content'
+    'System\\Router\\Route',
+    'Content\\Query\\Content'
 ));
 
 //echo "<pre>";
-//print_r(System\System::getReferData());
+//print_r(System\Server::getReferData());
 //echo "</pre>";

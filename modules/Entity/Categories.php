@@ -1,48 +1,50 @@
 <?php
 
 namespace Entity;
+
 use \Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Categories
  *
- * @Table(name="categories")
- * @Entity
+ * @ORM\Table(name="categories")
+ * @ORM\Entity
  */
 class Categories
 {
     /**
      * @var integer
      *
-     * @Column(name="id", type="integer", nullable=false)
-     * @Id
-     * @GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var integer
      *
-     * @Column(name="parent_id", type="integer", nullable=true)
+     * @ORM\Column(name="parent_id", type="integer", nullable=true)
      */
     private $parent_id;
 
     /**
      * @var string
      *
-     * @Column(name="title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @Column(name="alias", type="string", length=255, nullable=false)
+     * @ORM\Column(name="alias", type="string", length=255, nullable=false)
      */
     private $alias;
     
     /**
-     * @OneToMany(targetEntity="Entity\Posts", mappedBy="categories")
+     * @ORM\OneToMany(targetEntity="Entity\Posts", mappedBy="categories")
      */
     private $post;
 

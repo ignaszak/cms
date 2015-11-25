@@ -10,7 +10,7 @@ abstract class ExtensionInstances
 
     protected function getActiveExtensionFolderFromUrl()
     {
-        $request = \System\System::getHttpRequest();
+        $request = \System\Server::getHttpRequest();
         $folderArray = array();
 
         foreach (self::$extensionArray as $xmlArray) {

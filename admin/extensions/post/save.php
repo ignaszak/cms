@@ -1,10 +1,10 @@
 <?php
 
-define('FORM_ACTION', Ignaszak\Router\Client::getRoute('formAction')) ;
+define('FORM_ACTION', System\Router\Storage::getRoute('formAction')) ;
 
 if (FORM_ACTION == 'new') {
-    \System\System::setReferData(array('incorrectLoginData'=>1));
-    \System\System::headerLocationReferer();
+    \System\Server::setReferData(array('incorrectLoginData'=>1));
+    \System\Server::headerLocationReferer();
 }
 
-if (FORM_ACTION) System\System::headerLocationReferer();
+if (FORM_ACTION) System\Server::headerLocationReferer();

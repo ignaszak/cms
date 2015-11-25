@@ -15,7 +15,7 @@ class Options
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -24,58 +24,57 @@ class Options
     /**
      * @var string
      *
-     * @ORM\Column(name="site_title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="site_title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $siteTitle;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="admin_email", type="string", length=255, nullable=false)
+     * @ORM\Column(name="admin_email", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $adminEmail;
 
     /**
      * @var integer
      *
-     * @ORM\Column(name="post_limit", type="integer", nullable=false)
+     * @ORM\Column(name="post_limit", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $postLimit = '10';
+    private $postLimit;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="date_format", type="string", length=20, nullable=false)
+     * @ORM\Column(name="date_format", type="string", length=20, precision=0, scale=0, nullable=false, unique=false)
      */
-    private $dateFormat = 'j.n.Y H:i';
+    private $dateFormat;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="base_url", type="string", length=255, nullable=false)
+     * @ORM\Column(name="base_url", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $baseUrl;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="request_uri", type="string", length=255, nullable=false)
+     * @ORM\Column(name="request_uri", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $requestUri;
-    
+
     /**
      * @var string
      *
-     * @ORM\Column(name="theme", type="string", length=50, nullable=false)
+     * @ORM\Column(name="theme", type="string", length=50, precision=0, scale=0, nullable=false, unique=false)
      */
     private $theme;
-
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -86,6 +85,7 @@ class Options
      * Set siteTitle
      *
      * @param string $siteTitle
+     *
      * @return Options
      */
     public function setSiteTitle($siteTitle)
@@ -98,7 +98,7 @@ class Options
     /**
      * Get siteTitle
      *
-     * @return string 
+     * @return string
      */
     public function getSiteTitle()
     {
@@ -109,6 +109,7 @@ class Options
      * Set adminEmail
      *
      * @param string $adminEmail
+     *
      * @return Options
      */
     public function setAdminEmail($adminEmail)
@@ -121,7 +122,7 @@ class Options
     /**
      * Get adminEmail
      *
-     * @return string 
+     * @return string
      */
     public function getAdminEmail()
     {
@@ -132,6 +133,7 @@ class Options
      * Set postLimit
      *
      * @param integer $postLimit
+     *
      * @return Options
      */
     public function setPostLimit($postLimit)
@@ -144,7 +146,7 @@ class Options
     /**
      * Get postLimit
      *
-     * @return integer 
+     * @return integer
      */
     public function getPostLimit()
     {
@@ -155,6 +157,7 @@ class Options
      * Set dateFormat
      *
      * @param string $dateFormat
+     *
      * @return Options
      */
     public function setDateFormat($dateFormat)
@@ -167,7 +170,7 @@ class Options
     /**
      * Get dateFormat
      *
-     * @return string 
+     * @return string
      */
     public function getDateFormat()
     {
@@ -178,6 +181,7 @@ class Options
      * Set baseUrl
      *
      * @param string $baseUrl
+     *
      * @return Options
      */
     public function setBaseUrl($baseUrl)
@@ -190,7 +194,7 @@ class Options
     /**
      * Get baseUrl
      *
-     * @return string 
+     * @return string
      */
     public function getBaseUrl()
     {
@@ -201,6 +205,7 @@ class Options
      * Set requestUri
      *
      * @param string $requestUri
+     *
      * @return Options
      */
     public function setRequestUri($requestUri)
@@ -213,26 +218,27 @@ class Options
     /**
      * Get requestUri
      *
-     * @return string 
+     * @return string
      */
     public function getRequestUri()
     {
         return $this->requestUri;
     }
-    
+
     /**
      * Set theme
      *
-     * @param string $requestUri
+     * @param string $theme
+     *
      * @return Options
      */
     public function setTheme($theme)
     {
         $this->theme = $theme;
-    
+
         return $this;
     }
-    
+
     /**
      * Get theme
      *
@@ -243,3 +249,4 @@ class Options
         return $this->theme;
     }
 }
+

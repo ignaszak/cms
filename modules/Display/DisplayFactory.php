@@ -39,7 +39,7 @@ class DisplayFactory
     public function display()
     {
         $contentClass = $this->_displayExtension->returnExtensionClassName('Content');
-        $contentName = \Ignaszak\Router\Client::getRoute();
+        $contentName = \System\Router\Storage::getRoute();
         $_contentInstance = $this->getExtensionInstance($contentClass);
         $_contentInstance->setContent($contentName);
 
