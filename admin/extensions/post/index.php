@@ -13,4 +13,4 @@ $controller->setPostDate(new DateTime);
 $controller->setPostTitle($title);
 $controller->setPostAlias($title);
 $controller->setPostContent('treść');
-$controller->insert();
+//$controller->insert();

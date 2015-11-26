@@ -85,7 +85,7 @@ class PaginationGenerator
         for ($i=0; $i<$this->countSite; ++$i) {
             $paginationArray[$i] = array(
                 'number' => ($i + 1),
-                'link' => $this->getLinkWhitoutPage() . ++$i
+                'link' => $this->getLinkWhitoutPage() . ($i + 1)
             );
         }
 

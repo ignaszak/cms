@@ -22,7 +22,6 @@ class MultiPage extends PaginationTheme
             </a>
         </li>
 EOT;
-
             foreach ($this->_pg->getPaginationArray() as $page) {
                 $class = $page['number'] == $this->_pg->getCurrentPage() ? "active" : "";
                 $pagination .= <<<EOT
