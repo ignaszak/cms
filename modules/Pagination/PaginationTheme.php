@@ -2,9 +2,6 @@
 
 namespace Pagination;
 
-use Conf\Conf;
-use Content\Query\IContentQuery;
-
 abstract class PaginationTheme
 {
 
