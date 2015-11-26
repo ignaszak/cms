@@ -5,7 +5,7 @@ namespace Pagination;
 class Pagination
 {
 
-    private $_iPagination;
+    private $_paginationTheme;
     private $_pg;
 
     public function __construct()
@@ -21,12 +21,12 @@ class Pagination
     public function getPaginationTheme($theme = "pagination")
     {
         switch ($theme) {
-            case "pagination":  $this->_iPagination = new MultiPage($this->_pg);  break;
-            case "pager":       $this->_iPagination = new Pager($this->_pg);      break;
-            case "pager-align": $this->_iPagination = new PagerAlign($this->_pg); break;
+            case "pagination":  $this->_paginationTheme = new MultiPage($this->_pg);  break;
+            case "pager":       $this->_paginationTheme = new Pager($this->_pg);      break;
+            case "pager-align": $this->_paginationTheme = new PagerAlign($this->_pg); break;
         }
 
-        return $this->_iPagination->getTheme();
+        return $this->_paginationTheme->getTheme();
     }
 
 }
