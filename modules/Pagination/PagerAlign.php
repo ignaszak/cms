@@ -9,7 +9,7 @@ class PagerAlign extends PaginationTheme
     {
         if ($this->_pg->getCountSite() > 1) {
 
-            $pagination = <<<EOT
+            return <<<EOT
 <nav>
     <ul class="pager">
         <li class="previous {$this->_pg->getNextDisabled()}">
@@ -25,8 +25,6 @@ class PagerAlign extends PaginationTheme
     </ul>
 </nav>
 EOT;
-
-            return $pagination;
         }
     }
 
