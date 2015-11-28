@@ -37,7 +37,7 @@ class User
 
     public function isUserLoggedIn()
     {
-        return isset($this->userSession) && DBDoctrine::getEntityManager()
+        return isset($this->userSession) && DBDoctrine::em()
             ->getRepository('\Entity\Users')
             ->findBy(array(
                 'login' => $this->userSession->getLogin(),
@@ -59,10 +59,10 @@ class User
         }
     }
 
-    public function login($userLoginOrEmail, $userPassword, $userRemember)
+    public function login($userEmailOrLogin, $userPassword, $userRemember)
     {
         $userLoginAuth = new UserLoginAuth;
-        $userLoginAuth->login($userLoginOrEmail, $userPassword, $userRemember);
+        $userLoginAuth->login($userEmailOrLogin, $userPassword, $userRemember);
     }
 
     public function logout()

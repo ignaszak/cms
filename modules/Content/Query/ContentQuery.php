@@ -21,7 +21,7 @@ class ContentQuery extends IContentQuery
     public function __construct($entityName)
     {
         $this->_conf = Conf::instance();
-        $this->_em = DBDoctrine::getEntityManager();
+        $this->_em = DBDoctrine::em();
         $this->_contentQueryBuilder = new ContentQueryBuilder($this);
         $this->entityName = $entityName;
         $this->createQuery();

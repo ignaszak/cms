@@ -2,45 +2,77 @@
 
 namespace Validation;
 
+use Entity\EntityController;
+
 class ContentValidation extends Validator
 {
 
-    public function validCategoryId($categoryId)
+    /**
+     * @param \Entity\Categories $_category
+     * @return boolean
+     */
+    public function validCategory($_category)
     {
-        return $this->validId($categoryId);
+        return $this->validObject($_category, 'category');
     }
 
-    public function validAuthorId($authorId)
+    /**
+     * @param \Entity\Users $_author
+     * @return boolean
+     */
+    public function validAuthor($_author)
     {
-        return $this->validId($authorId);
+        return $this->validObject($_author, 'author');
     }
 
-    public function validDate($date)
+    /**
+     * @param \DateTime $_date
+     * @return boolean
+     */
+    public function validDate($_date)
     {
-        return $date instanceof \DateTime;
+        return $_date instanceof \DateTime;
     }
 
+    /**
+     * @param string $title
+     * @return boolean
+     */
     public function validTitle($title)
     {
         return parent::$_auraFilter->validate($title, 'strlenMin', 1)
             && parent::$_auraFilter->sanitize($title, 'string');
     }
 
+    /**
+     * @param string $alias
+     * @return boolean
+     */
     public function validAlias($alias)
     {
         return parent::$_auraFilter->validate($alias, 'strlenMin', 1)
         && parent::$_auraFilter->sanitize($alias, 'string');
     }
 
+    /**
+     * @param string $content
+     * @return boolean
+     */
     public function validContent($content)
     {
         return parent::$_auraFilter->validate($content, 'strlenMin', 1)
             && parent::$_auraFilter->sanitize($content, 'string');
     }
 
-    private function validId($id)
+    /**
+     * @param \Entity $_object
+     * @param string $name
+     * @return boolean
+     */
+    private function validObject($_object, $name)
     {
-        return is_numeric($id);
+        $class = EntityController::instance()->getEntityByName($name);
+        return $_object instanceof $class;
     }
 
 }

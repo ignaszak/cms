@@ -28,27 +28,29 @@
                 }
 
                 $content = $cms->setContent('post');
-                foreach ($cms->getContent() as $row) :
+                foreach ($cms->getContent() as $post) :
+                    $cat = $post->getCategory();
+                    $author = $post->getAuthor();
             ?>
 
             <tr>
                 <th scope="row"><?php echo $i; ?></th>
                 <td>
-                    <a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $row->getPostAlias(); ?>"><b><?php echo $row->getPostTitle(); ?></b></a>
+                    <a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $post->getAlias(); ?>"><b><?php echo $post->getTitle(); ?></b></a>
                     <p class="visible-xs">
-                        <small><?php echo $row->getPostDate(); ?></small>
+                        <small><?php echo $post->getDate(); ?></small>
                     </p>
                 </td>
                 <td class="visible-xs">
                     <small>
-                        Cat: <?php echo $row->getCategoryTitle(); ?><br>
-                        Author: <?php echo $row->getUserLogin(); ?>
+                        Cat: <?php echo $cat->getTitle(); ?><br>
+                        Author: <?php echo $author->getLogin(); ?>
                     </small>
                 </td>
-                <td class="hidden-xs"><?php echo $row->getPostAlias(); ?></td>
-                <td class="hidden-xs"><?php echo $row->getCategoryTitle(); ?></td>
-                <td class="hidden-xs"><?php echo $row->getUserLogin(); ?></td>
-                <td class="hidden-xs"><?php echo $row->getPostDate(); ?></td>
+                <td class="hidden-xs"><?php echo $post->getAlias(); ?></td>
+                <td class="hidden-xs"><?php echo $cat->getTitle(); ?></td>
+                <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
+                <td class="hidden-xs"><?php echo $post->getDate(); ?></td>
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-default dropdown-toggle" type="button"
@@ -56,8 +58,8 @@
                             <span class="glyphicon glyphicon-menu-hamburger"></span>
                         </button>
                         <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $row->getPostAlias(); ?>">Edit</a></li>
-                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/delete/<?php echo $row->getPostAlias(); ?>">Delete</a></li>
+                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $post->getAlias(); ?>">Edit</a></li>
+                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/delete/<?php echo $post->getAlias(); ?>">Delete</a></li>
                         </ul>
                     </div>
                 </td>

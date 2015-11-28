@@ -21,7 +21,8 @@
 		"psr-4" : {
 			"" : "modules/",
 			"Admin\\" : "admin/modules",
-			"Conf\\" : "conf"
+			"Conf\\" : "conf",
+			"Test\\" : "tests"
 		}
 	},
 	"name" : "ignaszak/cms"

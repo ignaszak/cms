@@ -1,15 +1,16 @@
-<?php foreach ($cms->display() as $row) : ?>
+<?php foreach ($cms->display() as $cat) : ?>
 
-    <b>Kategoria:</b> <?php echo $row->getCategoryTitle(); ?><hr>
+    <b>Kategoria:</b> <?php echo $cat->getTitle(); ?><hr>
 
-    <?php foreach ($row->getPost() as $post) : ?>
+    <?php foreach ($cat->getPost() as $post) : ?>
 
-        <b><?php echo $post->getPostTitle(); ?></b> <?php echo $post->getPostDate(); ?><br>
+        <b><?php echo $post->getTitle(); ?></b> <?php echo $post->getDate(); ?><br>
         <b>Użytkownik:</b>
-        <?php echo $post->getUserLogin(); ?>,
-        <?php echo $post->getUserEmail(); ?>,
-        <?php echo $post->getUserRole(); ?><br>
-        <?php echo $post->getPostContent() ?><br><br>
+        <?php $author = $post->getAuthor(); ?>
+        <?php echo $author->getLogin(); ?>,
+        <?php echo $author->getEmail(); ?>,
+        <?php echo $author->getRole(); ?><br>
+        <?php echo $post->getContent() ?><br><br>
 
     <?php  endforeach; ?>
 

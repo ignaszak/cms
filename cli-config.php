@@ -4,6 +4,6 @@ use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Conf\DB\DBDoctrine;
 
 DBDoctrine::configure();
-$entityManager = DBDoctrine::getEntityManager();
+$entityManager = DBDoctrine::em();
 
 return ConsoleRunner::createHelperSet($entityManager);

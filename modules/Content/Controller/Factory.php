@@ -16,7 +16,12 @@ class Factory
     {
         $this->_controller->setToDataArray($name, $arguments);
     }
-    
+
+    public function setReference($entityName, $by)
+    {
+        return $this->_controller->setReference($entityName, $by);
+    }
+
     public function insert()
     {
         return $this->_controller->insert();

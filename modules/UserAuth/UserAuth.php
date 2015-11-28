@@ -15,7 +15,7 @@ class UserAuth
 
     public function __construct()
     {
-        $this->_em = DBDoctrine::getEntityManager();
+        $this->_em = DBDoctrine::em();
         $this->_userValid = new UserValidation;
     }
 

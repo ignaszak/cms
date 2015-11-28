@@ -28,9 +28,11 @@ $(document).ready(function() {
 
 <?php
 
-$title = '';
-$content = '';
-$id = null;
+$returnData = $cms->getFormResponseData('data');
+
+$title = $returnData['setTitle'];
+$content = $returnData['setContent'];
+$catId = $returnData['setCategory'];
 $formTitle = 'Add new post';
 $formAction = 'new';
 
@@ -41,10 +43,10 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
 
     $cms->setContent('post')->buildQuery()->alias($cms->getRoute('alias'));
 
-    foreach ($cms->getContent() as $row) {
-        $id = $row->getPostId();
-        $title = $row->getPostTitle();
-        $content = $row->getPostContent();
+    foreach ($cms->getContent() as $post) {
+        $catId = $post->getCategoryId();
+        $title = $post->getTitle();
+        $content = $post->getContent();
     }
 
 }
@@ -64,11 +66,11 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
         </div>
 
         <div class="form-group" style="margin-bottom: 5px;">
-            <input type="text" value="<?php echo $title; ?>" class="form-control input-lg" placeholder="Title">
+            <input type="text" name="title" value="<?php echo $title; ?>" class="form-control input-lg" placeholder="Title">
         </div>
 
         <div class="form-group">
-            <div id="summernote"><?php echo $content; ?></div>
+            <textarea name="content" id="summernote"><?php echo $content; ?></textarea>
         </div>
 
         <div class="row">
@@ -80,14 +82,14 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
 
                     <?php 
                     $cms->setContent('category')->force();
-                    foreach ($cms->getContent() as $row) :
+                    foreach ($cms->getContent() as $cat) :
                     ?>
 
                         <div class="radio">
                             <label style="width:100%;">
-                                <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"
-                                <?php if ($id == $row->getCategoryId()) echo 'checked'; ?>>
-                                <?php echo $row->getCategoryTitle(); ?>
+                                <input type="radio" name="categoryId" value="<?php echo $cat->getId(); ?>"
+                                <?php if ($catId == $cat->getId()) echo 'checked'; ?>>
+                                <?php echo $cat->getTitle(); ?>
                             </label>
                         </div>
 

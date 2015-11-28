@@ -7,6 +7,9 @@ use Aura\Filter\FilterFactory;
 abstract class Validator
 {
 
+    /**
+     * @var \Aura\Filter\ValueFilter
+     */
     protected static $_auraFilter;
 
     public function __construct()

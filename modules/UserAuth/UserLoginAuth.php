@@ -2,15 +2,17 @@
 
 namespace UserAuth;
 
+use System\Server;
+
 class UserLoginAuth extends UserAuth
 {
 
-    private $userLoginOrEmail;
+    private $userEmailOrLogin;
     private $userRemember;
 
-    public function login($userLoginOrEmail, $userPassword, $userRemember)
+    public function login($userEmailOrLogin, $userPassword, $userRemember)
     {
-        $this->setUserLoginData($userLoginOrEmail, $userPassword, $userRemember);
+        $this->setUserLoginData($userEmailOrLogin, $userPassword, $userRemember);
         $this->validUserLoginData();
         $this->validUserWithDataBase();
         $this->setUserSession();
@@ -22,41 +24,41 @@ class UserLoginAuth extends UserAuth
         $session->logout();
     }
 
-    private function setUserLoginData($userLoginOrEmail, $userPassword, $userRemember)
+    private function setUserLoginData($userEmailOrLogin, $userPassword, $userRemember)
     {
-        $this->userLoginOrEmail = $userLoginOrEmail;
+        $this->userEmailOrLogin = $userEmailOrLogin;
         $this->userPassword = $userPassword;
         $this->userRemember = $userRemember;
     }
 
     private function validUserLoginData()
     {
-        $isValidEmailOrLogin = $this->_userValid->validEmailOrUserName($this->userLoginOrEmail);
-        $isValidUserPassword = $this->_userValid->validUserPassword($this->userPassword);
+        $isValidEmailOrLogin = $this->_userValid->validEmailOrLogin($this->userEmailOrLogin);
+        $isValidPassword = $this->_userValid->validPassword($this->userPassword);
     
-        if (!$isValidEmailOrLogin or !$isValidUserPassword) {
-            \System\Server::setReferData(array('incorrectLoginData'=>1));
-            \System\Server::headerLocationReferer();
+        if (!$isValidEmailOrLogin or !$isValidPassword) {
+            Server::setReferData(array('incorrectLoginData'=>1));
+            Server::headerLocationReferer();
         }
     }
 
     private function validUserWithDataBase()
     {
         $user = $this->_em->getRepository('\Entity\Users')->findBy(array(
-            $this->returnUserLoginColumnName() => $this->userLoginOrEmail
+            $this->returnUserLoginColumnName() => $this->userEmailOrLogin
         ));
 
         if (count($user) == 1 && HashPass::verifyPassword($this->userPassword, $user[0]->getPassword())) {
             $this->_userEntity = $user[0];
         } else {
-            \System\Server::setReferData(array('incorrectLoginData'=>1));
-            \System\Server::headerLocationReferer();
+            Server::setReferData(array('incorrectLoginData'=>1));
+            Server::headerLocationReferer();
         }
     }
 
     private function returnUserLoginColumnName()
     {
-        return ($this->_userValid->validUserName($this->userLoginOrEmail) ? 'login' : 'email');
+        return ($this->_userValid->validLogin($this->userEmailOrLogin) ? 'login' : 'email');
     }
 
 }

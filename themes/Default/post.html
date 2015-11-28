@@ -4,16 +4,17 @@
         ->force()
         ->buildQuery()
             ->contentLike('a');
-    foreach ($cms->getContent() as $row) :
+    foreach ($cms->getContent() as $post) :
 ?>
 
-    <b>Kategoria:</b> <?php echo $row->getCategoryTitle(); ?><br>
-    <b><?php echo $row->getPostTitle(); ?></b> <?php echo $row->getPostDate(); ?><br>
+    <b>Kategoria:</b> <?php echo $post->getCategory()->getTitle(); ?><br>
+    <b><?php echo $post->getTitle(); ?></b> <?php echo $post->getDate(); ?><br>
     <b>Użytkownik:</b>
-    <?php echo $row->getUserLogin(); ?>,
-    <?php echo $row->getUserEmail(); ?>,
-    <?php echo $row->getUserRole(); ?><br>
-    <?php echo $row->getPostContent() ?><br><br>
+    <?php $author = $post->getAuthor(); ?>
+    <?php echo $author->getLogin(); ?>,
+    <?php echo $author->getEmail(); ?>,
+    <?php echo $author->getRole(); ?><br>
+    <?php echo $post->getContent() ?><br><br>
 
 <?php endforeach; ?>
 
@@ -21,16 +22,17 @@
 
 <?php
     $cms->setContent('post');
-    foreach ($cms->getContent() as $row) :
+    foreach ($cms->getContent() as $post) :
 ?>
 
-    <b>Kategoria:</b> <?php echo $row->getCategoryTitle(); ?><br>
-    <b><?php echo $row->getPostTitle(); ?></b> <?php echo $row->getPostDate(); ?><br>
+    <b>Kategoria:</b> <?php echo $post->getCategory()->getTitle(); ?><br>
+    <b><?php echo $post->getTitle(); ?></b> <?php echo $post->getDate(); ?><br>
     <b>Użytkownik:</b>
-    <?php echo $row->getUserLogin(); ?>,
-    <?php echo $row->getUserEmail(); ?>,
-    <?php echo $row->getUserRole(); ?><br>
-    <?php echo $row->getPostContent(); ?><br><br>
+    <?php $author = $post->getAuthor(); ?>
+    <?php echo $author->getLogin(); ?>,
+    <?php echo $author->getEmail(); ?>,
+    <?php echo $author->getRole(); ?><br>
+    <?php echo $post->getContent() ?><br><br>
 
 <?php endforeach; ?>
 

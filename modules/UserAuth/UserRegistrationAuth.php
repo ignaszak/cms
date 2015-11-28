@@ -2,6 +2,8 @@
 
 namespace UserAuth;
 
+use System\Server;
+
 class UserRegistrationAuth extends UserAuth
 {
 
@@ -13,8 +15,8 @@ class UserRegistrationAuth extends UserAuth
     public function registration(User $_user, $userLogin, $userEmail, $userPassword, $userRePassword)
     {
         if ($_user->isUserLoggedIn()) {
-            \System\Server::setReferData(array('userMustBeLogout'=>1));
-            \System\Server::headerLocationReferer();
+            Server::setReferData(array('userMustBeLogout'=>1));
+            Server::headerLocationReferer();
         }
 
         $this->setUserRegistrationData($userLogin, $userEmail, $userPassword, $userRePassword);
@@ -36,9 +38,9 @@ class UserRegistrationAuth extends UserAuth
 
     private function validUserRegistrationData()
     {
-        $isValidLogin = $this->_userValid->validUserName($this->userLogin);
-        $isValidEmail = $this->_userValid->validUserEmail($this->userEmail);
-        $isValidPassword = $this->_userValid->validUserPassword($this->userPassword,
+        $isValidLogin = $this->_userValid->validLogin($this->userLogin);
+        $isValidEmail = $this->_userValid->validEmail($this->userEmail);
+        $isValidPassword = $this->_userValid->validPassword($this->userPassword,
             $this->userRePassword, 'REGISTRATION');
 
         $registrationErrorArray = array();
@@ -48,8 +50,8 @@ class UserRegistrationAuth extends UserAuth
         if (!$isValidPassword) $registrationErrorArray['incorrectPassword'] = 1;
 
         if (!$isValidLogin or !$isValidEmail or !$isValidPassword) {
-            \System\Server::setReferData($registrationErrorArray);
-            \System\Server::headerLocationReferer();
+            Server::setReferData($registrationErrorArray);
+            Server::headerLocationReferer();
         }
     }
 
@@ -68,8 +70,8 @@ class UserRegistrationAuth extends UserAuth
     private function sendErrorsIfExists()
     {
         if (count($this->errorDoubledDataArray) > 0) {
-            \System\Server::setReferData($this->errorDoubledDataArray);
-            \System\Server::headerLocationReferer();
+            Server::setReferData($this->errorDoubledDataArray);
+            Server::headerLocationReferer();
         }
     }
 
@@ -86,10 +88,10 @@ class UserRegistrationAuth extends UserAuth
         $this->_em->persist($user);
         $this->_em->flush();
     }
-    
+
     private function setRefererMessage()
     {
-        \System\Server::setReferData(array('registrationSuccess'=>1));
+        Server::setReferData(array('registrationSuccess'=>1));
     }
 
 }

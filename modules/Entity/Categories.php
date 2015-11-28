@@ -2,8 +2,8 @@
 
 namespace Entity;
 
-use \Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Categories
@@ -16,7 +16,7 @@ class Categories
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -25,24 +25,24 @@ class Categories
     /**
      * @var integer
      *
-     * @ORM\Column(name="parent_id", type="integer", nullable=true)
+     * @ORM\Column(name="parent_id", type="integer", precision=0, scale=0, nullable=true, unique=false)
      */
-    private $parent_id;
+    private $parentId;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=false)
+     * @ORM\Column(name="title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="alias", type="string", length=255, nullable=false)
+     * @ORM\Column(name="alias", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $alias;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Entity\Posts", mappedBy="categories")
      */
@@ -53,45 +53,61 @@ class Categories
     }
 
     /**
-     * Get id
+     * Set id
+     * 
+     * @param integer $id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getCategoryId()
+    public function setId($id)
     {
-        return $this->id;
-    }
-
-    /**
-     * Set parent_id
-     *
-     * @param integer $parent_id
-     * @return Categories
-     */
-    public function setCategoryParentId($parent_id)
-    {
-        $this->parent_id = $parent_id;
+        $this->id = $id;
 
         return $this;
     }
 
     /**
-     * Get parent_id
+     * Get id
      *
-     * @return integer 
+     * @return integer
      */
-    public function getCategoryParentId()
+    public function getId()
     {
-        return $this->parent_id;
+        return $this->id;
+    }
+
+    /**
+     * Set parentId
+     *
+     * @param string $parentId
+     *
+     * @return Categories
+     */
+    public function setParentId($parentId)
+    {
+        $this->parentId = $parentId;
+
+        return $this;
+    }
+
+    /**
+     * Get parentId
+     *
+     * @return integer
+     */
+    public function getParentId()
+    {
+        return $this->parentId;
     }
 
     /**
      * Set title
      *
      * @param string $title
+     *
      * @return Categories
      */
-    public function setCategoryTitle($title)
+    public function setTitle($title)
     {
         $this->title = $title;
 
@@ -101,9 +117,9 @@ class Categories
     /**
      * Get title
      *
-     * @return string 
+     * @return string
      */
-    public function getCategoryTitle()
+    public function getTitle()
     {
         return $this->title;
     }
@@ -112,9 +128,10 @@ class Categories
      * Set alias
      *
      * @param string $alias
+     *
      * @return Categories
      */
-    public function setCategoryAlias($alias)
+    public function setAlias($alias)
     {
         $this->alias = $alias;
 
@@ -124,13 +141,13 @@ class Categories
     /**
      * Get alias
      *
-     * @return string 
+     * @return string
      */
-    public function getCategoryAlias()
+    public function getAlias()
     {
         return $this->alias;
     }
-    
+
     /**
      * Get posts
      *
@@ -140,4 +157,5 @@ class Categories
     {
         return $this->post;
     }
+
 }

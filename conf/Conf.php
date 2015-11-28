@@ -13,7 +13,7 @@ class Conf
 
     private function __construct()
     {
-        $this->_optionsEntity = DBDoctrine::getEntityManager()->find('\\Entity\\Options', 1);
+        $this->_optionsEntity = DBDoctrine::em()->find('\\Entity\\Options', 1);
     }
 
     public static function instance()

@@ -3,12 +3,28 @@
 namespace Display;
 
 use Conf\Conf;
+use System\Router\Storage as Router;
+use CMSException\InvalidClassException;
+use Doctrine\ORM\Internal\Hydration\ObjectHydrator;
 
 class DisplayFactory
 {
 
+    /**
+     * @var DisplayExtension
+     */
     private $_displayExtension;
+
+    /**
+     * @var Conf
+     */
     private $_conf;
+
+    /**
+     * Contains extension instances
+     * 
+     * @var array
+     */
     private $_instancesArray = array();
 
     public function __construct()
@@ -17,41 +33,46 @@ class DisplayFactory
         $this->_conf = Conf::instance();
     }
 
+    /**
+     * Searches for correspond class based on method name.
+     * If is found creates an object and call a method.
+     * 
+     * @param string $name
+     * @param array $arguments
+     * @throws InvalidClassException
+     * @return mixed
+     */
     public function __call($name, $arguments)
     {
-        $extensionClassName = $this->_displayExtension->returnExtensionClassName($name);
-        $this->getExtensionInstance($extensionClassName);
+        $extensionInstance = $this->_displayExtension->getExtensionInstanceFromMethodName($name);
 
-        if (method_exists($this->_instancesArray[$extensionClassName], $name)) {
+        if (method_exists($extensionInstance, $name)) {
 
             return call_user_func_array(array(
-                $this->getExtensionInstance($extensionClassName),
+                $extensionInstance,
                 $name
             ), $arguments);
 
         } else {
 
-            throw new \Exception("No class correspond to <b>$name</b> match");
+            throw new InvalidClassException("No class correspond to <b>$name</b> method");
 
         }
+        return null;
     }
 
+    /**
+     * Returns current entity based on client request
+     * 
+     * @return array
+     */
     public function display()
     {
-        $contentClass = $this->_displayExtension->returnExtensionClassName('Content');
-        $contentName = \System\Router\Storage::getRoute();
-        $_contentInstance = $this->getExtensionInstance($contentClass);
+        $_contentInstance = $this->_displayExtension->getExtensionInstanceFromMethodName('Content');
+        $contentName = Router::getRoute();
         $_contentInstance->setContent($contentName);
 
         return $_contentInstance->getContent();
-    }
-
-    private function getExtensionInstance($extensionClassName)
-    {
-        if (empty($this->_instancesArray[$extensionClassName]))
-            $this->_instancesArray[$extensionClassName] = new $extensionClassName();
-
-        return $this->_instancesArray[$extensionClassName];
     }
 
 }

@@ -2,38 +2,58 @@
 
 namespace Validation;
 
-class UserValidation extends Validator implements IUserValidation
+class UserValidation extends Validator
 {
 
-    public function validUserName($userName)
+    /**
+     * @param string $login
+     * @return boolean
+     */
+    public function validLogin($login)
     {
-        return parent::$_auraFilter->validate($userName, 'alnum')
-            && parent::$_auraFilter->validate($userName, 'strlenBetween', 3, 15)
-            && parent::$_auraFilter->sanitize($userName, 'string');
+        return parent::$_auraFilter->validate($login, 'alnum')
+            && parent::$_auraFilter->validate($login, 'strlenBetween', 3, 15)
+            && parent::$_auraFilter->sanitize($login, 'string');
     }
 
-    public function validUserPassword($userPassword, $userPasswordConfirm = '', $isRegistration = '')
+    /**
+     * @param string $password
+     * @param string $passwordConfirm
+     * @param string $isRegistration
+     * @return boolean
+     */
+    public function validPassword($password, $passwordConfirm = '', $isRegistration = '')
     {
-        $passValid = parent::$_auraFilter->validate($userPassword, 'strlenMin', 6);
+        $passValid = parent::$_auraFilter->validate($password, 'strlenMin', 6);
 
         if ($isRegistration == 'REGISTRATION') {
-            return $passValid && parent::$_auraFilter->validate($userPassword, 'equalToValue', $userPasswordConfirm);
+            return $passValid && parent::$_auraFilter->validate($password, 'equalToValue', $passwordConfirm);
         } else {
             return $passValid;
         }
+
+        return false;
     }
 
-    public function validUserEmail($userEmail)
+    /**
+     * @param string $email
+     * @return boolean
+     */
+    public function validEmail($email)
     {
-        return parent::$_auraFilter->validate($userEmail, 'email');
+        return parent::$_auraFilter->validate($email, 'email');
     }
 
-    public function validEmailOrUserName($value)
+    /**
+     * @param string $value
+     * @return boolean
+     */
+    public function validEmailOrLogin($value)
     {
-        if (!$this->validUserName($value)) {
-            return $this->validUserEmail($value);
+        if (!$this->validLogin($value)) {
+            return $this->validEmail($value);
         } else {
-            return 1;
+            return true;
         }
     }
 

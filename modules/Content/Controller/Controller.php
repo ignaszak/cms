@@ -2,9 +2,11 @@
 
 namespace Content\Controller;
 
+use System\Server;
 use Conf\DB\DBDoctrine;
 use CMSException\InvalidMethodException;
 use Validation\ContentValidation;
+use Entity\EntityController;
 
 abstract class Controller
 {
@@ -12,14 +14,16 @@ abstract class Controller
     protected $_em;
     protected $_entity;
     protected $_contentValidation;
+    private $_entityController;
     protected $dataArray = array();
     protected $validPatternsArray = array();
     private $errorArray = array();
 
     public function __construct()
     {
-        $this->_em = DBDoctrine::getEntityManager();
+        $this->_em = DBDoctrine::em();
         $this->_contentValidation = new ContentValidation;
+        $this->_entityController = EntityController::instance();
     }
 
     public function setToDataArray($name, $arguments)
@@ -29,6 +33,16 @@ abstract class Controller
         } else {
             throw new InvalidMethodException("Method '$name' does not exist.");
         }
+    }
+
+    public function setReference($entityName, $by)
+    {
+        if (is_numeric($by)) {
+            $entityClass = $this->_entityController->getEntityByName($entityName);
+            $entityObject = DBDoctrine::em()->find($entityClass, $by);
+        }
+        $name = "set" . ucfirst($entityName);
+        $this->setToDataArray($name, array($entityObject));
     }
 
     protected function validAndAddToEntity(array $validPatternsArray)
@@ -42,7 +56,6 @@ abstract class Controller
     private function callEntitySetters()
     {
         foreach ($this->dataArray as $name => $arguments) {
-            //echo "$name => $arguments<br>";
             $this->_entity->$name($arguments);
         }
     }
@@ -68,8 +81,19 @@ abstract class Controller
     private function sendErrorsIfExists()
     {
         if (count($this->errorArray) > 0) {
-            \System\Server::setReferData(array('data'=>$this->dataArray,'error'=>$this->errorArray));
-            \System\Server::headerLocationReferer();
+
+            foreach ($this->dataArray as $key=>$data) {
+                if (is_object($data)) {
+                    if (method_exists($data, 'getId')) {
+                        $this->dataArray[$key] = $data->getId();
+                    } else {
+                        unset($this->dataArray[$key]);
+                    }
+                }
+            }
+
+            Server::setReferData(array('data'=>$this->dataArray,'error'=>$this->errorArray));
+            Server::headerLocationReferer();
         }
     }
 

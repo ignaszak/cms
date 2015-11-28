@@ -16,7 +16,7 @@ class DBDoctrine
         self::registerEnumTypeAsDoctrineVarchar();
     }
 
-    public static function getEntityManager()
+    public static function em()
     {
         return self::$entityManager;
     }

@@ -15,8 +15,7 @@ class PostController extends Controller
 
     public function insert()
     {
-        $this->validAndAddToEntity(array('CategoryId', 'AuthorId', 'Date', 'Title', 'Alias', 'Content'));
-        $this->_entity->setPostCategoryId(1);
+        $this->validAndAddToEntity(array('Category', 'Author', 'Date', 'Title', 'Alias', 'Content'));
         $this->_em->persist($this->_entity);
         $this->_em->flush($this->_entity);
     }
