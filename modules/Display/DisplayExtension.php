@@ -23,7 +23,7 @@ class DisplayExtension
         if (empty($this->_instancesArray[$extensionClassName]))
             $this->_instancesArray[$extensionClassName] = new $extensionClassName();
 
-            return $this->_instancesArray[$extensionClassName];
+        return $this->_instancesArray[$extensionClassName];
     }
 
     /**
@@ -46,7 +46,7 @@ class DisplayExtension
     private function returnExtensionClassNameFromMethodName($name)
     {
         // From this class script will search for no matched methods
-        $className = '\\Display\Extension\\System';
+        $className = 'Display\Extension\\System';
 
         foreach (self::$extensionClassNameArray as $class) {
 
