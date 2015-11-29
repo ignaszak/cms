@@ -6,7 +6,6 @@ try {
     require __DIR__ . '/vendor/autoload.php';
     require __DIR__ . '/error-handler.php';
 
-    Conf\DB\DBDoctrine::configure();
     $conf = Conf\Conf::instance();
 
     require __DIR__ . '/routs-loader.php';

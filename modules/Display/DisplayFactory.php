@@ -5,7 +5,6 @@ namespace Display;
 use Conf\Conf;
 use System\Router\Storage as Router;
 use CMSException\InvalidClassException;
-use Doctrine\ORM\Internal\Hydration\ObjectHydrator;
 
 class DisplayFactory
 {

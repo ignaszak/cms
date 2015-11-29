@@ -8,7 +8,14 @@ use CMSException\ConfException;
 class Conf
 {
 
+    /**
+     * @var Conf
+     */
     private static $_conf;
+
+    /**
+     * @var Entity\Options
+     */
     private $_optionsEntity;
 
     private function __construct()
@@ -16,6 +23,9 @@ class Conf
         $this->_optionsEntity = DBDoctrine::em()->find('\\Entity\\Options', 1);
     }
 
+    /**
+     * @return Conf
+     */
     public static function instance()
     {
         if (empty(self::$_conf))
@@ -24,6 +34,12 @@ class Conf
         return self::$_conf;
     }
 
+    /**
+     * @param string $function
+     * @param array $args
+     * @throws ConfException
+     * @return mixed
+     */
     public function __call($function, $args)
     {
         if (method_exists($this->_optionsEntity, $function)) {

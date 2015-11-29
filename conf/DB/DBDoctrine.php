@@ -8,17 +8,26 @@ use Doctrine\ORM\EntityManager;
 class DBDoctrine
 {
 
-    private static $entityManager;
+    /**
+     * @var EntityManager
+     */
+    private static $_em;
 
-    public static function configure()
+    /**
+     * @return EntityManager
+     */
+    public static function em()
+    {
+        if (empty(self::$_em))
+            self::configure();
+
+        return self::$_em;
+    }
+
+    private static function configure()
     {
         self::setConnectionConfigurationAndEntityManager();
         self::registerEnumTypeAsDoctrineVarchar();
-    }
-
-    public static function em()
-    {
-        return self::$entityManager;
     }
 
     private static function setConnectionConfigurationAndEntityManager()
@@ -36,12 +45,12 @@ class DBDoctrine
         );
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null, false);
-        self::$entityManager = EntityManager::create($dbParams, $config);
+        self::$_em = EntityManager::create($dbParams, $config);
     }
 
     private static function registerEnumTypeAsDoctrineVarchar()
     {
-        $platform = self::$entityManager->getConnection()->getDatabasePlatform();
+        $platform = self::$_em->getConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'string');
     }
 
