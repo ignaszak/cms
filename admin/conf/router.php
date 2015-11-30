@@ -9,6 +9,6 @@ new Admin\Extension\ExtensionLoader; // Load routs from extension configuration 
 #$router->addToken('alias', '([a-z_-]*)([0-9]*)');
 
 $adminBaseDir = dirname(__DIR__) . '/';
-$router->addController('admin-index', array(
+/*$router->addController('admin-index', array(
     'file' => $adminBaseDir . 'extensions/index/index.php'
-));
+));*/

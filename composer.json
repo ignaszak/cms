@@ -15,14 +15,16 @@
 		"aura/filter" : "2.0.0-beta2",
 		"ircmaxell/password-compat" : ">=1.0.4",
 		"ignaszak/exception" : "dev-master",
-		"ignaszak/router" : "dev-master"
+		"ignaszak/router" : "dev-master",
+		"phpunit/phpunit" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {
 			"" : "modules/",
 			"Admin\\" : "admin/modules",
 			"Conf\\" : "conf",
-			"Test\\" : "tests"
+			"Test\\" : "tests",
+			"Controller\\" : "controller"
 		}
 	},
 	"name" : "ignaszak/cms"

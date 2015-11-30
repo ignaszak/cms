@@ -46,9 +46,9 @@ class ExtensionLoader extends ExtensionInstances
             $xml = $xmlArray['xml'];
 
             $controllerName = 'admin'.$xml->title;
-            $router->addController($controllerName, array(
+            /*$router->addController($controllerName, array(
                 'file' => "{$xmlArray['extensionDir']}/{$xml->file->script}"
-            ));
+            ));*/
 
             $count = 1;
 
@@ -56,9 +56,9 @@ class ExtensionLoader extends ExtensionInstances
                 
                 if (isset($item->file)) {
                     $itemControllerName = $controllerName . $count;
-                    $router->addController($itemControllerName, array(
+                    /*$router->addController($itemControllerName, array(
                         'file' => "{$xmlArray['extensionDir']}/{$item->file}"
-                    ));
+                    ));*/
                 } else {
                     $itemControllerName = $controllerName;
                 }

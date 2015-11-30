@@ -2,8 +2,6 @@
 
 defined('ACCESS') or die();
 
-$baseDir = dirname(__DIR__) . '/includes/';
-
 $router->defaultRoute = 'post';
 
 /*
@@ -47,13 +45,13 @@ $router->addToken('method', '(post|ajax)');
  *      user/login/([a-Z_-0-9]*) - display user site
  */
 $router->add('user', '(user)', 'user');
-$router->add('user', '(user)/{method}/{userAction}', 'user');
+$router->add('user', '(user)/{method}/{userAction}', 'UserAuthenticationController');
 $router->add('user', '(user)/(login)/{userName}');
 $router->addToken('userAction', '(registration|login|logout|remind)');
 $router->addToken('userName', '([a-Z_-0-9]*)');
-$router->addController('user', array(
+/*$router->addController('user', array(
     'file' => $baseDir . 'user.php'
-));
+));*/
 
 /*
  * Get rout 
