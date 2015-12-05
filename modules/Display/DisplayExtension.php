@@ -63,7 +63,7 @@ class DisplayExtension
      */
     private function getClassNameWithoutNamespace($className)
     {
-        return end(@explode('\\', $className));
+        return @end(explode('\\', $className));
     }
 
 }

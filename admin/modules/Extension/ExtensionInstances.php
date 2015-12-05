@@ -2,19 +2,22 @@
 
 namespace Admin\Extension;
 
+use System\Server;
+
 abstract class ExtensionInstances
 {
+
     protected static $extensionArray = array();
     protected static $activeExtension;
     protected static $extensionsDir;
 
     protected function getActiveExtensionFolderFromUrl()
     {
-        $request = \System\Server::getHttpRequest();
+        $request = Server::getHttpRequest();
         $folderArray = array();
 
         foreach (self::$extensionArray as $xmlArray) {
-            $folderArray = end(@explode('/', $xmlArray['extensionDir']));
+            $folderArray = @end(explode(DIRECTORY_SEPARATOR, $xmlArray['extensionDir']));
             $link = str_replace('/', '\\/', $folderArray);
 
             if (preg_match("/(admin\/$link)/", $request)) {
@@ -22,4 +25,5 @@ abstract class ExtensionInstances
             }
         }
     }
+
 }

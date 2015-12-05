@@ -2,6 +2,7 @@
 
 defined('ACCESS') or die();
 
+session_save_path (__DIR__ . '/session');
 session_start();
 System\Server::readReferData();
 
