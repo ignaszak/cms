@@ -2,6 +2,8 @@
 
 namespace Display;
 
+use Ignaszak\Registry\RegistryFactory;
+
 class DisplayExtension
 {
 
@@ -20,10 +22,7 @@ class DisplayExtension
     {
         $extensionClassName = $this->returnExtensionClassNameFromMethodName($name);
 
-        if (empty($this->_instancesArray[$extensionClassName]))
-            $this->_instancesArray[$extensionClassName] = new $extensionClassName();
-
-        return $this->_instancesArray[$extensionClassName];
+        return RegistryFactory::start()->register($extensionClassName);
     }
 
     /**

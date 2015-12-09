@@ -19,13 +19,6 @@ class DisplayFactory
      */
     private $_conf;
 
-    /**
-     * Contains extension instances
-     * 
-     * @var array
-     */
-    private $_instancesArray = array();
-
     public function __construct()
     {
         $this->_displayExtension = new DisplayExtension;

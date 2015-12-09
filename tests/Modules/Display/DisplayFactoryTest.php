@@ -20,6 +20,7 @@ class DisplayFactoryTest extends \PHPUnit_Framework_TestCase
     public function test__call()
     {
         $siteTitle = Conf::instance()->getSiteTitle();
+        \Conf\DB\DBDoctrine::em()->clear();
         $getSiteTitle = $this->_displayFactory->getSiteTitle();
         $this->assertEquals($siteTitle, $getSiteTitle);
     }
