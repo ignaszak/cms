@@ -9,29 +9,24 @@ class Conf
 {
 
     /**
-     * @var Conf
+     * Stores values of Entity\Options methods
+     * 
+     * @var mixed[]
      */
-    private static $_conf;
+    private $optionsArray = array();
 
     /**
-     * @var Entity\Options
+     * @param string $entity
      */
-    private $_optionsEntity;
-
-    private function __construct()
+    public function __construct(string $entity = 'Entity\Options')
     {
-        $this->_optionsEntity = DBDoctrine::em()->find('\\Entity\\Options', 1);
-    }
+        $_options = DBDoctrine::em()->find($entity, 1);
+        $optonsMethods = get_class_methods($entity);
 
-    /**
-     * @return Conf
-     */
-    public static function instance()
-    {
-        if (empty(self::$_conf))
-            self::$_conf = new self;
-
-        return self::$_conf;
+        foreach ($optonsMethods as $method) {
+            if (!preg_match('/^(id|set)/', $method))
+                $this->optionsArray[$method] = $_options->$method();
+        }
     }
 
     /**
@@ -42,8 +37,8 @@ class Conf
      */
     public function __call($function, $args)
     {
-        if (method_exists($this->_optionsEntity, $function)) {
-            return call_user_func_array(array($this->_optionsEntity, $function), $args);
+        if (array_key_exists($function, $this->optionsArray)) {
+            return $this->optionsArray[$function];
         } else {
             throw new ConfException("Call to undefined method " . __CLASS__ . "::$function()");
         }
