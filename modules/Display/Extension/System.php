@@ -3,6 +3,7 @@
 namespace Display\Extension;
 
 use Conf\Conf;
+use Ignaszak\Registry\RegistryFactory;
 
 class System
 {
@@ -11,7 +12,7 @@ class System
 
     public function __construct()
     {
-        $this->_conf = Conf::instance();
+        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
     }
 
     public function getSiteTitle()

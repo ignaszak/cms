@@ -18,7 +18,7 @@ abstract class ExtensionInstances
 
         foreach (self::$extensionArray as $xmlArray) {
             $folderArray = @end(explode(DIRECTORY_SEPARATOR, $xmlArray['extensionDir']));
-            $link = str_replace('/', '\\/', $folderArray);
+            $link = strtolower(str_replace('/', '\\/', $folderArray));
 
             if (preg_match("/(admin\/$link)/", $request)) {
                 return $folderArray;

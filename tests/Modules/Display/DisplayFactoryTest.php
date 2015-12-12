@@ -2,10 +2,10 @@
 
 namespace Test\Modules\Display;
 
-use Conf\Conf;
 use Test\Init\InitRouter;
 use Test\Init\InitDisplay;
 use Display\DisplayFactory;
+use Ignaszak\Registry\RegistryFactory;
 
 class DisplayFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +19,8 @@ class DisplayFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function test__call()
     {
-        $siteTitle = Conf::instance()->getSiteTitle();
+        $siteTitle = RegistryFactory::start('file')->register('Conf\Conf')
+            ->getSiteTitle();
         \Conf\DB\DBDoctrine::em()->clear();
         $getSiteTitle = $this->_displayFactory->getSiteTitle();
         $this->assertEquals($siteTitle, $getSiteTitle);

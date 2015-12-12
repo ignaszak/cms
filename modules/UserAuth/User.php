@@ -3,13 +3,13 @@
 namespace UserAuth;
 
 use Conf\DB\DBDoctrine;
+use Ignaszak\Registry\RegistryFactory;
 
 class User
 {
 
     private static $_user;
     private $userSession;
-    private $sessionName;
 
     final static function instance()
     {
@@ -21,24 +21,13 @@ class User
 
     public function __construct()
     {
-        $this->setSessionName(md5('session'));
         $this->catchUserSession();
-    }
-
-    public function getSesionName()
-    {
-        return $this->sesionName;
-    }
-
-    private function setSessionName($sessionName)
-    {
-        $this->sesionName = $sessionName;
     }
 
     public function isUserLoggedIn()
     {
         return isset($this->userSession) && DBDoctrine::em()
-            ->getRepository('\Entity\Users')
+            ->getRepository('Entity\Users')
             ->findBy(array(
                 'login' => $this->userSession->getLogin(),
                 'password' => $this->userSession->getPassword()
@@ -52,28 +41,31 @@ class User
 
     public function catchUserSession()
     {
-        if (isset($_SESSION[$this->getSesionName()])) {
-            $this->userSession = $_SESSION[$this->getSesionName()];
-        } elseif (isset($_COOKIE[$this->sessionName])) {
-            $this->userSession = $_COOKIE[$this->getSesionName()];
+        $session = RegistryFactory::start('session')->get('userSession');
+        $cookie = RegistryFactory::start('cookie')->get('userSession');
+
+        if ($session instanceof \Entity\Users) {
+            $this->userSession = $session;
+        } elseif ($cookie instanceof \Entity\Users) {
+            $this->userSession = $cookie;
         }
     }
 
     public function login($userEmailOrLogin, $userPassword, $userRemember)
     {
-        $userLoginAuth = new UserLoginAuth;
+        $userLoginAuth = new UserLoginAuth($this);
         $userLoginAuth->login($userEmailOrLogin, $userPassword, $userRemember);
     }
 
     public function logout()
     {
-        $userLoginAuth = new UserLoginAuth;
+        $userLoginAuth = new UserLoginAuth($this);
         $userLoginAuth->logout();
     }
 
     public function registration($userLogin, $userEmail, $userPassword, $userRePassword)
     {
-        $userRegistrationAuth = new UserRegistrationAuth;
-        $userRegistrationAuth->registration($this, $userLogin, $userEmail, $userPassword, $userRePassword);
+        $userRegistrationAuth = new UserRegistrationAuth($this);
+        $userRegistrationAuth->registration($userLogin, $userEmail, $userPassword, $userRePassword);
     }
 }

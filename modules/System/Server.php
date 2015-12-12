@@ -2,6 +2,8 @@
 
 namespace System;
 
+use Ignaszak\Registry\RegistryFactory;
+
 class Server
 {
 
@@ -10,12 +12,16 @@ class Server
 
     public static function getHttpReferer()
     {
-        return (!empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : \Conf\Conf::instance()->getBaseUrl());
+        return (
+            !empty($_SERVER['HTTP_REFERER']) ?
+            $_SERVER['HTTP_REFERER'] :
+            RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl()
+        );
     }
 
     public static function getHttpRequest()
     {
-        $conf_req = \Conf\Conf::instance()->getRequestUri();
+        $conf_req = RegistryFactory::start('file')->register('Conf\Conf')->getRequestUri();
         return ($_SERVER['REQUEST_URI'] != $conf_req ? substr($_SERVER['REQUEST_URI'],
             strlen($conf_req) - strlen($_SERVER['REQUEST_URI'])) : "");
     }
@@ -35,7 +41,11 @@ class Server
     public static function headerLocation($location)
     {
         self::setRefererSession();
-        header('Location: ' . \Conf\Conf::instance()->getBaseUrl() . $location);
+        header(
+            'Location: ' .
+            RegistryFactory::start('file')->register('\Conf\Conf')->getBaseUrl() .
+            $location
+        );
         exit;
     }
 

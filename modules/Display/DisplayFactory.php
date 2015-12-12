@@ -5,6 +5,7 @@ namespace Display;
 use Conf\Conf;
 use System\Router\Storage as Router;
 use CMSException\InvalidClassException;
+use Ignaszak\Registry\RegistryFactory;
 
 class DisplayFactory
 {
@@ -22,7 +23,7 @@ class DisplayFactory
     public function __construct()
     {
         $this->_displayExtension = new DisplayExtension;
-        $this->_conf = Conf::instance();
+        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
     }
 
     /**

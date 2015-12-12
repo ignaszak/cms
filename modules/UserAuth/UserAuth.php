@@ -9,27 +9,16 @@ class UserAuth
 {
 
     protected $_em;
+    protected $_user;
     protected $_userValid;
     protected $_userEntity;
     protected $userPassword;
 
-    public function __construct()
+    public function __construct(User $_user)
     {
         $this->_em = DBDoctrine::em();
+        $this->_user = $_user;
         $this->_userValid = new UserValidation;
-    }
-
-    public function getUserEntity()
-    {
-        return $this->_userEntity;
-    }
-
-    protected function setUserSession()
-    {
-        //if ($this->userRemember) {
-        $session = new Session\Session($this);
-        $session->login();
-        //}
     }
 
 }

@@ -12,7 +12,7 @@
         <route>
             <item>
                 <pattern>(post)/{adminPostAction:form}/{formAction:(new|edit)}</pattern>
-                <file>save.php</file>
+                <controller>AdminController\Post\SaveController</controller>
             </item>
             <item>
                 <pattern>(post)/{adminPostAction}/{page}</pattern>

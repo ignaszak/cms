@@ -3,6 +3,7 @@
 namespace UserAuth;
 
 use System\Server;
+use Ignaszak\Registry\RegistryFactory;
 
 class UserLoginAuth extends UserAuth
 {
@@ -20,8 +21,9 @@ class UserLoginAuth extends UserAuth
 
     public function logout()
     {
-        $session = new Session\Session($this);
-        $session->logout();
+        RegistryFactory::start('cookie')->remove('userSession');
+        RegistryFactory::start('session')->remove('userSession');
+        $this->_user->catchUserSession();
     }
 
     private function setUserLoginData($userEmailOrLogin, $userPassword, $userRemember)
@@ -44,7 +46,7 @@ class UserLoginAuth extends UserAuth
 
     private function validUserWithDataBase()
     {
-        $user = $this->_em->getRepository('\Entity\Users')->findBy(array(
+        $user = $this->_em->getRepository('Entity\Users')->findBy(array(
             $this->returnUserLoginColumnName() => $this->userEmailOrLogin
         ));
 
@@ -59,6 +61,21 @@ class UserLoginAuth extends UserAuth
     private function returnUserLoginColumnName()
     {
         return ($this->_userValid->validLogin($this->userEmailOrLogin) ? 'login' : 'email');
+    }
+
+    private function setUserSession()
+    {
+        if ($this->userRemember) {
+
+            RegistryFactory::start('cookie')->set('userSession', $this->_userEntity);
+            $this->_user->catchUserSession();
+
+        } else {
+
+            RegistryFactory::start('session')->set('userSession', $this->_userEntity);
+            $this->_user->catchUserSession();
+
+        }
     }
 
 }

@@ -2,6 +2,8 @@
 
 namespace Admin\Extension\Display;
 
+use Ignaszak\Registry\RegistryFactory;
+
 class Admin extends \Admin\Extension\ExtensionInstances
 {
 
@@ -13,7 +15,7 @@ class Admin extends \Admin\Extension\ExtensionInstances
 
     public function getAdminAdress()
     {
-        $_conf = \Conf\Conf::instance();
+        $_conf = RegistryFactory::start('file')->register('Conf\Conf');
         return $_conf->getBaseUrl() . ADMIN_URL;
     }
 

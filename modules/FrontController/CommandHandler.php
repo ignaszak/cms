@@ -38,7 +38,7 @@ class CommandHandler
     public function getCommand(Route $_route)
     {
         if ($_route->controller) {
-            $controllerClass = "Controller\\" . $_route->controller;
+            $controllerClass = $_route->controller;
 
             if (class_exists($controllerClass)) {
                 $reflectionControllerClass = new \ReflectionClass($controllerClass);

@@ -25,7 +25,7 @@ class ExtensionLoader extends ExtensionInstances
         $folderArray = scandir(parent::$extensionsDir);
 
         foreach ($folderArray as $extension) {
-            if (!in_array($extension, array(".", "..", "index"))) 
+            if (!in_array($extension, array(".", "..", "Index"))) 
             {
                 $configureFile = parent::$extensionsDir."/$extension/configuration.xml";
 
@@ -45,24 +45,14 @@ class ExtensionLoader extends ExtensionInstances
         foreach (parent::$extensionArray as $xmlArray) {
             $xml = $xmlArray['xml'];
 
-            $controllerName = 'admin'.$xml->title;
-            /*$router->addController($controllerName, array(
-                'file' => "{$xmlArray['extensionDir']}/{$xml->file->script}"
-            ));*/
-
-            $count = 1;
-
             foreach ($xml->router->route->item as $item) {
-                
-                if (isset($item->file)) {
-                    $itemControllerName = $controllerName . $count;
-                    /*$router->addController($itemControllerName, array(
-                        'file' => "{$xmlArray['extensionDir']}/{$item->file}"
-                    ));*/
+
+                if (isset($item->controller)) {
+                    $router->add('admin', '(' . ADMIN_URL . ')/' . $item->pattern, (string) $item->controller);
                 } else {
-                    $itemControllerName = $controllerName;
+                    $router->add('admin', '(' . ADMIN_URL . ')/' . $item->pattern);
                 }
-                $router->add('admin', '(' . ADMIN_URL . ')/' . $item->pattern, $itemControllerName);
+
             }
 
             if (isset($xml->router->token->item)) {

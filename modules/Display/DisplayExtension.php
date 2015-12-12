@@ -45,7 +45,7 @@ class DisplayExtension
     private function returnExtensionClassNameFromMethodName($name)
     {
         // From this class script will search for no matched methods
-        $className = 'Display\Extension\\System';
+        $className = 'Display\Extension\System';
 
         foreach (self::$extensionClassNameArray as $class) {
 

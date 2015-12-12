@@ -2,10 +2,10 @@
 
 namespace Pagination;
 
-use Conf\Conf;
 use System\Server;
 use System\Router\Storage as Router;
 use Content\Query\IContentQuery as Content;
+use Ignaszak\Registry\RegistryFactory;
 
 class PaginationGenerator
 {
@@ -17,7 +17,7 @@ class PaginationGenerator
 
     public function __construct()
     {
-        $this->_conf = Conf::instance();
+        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->setParams();
         $this->createPaginationArray();
     }

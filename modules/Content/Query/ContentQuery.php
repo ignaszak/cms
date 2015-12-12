@@ -6,6 +6,7 @@ use Conf\Conf;
 use Conf\DB\DBDoctrine;
 use System\Router\Storage as Router;
 use CMSException\InvalidQueryException;
+use Ignaszak\Registry\RegistryFactory;
 
 class ContentQuery extends IContentQuery
 {
@@ -20,7 +21,7 @@ class ContentQuery extends IContentQuery
 
     public function __construct($entityName)
     {
-        $this->_conf = Conf::instance();
+        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->_em = DBDoctrine::em();
         $this->_contentQueryBuilder = new ContentQueryBuilder($this);
         $this->entityName = $entityName;

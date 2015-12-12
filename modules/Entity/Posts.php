@@ -4,6 +4,7 @@ namespace Entity;
 
 use Entity\Users;
 use Doctrine\ORM\Mapping as ORM;
+use Ignaszak\Registry\RegistryFactory;
 
 /**
  * Posts
@@ -161,7 +162,11 @@ class Posts
      */
     public function getDate($format = "")
     {
-        return $this->date->format( (empty($format) ? \Conf\Conf::instance()->getDateFormat() : $format));
+        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
+            ->getDateFormat();
+        return $this->date->format(
+            (empty($format) ? $dateFormat : $format)
+        );
     }
 
     /**

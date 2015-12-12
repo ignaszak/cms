@@ -12,9 +12,9 @@ class UserRegistrationAuth extends UserAuth
     private $userEmail;
     private $errorDoubledDataArray = array();
 
-    public function registration(User $_user, $userLogin, $userEmail, $userPassword, $userRePassword)
+    public function registration($userLogin, $userEmail, $userPassword, $userRePassword)
     {
-        if ($_user->isUserLoggedIn()) {
+        if ($this->_user->isUserLoggedIn()) {
             Server::setReferData(array('userMustBeLogout'=>1));
             Server::headerLocationReferer();
         }

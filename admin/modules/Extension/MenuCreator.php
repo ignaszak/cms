@@ -2,6 +2,8 @@
 
 namespace Admin\Extension;
 
+use Ignaszak\Registry\RegistryFactory;
+
 class MenuCreator extends ExtensionInstances
 {
 
@@ -9,7 +11,8 @@ class MenuCreator extends ExtensionInstances
 
     public static function createMenu()
     {
-        $baseUrl = \Conf\Conf::instance()->getBaseUrl();
+        $baseUrl = RegistryFactory::start('file')->register('Conf\Conf')
+            ->getBaseUrl();
         $menu = "<ul class=\"nav nav-list\" id=\"accordion\">" . PHP_EOL;
 
         foreach (parent::$extensionArray as $xmlArray) {

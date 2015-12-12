@@ -25,7 +25,8 @@
 			"Admin\\" : "admin/modules",
 			"Conf\\" : "conf",
 			"Test\\" : "tests",
-			"Controller\\" : "controller"
+			"Controller\\" : "controller",
+			"AdminController\\" : "admin/extensions"
 		}
 	},
 	"name" : "ignaszak/cms"

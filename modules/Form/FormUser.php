@@ -2,7 +2,7 @@
 
 namespace Form;
 
-use Conf\Conf;
+use Ignaszak\Registry\RegistryFactory;
 
 class FormUser
 {
@@ -12,7 +12,7 @@ class FormUser
 
     public function __construct($formAction)
     {
-        $this->_conf = Conf::instance();
+        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->formAction = $formAction;
     }
 
