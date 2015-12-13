@@ -5,7 +5,7 @@ defined('ACCESS') or die();
 $baseDir = dirname(dirname(__DIR__));
 
 if (!$user->isUserLoggedIn()) {
-    require $baseDir . '/' . ADMIN_FOLDER . '/extensions/index/login.html';
+    require $baseDir . '/' . ADMIN_FOLDER . '/extensions/Index/login.html';
     exit;
 }
 

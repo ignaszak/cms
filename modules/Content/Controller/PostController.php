@@ -17,7 +17,7 @@ class PostController extends Controller
     {
         $this->validAndAddToEntity(array('Category', 'Author', 'Date', 'Title', 'Alias', 'Content'));
         $this->_em->persist($this->_entity);
-        $this->_em->flush($this->_entity);
+        $this->_em->flush();
     }
 
 }

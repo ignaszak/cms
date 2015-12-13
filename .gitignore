@@ -1,5 +1,5 @@
 $ cat .gitignore
-session/
+.cache/
 vendor/
 logs/
 conf/DB/DBSettings.php

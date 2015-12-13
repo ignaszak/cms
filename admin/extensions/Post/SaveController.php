@@ -13,22 +13,27 @@ class SaveController extends Controller
 
     public function run()
     {
-        define('FORM_ACTION', Router::getRoute('formAction')) ;
 
+        // Initialize
         $controller = new Factory(new PostController);
-        $catId = $_POST['categoryId'];
+
+        // Find entity by id to update
+        if ($_POST['id']) $controller->find($_POST['id']);
+
+        // Sets data
+        $catId = @$_POST['categoryId'];
         $controller->setReference('category', $catId);
         $controller->setReference('author', 1);
         $controller->setDate(new \DateTime);
         $controller->setTitle($_POST['title']);
-        $controller->setAlias($_POST['title']);
+        $alias = $controller->getAlias($_POST['title']);
+        $controller->setAlias($alias);
         $controller->setContent($_POST['content']);
 
-        if (FORM_ACTION == 'new') {
-            $controller->insert();
-        }
+        // Execute
+        $controller->insert();
 
-        if (FORM_ACTION) Server::headerLocationReferer();
+        Server::headerLocation("admin/post/edit/$alias");
     }
 
 }

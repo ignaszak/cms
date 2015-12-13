@@ -30,20 +30,20 @@ $(document).ready(function() {
 
 $returnData = $cms->getFormResponseData('data');
 
+$id = null;
 $title = $returnData['setTitle'];
 $content = $returnData['setContent'];
 $catId = $returnData['setCategory'];
 $formTitle = 'Add new post';
-$formAction = 'new';
 
 if ($cms->getRoute('adminPostAction') == 'edit') {
 
     $formTitle = 'Edit post';
-    $formAction = 'edit';
 
     $cms->setContent('post')->buildQuery()->alias($cms->getRoute('alias'));
 
     foreach ($cms->getContent() as $post) {
+        $id = $post->getId();
         $catId = $post->getCategoryId();
         $title = $post->getTitle();
         $content = $post->getContent();
@@ -57,7 +57,9 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
 
     <h2><?php echo $formTitle; ?></h2>
 
-    <form method="post" action="<?php echo $cms->getAdminAdress(); ?>/post/form/<?php echo $formAction; ?>">
+    <form method="post" action="<?php echo $cms->getAdminAdress(); ?>/post/form">
+
+        <input type="hidden" name="id" value="<?php echo $id; ?>">
 
         <div class="well well-controls input-group">
             <button type="submit" class="btn btn-success">Public</button>

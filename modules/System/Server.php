@@ -26,11 +26,6 @@ class Server
             strlen($conf_req) - strlen($_SERVER['REQUEST_URI'])) : "");
     }
 
-    private static function setRefererSession()
-    {
-        $_SESSION['systemReferData'] = serialize(self::$sendReferDataArray);
-    }
-
     public static function headerLocationReferer()
     {
         self::setRefererSession();
@@ -38,7 +33,7 @@ class Server
         exit;
     }
 
-    public static function headerLocation($location)
+    public static function headerLocation(string $location)
     {
         self::setRefererSession();
         header(
@@ -63,6 +58,11 @@ class Server
     {
         self::$readReferDataArray = unserialize(@$_SESSION['systemReferData']);
         unset($_SESSION['systemReferData']);
+    }
+
+    private static function setRefererSession()
+    {
+        $_SESSION['systemReferData'] = serialize(self::$sendReferDataArray);
     }
 
 }

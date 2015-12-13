@@ -6,7 +6,7 @@ try {
     require __DIR__ . '/vendor/autoload.php';
     require __DIR__ . '/error-handler.php';
 
-    Ignaszak\Registry\Conf::setTmpPath(__DIR__ . '/cache');
+    Ignaszak\Registry\Conf::setTmpPath(__DIR__ . '/cache/registry');
 
     require __DIR__ . '/routs-loader.php';
     require __DIR__ . '/modules-loader.php';
