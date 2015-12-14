@@ -23,7 +23,14 @@
         <!-- Font awesome for bootstrap -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
 
-        <!-- Less css -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+        <script src="<?php echo $cms->getThemePath(); ?>/js/check-screen-size.js"></script>
+        <script src="<?php echo $cms->getThemePath(); ?>/js/panel-bootstrap.js"></script>
+
+        <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/AccordionMenu.less">
+        <script src="<?php echo $cms->getThemePath(); ?>/js/AccordionMenu.js"></script>
+
         <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/panel-bootstrap.less" type="text/css" />
         <script>
             less = {
@@ -33,11 +40,6 @@
         </script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.5.3/less.min.js"></script>
         <script>less.watch();</script>
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="<?php echo $cms->getThemePath(); ?>/js/check-screen-size.js"></script>
-        <script src="<?php echo $cms->getThemePath(); ?>/js/panel-bootstrap.js"></script>
 
     </head>
     <body>
@@ -60,7 +62,9 @@
 
             <div id="sidebar-menu" role="navigation">
                 <div class="navbar-collapse">
-                    <?php echo $cms->getAdminMenu(); ?>
+                    <div class="accordion-menu-border">
+                        <?php echo $cms->getAdminMenu(); ?>
+                    </div>
                 </div>
             </div>
 

@@ -23,6 +23,6 @@ $router->addToken('userName', '([a-Z_-0-9]*)');
 
 $router->run();
 
-echo "<pre>";
-print_r(System\Router\Storage::getAllRoutes());
-echo "</pre>";
+//echo "<pre>";
+//print_r(System\Router\Storage::getAllRoutes());
+//echo "</pre>";

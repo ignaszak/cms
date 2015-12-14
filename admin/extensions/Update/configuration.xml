@@ -2,6 +2,8 @@
 <conf>
 
     <title>Update</title>
+    <base>update</base>
+    <icon>fa fa-refresh</icon>
     
     <file>
         <script>index.php</script>
@@ -11,7 +13,7 @@
     <router>
         <route>
             <item>
-                <pattern>update</pattern>
+                <pattern></pattern>
             </item>
         </route>
     </router>
@@ -19,7 +21,7 @@
     <menu>
         <item>
             <title>Update</title>
-            <link>update</link>
+            <link></link>
         </item>
     </menu>
 

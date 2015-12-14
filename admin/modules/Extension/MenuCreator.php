@@ -2,28 +2,42 @@
 
 namespace Admin\Extension;
 
+use System\Server;
 use Ignaszak\Registry\RegistryFactory;
 
 class MenuCreator extends ExtensionInstances
 {
 
+    /**
+     * @var string
+     */
     private static $sidebarMenu;
 
     public static function createMenu()
     {
         $baseUrl = RegistryFactory::start('file')->register('Conf\Conf')
             ->getBaseUrl();
-        $menu = "<ul class=\"nav nav-list\" id=\"accordion\">" . PHP_EOL;
+        $menu = "<ul id=\"accordion\" class=\"accordion\">" . PHP_EOL;
 
         foreach (parent::$extensionArray as $xmlArray) {
             $xml = $xmlArray['xml'];
 
-            $menu .= "<li><a id=\"tree\" href=\"#\">$xml->title</a>" . PHP_EOL;
-            $menu .= "<ul class=\"nav nav-list\">";
+            $liActive = self::returnActiveMenuClass($xml->base, 'li');
+            $menu .= "<li {$liActive}>
+                        <div class=\"link\"><i class=\"{$xml->icon}\">
+                            </i>{$xml->title}<i class=\"fa fa-chevron-down\"></i>
+                        </div>" . PHP_EOL;
+
+            $ulActive = self::returnActiveMenuClass($xml->base, 'ul');
+            $menu .= "<ul class=\"submenu\" {$ulActive}>";
 
             foreach ($xml->menu->item as $item) {
-                $activeClass = self::returnActiveMenuClass($item->link);
-                $menu .= "<li $activeClass><a href=\"{$baseUrl}admin/{$item->link}\" id=\"item\">$item->title</a></li>" . PHP_EOL;
+                $aActive = self::returnActiveMenuClass($item->link, 'a');
+                $menu .= "<li>
+                            <a href=\"{$baseUrl}admin/{$xml->base}/{$item->link}\" {$aActive}>
+                                {$item->title}
+                            </a>
+                         </li>";
             }
 
             $menu .= "</ul>" . PHP_EOL . "</li>" . PHP_EOL;
@@ -34,19 +48,34 @@ class MenuCreator extends ExtensionInstances
         self::$sidebarMenu = $menu;
     }
 
-    public static function getMenu()
+    /**
+     * @return string
+     */
+    public static function getMenu(): string
     {
         return self::$sidebarMenu;
     }
 
-    private static function returnActiveMenuClass($link)
+    /**
+     * @param string $link
+     * @param string $elemrnt
+     * @return string
+     */
+    private static function returnActiveMenuClass(string $link, string $element): string
     {
         $link = str_replace('/', '\\/', $link);
-        $request = \System\Server::getHttpRequest();
+        $request = Server::getHttpRequest();
 
         if (preg_match("/($link)/", $request)) {
-            return 'class="active"';
+            if ($element == 'li') {
+                return 'class="open"';
+            } elseif ($element == 'ul') {
+                return 'style="display:block"';
+            } elseif ($element == 'a') {
+                return 'class="active"';
+            }
         }
+        return '';
     }
 
 }

@@ -30,9 +30,15 @@ class ExtensionLoader extends ExtensionInstances
                 $configureFile = parent::$extensionsDir."/$extension/configuration.xml";
 
                 if (file_exists($configureFile)) {
-                    parent::$extensionArray = array_merge(parent::$extensionArray, array(
-                        array('xml' => simplexml_load_file($configureFile), 'extensionDir' => parent::$extensionsDir."/$extension")
-                    ));
+                    parent::$extensionArray = array_merge(
+                        parent::$extensionArray,
+                        array(
+                            array(
+                                'xml' => simplexml_load_file($configureFile),
+                                'extensionDir' => parent::$extensionsDir."/$extension"
+                            )
+                        )
+                    );
                 }
             }
         }
@@ -48,9 +54,16 @@ class ExtensionLoader extends ExtensionInstances
             foreach ($xml->router->route->item as $item) {
 
                 if (isset($item->controller)) {
-                    $router->add('admin', '(' . ADMIN_URL . ')/' . $item->pattern, (string) $item->controller);
+                    $router->add(
+                        'admin',
+                        "(" . ADMIN_URL . ")/{$xml->base}/{$item->pattern}",
+                        (string) $item->controller
+                    );
                 } else {
-                    $router->add('admin', '(' . ADMIN_URL . ')/' . $item->pattern);
+                    $router->add(
+                        'admin',
+                        "(" . ADMIN_URL . ")/{$xml->base}/{$item->pattern}"
+                    );
                 }
 
             }

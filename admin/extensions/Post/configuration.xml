@@ -2,7 +2,9 @@
 <conf>
 
     <title>Post</title>
-    
+    <base>post</base>
+    <icon>fa fa-thumb-tack</icon>
+
     <file>
         <script>index.php</script>
         <theme>theme/index.html</theme>
@@ -11,14 +13,14 @@
     <router>
         <route>
             <item>
-                <pattern>(post)/{adminPostAction:form}</pattern>
+                <pattern>{adminPostAction:form}</pattern>
                 <controller>AdminController\Post\SaveController</controller>
             </item>
             <item>
-                <pattern>(post)/{adminPostAction}/{page}</pattern>
+                <pattern>{adminPostAction}/{page}</pattern>
             </item>
             <item>
-                <pattern>(post)/{adminPostAction}/{alias}</pattern>
+                <pattern>{adminPostAction}/{alias}</pattern>
             </item>
         </route>
         <token>
@@ -32,11 +34,11 @@
     <menu>
         <item>
             <title>Add</title>
-            <link>post/add/</link>
+            <link>add/</link>
         </item>
         <item>
             <title>View</title>
-            <link>post/view/</link>
+            <link>view/</link>
         </item>
     </menu>
 

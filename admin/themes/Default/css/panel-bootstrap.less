@@ -1,6 +1,5 @@
-@color-navbar-border: rgb(214, 214, 214);
-@color-navbar-background: #f8f8f8;
-@color-navbar-active-menu: #eee;
+@color-navbar-border: #CCC;
+@color-navbar-background: #fff;
 @color-content: #fff;
 
 @bootstrap-size-lg: 1200px;
@@ -8,12 +7,13 @@
 @bootstrap-size-sm: 768px;
 @bootstrap-size-xs: 480px;
 
-
 body {
     background-color: @color-navbar-background;
+    font-family: 'Open Sans', Arial, Helvetica, Sans-serif, Verdana, Tahoma;
 }
 
 .navbar {
+    background-color: @color-navbar-background;
     border-bottom: 0px;
     margin: 0px;
 }
@@ -22,22 +22,15 @@ body {
     border-bottom: 1px solid @color-navbar-border;
 }
 
-#accordion ul{
-    display: none;
-    
-    a#item {
-        padding-left: 30px;
-    }
-    
-    .active{
-        background-color: @color-navbar-active-menu;
-    }
-}
-
 #page-context {
     background-color: @color-content;
     padding: 5px;
     bottom: 0px;
+}
+
+.navbar-collapse {
+    margin: 0px;
+    padding: 0px;
 }
 
 @media only screen and (min-width : @bootstrap-size-sm) {

@@ -3,14 +3,16 @@
 namespace Admin\Extension\Display;
 
 use Ignaszak\Registry\RegistryFactory;
+use Ignaszak\Exception\Start as Exception;
+use Admin\Extension\MenuCreator;
 
 class Admin extends \Admin\Extension\ExtensionInstances
 {
 
     public function getAdminMenu()
     {
-        \Admin\Extension\MenuCreator::createMenu();
-        return \Admin\Extension\MenuCreator::getMenu();
+        MenuCreator::createMenu();
+        return MenuCreator::getMenu();
     }
 
     public function getAdminAdress()
@@ -37,7 +39,7 @@ class Admin extends \Admin\Extension\ExtensionInstances
 
     public function getAdminlogFileArray()
     {
-        return \Ignaszak\Exception\Start::getLogFileArray();
+        return Exception::getLogFileArray();
     }
 
 }

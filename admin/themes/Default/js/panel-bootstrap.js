@@ -9,17 +9,6 @@ function hideSidebarMenu() {
     }
 }
 
-function launchAccordionMenu() {
-    $("#accordion > li > a#tree").click(function() {
-        if (false == $(this).next().is(':visible')) {
-            $('#accordion ul').slideUp(300);
-        }
-
-        $(this).next().slideToggle(300);
-    });
-    $('#accordion ul:eq(0)').show();
-}
-
 function responsivePanel() {
     navTopPosition = $('nav div.container-fluid').offset().top;
     navTopHeight = $('nav div.container-fluid').outerHeight();
@@ -45,7 +34,6 @@ function responsivePanel() {
 $(document).ready(function () {
 
     hideSidebarMenu();
-    launchAccordionMenu();
     responsivePanel();
 
 });

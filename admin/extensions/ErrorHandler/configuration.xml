@@ -2,6 +2,8 @@
 <conf>
 
     <title>Error Handler</title>
+    <base>errorhandler</base>
+    <icon>fa fa-exclamation-triangle</icon>
     
     <file>
         <script>index.php</script>
@@ -11,7 +13,7 @@
     <router>
         <route>
             <item>
-                <pattern>(error-handler)</pattern>
+                <pattern></pattern>
             </item>
         </route>
     </router>
@@ -19,7 +21,7 @@
     <menu>
         <item>
             <title>View log files</title>
-            <link>error-handler</link>
+            <link></link>
         </item>
     </menu>
 
