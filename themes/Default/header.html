@@ -22,6 +22,7 @@
         <!-- Font awesome for bootstrap -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 
+        <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/header.less">
         <script>
             less = {
                 env: 'development',
@@ -35,36 +36,47 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
     </head>
-    <body style="padding-top:60px;">
+    <body>
+
+    <header>
+
+        <div class="head-panel">
+            <div class="head-panel-container">
+                <div class="login-panel">
+                    <?php loadFile('user-login-bar.html'); ?>
+                </div>
     
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-
-            <!-- Mobile navbar -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="<?php echo $cms->getSiteAdress(); ?>"><?php echo $cms->getSiteTitle(); ?></a>
+                <h1><?php echo $cms->getSiteTitle(); ?></h1>
             </div>
-            <!-- end mobile navbar -->
 
-            <!-- Collapse navbar -->
-            <div class="collapse navbar-collapse" id="navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li class="active"></li>
-                    <li><a href="#">O mnie</a></li>
-                </ul>
-
-                <?php loadFile('user-login-bar.html'); ?>
-
-            </div>
-            <!-- end collapse navbar -->
+            <nav class="navbar navbar-inverse navbar-static-top">
+                <div class="container">
+    
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand visible-xs" href="javascript:void(0);">
+                            <?php echo $cms->getSiteTitle(); ?>
+                        </a>
+                    </div>
+    
+                    <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li class="">
+                                <a href="#"></a>
+                            </li>
+                        </ul>
+                    </div>
+    
+                </div>
+            </nav>
 
         </div>
-    </nav>
+
+    </header>
 
     <div class="container">

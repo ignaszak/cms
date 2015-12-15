@@ -1,0 +1,48 @@
+@theme-path: './themes/Default';
+@header-background-image: '../images/header-1.jpg';
+
+.rounded-corners (@radius: 5px) {
+    -webkit-border-radius: @radius;
+    -moz-border-radius: @radius;
+    -ms-border-radius: @radius;
+    -o-border-radius: @radius;
+    border-radius: @radius;
+}
+
+.head-panel {
+    color: #FFF;
+    background: url(@header-background-image);
+    background-size: 100% 350px;
+
+    .login-panel {
+        position: absolute;
+        right: 10px;
+        padding: 7px;
+        margin-top: 5px;
+        background-color: fade(#000, 20%);
+
+        input {
+            background-color: transparent;
+        }
+
+        .rounded-corners;
+    }
+
+    .head-panel-container {
+        height: 300px;
+
+        h1 {
+            position: absolute;
+            top: 70px;
+            left: 50px;
+            margin: 0px;
+            font-size: 60px;
+            text-decoration: bold;
+        }
+    }
+
+    .navbar-inverse {
+        height: 50px;
+        background-color: fade(#000, 50%);
+    }
+}

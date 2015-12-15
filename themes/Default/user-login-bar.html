@@ -1,64 +1,82 @@
 <?php if (!$cms->isUserLoggedIn()): ?>
 
-<!-- Login form controller -->
-<script>
-$(document).ready(function(){
-    // Tooltip
-    $('[data-toggle="tooltip"]').tooltip();
+    <!-- Login form controller -->
+    <script>
+    $(document).ready(function(){
+        // Tooltip
+        $('[data-toggle="tooltip"]').tooltip();
 
-    <?php if ($cms->getFormResponseData('incorrectLoginData')): ?>
-    // Generate invalid data error
-    $('form#login').addClass('has-error');
-    popoverCloseButton = '<a href="#" class="close" data-dismiss="alert">×</a>';
-    $('form#login').popover({
-        trigger: 'manual',
-        placement : 'bottom',
-        html : true,
-        title: '<b>Invalid data!</b>' + popoverCloseButton,
-        content : '<div style="min-width:300px; max-width:600px;">Following fields are incorrect:<br>login/email or password.<br><a href="#">Remind password</a></div>'
+        <?php if ($cms->getFormResponseData('incorrectLoginData')): ?>
+        // Generate invalid data error
+        $('form#login').addClass('has-error');
+        popoverCloseButton = '<a href="#" class="close" data-dismiss="alert">×</a>';
+        $('form#login').popover({
+            trigger: 'manual',
+            placement : 'bottom',
+            html : true,
+            title: '<b>Invalid data!</b>' + popoverCloseButton,
+            content : '<div style="min-width:300px; max-width:600px;">Following fields are incorrect:<br>login/email or password.<br><a href="#">Remind password</a></div>'
+        });
+        $(document).on("click", ".popover .close" , function(){
+            $(this).parents(".popover").popover('hide');
+        });
+        $('form').popover('show');
+        <?php endif; ?>
     });
-    $(document).on("click", ".popover .close" , function(){
-        $(this).parents(".popover").popover('hide');
-    });
-    $('form').popover('show');
-    <?php endif; ?>
-});
-</script>
+    </script>
 
-<?php $form = $cms->createForm('user-login'); ?>
+    <?php $form = $cms->createForm('user-login'); ?>
 
-<form action="<?php echo $form->getFormActionAdress(); ?>" id="login" method="post" class="navbar-form navbar-right">
+    <form action="<?php echo $form->getFormActionAdress(); ?>" id="login" method="post" class="form-inline">
 
-    <div class="form-group">
-        <?php echo $form->inputLogin(array('placeholder'=>'Login or Email','style'=>'max-width:150px;')); ?>
-    </div>
+        <div class="form-group">
+            <?php echo $form->inputLogin(array(
+            'placeholder' => 'Login or Email',
+            'style' => 'max-width: 120px;'
+        )); ?>
+        </div>
 
-    <div class="form-group">
-        <?php echo $form->inputPassword(array('placeholder'=>'Password','style'=>'max-width:150px;')); ?>
-    </div>
+        <div class="form-group">
+            <?php echo $form->inputPassword(array(
+            'placeholder' => 'Password',
+            'style' => 'max-width: 120px;'
+        )); ?>
+        </div>
 
-    <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Remember me">
-        <input type="checkbox" name="userRemember" value="1">
-    </div>
+        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Remember me">
+            <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary">
+                    <input type="checkbox" name="userRemember" value="1" autocomplete="off"><i class="fa fa-check-square-o"></i>
+                </label>
+            </div>
+        </div>
 
-    <div class="input-group">
-        <button class="btn">Sign in</button>
-    </div>
-    
-    <div class="input-group" style="text-align:center;">
-        <a class="" href="<?php echo $cms->getSiteAdress(); ?>user">Sign up</a><br>
-        <a class="" href="<?php echo $cms->getSiteAdress(); ?>user">Lost password</a>
-    </div>
+        <div class="input-group">
+            <button class="btn btn-primary">Sign in</button>
+        </div>
 
-</form>
+        <div class="input-group" style="text-align:center;">
+            <button type="button" class="btn btn-success"
+            onclick="window.location='<?php echo $cms->getSiteAdress(); ?>user';">Sign up</button>
+        </div>
+
+    </form>
 
 <?php else: ?>
 
-<?php $form = $cms->createForm('user-logout'); ?>
+    <?php $form = $cms->createForm('user-logout'); ?>
 
-<div class="navbar-right">
-    <p class="navbar-text">Hello <?php echo $cms->getUserLogin(); ?></p>
-    <a class="navbar-text" href="<?php echo $form->getFormActionAdress(); ?>">Log out</a>
-</div>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary">Hello <?php echo $cms->getUserLogin(); ?></button>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+            <li><a href="<?php echo $cms->getSiteAdress(); ?>admin">Admin panel</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="<?php echo $form->getFormActionAdress(); ?>">Log out</a></li>
+        </ul>
+    </div>
 
 <?php endif; ?>
