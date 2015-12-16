@@ -1,14 +1,15 @@
 <?php
 
+use Ignaszak\Registry\RegistryFactory;
+
 defined('ACCESS') or die();
 
 session_save_path (__DIR__ . '/cache/session');
 session_start();
 System\Server::readReferData();
 
-$cms = new Display\DisplayFactory;
-
-$user = UserAuth\User::instance();
+RegistryFactory::start()->set('cms', new Display\DisplayFactory);
+RegistryFactory::start()->set('user', new UserAuth\User);
 
 require __DIR__ . '/conf/modules.php';
 

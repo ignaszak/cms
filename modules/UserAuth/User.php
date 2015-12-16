@@ -8,16 +8,7 @@ use Ignaszak\Registry\RegistryFactory;
 class User
 {
 
-    private static $_user;
     private $userSession;
-
-    final static function instance()
-    {
-        if (empty(self::$_user))
-            self::$_user = new self;
-    
-        return self::$_user;
-    }
 
     public function __construct()
     {

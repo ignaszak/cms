@@ -35,7 +35,7 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
         $stubRoute = $this->getMock('System\Router\Route');
         $stubRoute->expects($this->any())
             ->method('__get')
-            ->will($this->returnValue('DefaultController'));
+            ->will($this->returnValue('Controller\DefaultController'));
         
         $getCommand = $this->_commandHandler->getCommand($stubRoute);
         $this->assertTrue($getCommand);

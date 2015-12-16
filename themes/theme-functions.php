@@ -1,4 +1,7 @@
 <?php
+
+use Ignaszak\Registry\RegistryFactory;
+
 /**
  * This file includes theme functions
  */
@@ -13,7 +16,7 @@ defined('ACCESS') or die();
  */
 function loadFile($file)
 {
-    global $cms;
+    $cms = RegistryFactory::start()->get('cms');
 
     $file = THEME_PATH . '/' . $file;
 
@@ -31,7 +34,7 @@ function loadFile($file)
  */
 function loadExtensionFile($file)
 {
-    global $cms;
+    $cms = RegistryFactory::start()->get('cms');
 
     $adminExtensionDir = $cms->getAdminExtensionDir();
 

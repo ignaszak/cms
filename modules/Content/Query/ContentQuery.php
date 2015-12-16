@@ -13,11 +13,11 @@ class ContentQuery extends IContentQuery
 
     private $_em;
     private $_conf;
-    private $_contentQueryBuilder;
     private $entityName;
     private $isResultForced = false;
     private $entityContentArray = array();
     private $isPaginationEnabled = true;
+    private $limit;
 
     public function __construct($entityName)
     {
@@ -37,27 +37,24 @@ class ContentQuery extends IContentQuery
 
         $this->countQuery();
 
-        //if (empty($this->entityContentArray)) {
-        //    throw new InvalidQueryException('dupa');
-        //} else {
-            return $this->entityContentArray;
-        //}
+        return $this->entityContentArray;
     }
 
-    public function buildQuery()
-    {
-        return $this->_contentQueryBuilder;
-    }
-
-    public function paginate($paginate = true)
+    public function paginate(bool $paginate = true): IContentQuery
     {
         $this->isPaginationEnabled = $paginate;
         return $this;
     }
 
-    public function force()
+    public function force(): IContentQuery
     {
         $this->isResultForced = true;
+        return $this;
+    }
+
+    public function limit(int $limit): IContentQuery
+    {
+        $this->limit = $limit;
         return $this;
     }
 
@@ -108,6 +105,12 @@ class ContentQuery extends IContentQuery
 
     private function setAliasIfResultIsNotForced()
     {
+        if (is_null($this->limit) === false) {
+            $query = $this->contentQuery
+                ->setMaxResults($this->limit);
+            $this->contentQuery = $query;
+        }
+
         if (!$this->isResultForced) {
             $alias = Router::getRoute('alias');
             $this->_contentQueryBuilder->alias($alias);

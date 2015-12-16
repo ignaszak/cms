@@ -2,8 +2,7 @@
     $cms->setContent('post')
         ->paginate(false)
         ->force()
-        ->buildQuery()
-            ->contentLike('post');
+        ->contentLike('post');
     foreach ($cms->getContent() as $post) :
 ?>
 

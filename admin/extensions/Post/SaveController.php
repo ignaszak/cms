@@ -4,16 +4,22 @@ namespace AdminController\Post;
 
 use FrontController\Controller;
 use System\Server;
-use System\Router\Storage as Router;
 use Content\Controller\Factory;
 use Content\Controller\PostController;
+use Ignaszak\Registry\RegistryFactory;
 
 class SaveController extends Controller
 {
 
+    private $cms;
+
+    public function __construct()
+    {
+        $this->cms = RegistryFactory::start()->get('cms');
+    }
+
     public function run()
     {
-
         // Initialize
         $controller = new Factory(new PostController);
 
@@ -21,9 +27,8 @@ class SaveController extends Controller
         if ($_POST['id']) $controller->find($_POST['id']);
 
         // Sets data
-        $catId = @$_POST['categoryId'];
-        $controller->setReference('category', $catId);
-        $controller->setReference('author', 1);
+        $controller->setReference('category', $this->getCategoryId());
+        $controller->setReference('author', $this->cms->getUserId());
         $controller->setDate(new \DateTime);
         $controller->setTitle($_POST['title']);
         $alias = $controller->getAlias($_POST['title']);
@@ -34,6 +39,17 @@ class SaveController extends Controller
         $controller->insert();
 
         Server::headerLocation("admin/post/edit/$alias");
+    }
+
+    private function getCategoryId(): int
+    {
+        if (!array_key_exists('categoryId', $_POST)) {
+            $this->cms->setContent('category')->limit(1);
+            $catArray = $this->cms->getContent();
+            return $catArray[0]->getId();
+        } else {
+            return $_POST['categoryId'];
+        }
     }
 
 }

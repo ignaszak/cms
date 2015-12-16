@@ -3,6 +3,7 @@
 namespace Controller;
 
 use FrontController\Controller;
+use Ignaszak\Registry\RegistryFactory;
 
 class UserAuthenticationController extends Controller
 {
@@ -10,7 +11,7 @@ class UserAuthenticationController extends Controller
     public function run()
     {
         define('USER_ACTION', \System\Router\Storage::getRoute('userAction')) ;
-        $user = \UserAuth\User::instance();
+        $user = RegistryFactory::start()->get('user');
         $userLogin      = @$_POST['userLogin'];
         $userEmail      = @$_POST['userEmail'];
         $userPassword   = @$_POST['userPassword'];

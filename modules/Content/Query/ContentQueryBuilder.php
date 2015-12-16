@@ -12,68 +12,68 @@ class ContentQueryBuilder implements IContentQueryBuilder
         $this->_contentQuery = $_contentQuery;
     }
 
-    public function id($value)
+    public function id(int $value): IContentQuery
     {
         $this->set('c.id', $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function categoryId($value)
+    public function categoryId(int $value): IContentQuery
     {
         $this->set('c.category_id', $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function categoryAlias($value)
+    public function categoryAlias(string $value): IContentQuery
     {
         $column = 'category.alias';
         $this->join($column);
         $this->set($column, $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function authorId($value)
+    public function authorId(int $value): IContentQuery
     {
         $this->set('c.author_id', $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function authorLogin($value)
+    public function authorLogin(string $value): IContentQuery
     {
         $column = 'user.login';
         $this->join($column);
         $this->set($column, $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function date($value)
+    public function date(\DateTime $value): IContentQuery
     {
         $this->set('c.date', $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function title($value)
+    public function title(string $value): IContentQuery
     {
         $this->set('c.title', $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function alias($value)
+    public function alias(string $value): IContentQuery
     {
         $this->set('c.alias', $value);
-        return $this;
+        return $this->_contentQuery;
     }
 
-    public function contentLike($value)
+    public function contentLike(string $value): IContentQuery
     {
         $query = $this->_contentQuery->contentQuery
             ->andwhere('c.content LIKE :value')
             ->setParameter('value', '%'.$value.'%');
         $this->_contentQuery->contentQuery = $query;
-        return $this;
+        return $this->_contentQuery;
     }
 
-    private function join($column)
+    private function join(string $column)
     {
         $reference = $this->getReference($column);
 
@@ -83,7 +83,7 @@ class ContentQueryBuilder implements IContentQueryBuilder
         $this->_contentQuery->contentQuery = $query;
     }
 
-    private function set($column, $value)
+    private function set(string $column, $value)
     {
         $query = $this->_contentQuery->contentQuery
             ->andwhere($column.' IN(:value)')
@@ -92,7 +92,7 @@ class ContentQueryBuilder implements IContentQueryBuilder
         $this->_contentQuery->contentQuery = $query;
     }
 
-    private function getReference($column)
+    private function getReference(string $column): string
     {
         $array = explode('.', $column);
         return $array[0];

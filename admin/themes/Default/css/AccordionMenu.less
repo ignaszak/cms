@@ -1,6 +1,9 @@
 @accordion-a-h1-color: #c12c42;
-@accordion-a-color: #b63b4d;
+@accordion-a-color: #286090;
 @accordion-link: #4D4D4D;
+@accordion-submenu-background: #337ab7;
+@accordion-submenu-border: #2e6da4;
+@accordion-submenu-a: #FFF;
 
 * {
     margin: 0;
@@ -91,18 +94,18 @@
 
 .accordion .submenu {
     display: none;
-    background: #444359;
+    background: @accordion-submenu-background;
     font-size: 14px;
 }
 
 .accordion .submenu li {
-    border-bottom: 1px solid #4b4a5e;
+    border-bottom: 1px solid @accordion-submenu-border;
 }
 
 .accordion .submenu a {
     display: block;
     text-decoration: none;
-    color: #d9d9d9;
+    color: @accordion-submenu-a;
     padding: 12px;
     padding-left: 42px;
 }

@@ -3,25 +3,44 @@
     <!-- Login form controller -->
     <script>
     $(document).ready(function(){
-        // Tooltip
+
+        /**
+         * Tooltip
+         */
         $('[data-toggle="tooltip"]').tooltip();
 
         <?php if ($cms->getFormResponseData('incorrectLoginData')): ?>
-        // Generate invalid data error
-        $('form#login').addClass('has-error');
-        popoverCloseButton = '<a href="#" class="close" data-dismiss="alert">×</a>';
-        $('form#login').popover({
-            trigger: 'manual',
-            placement : 'bottom',
-            html : true,
-            title: '<b>Invalid data!</b>' + popoverCloseButton,
-            content : '<div style="min-width:300px; max-width:600px;">Following fields are incorrect:<br>login/email or password.<br><a href="#">Remind password</a></div>'
-        });
-        $(document).on("click", ".popover .close" , function(){
-            $(this).parents(".popover").popover('hide');
-        });
-        $('form').popover('show');
+            /**
+             * Generate invalid data error
+             */
+            popoverCloseButton = '<a href="#" class="close" data-dismiss="alert">×</a>';
+            $('form#login .login-group').popover({
+                trigger: 'manual',
+                placement : 'bottom',
+                html : true,
+                title: '<b>Invalid data!</b>' + popoverCloseButton,
+                content : '<div style="min-width:300px; max-width:600px;">Following fields are incorrect:<br>login/email or password.<br><a href="#">Remind password</a></div>'
+            });
+            $(document).on("click", ".popover .close" , function(){
+                $(this).parents(".popover").popover('hide');
+            });
+            $('form#login .login-group').popover('show');
         <?php endif; ?>
+
+        /**
+         * User remember button
+         */
+         var userRemember = 0;
+         $("#userRemember").click(function(){
+            if (userRemember == 0) {
+                $("#userRemember i").removeClass('fa-square-o').addClass('fa-check-square-o');
+                userRemember = 1;
+            } else {
+                $("#userRemember i").removeClass('fa-check-square-o').addClass('fa-square-o');
+                userRemember = 0;
+            }
+         });
+
     });
     </script>
 
@@ -29,29 +48,25 @@
 
     <form action="<?php echo $form->getFormActionAdress(); ?>" id="login" method="post" class="form-inline">
 
-        <div class="form-group">
+        <div class="input-group login-group">
             <?php echo $form->inputLogin(array(
-            'placeholder' => 'Login or Email',
-            'style' => 'max-width: 120px;'
-        )); ?>
-        </div>
+                'placeholder' => 'Login or Email',
+                'style' => 'max-width: 120px;'
+            )); ?>
 
-        <div class="form-group">
             <?php echo $form->inputPassword(array(
-            'placeholder' => 'Password',
-            'style' => 'max-width: 120px;'
-        )); ?>
-        </div>
+                'placeholder' => 'Password',
+                'style' => 'max-width: 120px;'
+            )); ?>
 
-        <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Remember me">
-            <div class="btn-group" data-toggle="buttons">
-                <label class="btn btn-primary">
-                    <input type="checkbox" name="userRemember" value="1" autocomplete="off"><i class="fa fa-check-square-o"></i>
-                </label>
+            <div class="input-group" data-toggle="tooltip" data-placement="bottom" title="Remember me">
+                <div class="btn-group" id="userRemember" data-toggle="buttons">
+                    <label class="btn btn-primary">
+                        <input type="checkbox" name="userRemember" value="1" autocomplete="off"><i class="fa fa-square-o"></i>
+                    </label>
+                </div>
             </div>
-        </div>
 
-        <div class="input-group">
             <button class="btn btn-primary">Sign in</button>
         </div>
 

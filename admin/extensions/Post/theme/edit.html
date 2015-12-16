@@ -40,7 +40,7 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
 
     $formTitle = 'Edit post';
 
-    $cms->setContent('post')->buildQuery()->alias($cms->getRoute('alias'));
+    $cms->setContent('post')->alias($cms->getRoute('alias'));
 
     foreach ($cms->getContent() as $post) {
         $id = $post->getId();

@@ -2,6 +2,8 @@
 
 namespace Display\Extension;
 
+use Ignaszak\Registry\RegistryFactory;
+
 class User
 {
 
@@ -9,7 +11,7 @@ class User
 
     public function __construct()
     {
-        $this->_user = \UserAuth\User::instance();
+        $this->_user = RegistryFactory::start()->get('user');
     }
 
     public function isUserLoggedIn()
