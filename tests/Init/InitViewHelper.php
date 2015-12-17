@@ -2,14 +2,14 @@
 
 namespace Test\Init;
 
-use Display\DisplayExtension;
+use ViewHelper\ViewHelperExtension;
 
-class InitDisplay
+class InitViewHelper
 {
 
     public static function loadExtensions()
     {
-        DisplayExtension::addExtensionClass(array(
+        ViewHelperExtension::addExtensionClass(array(
             'Display\\Extension\\User',
             'Form\\Form',
             'Pagination\\Pagination',

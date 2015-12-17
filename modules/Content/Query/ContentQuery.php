@@ -11,13 +11,13 @@ use Ignaszak\Registry\RegistryFactory;
 class ContentQuery extends IContentQuery
 {
 
-    private $_em;
-    private $_conf;
+    private $_em; //
+    private $_conf; 
     private $entityName;
-    private $isResultForced = false;
-    private $entityContentArray = array();
-    private $isPaginationEnabled = true;
-    private $limit;
+    private $isResultForced = false; //
+    private $entityContentArray = array(); //
+    private $isPaginationEnabled = true; //
+    private $limit; //
 
     public function __construct($entityName)
     {
@@ -65,7 +65,7 @@ class ContentQuery extends IContentQuery
         ->getQuery()
         ->getSingleScalarResult();
 
-        parent::$countQuery = $query;
+        $this->contentQuery = $query;
     }
 
     private function createQuery()

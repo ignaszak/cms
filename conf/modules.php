@@ -2,8 +2,8 @@
 
 defined('ACCESS') or die();
 
-Display\DisplayExtension::addExtensionClass(array(
-    'Display\\Extension\\User',
+ViewHelper\ViewHelperExtension::addExtensionClass(array(
+    'ViewHelper\\Extension\\User',
     'Form\\Form',
     'Pagination\\Pagination',
     'System\\Router\\Route',

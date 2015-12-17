@@ -13,6 +13,10 @@
     <router>
         <route>
             <item>
+                <pattern>{adminPostAction:view}/{page}</pattern>
+                <controller>AdminController\Post\ViewController</controller>
+            </item>
+            <item>
                 <pattern>{adminPostAction:form}</pattern>
                 <controller>AdminController\Post\SaveController</controller>
             </item>
@@ -26,7 +30,7 @@
         <token>
             <item>
                 <name>adminPostAction</name>
-                <pattern>(add|view|edit|delete)</pattern>
+                <pattern>(add|edit|delete)</pattern>
             </item>
         </token>
     </router>

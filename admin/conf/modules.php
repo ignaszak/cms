@@ -1,6 +1,7 @@
 <?php
 
 use Ignaszak\Registry\RegistryFactory;
+use ViewHelper\ViewHelperExtension;
 
 defined('ACCESS') or die();
 
@@ -17,6 +18,6 @@ if ($cms->getUserRole() != 'admin') {
     System\Server::headerLocation('');
 }
 
-Display\DisplayExtension::addExtensionClass(array(
-    'Admin\\Extension\\Display\\Admin'
+ViewHelperExtension::addExtensionClass(array(
+    'Admin\\Extension\\ViewHelper\\Admin'
 ));

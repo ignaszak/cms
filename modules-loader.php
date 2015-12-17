@@ -8,7 +8,7 @@ session_save_path (__DIR__ . '/cache/session');
 session_start();
 System\Server::readReferData();
 
-RegistryFactory::start()->set('cms', new Display\DisplayFactory);
+RegistryFactory::start()->set('cms', new ViewHelper\ViewHelper);
 RegistryFactory::start()->set('user', new UserAuth\User);
 
 require __DIR__ . '/conf/modules.php';

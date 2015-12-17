@@ -1,6 +1,6 @@
 <?php
 
-namespace Admin\Extension\Display;
+namespace Admin\Extension\ViewHelper;
 
 use Ignaszak\Registry\RegistryFactory;
 use Ignaszak\Exception\Start as Exception;

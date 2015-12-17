@@ -1,19 +1,19 @@
 <?php
 
-namespace Display;
+namespace ViewHelper;
 
 use Conf\Conf;
 use System\Router\Storage as Router;
 use CMSException\InvalidClassException;
 use Ignaszak\Registry\RegistryFactory;
 
-class DisplayFactory
+class ViewHelper
 {
 
     /**
-     * @var DisplayExtension
+     * @var ViewHelperExtension
      */
-    private $_displayExtension;
+    private $_viewHelperExtension;
 
     /**
      * @var Conf
@@ -22,7 +22,7 @@ class DisplayFactory
 
     public function __construct()
     {
-        $this->_displayExtension = new DisplayExtension;
+        $this->_viewHelperExtension = new ViewHelperExtension;
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
     }
 
@@ -37,7 +37,7 @@ class DisplayFactory
      */
     public function __call($name, $arguments)
     {
-        $extensionInstance = $this->_displayExtension->getExtensionInstanceFromMethodName($name);
+        $extensionInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName($name);
 
         if (method_exists($extensionInstance, $name)) {
 
@@ -61,7 +61,7 @@ class DisplayFactory
      */
     public function display()
     {
-        $_contentInstance = $this->_displayExtension->getExtensionInstanceFromMethodName('Content');
+        $_contentInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName('Content');
         $contentName = Router::getRoute();
         $_contentInstance->setContent($contentName);
 

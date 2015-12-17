@@ -1,10 +1,10 @@
 <?php
 
-namespace Display;
+namespace ViewHelper;
 
 use Ignaszak\Registry\RegistryFactory;
 
-class DisplayExtension
+class ViewHelperExtension
 {
 
     /**
@@ -45,7 +45,7 @@ class DisplayExtension
     private function returnExtensionClassNameFromMethodName($name)
     {
         // From this class script will search for no matched methods
-        $className = 'Display\Extension\System';
+        $className = 'ViewHelper\Extension\System';
 
         foreach (self::$extensionClassNameArray as $class) {
 

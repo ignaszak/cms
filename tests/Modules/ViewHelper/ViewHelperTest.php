@@ -3,18 +3,18 @@
 namespace Test\Modules\Display;
 
 use Test\Init\InitRouter;
-use Test\Init\InitDisplay;
-use Display\DisplayFactory;
+use Test\Init\InitViewHelper;
+use ViewHelper\ViewHelper;
 use Ignaszak\Registry\RegistryFactory;
 
-class DisplayFactoryTest extends \PHPUnit_Framework_TestCase
+class ViewHelperTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_displayFactory;
+    private $_viewHelper;
 
     public function setUp()
     {
-        $this->_displayFactory = new DisplayFactory;
+        $this->_viewHelper = new ViewHelper;
     }
 
     public function test__call()
@@ -22,7 +22,7 @@ class DisplayFactoryTest extends \PHPUnit_Framework_TestCase
         $siteTitle = RegistryFactory::start('file')->register('Conf\Conf')
             ->getSiteTitle();
         \Conf\DB\DBDoctrine::em()->clear();
-        $getSiteTitle = $this->_displayFactory->getSiteTitle();
+        $getSiteTitle = $this->_viewHelper->getSiteTitle();
         $this->assertEquals($siteTitle, $getSiteTitle);
     }
 
@@ -31,16 +31,16 @@ class DisplayFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public function test__callException()
     {
-        $this->_displayFactory->getNonExistingMethod();
+        $this->_viewHelper->getNonExistingMethod();
     }
 
     public function testDisplay()
     {
-        InitDisplay::loadExtensions();
+        InitViewHelper::loadExtensions();
         InitRouter::start('post', 'post');
         InitRouter::add('post', 'post');
         InitRouter::run();
-        $this->assertNotEmpty($this->_displayFactory->display());
+        $this->assertNotEmpty($this->_viewHelper->display());
     }
 
 }
