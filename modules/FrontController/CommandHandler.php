@@ -33,9 +33,9 @@ class CommandHandler
      * 
      * @param Route $_route
      * @throws InvalidControllerException
-     * @return null|true
+     * @return boolean
      */
-    public function getCommand(Route $_route)
+    public function getCommand(Route $_route): bool
     {
         if ($_route->controller) {
             $controllerClass = $_route->controller;
@@ -46,14 +46,15 @@ class CommandHandler
                 if ($reflectionControllerClass->isSubclassOf($this->_base)) {
                     $controller = $controllerClass::instance();
                     $controller->run();
+                    $controller->runModules();
                     return true;
                 } else {
                     throw new InvalidControllerException('');
                 }
             }
-            return null;
+            return false;
         }
-        return null;
+        return false;
     }
 
 }

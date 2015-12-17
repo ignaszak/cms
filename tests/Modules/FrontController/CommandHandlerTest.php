@@ -27,7 +27,7 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
     {
         $stub = $this->getMock('System\Router\Route');
         $getCommand = $this->_commandHandler->getCommand($stub);
-        $this->assertNull($getCommand);
+        $this->assertFalse($getCommand);
     }
 
     public function testSetControllerClassInstance()

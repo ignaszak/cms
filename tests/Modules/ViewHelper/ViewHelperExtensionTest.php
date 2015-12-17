@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Modules\Display;
+namespace Test\Modules\ViewHelper;
 
 use Test\Mock\MockTest;
 use ViewHelper\ViewHelperExtension;

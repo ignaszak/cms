@@ -4,7 +4,7 @@ namespace AdminController\Post;
 
 use FrontController\Controller;
 use Ignaszak\Registry\RegistryFactory;
-use ViewHelper\ViewHelperExtension;
+use FrontController\ViewHelperController;
 
 class ViewController extends Controller
 {
@@ -18,26 +18,20 @@ class ViewController extends Controller
 
     public function run()
     {
-        $this->loadDisplay();
+        $this->setViewHelperName('AdminViewPost');
     }
 
-    public function loadDisplay()
+    /**
+     * @return ViewHelperController
+     */
+    public function setViewHelper()
     {
-        $saveName = 'ViewPost';
-        RegistryFactory::start()->set($saveName, $this->setDisplay());
-        ViewHelperExtension::addExtensionClass($saveName);
-    }
-
-    public function setDisplay()
-    {
-    
-        return new class () {
-
-            public function getViewPostList()
+        return new class ($this) extends ViewHelperController
+        {
+            public function getAdminViewPostList()
             {
-                return 'test';
+                return get_class($this->_controller);
             }
-
         };
     }
 

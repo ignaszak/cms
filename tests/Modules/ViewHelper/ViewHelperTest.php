@@ -1,6 +1,6 @@
 <?php
 
-namespace Test\Modules\Display;
+namespace Test\Modules\ViewHelper;
 
 use Test\Init\InitRouter;
 use Test\Init\InitViewHelper;

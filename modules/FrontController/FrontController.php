@@ -29,6 +29,9 @@ class FrontController
             self::$_controller = new FrontController;
     }
 
+    /**
+     * @param CommandHandler $_commandHandler
+     */
     private function handle($_commandHandler)
     {
         $_route = new Route;
