@@ -2,8 +2,6 @@
 
 defined('ACCESS') or die();
 
-$router->defaultRoute = 'post';
-
 $router->add('post', 'post/{page}');
 $router->add('post', 'post/{alias}');
 $router->add('post', 'post/{alias}/{page}');
@@ -20,9 +18,3 @@ $router->addToken('method', '(post|ajax)');
 
 $router->addToken('userAction', '(registration|login|logout|remind)');
 $router->addToken('userName', '([a-Z_-0-9]*)');
-
-$router->run();
-
-//echo "<pre>";
-//print_r(System\Router\Storage::getAllRoutes());
-//echo "</pre>";
