@@ -3,6 +3,8 @@
 use Ignaszak\Registry\RegistryFactory;
 use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Router\Start as Router;
+use ViewHelper\ViewHelper;
+use UserAuth\User;
 
 defined('ACCESS') or die();
 
@@ -35,15 +37,17 @@ $router->run();
 
 // CHECK PERMISSIONS TO ADMIN PANEL AND LOAD ADMIN VIEW HELPER EXTENSION
 // Register ViewHelper and User classes
-RegistryFactory::start()->set('cms', new ViewHelper\ViewHelper);
+RegistryFactory::start()->set('cms', new ViewHelper);
 $cms = RegistryFactory::start()->get('cms');
-RegistryFactory::start()->set('user', new UserAuth\User);
+RegistryFactory::start()->set('user', new User);
 $user = RegistryFactory::start()->get('user');
+// Default view helper classes
+require __DIR__ . '/conf/view-helper.php';
 // Check admin panel route
 if (System\Router\Storage::isRouteName('admin')) {
     // If not logged open login panel
     if (!$user->isUserLoggedIn()) {
-        require $baseDir . '/' . ADMIN_FOLDER . '/extensions/Index/login.html';
+        require __DIR__ . '/' . ADMIN_FOLDER . '/extensions/Index/login.html';
         exit;
     }
     // Check permissions
@@ -53,5 +57,3 @@ if (System\Router\Storage::isRouteName('admin')) {
     // Admin view helper classes
     require __DIR__ . '/' . ADMIN_FOLDER . '/conf/view-helper.php';
 }
-// Default view helper classes
-require __DIR__ . '/conf/view-helper.php';
