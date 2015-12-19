@@ -2,7 +2,7 @@
 
 namespace Validation;
 
-use Entity\EntityController;
+use Ignaszak\Registry\RegistryFactory;
 
 class ContentValidation extends Validator
 {
@@ -71,7 +71,9 @@ class ContentValidation extends Validator
      */
     private function validObject($_object, $name)
     {
-        $class = EntityController::instance()->getEntityByName($name);
+        $_entityController = RegistryFactory::start()
+            ->register('Entity\Controller\EntityController');
+        $class = $_entityController->getEntity($name);
         return $_object instanceof $class;
     }
 

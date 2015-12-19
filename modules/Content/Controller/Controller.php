@@ -6,7 +6,7 @@ use System\Server;
 use Conf\DB\DBDoctrine;
 use CMSException\InvalidMethodException;
 use Validation\ContentValidation;
-use Entity\EntityController;
+use Ignaszak\Registry\RegistryFactory;
 
 abstract class Controller
 {
@@ -50,7 +50,8 @@ abstract class Controller
     {
         $this->_em = DBDoctrine::em();
         $this->_contentValidation = new ContentValidation;
-        $this->_entityController = EntityController::instance();
+        $this->_entityController = RegistryFactory::start()
+            ->register('Entity\Controller\EntityController');
     }
 
     /**
@@ -90,7 +91,7 @@ abstract class Controller
      */
     public function setReference(string $entityName, int $by)
     {
-        $entityClass = $this->_entityController->getEntityByName($entityName);
+        $entityClass = $this->_entityController->getEntity($entityName);
         $entityObject = $this->_em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
         $this->setToDataArray($name, array($entityObject));

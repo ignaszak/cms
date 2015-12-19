@@ -34,6 +34,7 @@ class SaveController extends Controller
         $alias = $controller->getAlias($_POST['title']);
         $controller->setAlias($alias);
         $controller->setContent($_POST['content']);
+        $controller->setPublic($_POST['public']);
 
         // Execute
         $controller->insert();

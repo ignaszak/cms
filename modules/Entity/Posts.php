@@ -5,6 +5,7 @@ namespace Entity;
 use Entity\Users;
 use Doctrine\ORM\Mapping as ORM;
 use Ignaszak\Registry\RegistryFactory;
+use Aura\Filter\Rule\Sanitize\Integer;
 
 /**
  * Posts
@@ -64,6 +65,13 @@ class Posts
      * @ORM\Column(name="content", type="text", precision=0, scale=0, nullable=false, unique=false)
      */
     private $content;
+
+    /**
+     * @var Integer
+     *
+     * @ORM\Column(name="public", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     */
+    private $public;
 
     /**
      * @ORM\ManyToOne(targetEntity="Entity\Users", cascade={"persist"})
@@ -239,6 +247,30 @@ class Posts
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set public
+     *
+     * @param integer $public
+     *
+     * @return Posts
+     */
+    public function setPublic($public)
+    {
+        $this->public = $public;
+
+        return $this;
+    }
+
+    /**
+     * Get public
+     *
+     * @return integer
+     */
+    public function getPublic()
+    {
+        return $this->public;
     }
 
     /**

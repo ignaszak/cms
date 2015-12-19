@@ -1,37 +1,36 @@
-<?php
-    $cms->setContent('post')
-        ->paginate(false)
-        ->force()
-        ->contentLike('post');
-    foreach ($cms->getContent() as $post) :
-?>
+<?php 
+var_dump($cms->display());exit;
 
-    <b>Kategoria:</b> <?php echo $post->getCategory()->getTitle(); ?><br>
-    <b><?php echo $post->getTitle(); ?></b> <?php echo $post->getDate(); ?><br>
-    <b>Użytkownik:</b>
-    <?php $author = $post->getAuthor(); ?>
-    <?php echo $author->getLogin(); ?>,
-    <?php echo $author->getEmail(); ?>,
-    <?php echo $author->getRole(); ?><br>
-    <?php echo $post->getContent() ?><br><br>
+foreach ($cms->display() as $post): ?>
 
-<?php endforeach; ?>
-
-<hr>
-
-<?php
-    $cms->setContent('post');
-    foreach ($cms->getContent() as $post) :
-?>
-
-    <b>Kategoria:</b> <?php echo $post->getCategory()->getTitle(); ?><br>
-    <b><?php echo $post->getTitle(); ?></b> <?php echo $post->getDate(); ?><br>
-    <b>Użytkownik:</b>
-    <?php $author = $post->getAuthor(); ?>
-    <?php echo $author->getLogin(); ?>,
-    <?php echo $author->getEmail(); ?>,
-    <?php echo $author->getRole(); ?><br>
-    <?php echo $post->getContent() ?><br><br>
+<section id="<?php echo $post->getAlias(); ?>">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>
+                <a href="<?php echo $cms->getSiteAdress(); ?>post/<?php echo $post->getAlias(); ?>">
+                    <?php echo $post->getTitle(); ?>
+                </a>
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <p class="inf">
+                <i class="fa fa-calendar"></i>
+                <?php echo $post->getDate('j F Y, G:i'); ?>
+                &nbsp;&nbsp;
+                <i class="fa fa-user"></i>
+                <?php $author = $post->getAuthor(); ?>
+                <?php echo $author->getLogin(); ?>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <?php echo $post->getContent() ?>
+        </div>
+    </div>
+</section>
 
 <?php endforeach; ?>
 

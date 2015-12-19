@@ -38,7 +38,7 @@ class Server
         self::setRefererSession();
         header(
             'Location: ' .
-            RegistryFactory::start('file')->register('\Conf\Conf')->getBaseUrl() .
+            RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl() .
             $location
         );
         exit;

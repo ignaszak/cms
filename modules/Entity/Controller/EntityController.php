@@ -1,14 +1,18 @@
 <?php
 
-namespace Entity;
+namespace Entity\Controller;
+
+use CMSException\DBException;
 
 class EntityController
 {
 
-    private static $_entityController;
+    /**
+     * @var Entity[]
+     */
     private static $entityArray = array();
 
-    private function __construct()
+    public function __construct()
     {
         $this->addEntity('post', 'Entity\Posts');
         $this->addEntity('category', 'Entity\Categories');
@@ -16,26 +20,27 @@ class EntityController
         $this->addEntity('author', 'Entity\Users');
     }
 
-    public static function instance()
-    {
-        if (empty(self::$_entityController))
-            self::$_entityController = new EntityController;
-
-            return self::$_entityController;
-    }
-
-    public function addEntity($name, $entity)
+    /**
+     * @param string $name
+     * @param string $entity
+     */
+    public function addEntity(string $name, string $entity)
     {
         if (is_string($name) && class_exists($entity) && !array_key_exists($name, self::$entityArray))
             self::$entityArray[$name] = $entity;
     }
 
-    public function getEntityByName($name)
+    /**
+     * @param string $name
+     * @throws DBException
+     * @return Entity
+     */
+    public function getEntity(string $name)
     {
         if (array_key_exists($name, self::$entityArray)) {
             return self::$entityArray[$name];
         } else {
-            throw new \CMSException\DBException('Invalid entity name');
+            throw new DBException('Invalid entity name');
         }
     }
 

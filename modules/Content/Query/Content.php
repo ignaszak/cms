@@ -2,6 +2,8 @@
 
 namespace Content\Query;
 
+use Ignaszak\Registry\RegistryFactory;
+
 class Content
 {
 
@@ -9,8 +11,9 @@ class Content
 
     public function setContent($name)
     {
-        $entityController = \Entity\EntityController::instance();
-        $entityName = $entityController->getEntityByName($name);
+        $entityController = RegistryFactory::start()
+            ->register('Entity\Controller\EntityController');
+        $entityName = $entityController->getEntity($name);
         $this->_contentQuery = new ContentQuery($entityName);
 
         return $this->_contentQuery;
