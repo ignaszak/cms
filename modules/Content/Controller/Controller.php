@@ -72,6 +72,15 @@ abstract class Controller
     }
 
     /**
+     * @param array $array
+     */
+    public function findBy(array $array)
+    {
+        $entityName = get_class($this->_entity);
+        $this->_entity = $this->_em->getRepository($entityName)->findOneBy($array);
+    }
+
+    /**
      * @param string $name
      * @param array $arguments
      * @throws InvalidMethodException
@@ -153,6 +162,7 @@ abstract class Controller
     }
 
     abstract public function insert();
+    abstract public function remove();
 
 }
 

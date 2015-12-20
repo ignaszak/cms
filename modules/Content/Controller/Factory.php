@@ -11,17 +11,11 @@ class Factory
     private $_controller;
 
     /**
-     * @var Alias
-     */
-    private $_alias;
-
-    /**
      * @param Controller $_controller
      */
     public function __construct(Controller $_controller)
     {
         $this->_controller = $_controller;
-        $this->_alias = new Alias($this->_controller->getEntity());
     }
 
     /**
@@ -48,7 +42,8 @@ class Factory
      */
     public function getAlias(string $string): string
     {
-        return $this->_alias->getAlias($string);
+        $_alias = new Alias($this->_controller->getEntity());
+        return $_alias->getAlias($string);
     }
 
     /**
@@ -59,9 +54,22 @@ class Factory
         $this->_controller->find($id);
     }
 
+    /**
+     * @param array $array
+     */
+    public function findBy(array $array)
+    {
+        $this->_controller->findBy($array);
+    }
+
     public function insert()
     {
         $this->_controller->insert();
+    }
+
+    public function remove()
+    {
+        $this->_controller->remove();
     }
 
 }

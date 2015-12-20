@@ -1,82 +1,79 @@
 <div class="panel panel-primary">
     <div class="panel-heading">Posts list</div>
     <div class="panel-body">
-    
-    <?php echo $cms->getAdminViewPostList(); ?>
 
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th class="visible-xs">Inf</th>
-                <th class="hidden-xs">Alias</th>
-                <th class="hidden-xs">Category</th>
-                <th class="hidden-xs">Author</th>
-                <th class="hidden-xs">Date</th>
-                <th></th>
-            </tr>
-        </thead>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th class="visible-xs">Inf</th>
+                    <th class="hidden-xs">Alias</th>
+                    <th class="hidden-xs">Category</th>
+                    <th class="hidden-xs">Author</th>
+                    <th class="hidden-xs">Date</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-        <tbody>
+            <tbody>
 
-            <?php
-                $page = $cms->getRoute('page');
+                <?php
+                    $page = $cms->getRoute('page');
 
-                if ($page == 1 || empty($page)) {
-                    $i = 1;
-                } else {
-                    $i = ($page - 1)*$cms->getPageLimit() + 1;
-                }
+                    if ($page == 1 || empty($page)) {
+                        $i = 1;
+                    } else {
+                        $i = ($page - 1)*$cms->getPageLimit() + 1;
+                    }
 
-                $content = $cms->setContent('post');
-                foreach ($cms->getContent() as $post) :
-                    $cat = $post->getCategory();
-                    $author = $post->getAuthor();
-            ?>
+                    foreach ($cms->getAdminViewPost() as $post) :
+                        $cat = $post->getCategory();
+                        $author = $post->getAuthor();
+                ?>
 
-            <tr>
-                <th scope="row"><?php echo $i; ?></th>
-                <td>
-                    <a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $post->getAlias(); ?>"><b><?php echo $post->getTitle(); ?></b></a>
-                    <p class="visible-xs">
-                        <small><?php echo $post->getDate(); ?></small>
-                    </p>
-                </td>
-                <td class="visible-xs">
-                    <small>
-                        Cat: <?php echo $cat->getTitle(); ?><br>
-                        Author: <?php echo $author->getLogin(); ?>
-                    </small>
-                </td>
-                <td class="hidden-xs"><?php echo $post->getAlias(); ?></td>
-                <td class="hidden-xs"><?php echo $cat->getTitle(); ?></td>
-                <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
-                <td class="hidden-xs"><?php echo $post->getDate(); ?></td>
-                <td>
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button"
-                            id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                            <span class="glyphicon glyphicon-menu-hamburger"></span>
-                        </button>
-                        <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $post->getAlias(); ?>">Edit</a></li>
-                            <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/delete/<?php echo $post->getAlias(); ?>">Delete</a></li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
+                <tr>
+                    <th scope="row"><?php echo $i; ?></th>
+                    <td>
+                        <a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $post->getAlias(); ?>"><b><?php echo $post->getTitle(); ?></b></a>
+                        <p class="visible-xs">
+                            <small><?php echo $post->getDate(); ?></small>
+                        </p>
+                    </td>
+                    <td class="visible-xs">
+                        <small>
+                            Cat: <?php echo $cat->getTitle(); ?><br>
+                            Author: <?php echo $author->getLogin(); ?>
+                        </small>
+                    </td>
+                    <td class="hidden-xs"><?php echo $post->getAlias(); ?></td>
+                    <td class="hidden-xs"><?php echo $cat->getTitle(); ?></td>
+                    <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
+                    <td class="hidden-xs"><?php echo $post->getDate(); ?></td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-default dropdown-toggle" type="button"
+                                id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <span class="glyphicon glyphicon-menu-hamburger"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/edit/<?php echo $post->getAlias(); ?>">Edit</a></li>
+                                <li><a href="<?php echo $cms->getAdminAdress(); ?>/post/delete/<?php echo $post->getAlias(); ?>">Delete</a></li>
+                            </ul>
+                        </div>
+                    </td>
+                </tr>
 
-            <?php
-                ++$i;
-                endforeach;
-            ?>
+                <?php
+                    ++$i;
+                    endforeach;
+                ?>
 
-        </tbody>
+            </tbody>
 
-    </table>
+        </table>
 
-    <?php echo $cms->getPaginationTheme('pagination'); ?>
+        <?php echo $cms->getPaginationTheme('pagination'); ?>
 
     </div>
 </div>

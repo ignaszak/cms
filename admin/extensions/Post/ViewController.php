@@ -9,7 +9,7 @@ use FrontController\ViewHelperController;
 class ViewController extends Controller
 {
 
-    private $cms;
+    public $cms;
 
     public function __construct()
     {
@@ -28,9 +28,10 @@ class ViewController extends Controller
     {
         return new class ($this) extends ViewHelperController
         {
-            public function getAdminViewPostList()
+            public function getAdminViewPost()
             {
-                return get_class($this->_controller);
+                $this->_controller->cms->setContent('post')->status('all');
+                return $this->_controller->cms->getContent();
             }
         };
     }

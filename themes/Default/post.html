@@ -1,5 +1,4 @@
-<?php 
-var_dump($cms->display());exit;
+<?php
 
 foreach ($cms->display() as $post): ?>
 
@@ -7,7 +6,7 @@ foreach ($cms->display() as $post): ?>
     <div class="row">
         <div class="col-xs-12">
             <h1>
-                <a href="<?php echo $cms->getSiteAdress(); ?>post/<?php echo $post->getAlias(); ?>">
+                <a href="<?php echo $post->getLink(); ?>">
                     <?php echo $post->getTitle(); ?>
                 </a>
             </h1>
@@ -27,7 +26,7 @@ foreach ($cms->display() as $post): ?>
     </div>
     <div class="row">
         <div class="col-xs-12">
-            <?php echo $post->getContent() ?>
+            <?php echo $post->getText(); ?>
         </div>
     </div>
 </section>

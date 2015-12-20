@@ -26,8 +26,13 @@ class EntityController
      */
     public function addEntity(string $name, string $entity)
     {
-        if (is_string($name) && class_exists($entity) && !array_key_exists($name, self::$entityArray))
-            self::$entityArray[$name] = $entity;
+        
+        if (class_exists($entity)) {
+            if (!array_key_exists($name, self::$entityArray))
+                self::$entityArray[$name] = $entity;
+        } else {
+            throw new DBException('Entity not exists');
+        }
     }
 
     /**

@@ -21,10 +21,8 @@
                 <controller>AdminController\Post\SaveController</controller>
             </item>
             <item>
-                <pattern>{adminPostAction}/{page}</pattern>
-            </item>
-            <item>
                 <pattern>{adminPostAction}/{alias}</pattern>
+                <controller>AdminController\Post\EditController</controller>
             </item>
         </route>
         <token>

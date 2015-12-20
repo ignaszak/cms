@@ -14,6 +14,11 @@ class Alias
     private $_em;
 
     /**
+     * @var Entity
+     */
+    private $_entity;
+
+    /**
      * @var string
      */
     private $entityName;
@@ -29,6 +34,7 @@ class Alias
                 __CLASS__ . '::aliasNotExistsInDB() must be an Entity instance');
         } else {
             $this->_em = DBDoctrine::em();
+            $this->_entity = $_entity;
             $this->entityName = get_class($_entity);
         }
     }
@@ -39,8 +45,12 @@ class Alias
      */
     public function getAlias(string $string): string
     {
-        $alias = $this->createAliasFromString($string);
-        return $this->renameAliasIfExistsInDB($alias);
+        if (empty($this->_entity->getAlias())) {
+            $alias = $this->createAliasFromString($string);
+            return $this->renameAliasIfExistsInDB($alias);
+        } else {
+            return $this->_entity->getAlias();
+        }
     }
 
     /**

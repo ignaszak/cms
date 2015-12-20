@@ -3,6 +3,7 @@
 namespace Entity;
 
 use Entity\Users;
+use Entity\Controller\IPostsQuery;
 use Doctrine\ORM\Mapping as ORM;
 use Ignaszak\Registry\RegistryFactory;
 use Aura\Filter\Rule\Sanitize\Integer;
@@ -13,7 +14,7 @@ use Aura\Filter\Rule\Sanitize\Integer;
  * @ORM\Table(name="posts")
  * @ORM\Entity
  */
-class Posts
+class Posts extends IPostsQuery
 {
     /**
      * @var integer

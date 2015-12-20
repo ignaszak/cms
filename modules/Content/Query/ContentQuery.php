@@ -5,7 +5,6 @@ namespace Content\Query;
 use Conf\Conf;
 use Conf\DB\DBDoctrine;
 use System\Router\Storage as Router;
-use CMSException\InvalidQueryException;
 use Ignaszak\Registry\RegistryFactory;
 
 class ContentQuery extends IContentQuery
@@ -18,18 +17,20 @@ class ContentQuery extends IContentQuery
     private $entityContentArray = array(); //
     private $isPaginationEnabled = true; //
     private $limit; //
+    private $status; //
 
     public function __construct($entityName)
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->_em = DBDoctrine::em();
-        $this->_contentQueryBuilder = new ContentQueryBuilder($this);
         $this->entityName = $entityName;
+        $this->_contentQueryBuilder = new ContentQueryBuilder($this);
         $this->createQuery();
     }
 
     public function getContent()
     {
+        $this->statusHandler();
         $this->queryController();
 
         if (!$this->isPaginationEnabled)
@@ -58,12 +59,37 @@ class ContentQuery extends IContentQuery
         return $this;
     }
 
+    public function status(string $value): IContentQuery
+    {
+        $this->status = $value;
+        return $this;
+    }
+
+    private function statusHandler()
+    {
+        $value = 1;
+        if (Router::getRouteName() == 'admin') {
+            if ($this->status == 'public') {
+                $value = 1;
+            } elseif ($this->status == 'edit') {
+                $value = 0;
+            } else {
+                $value = null;
+            }
+        }
+        if (is_int($value)) {
+            $query = $this->contentQuery
+                ->andwhere('c.public = '.$value);
+            $this->contentQuery = $query;
+        }
+    }
+
     private function countQuery()
     {
         $query = $this->contentQuery
-        ->select('COUNT(c)')
-        ->getQuery()
-        ->getSingleScalarResult();
+            ->select('COUNT(c)')
+            ->getQuery()
+            ->getSingleScalarResult();
 
         $this->contentQuery = $query;
     }

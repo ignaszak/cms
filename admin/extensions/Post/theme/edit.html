@@ -4,10 +4,16 @@
 
 <script>
 $(document).ready(function() {
+
     $('#summernote').summernote({
         height: 300,
         focus: true
     });
+
+    $("#delete").click(function() {
+        $('form').attr("action", "<?php echo $cms->getAdminEditPost('deleteLink'); ?>");     
+    });
+
 });
 </script>
 
@@ -24,55 +30,80 @@ $(document).ready(function() {
     .note-editor .btn {
         height: 30px;
     }
-</style>
-
-<?php
-
-$returnData = $cms->getFormResponseData('data');
-
-$id = null;
-$title = $returnData['setTitle'];
-$content = $returnData['setContent'];
-$catId = $returnData['setCategory'];
-$formTitle = 'Add new post';
-
-if ($cms->getRoute('adminPostAction') == 'edit') {
-
-    $formTitle = 'Edit post';
-
-    $cms->setContent('post')->alias($cms->getRoute('alias'));
-
-    foreach ($cms->getContent() as $post) {
-        $id = $post->getId();
-        $catId = $post->getCategoryId();
-        $title = $post->getTitle();
-        $content = $post->getContent();
+    #publicButton label {
+        width: 82px;
     }
-
-}
-
-?>
+</style>
 
 <div class="container-fluid">
 
-    <h2><?php echo $formTitle; ?></h2>
+    <h2><?php echo $cms->getAdminEditPost('formTitle'); ?></h2>
 
-    <form method="post" action="<?php echo $cms->getAdminAdress(); ?>/post/form">
+    <form method="post" action="<?php echo $cms->getAdminEditPost('formLink'); ?>">
 
-        <input type="hidden" name="id" value="<?php echo $id; ?>">
+        <input type="hidden" name="id" value="<?php echo $cms->getAdminEditPost('id'); ?>">
 
         <div class="well well-controls input-group">
-            <button type="submit" class="btn btn-success" name="public" value="1">Public</button>
-            <button type="submit" class="btn btn-primary" name="public" value="0">Save</button>
-            <button type="submit" class="btn btn-default">View</button>
+            <button type="submit" class="btn btn-primary">Save</button>
+
+            <script>
+                $(document).ready(function(){
+                    $("#viewButton").click(function(){
+                        $("div.modal-body").html( $("#summernote").val() );
+                    });
+                });
+            </script>
+            <button type="button" id="viewButton" class="btn btn-default" data-toggle="modal" data-target="#view">
+                View
+            </button>
+             <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="viewLabel">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="viewLabel"><?php echo $cms->getAdminEditPost('title'); ?></h4>
+                        </div>
+                        <div class="modal-body"></div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+            $(document).ready(function(){
+                /**
+                 * Public Button
+                 */
+                if ($("#publicButton input").val() == 1) {
+                    $("#publicButton i").removeClass('fa-square-o').addClass('fa-check-square-o');
+                    $("#publicButton label").addClass('active');
+                    $("#itemPublic").val(1);
+                }
+                $("#publicButton").click(function(){
+                    if ($("#publicButton input").val() == 1) {
+                        $("#publicButton i").removeClass('fa-check-square-o').addClass('fa-square-o');
+                        $("#itemPublic").val(0);
+                    } else {
+                        $("#publicButton i").removeClass('fa-square-o').addClass('fa-check-square-o');
+                        $("#itemPublic").val(1);
+                    }
+                });
+            });
+            </script>
+            <div class="btn-group" id="publicButton" data-toggle="buttons">
+                <label class="btn btn-success">
+                <input type="hidden" id="itemPublic" name="public" value="<?php echo $cms->getAdminEditPost('public'); ?>">
+                    <input type="checkbox" value="<?php echo $cms->getAdminEditPost('public'); ?>" autocomplete="off">Public: <i class="fa fa-square-o"></i>
+                </label>
+            </div>
+            <button type="submit" class="btn btn-danger" id="delete">Delete</button>
         </div>
 
         <div class="form-group" style="margin-bottom: 5px;">
-            <input type="text" name="title" value="<?php echo $title; ?>" class="form-control input-lg" placeholder="Title">
+            <input type="text" name="title" value="<?php echo $cms->getAdminEditPost('title'); ?>" class="form-control input-lg" placeholder="Title">
         </div>
 
         <div class="form-group">
-            <textarea name="content" id="summernote"><?php echo $content; ?></textarea>
+            <textarea name="content" id="summernote"><?php echo $cms->getAdminEditPost('content'); ?></textarea>
         </div>
 
         <div class="row">
@@ -90,7 +121,7 @@ if ($cms->getRoute('adminPostAction') == 'edit') {
                         <div class="radio">
                             <label style="width:100%;">
                                 <input type="radio" name="categoryId" value="<?php echo $cat->getId(); ?>"
-                                <?php if ($catId == $cat->getId()) echo 'checked'; ?>>
+                                <?php if ($cms->getAdminEditPost('catId') == $cat->getId()) echo 'checked'; ?>>
                                 <?php echo $cat->getTitle(); ?>
                             </label>
                         </div>
