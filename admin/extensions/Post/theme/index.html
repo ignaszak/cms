@@ -1,6 +1,5 @@
-<link href="<?php echo $cms->getAdminAdress(); ?>/extensions/post/theme/css/style.css" rel="stylesheet">
-
 <?php
+if ($cms->getRoute('route3') == 'p') {
     switch ($cms->getRoute('adminPostAction')) {
         case 'view':
             loadExtensionFile('theme/view.html');
@@ -10,4 +9,7 @@
             loadExtensionFile('theme/edit.html');
             break;
     }
+} else {
+    loadExtensionFile('theme/view-categories.html');
+}
 ?>

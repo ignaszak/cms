@@ -91,7 +91,7 @@ class ContentQuery extends IContentQuery
             ->getQuery()
             ->getSingleScalarResult();
 
-        $this->contentQuery = $query;
+        parent::$countQuery = $query;
     }
 
     private function createQuery()

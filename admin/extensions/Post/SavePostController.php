@@ -8,7 +8,7 @@ use Content\Controller\Factory;
 use Content\Controller\PostController;
 use Ignaszak\Registry\RegistryFactory;
 
-class SaveController extends Controller
+class SavePostController extends Controller
 {
 
     private $cms;
@@ -26,21 +26,22 @@ class SaveController extends Controller
         // Find entity by id to update
         if ($_POST['id']) $controller->find($_POST['id']);
 
-        // Sets data
-        $controller->setReference('category', $this->getCategoryId());
-        $controller->setReference('author', $this->cms->getUserId());
-        $controller->setDate(new \DateTime);
-        $controller->setTitle($_POST['title']);
         $alias = $controller->getAlias($_POST['title']);
-        $controller->setAlias($alias);
-        $controller->setContent($_POST['content']);
         $public = @$_POST['public'] == 1 ? 1 : 0;
-        $controller->setPublic($public);
 
-        // Execute
-        $controller->insert();
+        $controller
+            // Sets data
+            ->setReference('category', $this->getCategoryId())
+            ->setReference('author', $this->cms->getUserId())
+            ->setDate(new \DateTime)
+            ->setTitle($_POST['title'])
+            ->setAlias($alias)
+            ->setContent($_POST['content'])
+            ->setPublic($public)
+            //Execute
+            ->insert();
 
-        Server::headerLocation("admin/post/edit/$alias");
+        Server::headerLocation("admin/post/p/edit/$alias");
     }
 
     private function getCategoryId(): int

@@ -114,7 +114,7 @@ $(document).ready(function() {
                     <div class="panel-body div-scroll">
 
                     <?php 
-                    $cms->setContent('category')->force();
+                    $cms->setContent('category')->paginate(false)->force();
                     foreach ($cms->getContent() as $cat) :
                     ?>
 

@@ -13,16 +13,21 @@
     <router>
         <route>
             <item>
-                <pattern>{adminPostAction:view}/{page}</pattern>
-                <controller>AdminController\Post\ViewController</controller>
+                <pattern>p/{adminPostAction:view}/{page}</pattern>
+                <controller>AdminController\Post\ViewPostController</controller>
             </item>
             <item>
-                <pattern>{adminPostAction:form}</pattern>
-                <controller>AdminController\Post\SaveController</controller>
+                <pattern>p/{adminPostAction:form}</pattern>
+                <controller>AdminController\Post\SavePostController</controller>
             </item>
             <item>
-                <pattern>{adminPostAction}/{alias}</pattern>
-                <controller>AdminController\Post\EditController</controller>
+                <pattern>p/{adminPostAction}/{alias}</pattern>
+                <controller>AdminController\Post\EditPostController</controller>
+            </item>
+
+            <item>
+                <pattern>c/{adminPostAction:view}/</pattern>
+                <controller>AdminController\Post\ViewCategoryController</controller>
             </item>
         </route>
         <token>
@@ -35,12 +40,16 @@
 
     <menu>
         <item>
-            <title>Add</title>
-            <link>add/</link>
+            <title>Add new post</title>
+            <link>p/add/</link>
         </item>
         <item>
-            <title>View</title>
-            <link>view/</link>
+            <title>View posts</title>
+            <link>p/view/</link>
+        </item>
+        <item>
+            <title>Categories</title>
+            <link>c/view/</link>
         </item>
     </menu>
 

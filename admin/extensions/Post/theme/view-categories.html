@@ -1,0 +1,15 @@
+<link rel="stylesheet" href="<?php echo $cms->getAdminAdress(); ?>/extensions/Post/theme/css/treeview.css">
+<script type="text/javascript">
+   $(document).ready(function () {
+     $('div.treeview ul li:last-child').addClass('last');
+   });
+</script>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">Categories</div>
+    <div class="panel-body">
+        <div class="treeview">
+            <?php echo $cms->getAdminViewCategoryTreeview(); ?>
+        </div>
+    </div>
+</div>

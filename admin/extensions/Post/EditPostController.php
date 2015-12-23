@@ -9,7 +9,7 @@ use FrontController\ViewHelperController;
 use Content\Controller\Factory;
 use Content\Controller\PostController;
 
-class EditController extends Controller
+class EditPostController extends Controller
 {
 
     public $cms;
@@ -24,16 +24,13 @@ class EditController extends Controller
         $this->setViewHelperName('AdminEditPost');
 
         if ($this->cms->getRoute('adminPostAction') == 'delete' && $this->cms->getRoute('alias')) {
-            // Initialize
             $controller = new Factory(new PostController);
-            // Find
             $controller->findBy(
-                array('alias' => $this->cms->getRoute('alias'))
-            );
-            // Execute
-            $controller->remove();
+                    array('alias' => $this->cms->getRoute('alias'))
+                )
+                ->remove();
 
-            Server::headerLocation("admin/post/view/");
+            Server::headerLocation("admin/post/p/view/");
         }
     }
 
@@ -65,9 +62,9 @@ class EditController extends Controller
                 $data['catId'] = $this->returnData['setCategory'];
                 $data['public'] = $this->returnData['setPublic'];
                 $data['formTitle'] = 'Add new post';
-                $data['formLink'] = $this->cms->getAdminAdress() . "/post/form";
+                $data['formLink'] = $this->cms->getAdminAdress() . "/post/p/form";
 
-                if ($this->cms->getRoute('adminPostAction') == 'edit') {
+                if ($this->cms->getRoute('adminPostAction') == 'edit' && $this->cms->getRoute('alias')) {
 
                     $data['formTitle'] = 'Edit post';
 
@@ -80,7 +77,7 @@ class EditController extends Controller
                         $data['title'] = $post->getTitle();
                         $data['content'] = $post->getContent();
                         $data['public'] = $post->getPublic();
-                        $data['deleteLink'] = $this->cms->getAdminAdress() . "/post/delete/" . $post->getAlias();
+                        $data['deleteLink'] = $this->cms->getAdminAdress() . "/post/p/delete/" . $post->getAlias();
                     }
 
                 }

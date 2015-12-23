@@ -21,21 +21,69 @@ class Factory
     /**
      * @param string $name
      * @param array $arguments
+     * @return Factory
      */
-    public function __call($name, $arguments)
+    public function __call($name, $arguments): Factory
     {
         $this->_controller->setToDataArray($name, $arguments);
+
+        return $this;
     }
 
     /**
      * @param string $entityName
      * @param int $by
+     * @return Factory
      */
-    public function setReference(string $entityName, int $by)
+    public function setReference(string $entityName, int $by): Factory
     {
         $this->_controller->setReference($entityName, $by);
+
+        return $this;
     }
-    
+
+    /**
+     * @param int $id
+     * @return Factory
+     */
+    public function find(int $id): Factory
+    {
+        $this->_controller->find($id);
+
+        return $this;
+    }
+
+    /**
+     * @param array $array
+     * @return Factory
+     */
+    public function findBy(array $array): Factory
+    {
+        $this->_controller->findBy($array);
+
+        return $this;
+    }
+
+    /**
+     * @return Factory
+     */
+    public function insert(): Factory
+    {
+        $this->_controller->insert();
+
+        return $this;
+    }
+
+    /**
+     * @return Factory
+     */
+    public function remove(): Factory
+    {
+        $this->_controller->remove();
+
+        return $this;
+    }
+
     /**
      * @param string $string
      * @return string
@@ -44,32 +92,6 @@ class Factory
     {
         $_alias = new Alias($this->_controller->getEntity());
         return $_alias->getAlias($string);
-    }
-
-    /**
-     * @param int $id
-     */
-    public function find(int $id)
-    {
-        $this->_controller->find($id);
-    }
-
-    /**
-     * @param array $array
-     */
-    public function findBy(array $array)
-    {
-        $this->_controller->findBy($array);
-    }
-
-    public function insert()
-    {
-        $this->_controller->insert();
-    }
-
-    public function remove()
-    {
-        $this->_controller->remove();
     }
 
 }

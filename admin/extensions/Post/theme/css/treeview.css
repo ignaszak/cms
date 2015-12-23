@@ -1,0 +1,23 @@
+div.treeview ul,div.treeview  ul ul {
+    list-style-type: none;
+    background: url(../img/vline.png) repeat-y;
+    margin: 0;
+    padding: 0;
+}
+   
+div.treeview ul ul {
+    margin-left: 6px;
+}
+
+div.treeview ul li {
+    margin: 0;
+    padding: 0 12px;
+    line-height: 20px;
+    background: url(../img/node.png) no-repeat;
+    color: #369;
+    font-weight: bold;
+}
+
+div.treeview ul li.last {
+    background: #fff url(../img/lastnode.png) no-repeat;
+}

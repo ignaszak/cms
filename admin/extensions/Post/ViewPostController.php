@@ -6,7 +6,7 @@ use FrontController\Controller;
 use Ignaszak\Registry\RegistryFactory;
 use FrontController\ViewHelperController;
 
-class ViewController extends Controller
+class ViewPostController extends Controller
 {
 
     public $cms;
@@ -32,6 +32,11 @@ class ViewController extends Controller
             {
                 $this->_controller->cms->setContent('post')->status('all');
                 return $this->_controller->cms->getContent();
+            }
+
+            public function getAdminViewPostLink()
+            {
+                return $this->_controller->cms->getAdminAdress() . "/post/p/edit/";
             }
         };
     }

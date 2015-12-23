@@ -22,7 +22,6 @@ class PostController extends Controller
 
     public function remove()
     {
-        //$this->validAndAddToEntity(array());
         $this->_em->remove($this->_entity);
         $this->_em->flush($this->_entity);
     }
