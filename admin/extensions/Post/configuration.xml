@@ -27,7 +27,14 @@
 
             <item>
                 <pattern>c/{adminPostAction:view}/</pattern>
+            </item>
+            <item>
+                <pattern>c/ajax/category-list.json</pattern>
                 <controller>AdminController\Post\ViewCategoryController</controller>
+            </item>
+            <item>
+                <pattern>c/{adminPostAction:form}</pattern>
+                <controller>AdminController\Post\SaveCategoryController</controller>
             </item>
         </route>
         <token>

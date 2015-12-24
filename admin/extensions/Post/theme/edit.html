@@ -113,6 +113,8 @@ $(document).ready(function() {
                     <div class="panel-heading">Chose category:</div>
                     <div class="panel-body div-scroll">
 
+                        <?php loadExtensionFile('theme/category-list.html'); ?>
+
                     <?php 
                     $cms->setContent('category')->paginate(false)->force();
                     foreach ($cms->getContent() as $cat) :

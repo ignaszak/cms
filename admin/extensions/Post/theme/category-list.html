@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="<?php echo $cms->getAdminAdress(); ?>/extensions/Post/theme/js/jstree/dist/themes/default/style.min.css" />
+<script src="<?php echo $cms->getAdminAdress(); ?>/extensions/Post/theme/js/jstree/dist/jstree.min.js"></script>
+<script>var admin_adress = "<?php echo $cms->getAdminAdress(); ?>";</script>
+<script src="<?php echo $cms->getAdminAdress(); ?>/extensions/Post/theme/js/jstree.js"></script>
+
+<button type="button" class="btn btn-success btn-sm" onclick="jstree_category_create();">
+    <i class="glyphicon glyphicon-asterisk"></i> Create
+</button>
+<button type="button" class="btn btn-warning btn-sm" onclick="jstree_category_rename();">
+    <i class="glyphicon glyphicon-pencil"></i> Rename
+</button>
+<button type="button" class="btn btn-danger btn-sm" onclick="jstree_category_delete();">
+    <i class="glyphicon glyphicon-remove"></i> Delete
+</button>
+
+<div id="jstree-category"></div>
+
+<input type="hidden" name="" value="">
