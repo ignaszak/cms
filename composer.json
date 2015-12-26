@@ -17,7 +17,8 @@
 		"ircmaxell/password-compat" : ">=1.0.4",
 		"ignaszak/router" : "dev-master",
 		"ignaszak/exception" : "dev-master",
-		"ignaszak/registry" : "dev-master"
+		"ignaszak/registry" : "dev-master",
+		"beberlei/DoctrineExtensions" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {
