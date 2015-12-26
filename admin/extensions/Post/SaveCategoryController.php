@@ -24,7 +24,11 @@ class SaveCategoryController extends Controller
         // Initialize
         $controller = new Factory(new CategoryController);
         // Find entity by id to update
-        if (is_numeric($_POST['id'])) $controller->find($_POST['id']);
+        $refresh = 'refresh';
+        if (is_numeric($_POST['id'])) {
+            $refresh = '';
+            $controller->find($_POST['id']);
+        }
 
         if ($_POST['action'] == 'edit') {
 
@@ -39,11 +43,14 @@ class SaveCategoryController extends Controller
                 //Execute
                 ->insert();
 
+            echo $refresh;
+
         } elseif ($_POST['action'] == 'delete') {
 
             $controller->remove();
 
         }
+        exit;
     }
 
 }

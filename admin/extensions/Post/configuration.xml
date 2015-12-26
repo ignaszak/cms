@@ -29,7 +29,7 @@
                 <pattern>c/{adminPostAction:view}/</pattern>
             </item>
             <item>
-                <pattern>c/ajax/category-list.json</pattern>
+                <pattern>c/ajax/{id:([0-9]*)}/category-list.json</pattern>
                 <controller>AdminController\Post\ViewCategoryController</controller>
             </item>
             <item>

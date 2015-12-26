@@ -31,21 +31,39 @@ function jstree_category_delete()
     if (sel != 1) {ref.delete_node(sel);}
 }
 
-function jstree_ajax(data, action)
+function jstree_ajax(obj, action)
 {
     $.post(
         admin_adress + "/post/c/form",
         {
             action: action,
-            id: data.node.id,
-            parentId: data.node.parent,
-            title: data.text
+            id: obj.node.id,
+            parentId: obj.node.parent,
+            title: obj.text
         },
-        function(data, status) {}
+        function(data, status) {
+            if (data == 'refresh') {
+                $('#jstree-category').jstree(true).refresh();
+            }
+        }
     );
 }
 
 $(function () {
+
+	/**
+	 * Sets default category id
+	 */
+    if (typeof category_id == 'undefined') category_id = 1;
+
+    /**
+     * 
+     */
+    $('input[name="categoryId"]').val(category_id);
+
+    /**
+     * Configure jsTree
+     */
     $('#jstree-category').jstree({
         "core" : {
             "animation" : 0,
@@ -56,26 +74,34 @@ $(function () {
                 "icons" : false
             },
             "data" : {
-                "url" : admin_adress + "/post/c/ajax/category-list.json"
+                "url" : admin_adress + "/post/c/ajax/" + category_id + "/category-list.json"
             }
         },
-        "plugins" : [ "dnd", "state", "wholerow" ]
+        "plugins" : [ "dnd", "wholerow" ]
     })
-    .on('rename_node.jstree', function (e, data) {
-        jstree_ajax(data, 'edit');
+    .on('rename_node.jstree', function (e, obj) {
+        jstree_ajax(obj, 'edit');
     })
-    .on('delete_node.jstree', function (e, data) {
-        jstree_ajax(data, 'delete');
+    .on('delete_node.jstree', function (e, obj) {
+        jstree_ajax(obj, 'delete');
+    })
+    .on('loaded.jstree', function() {
+    	$('#jstree-category').jstree('open_all');
+    })
+    .on('select_node.jstree', function() {
+        var id = $('#jstree-category').jstree(true).get_selected();
+        $('input[name="categoryId"]').val(id);
     });
-    $(document).on('dnd_stop.vakata', function (e, data) {
-        parentId = data.event.target.id.split('_');
+    $(document).on('dnd_stop.vakata', function (e, obj) {
+        parentId = obj.event.target.id.split('_');
         var stub = {
             node : {
-                id : data.data.nodes[0],
+                id : obj.data.nodes[0],
                 parent : parentId[0]
             },
-            text : data.element.innerText
+            text : obj.element.innerText
         }
         jstree_ajax(stub, 'edit');
     });
+
 });
