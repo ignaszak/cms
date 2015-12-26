@@ -1,6 +1,4 @@
-<?php
-
-foreach ($cms->display() as $post): ?>
+<?php foreach ($cms->display() as $post): ?>
 
 <section id="<?php echo $post->getAlias(); ?>">
     <div class="row">
@@ -16,11 +14,19 @@ foreach ($cms->display() as $post): ?>
         <div class="col-xs-12">
             <p class="inf">
                 <i class="fa fa-calendar"></i>
-                <?php echo $post->getDate('j F Y, G:i'); ?>
+                <a href="<?php echo $post->getDateLink(); ?>">
+                    <?php echo $post->getDate('j F Y, G:i'); ?>
+                </a>
                 &nbsp;&nbsp;
                 <i class="fa fa-user"></i>
                 <?php $author = $post->getAuthor(); ?>
                 <?php echo $author->getLogin(); ?>
+                &nbsp;&nbsp;
+                <i class="fa fa-folder-o"></i>
+                <a href="<?php echo $post->getCategoryLink(); ?>">
+                    <?php $cat = $post->getCategory(); ?>
+                    <?php echo $cat->getTitle(); ?>
+                </a>
             </p>
         </div>
     </div>

@@ -22,6 +22,8 @@
         <!-- Font awesome for bootstrap -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 
+        <link rel="stylesheet" href="<?php echo $cms->getThemePath(); ?>/css/BreadCrumbsArrows.css">
+
         <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/header.less">
         <script>
             less = {
@@ -80,3 +82,5 @@
     </header>
 
     <div class="container">
+
+    <?php echo $cms->getBreadcrumbsTheme('primary'); ?>

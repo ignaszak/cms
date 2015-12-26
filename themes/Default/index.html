@@ -3,10 +3,9 @@
 <?php
     switch ($cms->getRouteName()) {
         case 'post':
-            loadFile('post.html');
-            break;
         case 'category':
-            loadFile('category.html');
+        case 'date':
+            loadFile('post.html');
             break;
         case 'user':
             loadFile('user.html');

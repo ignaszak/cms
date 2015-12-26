@@ -7,5 +7,6 @@ ViewHelper\ViewHelperExtension::addExtensionClass(array(
     'Form\\Form',
     'Pagination\\Pagination',
     'System\\Router\\Route',
-    'Content\\Query\\Content'
+    'Content\\Query\\Content',
+    'Breadcrumbs\\Breadcrumbs'
 ));
