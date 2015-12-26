@@ -67,7 +67,7 @@ class ContentQuery extends IContentQuery
 
     private function statusHandler()
     {
-        if ($this->entityName == 'post') {
+        if (method_exists($this->entityName, 'getPublic')) {
             $value = 1;
             if (Router::getRouteName() == 'admin') {
                 if ($this->status == 'public') {
