@@ -67,20 +67,22 @@ class ContentQuery extends IContentQuery
 
     private function statusHandler()
     {
-        $value = 1;
-        if (Router::getRouteName() == 'admin') {
-            if ($this->status == 'public') {
-                $value = 1;
-            } elseif ($this->status == 'edit') {
-                $value = 0;
-            } else {
-                $value = null;
+        if ($this->entityName == 'post') {
+            $value = 1;
+            if (Router::getRouteName() == 'admin') {
+                if ($this->status == 'public') {
+                    $value = 1;
+                } elseif ($this->status == 'edit') {
+                    $value = 0;
+                } else {
+                    $value = null;
+                }
             }
-        }
-        if (is_int($value)) {
-            $query = $this->contentQuery
-                ->andwhere('c.public = '.$value);
-            $this->contentQuery = $query;
+            if (is_int($value)) {
+                $query = $this->contentQuery
+                    ->andwhere('c.public = '.$value);
+                $this->contentQuery = $query;
+            }
         }
     }
 

@@ -6,6 +6,7 @@ use Conf\Conf;
 use System\Router\Storage as Router;
 use CMSException\InvalidClassException;
 use Ignaszak\Registry\RegistryFactory;
+use Content\Query\Content as Query;
 
 class ViewHelper
 {
@@ -62,10 +63,48 @@ class ViewHelper
     public function display()
     {
         $_contentInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName('Content');
-        $contentName = Router::getRoute();
-        $_contentInstance->setContent($contentName);
-
+        switch (Router::getRoute()) {
+            case 'post':
+                $_contentInstance->setContent('post');
+                break;
+            case 'category':
+                $_contentInstance->setContent('post')
+                    ->categoryId($this->getCategoryHierarchy(Router::getRoute('alias')))
+                    ->force();
+                break;
+            case 'date':
+                $_contentInstance->setContent('post')
+                    ->date(Router::getRoute('date'))
+                    ->force();
+                break;
+            default:
+                $_contentInstance->setContent('post');
+        }
         return $_contentInstance->getContent();
+    }
+
+    /**
+     * @param string $alias
+     * @param int $parentId
+     * @return array
+     */
+    private function getCategoryHierarchy(string $alias = "", int $parentId = 0): array
+    {
+        $array = array();
+        $query = new Query;
+        $query->setContent('category')->paginate(false)->force();
+        $categories = $query->getContent();
+        if (!empty($alias)) {
+            $query->setContent('category')->alias($alias)->force();
+            $parentId = $query->getContent()[0]->getParentId();
+        }
+        foreach ($categories as $cat) {
+            if ($parentId == $cat->getParentId()) {
+                $array[] = $cat->getId();
+                $array = array_merge($this->getCategoryHierarchy("", $cat->getId()), $array);
+            }
+        }
+        return $array;
     }
 
 }

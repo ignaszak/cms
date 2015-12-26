@@ -94,4 +94,12 @@ class Factory
         return $_alias->getAlias($string);
     }
 
+    /**
+     * @return integer
+     */
+    public function getId(): int
+    {
+        return $this->_controller->getEntity()->getId();
+    }
+
 }

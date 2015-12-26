@@ -2,6 +2,8 @@
 
 namespace Content\Query;
 
+use Conf\DB\DBDoctrine;
+
 class ContentQueryBuilder implements IContentQueryBuilder
 {
 
@@ -12,15 +14,15 @@ class ContentQueryBuilder implements IContentQueryBuilder
         $this->_contentQuery = $_contentQuery;
     }
 
-    public function id(int $value): IContentQuery
+    public function id($value): IContentQuery
     {
         $this->set('c.id', $value);
         return $this->_contentQuery;
     }
 
-    public function categoryId(int $value): IContentQuery
+    public function categoryId($value): IContentQuery
     {
-        $this->set('c.category_id', $value);
+        $this->set('c.categoryId', $value);
         return $this->_contentQuery;
     }
 
@@ -32,9 +34,9 @@ class ContentQueryBuilder implements IContentQueryBuilder
         return $this->_contentQuery;
     }
 
-    public function authorId(int $value): IContentQuery
+    public function authorId($value): IContentQuery
     {
-        $this->set('c.author_id', $value);
+        $this->set('c.authorId', $value);
         return $this->_contentQuery;
     }
 
@@ -46,9 +48,20 @@ class ContentQueryBuilder implements IContentQueryBuilder
         return $this->_contentQuery;
     }
 
-    public function date(\DateTime $value): IContentQuery
+    public function date(string $value): IContentQuery
     {
-        $this->set('c.date', $value);
+        $date = explode('-', $value);
+
+        $emConfig = DBDoctrine::em()->getConfiguration();
+        $emConfig->addCustomDatetimeFunction('DATE_FORMAT', 'DoctrineExtensions\Query\Mysql\DateFormat');
+
+        $format = "";
+        if (array_key_exists(0, $date)) $format = "%Y";
+        if (array_key_exists(1, $date)) $format .= "-%c";
+        if (array_key_exists(2, $date)) $format .= "-%d";
+
+        $this->set('DATE_FORMAT(c.date, \''.$format.'\')', $value);
+
         return $this->_contentQuery;
     }
 

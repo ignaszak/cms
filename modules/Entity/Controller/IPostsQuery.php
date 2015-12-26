@@ -30,12 +30,30 @@ abstract class IPostsQuery
     }
 
     /**
+     * @return string
+     */
+    public function getCategoryLink()
+    {
+        $_cms = RegistryFactory::start()->get('cms');
+        return "{$_cms->getSiteAdress()}category/{$this->getCategory()->getAlias()}";
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateLink($format = 'Y-m-d')
+    {
+        $_cms = RegistryFactory::start()->get('cms');
+        return "{$_cms->getSiteAdress()}date/{$this->getDate($format)}";
+    }
+
+    /**
      * @param int $cut
      * @return string
      */
     public function getText($cut = 500)
     {
-        if (!empty(Router::getRoute('alias')) || !$cut) {
+        if (Router::getRoute('route1') == 'post' || !$cut) {
             return $this->getContent();
         } else {
             return (new TextFormat)->truncateHtml(
