@@ -17,7 +17,7 @@ $router->add('user', '(user)/(login)/{userName}');
 
 $router->addToken('alias', '([a-z0-9_-]*)');
 $router->addToken('page', '([0-9]*)');
-$router->addToken('date', '([a-z0-9_-]*)');
+$router->addToken('date', '([0-9-]*)');
 $router->addToken('method', '(post|ajax)');
 
 $router->addToken('userAction', '(registration|login|logout|remind)');
