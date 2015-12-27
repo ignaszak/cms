@@ -1,16 +1,32 @@
 <?php loadFile('header.html'); ?>
 
-<?php
-    switch ($cms->getRouteName()) {
-        case 'post':
-        case 'category':
-        case 'date':
-            loadFile('post.html');
-            break;
-        case 'user':
-            loadFile('user.html');
-            break;
-    }
-?>
+<div class="container-fluid">
+
+    <div class="row">
+    
+        <div class="col-md-2">
+            <?php loadFile('sidebar-category.html'); ?>
+        </div>
+    
+        <div class="col-md-10">
+
+            <?php echo $cms->getBreadcrumbsTheme('primary'); ?>
+
+            <?php switch ($cms->getRouteName()) {
+                case 'post':
+                case 'category':
+                case 'date':
+                    loadFile('post.html');
+                break;
+                case 'user':
+                    loadFile('user.html');
+                break;
+            } ?>
+        </div>
+    
+    </div>
+
+</div>
 
 <?php loadFile('footer.html'); ?>
+
