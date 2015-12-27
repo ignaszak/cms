@@ -3,21 +3,27 @@
 namespace Breadcrumbs;
 
 use System\Router\Storage as Router;
-use Content\Query\Content as Query;
 use Ignaszak\Registry\RegistryFactory;
+use Content\Query\Content as Query;
 
 class BreadcrumbsGenerator
 {
 
     /**
-     * @var \Content\Query\Content
+     * 
+     * @var \Conf\Conf
+     */
+    private $_conf;
+
+    /**
+     * @var Query
      */
     private $_query;
 
     /**
-     * @var Entity\Categories[]
+     * @var array
      */
-    private $categoryArray;
+    private $breadcrumbsArray;
 
     /**
      * @param Query $_query
@@ -25,8 +31,8 @@ class BreadcrumbsGenerator
      */
     public function __construct()
     {
-        $this->_query = new Query();
-        $this->categoryArray = $this->getCategoryList();
+        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->_query = new Query;
     }
 
     /**
@@ -37,7 +43,10 @@ class BreadcrumbsGenerator
         switch (Router::getRouteName()) {
             case 'post':
             case 'category':
-                return $this->switchBreadcrumbs();
+                return $this->createCategoryBreadcrumbs();
+                break;
+            case 'date':
+                return $this->createDateBreadcrumbs();
                 break;
             default: return array();
         }
@@ -46,18 +55,34 @@ class BreadcrumbsGenerator
     /**
      * @return array
      */
-    private function getCategoryList(): array
+    private function createDateBreadcrumbs(): array
     {
-        $this->_query->setContent('category')
-            ->paginate(false)
-            ->force();
-        return $this->_query->getContent();
+        $dateArray = explode('-', Router::getRoute('date'));
+        $array = array(array(
+            'title' => 'Home',
+            'id'    => '',
+            'link'  => $this->_conf->getBaseUrl()
+        ));
+        $i = 1;
+        foreach ($dateArray as $date) {
+            $arraySlice = array_slice($dateArray, 0, $i);
+            $link = $arraySlice[0];
+            if (array_key_exists(1, $arraySlice)) $link .= "-{$arraySlice[1]}";
+            if (array_key_exists(2, $arraySlice)) $link .= "-{$arraySlice[2]}";
+            $array[] = array(
+                'title' => $i == 2 ? date("F", mktime(0, 0, 0, $date, 1)) : $date,
+                'id'    => '',
+                'link'  => "{$this->_conf->getBaseUrl()}date/{$link}"
+            );
+            ++$i;
+        }
+        return $array;
     }
 
     /**
      * @return array
      */
-    private function switchBreadcrumbs(): array
+    private function createCategoryBreadcrumbs(): array
     {
         $name = Router::getRouteName();
         $alias = Router::getRoute('alias');
@@ -65,9 +90,19 @@ class BreadcrumbsGenerator
             $this->_query->setContent($name)->limit(1)->alias($alias)->force();
             $content = $this->_query->getContent()[0];
             $categoryId = ($name == 'category') ? $content->getId() : $content->getCategoryId();
+            $this->breadcrumbsArray = $this->getCategoryList();
             return $this->generateBreadcrumbs($categoryId);
         }
         return array();
+    }
+
+    /**
+     * @return \Entity\Categories[]
+     */
+    private function getCategoryList(): array
+    {
+        return RegistryFactory::start()
+            ->register('System\Storage\CategoryList')->get();
     }
 
     /**
@@ -76,14 +111,13 @@ class BreadcrumbsGenerator
      */
     private function generateBreadcrumbs(int $catId): array
     {
-        $conf = RegistryFactory::start('file')->register('Conf\Conf');
         $array = array();
-        foreach ($this->categoryArray as $cat) {
+        foreach ($this->breadcrumbsArray as $cat) {
             if ($catId == $cat->getId()) {
                 $array[] = array(
                     'title' => $cat->getTitle(),
                     'id'    => $cat->getId(),
-                    'link'  => "{$conf->getBaseUrl()}category/{$cat->getAlias()}"
+                    'link'  => $this->_conf->getBaseUrl() . ($cat->getTitle() != 'Home' ?? "category/{$cat->getAlias()}")
                 );
                 $array = array_merge($this->generateBreadcrumbs($cat->getParentId()), $array);
             }

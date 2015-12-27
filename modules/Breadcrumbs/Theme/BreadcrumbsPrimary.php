@@ -31,7 +31,7 @@ class BreadcrumbsPrimary implements Theme
         $i = 1;
         $count = count($categories);
         foreach ($categories as $cat) {
-            if ($cat['id'] == 1) $cat['title'] = "<i class=\"glyphicon glyphicon-home\"></i>";
+            if ($cat['title'] == 'Home') $cat['title'] = "<i class=\"glyphicon glyphicon-home\"></i>";
             if ($i == $count) { // Last element
                 $breadcrum .= "<li class=\"active\">{$cat['title']}</li>";
             } else {

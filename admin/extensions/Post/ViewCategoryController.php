@@ -4,7 +4,6 @@ namespace AdminController\Post;
 
 use FrontController\Controller;
 use Ignaszak\Registry\RegistryFactory;
-use FrontController\ViewHelperController;
 
 class ViewCategoryController extends Controller
 {
@@ -16,7 +15,8 @@ class ViewCategoryController extends Controller
     public function __construct()
     {
         $this->cms = RegistryFactory::start()->get('cms');
-        $this->getCategoryList();
+        $this->categoryArray = RegistryFactory::start()
+            ->register('System\Storage\CategoryList')->get();
     }
 
     public function run()
@@ -52,14 +52,6 @@ class ViewCategoryController extends Controller
             }
         }
         return !empty($string) ? "{$string}" : "";
-    }
-
-    private function getCategoryList()
-    {
-        $this->cms->setContent('category')
-            ->paginate(false)
-            ->force();
-        $this->categoryArray = $this->cms->getContent();
     }
 
 }

@@ -4,7 +4,6 @@ namespace AdminController\Post;
 
 use FrontController\Controller;
 use Ignaszak\Registry\RegistryFactory;
-use FrontController\ViewHelperController;
 use Content\Controller\Factory;
 use Content\Controller\CategoryController;
 

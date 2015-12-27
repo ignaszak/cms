@@ -29,7 +29,7 @@ class BreadcrumbsArrows implements Theme
         $breadcrum = "<div class=\"btn-group btn-breadcrumb\">";
         $categories = $this->_bg->getBreadcrumbs();
         foreach ($categories as $cat) {
-            if ($cat['id'] == 1) $cat['title'] = "<i class=\"glyphicon glyphicon-home\"></i>";
+            if ($cat['title'] == 'Home') $cat['title'] = "<i class=\"glyphicon glyphicon-home\"></i>";
             $breadcrum .= "<a href=\"{$cat['link']}\" class=\"btn btn-default\">{$cat['title']}</a>";
         }
         $breadcrum .= "</div>";

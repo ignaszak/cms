@@ -23,9 +23,9 @@ class Breadcrumbs
     public function getBreadcrumbsTheme(string $theme = "bootstrap"): string
     {
         switch ($theme) {
-            case "bootstrap":   $breadcrumbsTheme = new Theme\Bootstrap($this->_bg);             break;
-            case "arrows":      $breadcrumbsTheme = new Theme\BreadcrumbsArrows($this->_bg);     break;
-            case "primary": $breadcrumbsTheme = new Theme\BreadcrumbsPrimary($this->_bg); break;
+            case "bootstrap":   $breadcrumbsTheme = new Theme\Bootstrap($this->_bg);          break;
+            case "arrows":      $breadcrumbsTheme = new Theme\BreadcrumbsArrows($this->_bg);  break;
+            case "primary":     $breadcrumbsTheme = new Theme\BreadcrumbsPrimary($this->_bg); break;
             default:            $breadcrumbsTheme = new Theme\Bootstrap($this->_bg);
         }
 
