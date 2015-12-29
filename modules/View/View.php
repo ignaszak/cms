@@ -4,6 +4,7 @@ namespace View;
 
 use Ignaszak\Registry\RegistryFactory;
 use CMSException\InvalidFileException;
+use System\Router\Storage as Router;
 
 class View
 {
@@ -55,7 +56,13 @@ class View
 
     public function loadView()
     {
-        $this->loadFile($this->viewFileName);
+        if (!empty($this->viewFileName)) {
+            if (Router::isRouteName('admin')) {
+                $this->loadAdminExtensionThemeFile($this->viewFileName);
+            } else {
+                $this->loadFile($this->viewFileName);
+            }
+        }
     }
 
     /**

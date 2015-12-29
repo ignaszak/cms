@@ -21,9 +21,9 @@ class Admin extends \Admin\Extension\ExtensionInstances
         return $_conf->getBaseUrl() . ADMIN_URL;
     }
 
-    public function loadAdminExtensionThemeFile()
+    public function loadAdminExtensionThemeFile(string $fileName = '')
     {
-        $themeFile = @parent::$activeExtension->file->theme;
+        $themeFile = $fileName ?? @parent::$activeExtension->file->theme;
         $view = RegistryFactory::start()->get('view');
         $view->loadFile("../../extensions/{$this->getActiveExtensionFolderFromUrl()}/{$themeFile}");
     }

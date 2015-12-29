@@ -14,6 +14,7 @@ class EditPostController extends Controller
     public function run()
     {
         $this->setViewHelperName('AdminEditPost');
+        $this->_view->addView('theme/post-edit.html');
 
         if ($this->getRoute('adminPostAction') == 'delete' && $this->getRoute('alias')) {
             $controller = new Factory(new PostController);

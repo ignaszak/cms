@@ -11,6 +11,7 @@ class ViewPostController extends Controller
     public function run()
     {
         $this->setViewHelperName('AdminViewPost');
+        $this->_view->addView('theme/post-view.html');
     }
 
     /**

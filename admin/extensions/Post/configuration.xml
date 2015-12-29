@@ -5,11 +5,6 @@
     <base>post</base>
     <icon>fa fa-thumb-tack</icon>
 
-    <file>
-        <script>index.php</script>
-        <theme>theme/index.html</theme>
-    </file>
-
     <router>
         <route>
             <item>
@@ -27,14 +22,15 @@
 
             <item>
                 <pattern>c/{adminPostAction:view}/</pattern>
-            </item>
-            <item>
-                <pattern>c/ajax/{id:([0-9]*)}/category-list.json</pattern>
                 <controller>AdminController\Post\ViewCategoryController</controller>
             </item>
             <item>
+                <pattern>c/ajax/{id:([0-9]*)}/category-list.json</pattern>
+                <controller>AdminController\Post\AjaxViewCategoryController</controller>
+            </item>
+            <item>
                 <pattern>c/{adminPostAction:form}</pattern>
-                <controller>AdminController\Post\SaveCategoryController</controller>
+                <controller>AdminController\Post\AjaxSaveCategoryController</controller>
             </item>
         </route>
         <token>

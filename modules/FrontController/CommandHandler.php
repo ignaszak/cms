@@ -45,6 +45,7 @@ class CommandHandler
 
                 if ($reflectionControllerClass->isSubclassOf($this->_base)) {
                     $controller = $controllerClass::instance();
+                    $controller->setUp();
                     $controller->run();
                     $controller->runModules();
                     return true;

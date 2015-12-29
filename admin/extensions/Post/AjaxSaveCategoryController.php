@@ -6,7 +6,7 @@ use FrontController\Controller;
 use Content\Controller\Factory;
 use Content\Controller\CategoryController;
 
-class SaveCategoryController extends Controller
+class AjaxSaveCategoryController extends Controller
 {
 
     public function run()

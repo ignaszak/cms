@@ -2,7 +2,7 @@
 
 namespace FrontController;
 
-use CMSException\InvalidClassException;
+use Ignaszak\Registry\RegistryFactory;
 
 abstract class Controller
 {
@@ -13,6 +13,11 @@ abstract class Controller
     private static $_controllerHelper;
 
     /**
+     * @var \View\View
+     */
+    protected $_view;
+
+    /**
      * @return Controller
      */
     public static function instance(): Controller
@@ -21,8 +26,6 @@ abstract class Controller
         self::$_controllerHelper = new ControllerHelper($_controller);
         return $_controller;
     }
-
-    abstract public function run();
 
     /**
      * @param string $name
@@ -37,6 +40,19 @@ abstract class Controller
         ), $arguments);
     }
 
+    /**
+     * Init before Controller::run()
+     */
+    public function setUp()
+    {
+        $this->_view = RegistryFactory::start()->get('view');
+    }
+
+    abstract public function run();
+
+    /**
+     * Init after Controller::run()
+     */
     public function runModules()
     {
         $this->loadViewHelperSetter();
