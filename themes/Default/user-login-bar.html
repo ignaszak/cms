@@ -1,4 +1,4 @@
-<?php if (!$cms->isUserLoggedIn()): ?>
+<?php if (!$this->isUserLoggedIn()): ?>
 
     <!-- Login form controller -->
     <script>
@@ -9,7 +9,7 @@
          */
         $('[data-toggle="tooltip"]').tooltip();
 
-        <?php if ($cms->getFormResponseData('incorrectLoginData')): ?>
+        <?php if ($this->getFormResponseData('incorrectLoginData')): ?>
             /**
              * Generate invalid data error
              */
@@ -44,7 +44,7 @@
     });
     </script>
 
-    <?php $form = $cms->createForm('user-login'); ?>
+    <?php $form = $this->createForm('user-login'); ?>
 
     <form action="<?php echo $form->getFormActionAdress(); ?>" id="login" method="post" class="form-inline">
 
@@ -72,23 +72,23 @@
 
         <div class="input-group" style="text-align:center;">
             <button type="button" class="btn btn-success"
-            onclick="window.location='<?php echo $cms->getSiteAdress(); ?>user';">Sign up</button>
+            onclick="window.location='<?php echo $this->getSiteAdress(); ?>user';">Sign up</button>
         </div>
 
     </form>
 
 <?php else: ?>
 
-    <?php $form = $cms->createForm('user-logout'); ?>
+    <?php $form = $this->createForm('user-logout'); ?>
 
     <div class="btn-group">
-        <button type="button" class="btn btn-primary">Hello <?php echo $cms->getUserLogin(); ?></button>
+        <button type="button" class="btn btn-primary">Hello <?php echo $this->getUserLogin(); ?></button>
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu pull-right">
-            <li><a href="<?php echo $cms->getSiteAdress(); ?>admin">Admin panel</a></li>
+            <li><a href="<?php echo $this->getSiteAdress(); ?>admin">Admin panel</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="<?php echo $form->getFormActionAdress(); ?>">Log out</a></li>
         </ul>

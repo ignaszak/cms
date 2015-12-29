@@ -1,15 +1,15 @@
 <?php
-if ($cms->getRoute('route3') == 'p') {
-    switch ($cms->getRoute('adminPostAction')) {
+if ($this->getRoute('route3') == 'p') {
+    switch ($this->getRoute('adminPostAction')) {
         case 'view':
-            loadExtensionFile('theme/view.html');
+            $this->loadExtensionFile('theme/view.html');
             break;
         case 'edit':
         case 'add':
-            loadExtensionFile('theme/edit.html');
+            $this->loadExtensionFile('theme/edit.html');
             break;
     }
 } else {
-    loadExtensionFile('theme/view-categories.html');
+    $this->loadExtensionFile('theme/view-categories.html');
 }
 ?>

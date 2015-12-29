@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="keywords" content="">
-        <title><?php echo $cms->getSiteTitle(); ?></title>
+        <title><?php echo $this->getSiteTitle(); ?></title>
 
         <!-- Bootstrap -->
         <!-- Latest compiled and minified CSS -->
@@ -32,7 +32,7 @@
     </head>
     <body>
 
-        <?php $form = $cms->createForm('user-login'); ?>
+        <?php $form = $this->createForm('user-login'); ?>
 
         <div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog">

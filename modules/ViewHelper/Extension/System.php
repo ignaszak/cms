@@ -25,9 +25,9 @@ class System
         return $this->_conf->getBaseUrl();
     }
 
-    public function getThemePath()
+    public function getThemeUrl()
     {
-        return $this->_conf->getBaseUrl() . THEME_FOLDER;
+        return $this->_conf->getBaseUrl() . RegistryFactory::start()->get('view')->getThemeFolder();
     }
 
     public function getPageLimit()

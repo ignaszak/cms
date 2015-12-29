@@ -25,8 +25,8 @@ abstract class IPostsQuery
      */
     public function getLink()
     {
-        $_cms = RegistryFactory::start()->get('cms');
-        return "{$_cms->getSiteAdress()}post/{$this->getAlias()}";
+        $_conf = RegistryFactory::start()->register('Conf\Conf');
+        return "{$_conf->getBaseUrl()}post/{$this->getAlias()}";
     }
 
     /**
@@ -34,8 +34,8 @@ abstract class IPostsQuery
      */
     public function getCategoryLink()
     {
-        $_cms = RegistryFactory::start()->get('cms');
-        return "{$_cms->getSiteAdress()}category/{$this->getCategory()->getAlias()}";
+        $_conf = RegistryFactory::start()->register('Conf\Conf');
+        return "{$_conf->getBaseUrl()}category/{$this->getCategory()->getAlias()}";
     }
 
     /**
@@ -43,8 +43,8 @@ abstract class IPostsQuery
      */
     public function getDateLink($format = 'Y-m-d')
     {
-        $_cms = RegistryFactory::start()->get('cms');
-        return "{$_cms->getSiteAdress()}date/{$this->getDate($format)}";
+        $_conf = RegistryFactory::start()->register('Conf\Conf');
+        return "{$_conf->getBaseUrl()}date/{$this->getDate($format)}";
     }
 
     /**

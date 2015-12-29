@@ -6,7 +6,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="keywords" content="">
-        <title><?php echo $cms->getSiteTitle(); ?></title>
+        <title><?php echo $this->getSiteTitle(); ?></title>
 
         <!-- Bootstrap -->
         <!-- Latest compiled and minified CSS -->
@@ -22,10 +22,10 @@
         <!-- Font awesome for bootstrap -->
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
 
-        <link rel="stylesheet" href="<?php echo $cms->getThemePath(); ?>/css/BreadCrumbsArrows.css">
+        <link rel="stylesheet" href="<?php echo $this->getThemeUrl(); ?>/css/BreadCrumbsArrows.css">
 
-        <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/header.less">
-        <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/modules.less">
+        <link rel="stylesheet/less" href="<?php echo $this->getThemeUrl(); ?>/css/header.less">
+        <link rel="stylesheet/less" href="<?php echo $this->getThemeUrl(); ?>/css/modules.less">
         <script>
             less = {
                 env: 'development',
@@ -46,10 +46,10 @@
         <div class="head-panel">
             <div class="head-panel-container">
                 <div class="login-panel">
-                    <?php loadFile('user-login-bar.html'); ?>
+                    <?php $this->loadFile('user-login-bar.html'); ?>
                 </div>
     
-                <h1><?php echo $cms->getSiteTitle(); ?></h1>
+                <h1><?php echo $this->getSiteTitle(); ?></h1>
             </div>
 
             <nav class="navbar navbar-inverse navbar-static-top">
@@ -63,7 +63,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand visible-xs" href="javascript:void(0);">
-                            <?php echo $cms->getSiteTitle(); ?>
+                            <?php echo $this->getSiteTitle(); ?>
                         </a>
                     </div>
     

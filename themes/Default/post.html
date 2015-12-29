@@ -1,4 +1,4 @@
-<?php foreach ($cms->display() as $post): ?>
+<?php foreach ($this->display() as $post): ?>
 
 <section id="<?php echo $post->getAlias(); ?>">
     <div class="row">
@@ -39,4 +39,4 @@
 
 <?php endforeach; ?>
 
-<?php echo $cms->getPaginationTheme('pager-align'); ?>
+<?php echo $this->getPaginationTheme('pager-align'); ?>

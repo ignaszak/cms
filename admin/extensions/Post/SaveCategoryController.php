@@ -3,19 +3,11 @@
 namespace AdminController\Post;
 
 use FrontController\Controller;
-use Ignaszak\Registry\RegistryFactory;
 use Content\Controller\Factory;
 use Content\Controller\CategoryController;
 
 class SaveCategoryController extends Controller
 {
-
-    public $cms;
-
-    public function __construct()
-    {
-        $this->cms = RegistryFactory::start()->get('cms');
-    }
 
     public function run()
     {

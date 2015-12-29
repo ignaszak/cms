@@ -6,12 +6,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="keywords" content="">
-        <title><?php echo $cms->getSiteTitle(); ?></title>
+        <title><?php echo $this->getSiteTitle(); ?></title>
 
         <!-- Bootstrap -->
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" href="<?php echo $cms->getThemePath(); ?>/css/bs-callout.css">
+        <link rel="stylesheet" href="<?php echo $this->getThemeUrl(); ?>/css/bs-callout.css">
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -25,13 +25,13 @@
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-        <script src="<?php echo $cms->getThemePath(); ?>/js/check-screen-size.js"></script>
-        <script src="<?php echo $cms->getThemePath(); ?>/js/panel-bootstrap.js"></script>
+        <script src="<?php echo $this->getThemeUrl(); ?>/js/check-screen-size.js"></script>
+        <script src="<?php echo $this->getThemeUrl(); ?>/js/panel-bootstrap.js"></script>
 
-        <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/AccordionMenu.less">
-        <script src="<?php echo $cms->getThemePath(); ?>/js/AccordionMenu.js"></script>
+        <link rel="stylesheet/less" href="<?php echo $this->getThemeUrl(); ?>/css/AccordionMenu.less">
+        <script src="<?php echo $this->getThemeUrl(); ?>/js/AccordionMenu.js"></script>
 
-        <link rel="stylesheet/less" href="<?php echo $cms->getThemePath(); ?>/css/panel-bootstrap.less" type="text/css" />
+        <link rel="stylesheet/less" href="<?php echo $this->getThemeUrl(); ?>/css/panel-bootstrap.less" type="text/css" />
         <script>
             less = {
                 env: 'development',
@@ -55,7 +55,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="<?php echo $cms->getSiteAdress(); ?>"><?php echo $cms->getSiteTitle(); ?></a>
+                    <a class="navbar-brand" href="<?php echo $this->getSiteAdress(); ?>"><?php echo $this->getSiteTitle(); ?></a>
                 </div>
                 <!-- end mobile navbar -->
             </div>
@@ -63,7 +63,7 @@
             <div id="sidebar-menu" role="navigation">
                 <div class="navbar-collapse">
                     <div class="accordion-menu-border">
-                        <?php echo $cms->getAdminMenu(); ?>
+                        <?php echo $this->getAdminMenu(); ?>
                     </div>
                 </div>
             </div>
@@ -71,7 +71,7 @@
         </nav>
 
         <div id="page-context">
-            <?php $cms->loadAdminExtensionThemeFile(); ?>
+            <?php $this->loadAdminExtensionThemeFile(); ?>
         </div>
 
     </body>

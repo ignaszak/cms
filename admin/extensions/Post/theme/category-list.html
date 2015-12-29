@@ -8,12 +8,12 @@ $(document).ready(function(){
     });
 });
 </script>
-<link rel="stylesheet" href="<?php echo $cms->getAdminAdress(); ?>/extensions/Post/theme/js/jstree/dist/themes/default/style.min.css" />
-<script src="<?php echo $cms->getAdminAdress(); ?>/extensions/Post/theme/js/jstree/dist/jstree.min.js"></script>
+<link rel="stylesheet" href="<?php echo $this->getAdminAdress(); ?>/extensions/Post/theme/js/jstree/dist/themes/default/style.min.css" />
+<script src="<?php echo $this->getAdminAdress(); ?>/extensions/Post/theme/js/jstree/dist/jstree.min.js"></script>
 <script>
-var admin_adress = "<?php echo $cms->getAdminAdress(); ?>";
+var admin_adress = "<?php echo $this->getAdminAdress(); ?>";
 </script>
-<script src="<?php echo $cms->getAdminAdress(); ?>/extensions/Post/theme/js/jstree.js"></script>
+<script src="<?php echo $this->getAdminAdress(); ?>/extensions/Post/theme/js/jstree.js"></script>
 <style>
 #jstree-category {
     margin-top: 10px;

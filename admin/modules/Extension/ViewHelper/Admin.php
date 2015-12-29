@@ -23,13 +23,9 @@ class Admin extends \Admin\Extension\ExtensionInstances
 
     public function loadAdminExtensionThemeFile()
     {
-        global $cms;
         $themeFile = @parent::$activeExtension->file->theme;
-        $extensionDir = $this->getAdminExtensionDir();
-        $activeExtensionThemeFile = "$extensionDir/$themeFile";
-
-        if (file_exists($activeExtensionThemeFile) && is_file($activeExtensionThemeFile))
-            require ($activeExtensionThemeFile);
+        $view = RegistryFactory::start()->get('view');
+        $view->loadFile("../../extensions/{$this->getActiveExtensionFolderFromUrl()}/{$themeFile}");
     }
 
     public function getAdminExtensionDir()

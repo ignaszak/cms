@@ -4,17 +4,15 @@ namespace AdminController\Post;
 
 use FrontController\Controller;
 use Ignaszak\Registry\RegistryFactory;
+use System\Router\Storage as Router;
 
 class ViewCategoryController extends Controller
 {
-
-    public $cms;
 
     private $categoryArray = array();
 
     public function __construct()
     {
-        $this->cms = RegistryFactory::start()->get('cms');
         $this->categoryArray = RegistryFactory::start()
             ->register('System\Storage\CategoryList')->get();
     }
@@ -39,7 +37,7 @@ class ViewCategoryController extends Controller
                 $string .= $i > 0 ? ", " : "";
                 $string .= "{\n    \"id\" : {$cat->getId()},";
                 $string .= "\n    \"text\" : \"{$cat->getTitle()}\"";
-                $selected = ($this->cms->getRoute('id') == $cat->getId()) ? ",\n    \"state\" : { \"selected\" : true }" : "";
+                $selected = (Router::getRoute('id') == $cat->getId()) ? ",\n    \"state\" : { \"selected\" : true }" : "";
                 $string .= $selected;
                 $children = $this->getAdminViewCategoryTreeview($cat->getId());
                 if (!empty($children)) {

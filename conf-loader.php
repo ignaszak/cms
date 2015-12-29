@@ -8,6 +8,11 @@ use UserAuth\User;
 
 defined('ACCESS') or die();
 
+// Run installer if DBSettings.php not exists
+if (!file_exists(__DIR__ . '/conf/DB/DBSettings.php')) {
+    header('Location: ./install');
+}
+
 // Configure exception handler
 require __DIR__ . '/conf/exception-handler.php';
 
@@ -35,10 +40,8 @@ require __DIR__ . '/conf/router.php';
 // Initialize router
 $router->run();
 
-// CHECK PERMISSIONS TO ADMIN PANEL AND LOAD ADMIN VIEW HELPER EXTENSION
-// Register ViewHelper and User classes
-RegistryFactory::start()->set('cms', new ViewHelper);
-$cms = RegistryFactory::start()->get('cms');
+// CHECK PERMISSIONS TO ADMIN PANEL AND LOAD ADMIN VIEW HELPER EXTENSIONS
+// User classes
 RegistryFactory::start()->set('user', new User);
 $user = RegistryFactory::start()->get('user');
 // Default view helper classes
@@ -51,9 +54,19 @@ if (System\Router\Storage::isRouteName('admin')) {
         exit;
     }
     // Check permissions
-    if ($cms->getUserRole() != 'admin') {
+    if ($user->getUserSession()->getRole() != 'admin') {
         System\Server::headerLocation(''); // Go to main page
     }
     // Admin view helper classes
     require __DIR__ . '/' . ADMIN_FOLDER . '/conf/view-helper.php';
 }
+
+// LOAD VIEW PATTERN
+RegistryFactory::start()->set('view', new View\View);
+$view = RegistryFactory::start()->get('view');
+
+// LOAD FRONT CONTROLLER
+FrontController\FrontController::run();
+
+// LOAD INDEX.HTML FROM THEME
+$view->loadFile('index.html');

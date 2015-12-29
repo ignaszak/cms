@@ -3,18 +3,10 @@
 namespace AdminController\Post;
 
 use FrontController\Controller;
-use Ignaszak\Registry\RegistryFactory;
 use FrontController\ViewHelperController;
 
 class ViewPostController extends Controller
 {
-
-    public $cms;
-
-    public function __construct()
-    {
-        $this->cms = RegistryFactory::start()->get('cms');
-    }
 
     public function run()
     {
@@ -30,13 +22,13 @@ class ViewPostController extends Controller
         {
             public function getAdminViewPost()
             {
-                $this->_controller->cms->setContent('post')->status('all');
-                return $this->_controller->cms->getContent();
+                $this->_controller->setContent('post')->status('all');
+                return $this->_controller->getContent();
             }
 
             public function getAdminViewPostLink()
             {
-                return $this->_controller->cms->getAdminAdress() . "/post/p/edit/";
+                return $this->_controller->getAdminAdress() . "/post/p/edit/";
             }
         };
     }

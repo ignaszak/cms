@@ -6,17 +6,9 @@ use FrontController\Controller;
 use System\Server;
 use Content\Controller\Factory;
 use Content\Controller\PostController;
-use Ignaszak\Registry\RegistryFactory;
 
 class SavePostController extends Controller
 {
-
-    private $cms;
-
-    public function __construct()
-    {
-        $this->cms = RegistryFactory::start()->get('cms');
-    }
 
     public function run()
     {
@@ -32,7 +24,7 @@ class SavePostController extends Controller
         $controller
             // Sets data
             ->setReference('category', $this->getCategoryId())
-            ->setReference('author', $this->cms->getUserId())
+            ->setReference('author', $this->getUserId())
             ->setDate(new \DateTime)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
@@ -47,8 +39,8 @@ class SavePostController extends Controller
     private function getCategoryId(): int
     {
         if (!array_key_exists('categoryId', $_POST)) {
-            $this->cms->setContent('category')->limit(1);
-            $catArray = $this->cms->getContent();
+            $this->setContent('category')->limit(1);
+            $catArray = $this->getContent();
             return $catArray[0]->getId();
         } else {
             return $_POST['categoryId'];

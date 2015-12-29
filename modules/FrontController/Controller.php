@@ -27,24 +27,14 @@ abstract class Controller
     /**
      * @param string $name
      * @param array $arguments
-     * @throws InvalidClassException
-     * @return mixed|null
+     * @return mixed
      */
     public function __call(string $name, array $arguments)
     {
-        if (method_exists(self::$_controllerHelper, $name)) {
-
-            return call_user_func_array(array(
-                self::$_controllerHelper,
-                $name
-            ), $arguments);
-
-        } else {
-
-            throw new InvalidClassException("No class correspond to <b>$name</b> method");
-
-        }
-        return null;
+        return call_user_func_array(array(
+            self::$_controllerHelper,
+            $name
+        ), $arguments);
     }
 
     public function runModules()

@@ -1,6 +1,6 @@
 <!-- include summernote css/js-->
-<link href="<?php echo $cms->getThemePath(); ?>/summernote/summernote.css" rel="stylesheet">
-<script src="<?php echo $cms->getThemePath(); ?>/summernote/summernote.min.js"></script>
+<link href="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.css" rel="stylesheet">
+<script src="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.min.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -11,7 +11,7 @@ $(document).ready(function() {
     });
 
     $("#delete").click(function() {
-        $('form').attr("action", "<?php echo $cms->getAdminEditPost('deleteLink'); ?>");     
+        $('form').attr("action", "<?php echo $this->getAdminEditPost('deleteLink'); ?>");     
     });
 
 });
@@ -35,11 +35,11 @@ $(document).ready(function() {
 
 <div class="container-fluid">
 
-    <h2><?php echo $cms->getAdminEditPost('formTitle'); ?></h2>
+    <h2><?php echo $this->getAdminEditPost('formTitle'); ?></h2>
 
-    <form method="post" action="<?php echo $cms->getAdminEditPost('formLink'); ?>">
+    <form method="post" action="<?php echo $this->getAdminEditPost('formLink'); ?>">
 
-        <input type="hidden" name="id" value="<?php echo $cms->getAdminEditPost('id'); ?>">
+        <input type="hidden" name="id" value="<?php echo $this->getAdminEditPost('id'); ?>">
 
         <div class="well well-controls input-group">
             <button type="submit" class="btn btn-primary">
@@ -61,7 +61,7 @@ $(document).ready(function() {
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="viewLabel"><?php echo $cms->getAdminEditPost('title'); ?></h4>
+                            <h4 class="modal-title" id="viewLabel"><?php echo $this->getAdminEditPost('title'); ?></h4>
                         </div>
                         <div class="modal-body"></div>
                     </div>
@@ -91,8 +91,8 @@ $(document).ready(function() {
             </script>
             <div class="btn-group" id="publicButton" data-toggle="buttons">
                 <label class="btn btn-success">
-                <input type="hidden" id="itemPublic" name="public" value="<?php echo $cms->getAdminEditPost('public'); ?>">
-                    <input type="checkbox" value="<?php echo $cms->getAdminEditPost('public'); ?>" autocomplete="off">
+                <input type="hidden" id="itemPublic" name="public" value="<?php echo $this->getAdminEditPost('public'); ?>">
+                    <input type="checkbox" value="<?php echo $this->getAdminEditPost('public'); ?>" autocomplete="off">
                     <i class="fa fa-newspaper-o"></i> Public: <i class="fa fa-square-o"></i>
                 </label>
             </div>
@@ -102,11 +102,11 @@ $(document).ready(function() {
         </div>
 
         <div class="form-group" style="margin-bottom: 5px;">
-            <input type="text" name="title" value="<?php echo $cms->getAdminEditPost('title'); ?>" class="form-control input-lg" placeholder="Title">
+            <input type="text" name="title" value="<?php echo $this->getAdminEditPost('title'); ?>" class="form-control input-lg" placeholder="Title">
         </div>
 
         <div class="form-group">
-            <textarea name="content" id="summernote"><?php echo $cms->getAdminEditPost('content'); ?></textarea>
+            <textarea name="content" id="summernote"><?php echo $this->getAdminEditPost('content'); ?></textarea>
         </div>
 
         <div class="row">
@@ -116,9 +116,9 @@ $(document).ready(function() {
                     <div class="panel-heading">Chose category:</div>
                     <div class="panel-body div-scroll">
                         <script>
-                            var category_id = "<?php echo $cms->getAdminEditPost('catId'); ?>";
+                            var category_id = "<?php echo $this->getAdminEditPost('catId'); ?>";
                         </script>
-                        <?php loadExtensionFile('theme/category-list.html'); ?>
+                        <?php $this->loadExtensionFile('theme/category-list.html'); ?>
                     </div>
                 </div>
 

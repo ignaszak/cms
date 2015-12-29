@@ -1,25 +1,25 @@
-<?php loadFile('header.html'); ?>
+<?php $this->loadFile('header.html'); ?>
 
 <div class="container-fluid">
 
     <div class="row">
     
         <div class="col-md-2">
-            <?php loadFile('sidebar-category.html'); ?>
+            <?php $this->loadFile('sidebar-category.html'); ?>
         </div>
     
         <div class="col-md-10">
 
-            <?php echo $cms->getBreadcrumbsTheme('primary'); ?>
+            <?php echo $this->getBreadcrumbsTheme('primary'); ?>
 
-            <?php switch ($cms->getRouteName()) {
+            <?php switch ($this->getRouteName()) {
                 case 'post':
                 case 'category':
                 case 'date':
-                    loadFile('post.html');
+                    $this->loadFile('post.html');
                 break;
                 case 'user':
-                    loadFile('user.html');
+                    $this->loadFile('user.html');
                 break;
             } ?>
         </div>
@@ -28,5 +28,5 @@
 
 </div>
 
-<?php loadFile('footer.html'); ?>
+<?php $this->loadFile('footer.html'); ?>
 

@@ -1,8 +1,8 @@
-<?php if ($cms->getFormResponseData('registrationSuccess')): ?>
+<?php if ($this->getFormResponseData('registrationSuccess')): ?>
 
 <p>Registration Success!!!</p>
 
-<?php elseif ($cms->getFormResponseData('userMustBeLogout')): ?>
+<?php elseif ($this->getFormResponseData('userMustBeLogout')): ?>
 
 <p>Please log out before registration.</p>
 
@@ -12,7 +12,7 @@
 
     <div class="col-sm-6">
 
-        <?php $form = $cms->createForm('user-registration'); ?>
+        <?php $form = $this->createForm('user-registration'); ?>
 
         <h1>Registration</h1>
 
@@ -48,7 +48,7 @@
     
         <div class="col-sm-6">
 
-        <?php $form = $cms->createForm('user-remind'); ?>
+        <?php $form = $this->createForm('user-remind'); ?>
 
         <h1>Remind password</h1>
 

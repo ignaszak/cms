@@ -4,7 +4,6 @@ namespace AdminController\Post;
 
 use FrontController\Controller;
 use System\Server;
-use Ignaszak\Registry\RegistryFactory;
 use FrontController\ViewHelperController;
 use Content\Controller\Factory;
 use Content\Controller\PostController;
@@ -12,21 +11,14 @@ use Content\Controller\PostController;
 class EditPostController extends Controller
 {
 
-    public $cms;
-
-    public function __construct()
-    {
-        $this->cms = RegistryFactory::start()->get('cms');
-    }
-
     public function run()
     {
         $this->setViewHelperName('AdminEditPost');
 
-        if ($this->cms->getRoute('adminPostAction') == 'delete' && $this->cms->getRoute('alias')) {
+        if ($this->getRoute('adminPostAction') == 'delete' && $this->getRoute('alias')) {
             $controller = new Factory(new PostController);
             $controller->findBy(
-                    array('alias' => $this->cms->getRoute('alias'))
+                    array('alias' => $this->getRoute('alias'))
                 )
                 ->remove();
 
@@ -42,14 +34,12 @@ class EditPostController extends Controller
         return new class ($this) extends ViewHelperController
         {
 
-            private $cms;
             private $returnData;
 
             public function __construct(Controller $_controller)
             {
                 parent::__construct($_controller);
-                $this->cms = $this->_controller->cms;
-                $this->returnData = $this->cms->getFormResponseData('data');
+                $this->returnData = $this->_controller->getFormResponseData('data');
             }
 
             public function getAdminEditPost(string $key)
@@ -62,22 +52,24 @@ class EditPostController extends Controller
                 $data['catId'] = $this->returnData['setCategory'];
                 $data['public'] = $this->returnData['setPublic'];
                 $data['formTitle'] = 'Add new post';
-                $data['formLink'] = $this->cms->getAdminAdress() . "/post/p/form";
+                $data['formLink'] = $this->_controller->getAdminAdress() . "/post/p/form";
 
-                if ($this->cms->getRoute('adminPostAction') == 'edit' && $this->cms->getRoute('alias')) {
+                if ($this->_controller->getRoute('adminPostAction') == 'edit' &&
+                    $this->_controller->getRoute('alias')) {
 
                     $data['formTitle'] = 'Edit post';
 
-                    $this->cms->setContent('post')
-                        ->alias($this->cms->getRoute('alias'));
+                    $this->_controller->setContent('post')
+                        ->alias($this->_controller->getRoute('alias'));
 
-                    foreach ($this->cms->getContent() as $post) {
+                    foreach ($this->_controller->getContent() as $post) {
                         $data['id'] = $post->getId();
                         $data['catId'] = $post->getCategoryId();
                         $data['title'] = $post->getTitle();
                         $data['content'] = $post->getContent();
                         $data['public'] = $post->getPublic();
-                        $data['deleteLink'] = $this->cms->getAdminAdress() . "/post/p/delete/" . $post->getAlias();
+                        $data['deleteLink'] = $this->_controller->getAdminAdress() .
+                            "/post/p/delete/" . $post->getAlias();
                     }
 
                 }
