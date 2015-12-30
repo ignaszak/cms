@@ -18,6 +18,7 @@ class EntityController
         $this->addEntity('category', 'Entity\Categories');
         $this->addEntity('user', 'Entity\Users');
         $this->addEntity('author', 'Entity\Users');
+        $this->addEntity('options', 'Entity\Options');
     }
 
     /**
