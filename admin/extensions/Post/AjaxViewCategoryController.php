@@ -20,7 +20,6 @@ class AjaxViewCategoryController extends Controller
     public function run()
     {
         header("Content-type: application/json; charset=utf-8");
-        $this->setViewHelperName('AdminViewCategory');
         echo $this->getAdminViewCategoryTreeview();
         exit;
     }
