@@ -117,7 +117,8 @@ class BreadcrumbsGenerator
                 $array[] = array(
                     'title' => $cat->getTitle(),
                     'id'    => $cat->getId(),
-                    'link'  => $this->_conf->getBaseUrl() . ($cat->getTitle() != 'Home' ?? "category/{$cat->getAlias()}")
+                    'link'  => $this->_conf->getBaseUrl() . ($cat->getTitle() != 'Home' ?
+                        "category/{$cat->getAlias()}" : "")
                 );
                 $array = array_merge($this->generateBreadcrumbs($cat->getParentId()), $array);
             }

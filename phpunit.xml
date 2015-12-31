@@ -24,6 +24,7 @@
             <file>tests/Modules/Validation/ContentValidationTest.php</file>
             <file>tests/Modules/Validation/UserValidationTest.php</file>
             <file>tests/Modules/Validation/ValidatorTest.php</file>
+            <file>tests/Modules/View/ConfTest.php</file>
         </testsuite>
     </testsuites>
 

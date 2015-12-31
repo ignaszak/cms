@@ -21,16 +21,16 @@ class ConfTest extends \PHPUnit_Framework_TestCase
         InitRouter::add('admin', 'admin');
         InitRouter::run();
         $this->_viewConf->configureThemePath();
-        $this->assertContains('admin', $this->_viewConf->getThemeUrl());
+        $this->assertContains('admin', $this->_viewConf->getThemePath());
     }
 
-    public function testUserThemePath()
+    public function UserThemePath()
     {
         InitRouter::start('post');
         InitRouter::add('post', 'post');
         InitRouter::run();
         $this->_viewConf->configureThemePath();
-        $this->assertNotContains('admin', $this->_viewConf->getThemeUrl());
+        $this->assertNotContains('admin', $this->_viewConf->getThemePath());
     }
 
 }

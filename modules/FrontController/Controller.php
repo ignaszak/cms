@@ -58,4 +58,12 @@ abstract class Controller
         $this->loadViewHelperSetter();
     }
 
+    /**
+     * @return \View\View
+     */
+    public function view(): \View\View
+    {
+        return $this->_view;
+    }
+
 }
