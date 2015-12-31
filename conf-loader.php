@@ -3,7 +3,6 @@
 use Ignaszak\Registry\RegistryFactory;
 use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Router\Start as Router;
-use ViewHelper\ViewHelper;
 use UserAuth\User;
 
 defined('ACCESS') or die();
@@ -40,6 +39,10 @@ require __DIR__ . '/conf/router.php';
 // Initialize router
 $router->run();
 
+// LOAD VIEW PATTERN
+RegistryFactory::start()->set('view', new View\View);
+$view = RegistryFactory::start()->get('view');
+
 // CHECK PERMISSIONS TO ADMIN PANEL AND LOAD ADMIN VIEW HELPER EXTENSIONS
 // User classes
 RegistryFactory::start()->set('user', new User);
@@ -50,7 +53,7 @@ require __DIR__ . '/conf/view-helper.php';
 if (System\Router\Storage::isRouteName('admin')) {
     // If not logged open login panel
     if (!$user->isUserLoggedIn()) {
-        require __DIR__ . '/' . ADMIN_FOLDER . '/extensions/Index/login.html';
+        $view->loadFile('../../extensions/Index/login.html');
         exit;
     }
     // Check permissions
@@ -60,10 +63,6 @@ if (System\Router\Storage::isRouteName('admin')) {
     // Admin view helper classes
     require __DIR__ . '/' . ADMIN_FOLDER . '/conf/view-helper.php';
 }
-
-// LOAD VIEW PATTERN
-RegistryFactory::start()->set('view', new View\View);
-$view = RegistryFactory::start()->get('view');
 
 // LOAD FRONT CONTROLLER
 FrontController\FrontController::run();
