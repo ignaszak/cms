@@ -18,7 +18,8 @@
 		"ignaszak/router" : "dev-master",
 		"ignaszak/exception" : "dev-master",
 		"ignaszak/registry" : "dev-master",
-		"beberlei/DoctrineExtensions" : "*"
+		"beberlei/DoctrineExtensions" : "*",
+		"mockery/mockery" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {
