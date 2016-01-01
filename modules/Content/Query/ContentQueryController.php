@@ -26,9 +26,26 @@ class ContentQueryController extends IContentQueryController
      */
     private $isResultForced = false;
 
+    /**
+     * Stores result of createQueryBuilder method
+     * 
+     * @var Entity[]
+     */
     private $entityContentArray = array();
+
+    /**
+     * @var boolean
+     */
     private $isPaginationEnabled = true;
+
+    /**
+     * @var integer
+     */
     private $limit;
+
+    /**
+     * @var string (public|edit|all)
+     */
     private $status;
 
     public function __construct(string $entityName)
