@@ -7,21 +7,31 @@ use Ignaszak\Registry\RegistryFactory;
 class Content
 {
 
-    private $_contentQuery;
+    /**
+     * @var ContentQueryController
+     */
+    private $_contentQueryController;
 
-    public function setContent($name)
+    /**
+     * @param string $name entity name from \Entity\Controller\EntityController
+     * @return IContentQueryController
+     */
+    public function setContent(string $name): IContentQueryController
     {
         $entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');
         $entityName = $entityController->getEntity($name);
-        $this->_contentQuery = new ContentQuery($entityName);
+        $this->_contentQueryController = new ContentQueryController($entityName);
 
-        return $this->_contentQuery;
+        return $this->_contentQueryController;
     }
 
-    public function getContent()
+    /**
+     * @return Entity[]
+     */
+    public function getContent(): array
     {
-        return $this->_contentQuery->getContent();
+        return $this->_contentQueryController->getContent();
     }
 
 }

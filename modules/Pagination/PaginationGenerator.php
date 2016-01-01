@@ -4,7 +4,7 @@ namespace Pagination;
 
 use System\Server;
 use System\Router\Storage as Router;
-use Content\Query\IContentQuery as Content;
+use Content\Query\IContentQueryController as Content;
 use Ignaszak\Registry\RegistryFactory;
 
 class PaginationGenerator
