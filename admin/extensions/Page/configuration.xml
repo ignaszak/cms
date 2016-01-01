@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conf>
+
+    <title>Pages</title>
+    <base>page</base>
+    <icon>fa fa fa-book</icon>
+
+    <router>
+        <route>
+            <item>
+                <pattern>{adminPageAction:view}/{page}</pattern>
+                <controller>AdminController\Page\ViewPageController</controller>
+            </item>
+            <item>
+                <pattern>{adminPageAction}</pattern>
+                <controller>AdminController\Page\EditPageController</controller>
+            </item>
+        </route>
+        <token>
+            <item>
+                <name>adminPageAction</name>
+                <pattern>(add|edit|delete)</pattern>
+            </item>
+        </token>
+    </router>
+
+    <menu>
+        <item>
+            <title>Add new page</title>
+            <link>add</link>
+        </item>
+        <item>
+            <title>View pages</title>
+            <link>view/</link>
+        </item>
+    </menu>
+
+</conf>
