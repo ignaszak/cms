@@ -4,6 +4,7 @@ namespace Test\Modules\ViewHelper;
 
 use Test\Mock\MockTest;
 use ViewHelper\ViewHelperExtension;
+use Test\Init\InitViewHelper;
 
 class ViewHelperExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,6 +14,11 @@ class ViewHelperExtensionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_viewHelperExtension = new ViewHelperExtension;
+    }
+
+    public function tearDown()
+    {
+        InitViewHelper::clearExtensions();
     }
 
     public function testGetExtensionInstanceFromMethodName()

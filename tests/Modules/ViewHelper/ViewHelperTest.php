@@ -3,6 +3,7 @@
 namespace Test\Modules\ViewHelper;
 
 use Test\Init\InitRouter;
+use Test\Init\InitDoctrine;
 use Test\Init\InitViewHelper;
 use ViewHelper\ViewHelper;
 use Ignaszak\Registry\RegistryFactory;
@@ -15,6 +16,12 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_viewHelper = new ViewHelper;
+    }
+
+    public function tearDown()
+    {
+        \Mockery::close();
+        InitDoctrine::clear();
     }
 
     public function test__call()
@@ -40,6 +47,7 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
         InitRouter::start('post', 'post');
         InitRouter::add('post', 'post');
         InitRouter::run();
+        InitDoctrine::queryBuilderResult(array('AnyResult'));
         $this->assertNotEmpty($this->_viewHelper->display());
     }
 

@@ -4,6 +4,7 @@ namespace Test\Modules\Content\Controller;
 
 use Test\Mock\MockTest;
 use Content\Controller\Alias;
+use Test\Init\InitDoctrine;
 
 class AliasTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,6 +14,11 @@ class AliasTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->_alias = new Alias(new \Entity\Posts);
+    }
+    
+    public function tearDown()
+    {
+        InitDoctrine::clear();
     }
 
     public function testIfAliasIsCorrectCreatedFromString()
@@ -30,6 +36,7 @@ class AliasTest extends \PHPUnit_Framework_TestCase
     public function testAliasExistsInDB()
     {
         $alias = 'new-post';
+        InitDoctrine::getRepositoryResult(array($alias));
         $aliasNotExistsInDB = MockTest::callMockMethod(
             $this->_alias,
             'isAliasNotExistsInDB',
@@ -42,10 +49,11 @@ class AliasTest extends \PHPUnit_Framework_TestCase
     {
         $string = 'New Post';
         $alias = $this->_alias->getAlias($string);
+        InitDoctrine::getRepositoryResult(array($alias));
         $aliasNotExistsInDB = MockTest::callMockMethod(
             $this->_alias,
             'isAliasNotExistsInDB',
-            array($alias, new \Entity\Posts)
+            array($alias)
         );
         $this->assertTrue($aliasNotExistsInDB);
     }

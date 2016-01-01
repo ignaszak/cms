@@ -3,6 +3,7 @@ cache/
 vendor/
 logs/
 conf/DB/DBSettings.php
+tests/Init/InitDoctrineSettings.php
 .htaccess
 .git
 .metadata

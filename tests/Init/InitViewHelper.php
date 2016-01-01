@@ -18,4 +18,11 @@ class InitViewHelper
         ));
     }
 
+    public static function clearExtensions()
+    {
+        $reflection = new \ReflectionProperty('ViewHelper\ViewHelperExtension', 'extensionClassNameArray');
+        $reflection->setAccessible(true);
+        $reflection->setValue(null, array());
+    }
+
 }
