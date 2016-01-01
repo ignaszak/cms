@@ -126,17 +126,19 @@ return array(
     public static function queryBuilderResult(array $result)
     {
         $em = \Mockery::mock('EntityManager');
-        $em->shouldReceive('createQueryBuilder')
-            ->andReturn(self::queryBuilder($result));
+        $em->shouldReceive(array(
+            'createQueryBuilder' => self::queryBuilder($result),
+            'find' => self::queryBuilder($result)
+        ));
         self::mock($em);
     }
 
-    public static function repository()
+    public static function repository(array $result)
     {
         $repository = \Mockery::mock('Repository');
         $repository->shouldReceive(array(
-            'find' => $repository,
-            'findBy' => $repository
+            'find' => $result,
+            'findBy' => $result
         ));
         return $repository;
     }
@@ -144,11 +146,11 @@ return array(
     /**
      * @param array $result
      */
-    public static function getRepositoryResult($result)
+    public static function getRepositoryResult(array $result)
     {
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('getRepository')
-            ->andReturn(self::repository());
+            ->andReturn(self::repository($result));
         self::mock($em);
     }
 

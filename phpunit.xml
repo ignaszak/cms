@@ -15,16 +15,7 @@
 
     <testsuites>
         <testsuite name="CMSTests">
-            <file>tests/Modules/ViewHelper/ViewHelperExtensionTest.php</file>
-            <file>tests/Modules/ViewHelper/ViewHelperTest.php</file>
-            <file>tests/Modules/Content/Controller/AliasTest.php</file>
-            <file>tests/Modules/FrontController/CommandHandlerTest.php</file>
-            <file>tests/Modules/FrontController/ControllerHelperTest.php</file>
-            <file>tests/Modules/FrontController/FrontControllerTest.php</file>
-            <file>tests/Modules/Validation/ContentValidationTest.php</file>
-            <file>tests/Modules/Validation/UserValidationTest.php</file>
-            <file>tests/Modules/Validation/ValidatorTest.php</file>
-            <file>tests/Modules/View/ConfTest.php</file>
+            <directory>./tests/</directory>
         </testsuite>
     </testsuites>
 

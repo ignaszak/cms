@@ -37,6 +37,7 @@ class AliasTest extends \PHPUnit_Framework_TestCase
     {
         $alias = 'new-post';
         InitDoctrine::getRepositoryResult(array($alias));
+        $this->_alias = new Alias(new \Entity\Posts);
         $aliasNotExistsInDB = MockTest::callMockMethod(
             $this->_alias,
             'isAliasNotExistsInDB',
@@ -45,17 +46,26 @@ class AliasTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($aliasNotExistsInDB);
     }
 
-    public function testGetAlias()
+    public function testGetAliasIfAliasAlredyExists()
     {
-        $string = 'New Post';
+        $existingAlias = 'alias';
+        $entity = \Mockery::mock('Entity\Posts');
+        $entity->shouldReceive('getAlias')->andReturnValues(array($existingAlias));
+        $this->_alias = new Alias($entity);
+        $alias = $this->_alias->getAlias($existingAlias);
+
+        $this->assertEquals($alias, $existingAlias);
+    }
+
+    public function testGetAliasIfAliasNotExists()
+    {
+        $string = 'AnyString';
+        $entity = \Mockery::mock('Entity\Posts');
+        $entity->shouldReceive('getAlias')->andReturnValues(array());
+        InitDoctrine::getRepositoryResult(array());
+        $this->_alias = new Alias($entity);
         $alias = $this->_alias->getAlias($string);
-        InitDoctrine::getRepositoryResult(array($alias));
-        $aliasNotExistsInDB = MockTest::callMockMethod(
-            $this->_alias,
-            'isAliasNotExistsInDB',
-            array($alias)
-        );
-        $this->assertTrue($aliasNotExistsInDB);
+        $this->assertEquals('anystring', $alias);
     }
 
 }
