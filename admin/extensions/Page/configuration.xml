@@ -15,11 +15,19 @@
                 <pattern>{adminPageAction}</pattern>
                 <controller>AdminController\Page\EditPageController</controller>
             </item>
+            <item>
+                <pattern>{adminPageAction:edit}/{alias}</pattern>
+                <controller>AdminController\Page\EditPageController</controller>
+            </item>
+            <item>
+                <pattern>{adminPageAction:save}</pattern>
+                <controller>AdminController\Page\SavePageController</controller>
+            </item>
         </route>
         <token>
             <item>
                 <name>adminPageAction</name>
-                <pattern>(add|edit|delete)</pattern>
+                <pattern>(add|delete)</pattern>
             </item>
         </token>
     </router>

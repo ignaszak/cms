@@ -39,28 +39,26 @@ class EditPageController extends Controller
 
                 $data['id'] = null;
                 $data['title'] = $this->returnData['setTitle'];
-                $data['conten'] = $this->returnData['setContent'];
-                $data['catId'] = $this->returnData['setCategory'];
+                $data['content'] = $this->returnData['setContent'];
                 $data['public'] = $this->returnData['setPublic'];
-                $data['formTitle'] = 'Add new post';
-                $data['formLink'] = $this->_controller->getAdminAdress() . "/post/p/form";
+                $data['formTitle'] = 'Add new page';
+                $data['formLink'] = $this->_controller->getAdminAdress() . "/page/save";
 
-                if ($this->_controller->getRoute('adminPostAction') == 'edit' &&
+                if ($this->_controller->getRoute('adminPageAction') == 'edit' &&
                     $this->_controller->getRoute('alias')) {
 
                         $data['formTitle'] = 'Edit post';
 
-                        $this->_controller->setContent('post')
-                        ->alias($this->_controller->getRoute('alias'));
+                        $this->_controller->setContent('page')
+                            ->alias($this->_controller->getRoute('alias'));
 
                         foreach ($this->_controller->getContent() as $post) {
                             $data['id'] = $post->getId();
-                            $data['catId'] = $post->getCategoryId();
                             $data['title'] = $post->getTitle();
                             $data['content'] = $post->getContent();
                             $data['public'] = $post->getPublic();
                             $data['deleteLink'] = $this->_controller->getAdminAdress() .
-                            "/post/p/delete/" . $post->getAlias();
+                                "/page/delete" . $post->getAlias();
                         }
 
                     }
