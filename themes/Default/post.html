@@ -1,4 +1,4 @@
-<?php foreach ($this->display() as $post): ?>
+<?php if ($this->havePost()): foreach ($this->getPosts() as $post): ?>
 
 <section id="<?php echo $post->getAlias(); ?>">
     <div class="row">
@@ -37,6 +37,10 @@
     </div>
 </section>
 
-<?php endforeach; ?>
+<?php endforeach; else: ?>
+
+<h1>No posts found</h1>
+
+<?php endif; ?>
 
 <?php echo $this->getPaginationTheme('pager-align'); ?>

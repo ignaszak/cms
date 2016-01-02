@@ -12,16 +12,8 @@
 
             <?php echo $this->getBreadcrumbsTheme('primary'); ?>
 
-            <?php switch ($this->getRouteName()) {
-                case 'post':
-                case 'category':
-                case 'date':
-                    $this->loadFile('post.html');
-                break;
-                case 'user':
-                    $this->loadFile('user.html');
-                break;
-            } ?>
+            <?php $this->loadView(); ?>
+
         </div>
     
     </div>
