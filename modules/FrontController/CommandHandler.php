@@ -21,11 +21,11 @@ class CommandHandler
      * @var DefaultController
      */
     private $_default;
-    
+
     public function __construct()
     {
         $this->_base = new \ReflectionClass('\FrontController\Controller');
-        $this->_default = \Controller\DefaultController::instance();
+        $this->_default = 'Controller\DefaultController';
     }
 
     /**
@@ -39,21 +39,26 @@ class CommandHandler
     {
         if ($_route->controller) {
             $controllerClass = $_route->controller;
+            return $this->loadController($controllerClass);
+        } else {
+            return $this->loadController($this->_default);
+        }
+    }
 
-            if (class_exists($controllerClass)) {
-                $reflectionControllerClass = new \ReflectionClass($controllerClass);
-
-                if ($reflectionControllerClass->isSubclassOf($this->_base)) {
-                    $controller = $controllerClass::instance();
-                    $controller->setUp();
-                    $controller->run();
-                    $controller->runModules();
-                    return true;
-                } else {
-                    throw new InvalidControllerException('');
-                }
+    private function loadController(string $controllerClass): bool
+    {
+        if (class_exists($controllerClass)) {
+            $reflectionControllerClass = new \ReflectionClass($controllerClass);
+        
+            if ($reflectionControllerClass->isSubclassOf($this->_base)) {
+                $controller = $controllerClass::instance();
+                $controller->setUp();
+                $controller->run();
+                $controller->runModules();
+                return true;
+            } else {
+                throw new InvalidControllerException("$controllerClass must be a subclass of FrontController\Controller");
             }
-            return false;
         }
         return false;
     }

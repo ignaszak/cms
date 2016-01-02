@@ -3,6 +3,7 @@
 namespace Test\Modules\FrontController;
 
 use FrontController\CommandHandler;
+use Ignaszak\Registry\RegistryFactory;
 
 class CommandHandlerTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,28 +18,34 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $_base = \PHPUnit_Framework_Assert::readAttribute($this->_commandHandler, '_base');
-        $_default = \PHPUnit_Framework_Assert::readAttribute($this->_commandHandler, '_default');
         $this->assertInstanceOf('ReflectionClass', $_base);
-        $this->assertInstanceOf('Controller\DefaultController', $_default);
         $this->assertEquals($_base->getName(), 'FrontController\Controller');
     }
 
-    public function testEmptyController()
+    public function testLoadDefaultController()
     {
+        $this->mockView();
         $stub = $this->getMock('System\Router\Route');
         $getCommand = $this->_commandHandler->getCommand($stub);
-        $this->assertFalse($getCommand);
+        $this->assertTrue($getCommand);
     }
 
     public function testSetControllerClassInstance()
     {
+        $this->mockView();
         $stubRoute = $this->getMock('System\Router\Route');
         $stubRoute->expects($this->any())
             ->method('__get')
             ->will($this->returnValue('Controller\DefaultController'));
-        
         $getCommand = $this->_commandHandler->getCommand($stubRoute);
         $this->assertTrue($getCommand);
+    }
+
+    private function mockView()
+    {
+        $_view = \Mockery::mock('View');
+        $_view->shouldReceive('addView');
+        RegistryFactory::start()->set('view', $_view);
     }
 
 }

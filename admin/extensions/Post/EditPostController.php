@@ -49,7 +49,7 @@ class EditPostController extends Controller
 
                 $data['id'] = null;
                 $data['title'] = $this->returnData['setTitle'];
-                $data['conten'] = $this->returnData['setContent'];
+                $data['content'] = $this->returnData['setContent'];
                 $data['catId'] = $this->returnData['setCategory'];
                 $data['public'] = $this->returnData['setPublic'];
                 $data['formTitle'] = 'Add new post';
