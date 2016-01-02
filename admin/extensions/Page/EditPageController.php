@@ -47,7 +47,7 @@ class EditPageController extends Controller
                 if ($this->_controller->getRoute('adminPageAction') == 'edit' &&
                     $this->_controller->getRoute('alias')) {
 
-                        $data['formTitle'] = 'Edit post';
+                        $data['formTitle'] = 'Edit page';
 
                         $this->_controller->setContent('page')
                             ->alias($this->_controller->getRoute('alias'));

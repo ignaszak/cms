@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conf>
+
+    <title>Menu</title>
+    <base>menu</base>
+    <icon>fa fa-bars</icon>
+
+    <router>
+        <route>
+            <item>
+                <pattern>{adminMenuAction:view}/{page}</pattern>
+                <controller>AdminController\Menu\ViewMenuController</controller>
+            </item>
+            <item>
+                <pattern>{adminMenuAction}</pattern>
+                <controller>AdminController\Menu\EditMenuController</controller>
+            </item>
+            <item>
+                <pattern>{adminMenuAction:edit}/{alias}</pattern>
+                <controller>AdminController\Menu\EditMenuController</controller>
+            </item>
+            <item>
+                <pattern>{adminMenuAction:save}</pattern>
+                <controller>AdminController\Menu\SaveMenuController</controller>
+            </item>
+        </route>
+        <token>
+            <item>
+                <name>adminMenuAction</name>
+                <pattern>(add|delete)</pattern>
+            </item>
+        </token>
+    </router>
+
+    <menu>
+        <item>
+            <title>Create new menu</title>
+            <link>add</link>
+        </item>
+        <item>
+            <title>View menus</title>
+            <link>view/</link>
+        </item>
+    </menu>
+
+</conf>
