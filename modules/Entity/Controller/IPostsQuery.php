@@ -9,6 +9,11 @@ use Format\TextFormat;
 abstract class IPostsQuery
 {
 
+    /**
+     * @var boolean
+     */
+    private $showAllText = false;
+
     abstract public function getId();
     abstract public function getCategoryId();
     abstract public function getAuthorId();
@@ -53,7 +58,7 @@ abstract class IPostsQuery
      */
     public function getText($cut = 500)
     {
-        if (Router::getRoute('route1') == 'post' || !$cut) {
+        if (Router::getRoute('route1') == 'post' || !$cut || $this->showAllText) {
             return $this->getContent();
         } else {
             return (new TextFormat)->truncateHtml(
@@ -62,6 +67,11 @@ abstract class IPostsQuery
                 "..."
             ) . $this->getMoreLink();
         }
+    }
+
+    public function showAllText()
+    {
+        $this->showAllText = true;
     }
 
     /**

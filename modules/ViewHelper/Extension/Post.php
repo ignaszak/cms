@@ -4,6 +4,8 @@ namespace ViewHelper\Extension;
 
 use Content\Query\Content as Query;
 use Content\Query\IContentQueryController;
+use Ignaszak\Registry\RegistryFactory;
+use System\Router\Storage as Router;
 
 class Post
 {
@@ -33,7 +35,7 @@ class Post
      */
     public function havePost(): bool
     {
-        $this->setPostFromDB();
+        if (empty($this->_post)) $this->selectPosts();
         return count($this->_post);
     }
 
@@ -42,7 +44,7 @@ class Post
      */
     public function getPosts(): array
     {
-        if (empty($this->_post)) $this->setPostFromDB();
+        if (empty($this->_post)) $this->selectPosts();
         return $this->_post;
     }
 
@@ -65,10 +67,33 @@ class Post
     {
         return $this->_postQuery->getContent();
     }
-
-    private function setPostFromDB()
+    
+    private function selectPosts()
     {
-        $this->_query->setContent('post');
+        switch (Router::getRoute()) {
+
+            case 'post':
+                $this->_query->setContent('post');
+                break;
+
+            case 'category':
+                $this->_query->setContent('post')
+                    ->categoryId(
+                        RegistryFactory::start()
+                            ->register('System\Storage\CategoryList')->child()
+                    )
+                    ->force();
+                break;
+
+            case 'date':
+                $this->_query->setContent('post')
+                    ->date(Router::getRoute('date'))
+                    ->force();
+                break;
+
+            default:
+                $this->_query->setContent('post');
+        }
         $this->_post = $this->_query->getContent();
     }
 
