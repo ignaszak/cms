@@ -4,12 +4,12 @@ namespace Controller;
 
 use FrontController\Controller;
 
-class DefaultController extends Controller
+class ViewPageController extends Controller
 {
 
     public function run()
     {
-        $this->_view->addView('post.html');
+        $this->_view->addView('page.html');
     }
 
 }

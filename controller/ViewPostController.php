@@ -4,7 +4,7 @@ namespace Controller;
 
 use FrontController\Controller;
 
-class DefaultController extends Controller
+class ViewPostController extends Controller
 {
 
     public function run()
