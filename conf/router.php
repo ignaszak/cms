@@ -2,14 +2,16 @@
 
 defined('ACCESS') or die();
 
-$router->add('post', 'post/{page}');
-$router->add('post', 'post/{alias}');
-$router->add('post', 'post/{alias}/{page}');
+$router->add('post', 'post/{page}', 'Controller\ViewPostController');
+$router->add('post', 'post/{alias}', 'Controller\ViewPostController');
+$router->add('post', 'post/{alias}/{page}', 'Controller\ViewPostController');
 
-$router->add('category', 'category/{page}');
-$router->add('category', 'category/{alias}');
+$router->add('category', 'category/{page}', 'Controller\ViewPostController');
+$router->add('category', 'category/{alias}', 'Controller\ViewPostController');
 
-$router->add('date', 'date/{date}');
+$router->add('date', 'date/{date}', 'Controller\ViewPostController');
+
+$router->add('page', 'page/{alias}', 'Controller\ViewPageController');
 
 $router->add('user', '(user)', 'user');
 $router->add('user', '(user)/{method}/{userAction}', 'Controller\UserAuthenticationController');
