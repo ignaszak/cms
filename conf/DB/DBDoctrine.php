@@ -16,17 +16,12 @@ class DBDoctrine
     /**
      * @return EntityManager
      */
-    public static function em($_emMock = null)
+    public static function em()
     {
-        if (empty($_emMock)) { // Normal use
-            if (empty(self::$_em))
-                self::configure();
+        if (empty(self::$_em))
+            self::configure();
 
-            return self::$_em;
-        } else { // For testing
-            self::$_em = $_emMock;
-            return self::$_em;
-        }
+        return self::$_em;
     }
 
     private static function configure()

@@ -19,6 +19,13 @@ class InitRouter
         self::$_router->defaultRoute = $defaultRoute;
     }
 
+    public static function defaultRoute(string $defaultRoute)
+    {
+        self::$_router = new Start;
+        self::$_router->defaultRoute = $defaultRoute;
+        self::$_router->run();
+    }
+
     public static function add(string $name,string  $pattern,string  $controller = '')
     {
         self::$_router->add($name, $pattern, $controller);
@@ -51,7 +58,7 @@ class InitRouter
 
     public static function getRoute(): string
     {
-        return Client::getAllRoute();
+        return Client::getRoute();
     }
 
 }

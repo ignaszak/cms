@@ -5,6 +5,7 @@ namespace Test\Init;
 use Conf\DB\DBDoctrine;
 use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
+use Test\Mock\MockTest;
 
 class InitDoctrine
 {
@@ -45,7 +46,7 @@ class InitDoctrine
         $platform->registerDoctrineTypeMapping('enum', 'string');
 
         // Insert Entity Manager to DBDoctrine
-        DBDoctrine::em($_em);
+        self::mock($_em);
     }
 
     /**
@@ -85,7 +86,7 @@ return array(
      */
     public static function mock($stub)
     {
-        DBDoctrine::em($stub);
+        MockTest::injectStatic('Conf\DB\DBDoctrine', '_em', $stub);
     }
 
     /**
@@ -93,9 +94,7 @@ return array(
      */
     public static function clear()
     {
-        $reflection = new \ReflectionProperty('Conf\DB\DBDoctrine', '_em');
-        $reflection->setAccessible(true);
-        $reflection->setValue(null, null);
+        MockTest::injectStatic('Conf\DB\DBDoctrine', '_em');
     }
 
     /**
@@ -115,6 +114,7 @@ return array(
             'setFirstResult' => $queryBuilder,
             'setMaxResults' => $queryBuilder,
             'getSingleScalarResult' => $queryBuilder,
+            'setParameter' => $queryBuilder,
             'getResult' => $result
         ));
         return $queryBuilder;

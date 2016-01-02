@@ -168,10 +168,12 @@ class ContentQueryController extends IContentQueryController
             if ($this->isAliasEmptyOrIsResultForced()) {
                 $this->paginateQuery();
             } else {
+                $this->setLimit();
                 $this->setAliasIfResultIsNotForced();
             }
 
         } else {
+            $this->setLimit();
             $this->setAliasIfResultIsNotForced();
         }
     }
@@ -203,18 +205,23 @@ class ContentQueryController extends IContentQueryController
     }
 
     /**
-     * First checks if any limit of selected rows is set. If it is sets max
+     * Checks if any limit of selected rows is set. If it is sets max
      * result in doctrine query builder.
-     * Then if result is not forced select rows by alias from router
      */
-    private function setAliasIfResultIsNotForced()
+    private function setLimit()
     {
         if (is_null($this->limit) === false) {
             $query = $this->contentQuery
                 ->setMaxResults($this->limit);
             $this->contentQuery = $query;
         }
+    }
 
+    /**
+     * If result is not forced select rows by alias from router
+     */
+    private function setAliasIfResultIsNotForced()
+    {
         if (!$this->isResultForced) {
             $this->_contentQueryBuilder->alias(Router::getRoute('alias'));
             $this->getQueryAndResult();
