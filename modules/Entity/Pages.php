@@ -3,7 +3,9 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
+use Entity\Controller\IPagesQuery;
 
 /**
  * Pages
@@ -11,7 +13,7 @@ use Ignaszak\Registry\RegistryFactory;
  * @ORM\Table(name="pages", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})})
  * @ORM\Entity
  */
-class Pages
+class Pages extends IPagesQuery
 {
     /**
      * @var integer
@@ -63,6 +65,12 @@ class Pages
      * @ORM\Column(name="public", type="integer", nullable=true)
      */
     private $public;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Entity\Users", cascade={"persist"})
+     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
+     */
+    private $user;
 
     /**
      * Get id
@@ -220,6 +228,30 @@ class Pages
     public function getPublic()
     {
         return $this->public;
+    }
+
+    /**
+     * Set Users object
+     *
+     * @param Users $author
+     *
+     * @return Posts
+     */
+    public function setAuthor($author)
+    {
+        return $this->user = $author;
+    
+        return $this;
+    }
+
+    /**
+     * Get Users object
+     *
+     * @return Users
+     */
+    public function getAuthor()
+    {
+        return $this->user;
     }
 
 }
