@@ -23,6 +23,11 @@
                 <pattern>{adminMenuAction:save}</pattern>
                 <controller>AdminController\Menu\SaveMenuController</controller>
             </item>
+
+            <item>
+                <pattern>ajax/{alias:(page|post)}/{page}/load.json</pattern>
+                <controller>AdminController\Menu\AjaxLoadController</controller>
+            </item>
         </route>
         <token>
             <item>

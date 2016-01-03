@@ -118,7 +118,8 @@ $(document).ready(function() {
                         <script>
                             var category_id = "<?php echo $this->getAdminEditPost('catId'); ?>";
                         </script>
-                        <?php $this->loadExtensionFile('theme/category-list.html'); ?>
+                        <?php $this->loadFile('category-jstree-buttons.html'); ?>
+                        <?php $this->loadFile('category-jstree.html'); ?>
                     </div>
                 </div>
 

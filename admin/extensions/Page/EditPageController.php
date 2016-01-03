@@ -3,10 +3,7 @@
 namespace AdminController\Page;
 
 use FrontController\Controller;
-use System\Server;
 use FrontController\ViewHelperController;
-use Content\Controller\Factory;
-use Content\Controller\PostController;
 
 class EditPageController extends Controller
 {

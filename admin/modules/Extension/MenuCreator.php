@@ -32,7 +32,7 @@ class MenuCreator extends ExtensionInstances
             $menu .= "<ul class=\"submenu\" {$ulActive}>";
 
             foreach ($xml->menu->item as $item) {
-                $aActive = self::returnActiveMenuClass($item->link, 'a');
+                $aActive = self::returnActiveMenuClass("{$xml->base}/{$item->link}", 'a');
                 $menu .= "<li>
                             <a href=\"{$baseUrl}admin/{$xml->base}/{$item->link}\" {$aActive}>
                                 {$item->title}

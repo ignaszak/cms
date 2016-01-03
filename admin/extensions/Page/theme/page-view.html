@@ -1,23 +1,23 @@
 <div class="container-fluid">
-<h1>View pages</h1>
-<div class="panel panel-default">
-    <div class="panel-heading">Pages list</div>
-    <div class="panel-body">
+    <h1>View pages</h1>
+    <div class="panel panel-default">
+        <div class="panel-heading">Pages list</div>
+        <div class="panel-body">
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th class="visible-xs">Inf</th>
-                    <th class="hidden-xs">Alias</th>
-                    <th class="hidden-xs">Author</th>
-                    <th class="hidden-xs">Date</th>
-                    <th></th>
-                </tr>
-            </thead>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th class="visible-xs">Inf</th>
+                        <th class="hidden-xs">Alias</th>
+                        <th class="hidden-xs">Author</th>
+                        <th class="hidden-xs">Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-            <tbody>
+                <tbody>
 
                 <?php
                     $page = $this->getRoute('page');
@@ -32,49 +32,49 @@
                         $author = $post->getAuthor();
                 ?>
 
-                <tr>
-                    <th scope="row"><?php echo $i; ?></th>
-                    <td>
-                        <a href="<?php echo $this->getAdminViewPageLink() . 'edit/' . $post->getAlias(); ?>">
-                            <b><?php echo $post->getTitle(); ?></b>
-                        </a>
-                        <p class="visible-xs">
-                            <small><?php echo $post->getDate(); ?></small>
-                        </p>
-                    </td>
-                    <td class="visible-xs">
-                        <small>
-                            Author: <?php echo $author->getLogin(); ?>
-                        </small>
-                    </td>
-                    <td class="hidden-xs"><?php echo $post->getAlias(); ?></td>
-                    <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
-                    <td class="hidden-xs"><?php echo $post->getDate(); ?></td>
-                    <td>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button"
-                                id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="glyphicon glyphicon-menu-hamburger"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                                <li><a href="<?php echo $this->getAdminViewPageLink(); ?>edit/<?php echo $post->getAlias(); ?>">Edit</a></li>
-                                <li><a href="<?php echo $this->getAdminViewPageLink(); ?>delete/<?php echo $post->getAlias(); ?>">Delete</a></li>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+                    <tr>
+                        <th scope="row"><?php echo $i; ?></th>
+                        <td>
+                            <a href="<?php echo $this->getAdminViewPageLink() . 'edit/' . $post->getAlias(); ?>">
+                                <b><?php echo $post->getTitle(); ?></b>
+                            </a>
+                            <p class="visible-xs">
+                                <small><?php echo $post->getDate(); ?></small>
+                            </p>
+                        </td>
+                        <td class="visible-xs">
+                            <small>
+                                Author: <?php echo $author->getLogin(); ?>
+                            </small>
+                        </td>
+                        <td class="hidden-xs"><?php echo $post->getAlias(); ?></td>
+                        <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
+                        <td class="hidden-xs"><?php echo $post->getDate(); ?></td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-default dropdown-toggle" type="button"
+                                    id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                                    <li><a href="<?php echo $this->getAdminViewPageLink(); ?>edit/<?php echo $post->getAlias(); ?>">Edit</a></li>
+                                    <li><a href="<?php echo $this->getAdminViewPageLink(); ?>delete/<?php echo $post->getAlias(); ?>">Delete</a></li>
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
 
                 <?php
                     ++$i;
                     endforeach;
                 ?>
 
-            </tbody>
+                </tbody>
 
-        </table>
+            </table>
 
-        <?php echo $this->getPaginationTheme('pagination'); ?>
+            <?php echo $this->getPaginationTheme('pagination'); ?>
 
+        </div>
     </div>
-</div>
 </div>
