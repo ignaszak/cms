@@ -48,6 +48,14 @@ class ContentQueryController extends IContentQueryController
      */
     private $status;
 
+    /**
+     * Used to disable ContentQueryController::orderHandler() when user
+     * defines his own orderBy
+     * 
+     * @var boolean
+     */
+    private $enableOrderHandler = true;
+
     public function __construct(string $entityName)
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
@@ -98,11 +106,23 @@ class ContentQueryController extends IContentQueryController
 
     /**
      * {@inheritDoc}
+     * @see \Content\Query\IContentQueryController::orderBy($column, $order)
+     */
+    public function orderBy(string $column, string $order)
+    {
+        $query = $this->contentQuery
+            ->orderBy('c.' . $column, $order);
+        $this->contentQuery = $query;
+    }
+
+    /**
+     * {@inheritDoc}
      * @see \Content\Query\IContentQueryController::getContent()
      */
     public function getContent(): array
     {
         $this->statusHandler();
+        $this->orderHandler();
         $this->queryController();
 
         if (!$this->isPaginationEnabled)
@@ -150,6 +170,13 @@ class ContentQueryController extends IContentQueryController
                     ->andwhere('c.public = '.$value);
                 $this->contentQuery = $query;
             }
+        }
+    }
+
+    private function orderHandler()
+    {
+        if (method_exists($this->entityName, 'getDate') && $this->enableOrderHandler) {
+            $this->orderBy('date', 'DESC');
         }
     }
 

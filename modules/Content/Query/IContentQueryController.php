@@ -60,6 +60,12 @@ abstract class IContentQueryController
      */
     abstract public function status(string $value): IContentQueryController;
 
+    /**
+     * @param string $column
+     * @param string $order
+     */
+    abstract public function orderBy(string $column, string $order);
+
     public function setContentQuery($value)
     {
         $this->contentQuery = $value;
