@@ -115,6 +115,7 @@ return array(
             'setMaxResults' => $queryBuilder,
             'getSingleScalarResult' => $queryBuilder,
             'setParameter' => $queryBuilder,
+            'orderBy' => $queryBuilder,
             'getResult' => $result
         ));
         return $queryBuilder;

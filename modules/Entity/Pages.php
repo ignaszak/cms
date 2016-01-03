@@ -87,7 +87,7 @@ class Pages extends IPagesQuery
      *
      * @param integer $authorId
      *
-     * @return Posts
+     * @return Pages
      */
     public function setAuthorId($authorId)
     {
@@ -111,7 +111,7 @@ class Pages extends IPagesQuery
      *
      * @param \DateTime $date
      *
-     * @return Posts
+     * @return Pages
      */
     public function setDate($date)
     {
@@ -139,7 +139,7 @@ class Pages extends IPagesQuery
      *
      * @param string $title
      *
-     * @return Posts
+     * @return Pages
      */
     public function setTitle($title)
     {
@@ -163,7 +163,7 @@ class Pages extends IPagesQuery
      *
      * @param string $alias
      *
-     * @return Posts
+     * @return Pages
      */
     public function setAlias($alias)
     {
@@ -187,7 +187,7 @@ class Pages extends IPagesQuery
      *
      * @param string $content
      *
-     * @return Posts
+     * @return Pages
      */
     public function setContent($content)
     {
@@ -211,7 +211,7 @@ class Pages extends IPagesQuery
      *
      * @param integer $public
      *
-     * @return Posts
+     * @return Pages
      */
     public function setPublic($public)
     {
@@ -235,7 +235,7 @@ class Pages extends IPagesQuery
      *
      * @param Users $author
      *
-     * @return Posts
+     * @return Pages
      */
     public function setAuthor($author)
     {
