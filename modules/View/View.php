@@ -73,7 +73,7 @@ class View
         $file = "{$this->_viewConf->getThemePath()}/{$fileName}";
 
         if (file_exists($file) && is_file($file) && is_readable($file)) {
-            include_once($file);
+            include($file);
         }
     }
 
@@ -84,7 +84,7 @@ class View
     {
         $file = "{$this->getAdminExtensionDir()}/{$fileName}";
         if (file_exists($file) && is_file($file) && is_readable($file)) {
-            include_once($file);
+            include($file);
         } else {
             throw new InvalidFileException("File <b>$file</b> not found");
         }
