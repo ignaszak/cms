@@ -79,6 +79,6 @@ function add_element(data) {
 
 function get_category(cat) {
 	return (cat !== undefined ?
-		'<span style="color: #5f5f5f"><i class="fa fa-folder-o"></i> ' +
+		'<span><i class="fa fa-folder-o"></i> ' +
 		cat + ' <i class="fa fa-angle-double-right"></i></span> ' : "");
 }
