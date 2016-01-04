@@ -121,11 +121,30 @@ class ContentQueryBuilder implements IContentQueryBuilder
      */
     public function contentLike(string $value): IContentQueryController
     {
+        $this->like('content', $value);
+        return $this->_contentQueryController;
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Content\Query\IContentQueryBuilder::titleLike($value)
+     */
+    public function titleLike(string $value): IContentQueryController
+    {
+        $this->like('title', $value);
+        return $this->_contentQueryController;
+    }
+
+    /**
+     * @param string $column
+     * @param string $value
+     */
+    private function like(string $column, string $value)
+    {
         $query = $this->_contentQueryController->contentQuery
-            ->andwhere('c.content LIKE :value')
+            ->andwhere('c.'.$column.' LIKE :value')
             ->setParameter('value', '%'.$value.'%');
         $this->_contentQueryController->setContentQuery($query);
-        return $this->_contentQueryController;
     }
 
     /**

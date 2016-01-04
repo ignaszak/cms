@@ -59,4 +59,10 @@ interface IContentQueryBuilder
      */
     public function contentLike(string $value): IContentQueryController;
 
+    /**
+     * @param string $value
+     * @return \Content\Query\IContentQueryController
+     */
+    public function titleLike(string $value): IContentQueryController;
+
 }
