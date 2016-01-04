@@ -11,7 +11,17 @@ class AjaxLoadController extends Controller
     public function run()
     {
         $alias = Router::getRoute('alias');
-        $this->view()->setContent($alias)->force();
+
+        if (empty(@$_POST['search'])) {
+            $this->view()->setContent($alias)
+                ->force();
+        } else {
+            $this->view()->setContent($alias)
+                ->titleLike($_POST['search'])
+                ->paginate(false)
+                ->force();
+        }
+
         $array = array();
         foreach ($this->view()->getContent() as $row) {
             $rowArray = array(

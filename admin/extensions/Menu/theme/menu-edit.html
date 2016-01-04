@@ -13,15 +13,26 @@ var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
         overflow-x: hidden;
         max-height: 400px;
     }
-    .choose-element .list-group-item h4 {
-        font-size: 14px;
-        font-weight: bold;
+    .nav-stacked li+li {
+        margin: 0px;
     }
-    .choose-element .list-group-item p {
-        font-size: 11px;
+    .choose-element li a {
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+    .add-elemnt-buttons li a.active {
+        background: #337AB7;
+        color: #FFFFFF;
+    }
+    .add-elemnt-buttons li a:focus {
+        background: #337AB7;
+        color: #FFFFFF;
+    }
+    input[name="search"] {
+        margin-right: 5px;
     }
 </style>
-
+<?php var_dump($_POST); ?>
 <div class="container-fluid">
 
     <h1>Create new menu</h1>
@@ -48,7 +59,7 @@ var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
                         <input type="hidden" name="dataAlias" value="">
                         <input type="hidden" name="dataNumber" value="">
 
-                        <button type="button" onclick="javascript:load_element('page')" class="btn btn-default" data-toggle="modal" data-target="#addPage">
+                        <button type="button" id="page" class="btn btn-default" data-toggle="modal" data-target="#addPage">
                             <i class="fa fa fa-book"></i> Add page
                         </button>
                         <div class="modal fade" id="addPage" tabindex="-1" role="dialog" aria-labelledby="addPageLabel">
@@ -63,13 +74,16 @@ var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
                                     <div class="modal-body">
                                         <input type="text" class="form-control" name="pageTitle"
                                         value="" placeholder="Item title">
-                                        <div id="page" class="choose-element list-group"></div>
+                                        <ul id="page" class="choose-element nav nav-stacked"></ul>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                            Close
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="add">Add</button>
+                                        <div class="form-inline" style="padding-right: 15px;">
+                                        <div class="form-group">
+                                            <input type="text" id="page" class="form-control" name="search" value="" placeholder="Search">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" id="add">Add</button>
+                                        </div>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +116,7 @@ var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
                             </div>
                         </div>
 
-                        <button type="button" onclick="javascript:load_element('post')" class="btn btn-default" data-toggle="modal" data-target="#addPost">
+                        <button type="button" id="post" class="btn btn-default" data-toggle="modal" data-target="#addPost">
                             <i class="fa fa-thumb-tack"></i> Add post
                         </button>
                         <div class="modal fade" id="addPost" tabindex="-1" role="dialog" aria-labelledby="addPostLabel">
@@ -117,13 +131,16 @@ var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
                                     <div class="modal-body">
                                         <input type="text" class="form-control" name="postTitle"
                                         value="" placeholder="Item title">
-                                        <div id="post" class="choose-element list-group"></div>
+                                        <ul id="post" class="choose-element nav nav-stacked"></ul>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">
-                                            Close
-                                        </button>
-                                        <button type="button" class="btn btn-primary" id="add">Add</button>
+                                        <div class="form-inline" style="padding-right: 15px;">
+                                            <div class="form-group">
+                                                <input type="text" id="post" class="form-control" name="search" value="" placeholder="Search">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-primary" id="add">Add</button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -160,8 +177,8 @@ var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
 
                 <div class="form-group">
                     <label class="col-sm-2 control-label">Menu items</label>
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <div id="menu" class="choose-element list-group">
+                    <div class="col-sm-offset-2 col-sm-10" style="margin-left: 0px;">
+                        <div id="menu" class="list-group">
                             
                         </div>
                     </div>
