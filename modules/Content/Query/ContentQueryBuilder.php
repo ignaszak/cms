@@ -87,7 +87,7 @@ class ContentQueryBuilder implements IContentQueryBuilder
 
         $format = "";
         if (array_key_exists(0, $date)) $format = "%Y";
-        if (array_key_exists(1, $date)) $format .= "-%c";
+        if (array_key_exists(1, $date)) $format .= "-%m";
         if (array_key_exists(2, $date)) $format .= "-%d";
 
         $this->set('DATE_FORMAT(c.date, \''.$format.'\')', $value);

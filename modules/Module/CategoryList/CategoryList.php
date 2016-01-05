@@ -26,6 +26,7 @@ class CategoryList
             $string .= "{$this->categoryList[0]->getTitle()}</a>";
             $string .= "</li>";
         }
+        $categoriesExists = count($this->categoryList);
         unset($this->categoryList[0]);
         foreach ($this->categoryList as $cat) {
             if ($parentId == $cat->getParentId()) {
@@ -36,7 +37,7 @@ class CategoryList
             }
         }
         $string .= "</ul>";
-        return count($this->categoryList) ? $string : "";
+        return $categoriesExists ? $string : "";
     }
 
 }
