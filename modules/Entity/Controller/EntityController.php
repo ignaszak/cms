@@ -20,6 +20,8 @@ class EntityController
         $this->addEntity('author', 'Entity\Users');
         $this->addEntity('options', 'Entity\Options');
         $this->addEntity('page', 'Entity\Pages');
+        $this->addEntity('menu', 'Entity\Menus');
+        $this->addEntity('menuItems', 'Entity\MenuItems');
     }
 
     /**

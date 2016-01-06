@@ -67,7 +67,7 @@ class Post
     {
         return $this->_postQuery->getContent();
     }
-    
+
     private function selectPosts()
     {
         switch (Router::getRoute()) {

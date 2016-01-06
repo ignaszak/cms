@@ -3,6 +3,7 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Menus
@@ -31,16 +32,18 @@ class Menus
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @ORM\Column(name="position", type="string", length=255, nullable=true)
      */
-    private $title;
+    private $position;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="adress", type="string", length=255, nullable=true)
+     * @ORM\OneToMany(targetEntity="Entity\MenuItems", mappedBy="menu")
      */
-    private $adress;
+    private $menuItems;
+
+    public function __construct() {
+        $this->menuItems = new ArrayCollection;
+    }
 
     /**
      * Get id
@@ -77,51 +80,37 @@ class Menus
     }
 
     /**
-     * Set title
+     * Set position
      *
-     * @param string $title
+     * @param string $position
      *
      * @return Menus
      */
-    public function setTitle($title)
+    public function setPosition($position)
     {
-        $this->title = $title;
+        $this->position = $position;
     
         return $this;
     }
 
     /**
-     * Get title
+     * Get position
      *
      * @return string
      */
-    public function getTitle()
+    public function getPosition()
     {
-        return $this->title;
+        return $this->position;
     }
 
     /**
-     * Set adress
-     *
-     * @param string $adress
-     *
-     * @return Menus
+     * Get menuItems
+     * 
+     * @return MenuItems
      */
-    public function setAdress($adress)
+    public function getMenuItems()
     {
-        $this->adress = $adress;
-    
-        return $this;
-    }
-
-    /**
-     * Get adress
-     *
-     * @return string
-     */
-    public function getAdress()
-    {
-        return $this->adress;
+        return $this->menuItems;
     }
 
 }

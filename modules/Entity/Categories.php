@@ -49,7 +49,7 @@ class Categories
     private $post;
 
     public function __construct() {
-        $this->post = new ArrayCollection();
+        $this->post = new ArrayCollection;
     }
 
     /**
