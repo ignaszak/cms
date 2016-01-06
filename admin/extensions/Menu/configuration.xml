@@ -16,7 +16,7 @@
                 <controller>AdminController\Menu\EditMenuController</controller>
             </item>
             <item>
-                <pattern>{adminMenuAction:edit}/{alias}</pattern>
+                <pattern>{adminMenuAction:edit}/{id}</pattern>
                 <controller>AdminController\Menu\EditMenuController</controller>
             </item>
             <item>
@@ -25,8 +25,12 @@
             </item>
 
             <item>
-                <pattern>ajax/{alias:(page|post)}/{page}/load.json</pattern>
+                <pattern>ajax/{alias:(page|post|category)}/{page}/load.json</pattern>
                 <controller>AdminController\Menu\AjaxLoadController</controller>
+            </item>
+            <item>
+                <pattern>ajax/{id}/edit.json</pattern>
+                <controller>AdminController\Menu\AjaxEditController</controller>
             </item>
         </route>
         <token>

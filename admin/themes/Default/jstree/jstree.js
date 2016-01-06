@@ -54,7 +54,7 @@ $(function () {
 	/**
 	 * Sets default category id
 	 */
-    if (typeof category_id == 'undefined') category_id = 1;
+    if (typeof category_id == 'undefined') category_id = 0;
 
     /**
      * 

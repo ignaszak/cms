@@ -116,7 +116,7 @@ $(document).ready(function() {
                     <div class="panel-heading">Chose category:</div>
                     <div class="panel-body div-scroll">
                         <script>
-                            var category_id = "<?php echo $this->getAdminEditPost('catId'); ?>";
+                            var category_id = "<?php echo $this->getAdminEditPost('catId') ?? 1; ?>";
                         </script>
                         <?php $this->loadFile('category-jstree-buttons.html'); ?>
                         <?php $this->loadFile('category-jstree.html'); ?>
