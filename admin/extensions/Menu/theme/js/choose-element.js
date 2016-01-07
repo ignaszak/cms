@@ -1,6 +1,3 @@
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-}
 function isUrl(s) {
 	var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
 	return regexp.test(s);
@@ -139,15 +136,27 @@ function element_schema(data) {
 	$('input[name="' + data.alias + 'Adress"]').val('');
 	$('div#menu').append(
 		'<a href="javascript:void(0);" class="list-group-item">' +
+		'<span id="icon">' + get_icon(data.alias) + '</span>' +
 		(data.id != '' ? '<input type="hidden" name="menuId[]" value="' + data.id + '">' : '') +
 		'<input type="hidden" name="menuAdress[]" value="' + data.link + '">' +
-		'<button type="button" class="btn btn-danger btn-xs" onclick="element_schema_delete(this)"><i class="fa fa-times"></i></button>' +
-		'<b>Title:</b> <input type="text" class="edit-item" onchange="element_schema_title(this)" name="menuTitle[]" value="' + data.itemTitle + '">' +
+		'<button type="button" class="btn btn-default btn-xs" onclick="element_schema_delete(this)"><i class="fa fa-times"></i></button>' +
+		'<input type="text" class="edit-item" onchange="element_schema_title(this)" name="menuTitle[]" value="' + data.itemTitle + '">' +
 		'<p class="list-group-item-text">' +
-		'<b>' + data.alias.capitalize() + ':</b> ' +
 		get_category(data.category) + (data.alias == 'link' ? data.link : data.title) +
 		'</p></a>'
 	);
+}
+
+function get_icon(alias) {
+	if (alias == 'page') {
+		return  '<i class="fa fa fa-book"></i>';
+	} else if (alias == 'category') {
+		return  '<i class="fa fa-folder-o"></i>';
+	} else if (alias == 'post') {
+		return  '<i class="fa fa-thumb-tack"></i>';
+	} else if (alias == 'link') {
+		return  '<i class="fa fa-link"></i>';
+	}
 }
 
 function get_category(cat) {
