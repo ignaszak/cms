@@ -17,7 +17,7 @@ class SendMailController extends Controller
         $transport = \Swift_MailTransport::newInstance();
 
         $message = \Swift_Message::newInstance()
-            ->setSubject($_POST['subject'])
+            ->setSubject('Message from CMS')
             ->setFrom($_POST['from'])
             ->setTo($adminMail)
             ->setBody($_POST['body']);
@@ -25,6 +25,7 @@ class SendMailController extends Controller
         $mailer = \Swift_Mailer::newInstance($transport);
         $mailer->send($message);
 
+        Server::setReferData(array('send' => 1));
         Server::headerLocationReferer();
     }
 

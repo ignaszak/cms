@@ -155,7 +155,11 @@ class Categories
      */
     public function getPost()
     {
-        return $this->post;
+        $iterator = $this->post->getIterator();
+        $iterator->uasort(function($a, $b){
+            return $b->getId() <=> $a->getId();
+        });
+        return $iterator;
     }
 
 }
