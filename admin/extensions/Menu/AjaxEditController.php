@@ -4,19 +4,14 @@ namespace AdminController\Menu;
 
 use FrontController\Controller;
 use System\Router\Storage as Router;
+use Entity\MenuItems;
 
 class AjaxEditController extends Controller
 {
 
     public function run()
     {
-        $this->view()->setContent('menu')
-            ->id(Router::getRoute('id'))
-            ->limit(1)
-            ->paginate(false)
-            ->force();
-        $menu = $this->view()->getContent();
-        $menuItems = $menu[0]->getMenuItems();
+        $menuItems = $this->getMenuItemsArray();
         $array = array();
         foreach ($menuItems as $item) {
             $adressArray = explode('/', $item->getAdress());
@@ -26,6 +21,7 @@ class AjaxEditController extends Controller
                 'id' => $item->getId(),
                 'alias' => $alias,
                 'link' => $item->getAdress(),
+                'sequence' => $item->getSequence(),
                 'itemTitle' => $item->getTitle()
             );
 
@@ -48,6 +44,20 @@ class AjaxEditController extends Controller
         header("Content-type: application/json; charset=utf-8");
         echo json_encode($array);
         exit;
+    }
+    
+    /**
+     * @return MenuItems[]
+     */
+    private function getMenuItemsArray()
+    {
+        $this->view()->setContent('menu')
+            ->id(Router::getRoute('id'))
+            ->limit(1)
+            ->paginate(false)
+            ->force();
+        $menu = $this->view()->getContent();
+        return $menu[0]->getMenuItems();
     }
 
 }

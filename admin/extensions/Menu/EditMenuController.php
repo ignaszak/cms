@@ -30,6 +30,12 @@ class EditMenuController extends Controller
                 $this->id = Router::getRoute('id');
             }
 
+            public function getAdminLoadMenuFormTitle(): string
+            {
+                return Router::getRoute('adminMenuAction') == 'edit' ?
+                    "Edit menu" : "Create new menu";
+            }
+
             public function getAdminLoadMenuId()
             {
                 return empty($this->id) ? "" : $this->id;
@@ -49,8 +55,14 @@ class EditMenuController extends Controller
             public function getAdminLoadMenuLink(): string
             {
                 return empty($this->id) ? "" :
-                    $this->_controller->view()->getAdminAdress() . '/menu/ajax/' .
-                    $this->id . '/edit.json';
+                    $this->_controller->view()->getAdminAdress() .
+                    '/menu/ajax/' . $this->id . '/edit.json';
+            }
+
+            public function getAdminLoadMenuDelete(): string
+            {
+                return $this->_controller->view()->getAdminAdress() .
+                    '/menu/delete/' . $this->id;
             }
         };
     }

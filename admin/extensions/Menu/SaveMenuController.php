@@ -7,39 +7,76 @@ use Content\Controller\Factory;
 use Content\Controller\MenuController;
 use Content\Controller\MenuItemsController;
 use System\Server;
+use System\Router\Storage as Router;
 
 class SaveMenuController extends Controller
 {
 
+    /**
+     * Last Added Id into \Entity\Menu
+     *
+     * @var int
+     */
+    private $lastId;
+
     public function run()
     {
-        $id = @$_POST['id'];
-        $name = $_POST['name'];
-        $position = $_POST['position'];
-        $adressArray = $_POST['menuAdress'];
-        $titleArray = $_POST['menuTitle'];
-        $idArray = @$_POST['menuId'];
+        if (Router::getRoute('adminMenuAction') == 'save') {
 
+            $this->saveMenuEntityAndSetLastAddedId();
+            $this->saveMenuItemsEntity();
+            $this->removeMenuItemsEntity();
+            Server::headerLocation("admin/menu/edit/{$this->lastId}");
+
+        } elseif (Router::getRoute('adminMenuAction') == 'delete') {
+            $this->removeMenuWithMenuItems();
+            Server::headerLocation("admin/menu/view/");
+        }
+    }
+
+    private function saveMenuEntityAndSetLastAddedId()
+    {
         $controller = new Factory(new MenuController);
-        if (!empty($id)) $controller->find($id);
+        if (!empty(@$_POST['id'])) $controller->find($_POST['id']);
         $controller
-            ->setName($name)
-            ->setPosition($position)
+            ->setName($_POST['name'])
+            ->setPosition($_POST['position'])
             ->insert();
-        $lastId = $controller->getId();
+        $this->lastId = $controller->getId();
+    }
 
-        $countAdress = count($adressArray);
+    private function saveMenuItemsEntity()
+    {
+        $idArray = @$_POST['menuId'];
+        $countAdress = count($_POST['menuAdress']);
         for ($i = 0; $i < $countAdress; ++$i) {
             $controller = new Factory(new MenuItemsController);
             if (!empty($idArray[$i])) $controller->find($idArray[$i]);
             $controller
-                ->setReference('menu', $lastId)
-                ->setTitle($titleArray[$i])
-                ->setAdress($adressArray[$i])
+                ->setReference('menu', $this->lastId)
+                ->setSequence($_POST['menuSequence'][$i])
+                ->setTitle($_POST['menuTitle'][$i])
+                ->setAdress($_POST['menuAdress'][$i])
                 ->insert();
         }
+    }
 
-        Server::headerLocation("admin/menu/edit/" . $lastId);
+    private function removeMenuItemsEntity()
+    {
+        $removeIdArray = @$_POST['menuRemove'];
+        $count = count($removeIdArray);
+        for ($i = 0; $i < $count; ++$i) {
+            $controller = new Factory(new MenuItemsController);
+            $controller->find($removeIdArray[$i])
+                ->remove();
+        }
+    }
+
+    private function removeMenuWithMenuItems()
+    {
+        $controller = new Factory(new MenuController);
+        $controller->find(Router::getRoute('id'))
+            ->remove();
     }
 
 }
