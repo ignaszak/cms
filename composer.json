@@ -19,7 +19,8 @@
 		"ignaszak/exception" : "dev-master",
 		"ignaszak/registry" : "dev-master",
 		"beberlei/DoctrineExtensions" : "*",
-		"mockery/mockery" : "*"
+		"mockery/mockery" : "*",
+		"swiftmailer/swiftmailer" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {
