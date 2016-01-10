@@ -3,13 +3,14 @@
 namespace Test\Init;
 
 use Ignaszak\Registry\RegistryFactory;
+use Test\Mock\MockTest;
 
 class InitConf
 {
     public static function run()
     {
-        $find = \Mockery::mock('Find');
-        $find->shouldReceive(array(
+        $_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $array = array(
             'getId' => null,
             'getSiteTitle' => null,
             'getAdminEmail' => null,
@@ -18,13 +19,7 @@ class InitConf
             'getBaseUrl' => null,
             'getRequestUri' => null,
             'getTheme' => null
-        ));
-        $em = \Mockery::mock('EntityManager');
-        $em->shouldReceive(array(
-            'find' => $find
-        ));
-        InitDoctrine::mock($em);
-        RegistryFactory::start('file')->register('Conf\Conf');
-        InitDoctrine::clear();
+        );
+        MockTest::inject($_conf, 'optionsArray', $array);
     }
 }
