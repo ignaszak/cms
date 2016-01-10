@@ -13,9 +13,9 @@ $router->add('date', 'date/{date}', 'Controller\ViewPostController');
 
 $router->add('page', 'page/{alias}', 'Controller\ViewPageController');
 
-$router->add('user', '(user)', 'user');
-$router->add('user', '(user)/{method}/{userAction}', 'Controller\UserAuthenticationController');
-$router->add('user', '(user)/(login)/{userName}');
+$router->add('user', 'user', 'Controller\UserAuthController');
+$router->add('user', 'user/{method}/{userAction}', 'Controller\UserAuthenticationController');
+$router->add('user', 'user/login/{userName}');
 
 $router->add('mail', 'mail/send', 'Controller\SendMailController');
 
