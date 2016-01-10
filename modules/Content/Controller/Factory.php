@@ -65,6 +65,17 @@ class Factory
     }
 
     /**
+     * @param array $array
+     * @return Factory
+     */
+    public function findOneBy(array $array): Factory
+    {
+        $this->_controller->findOneBy($array);
+
+        return $this;
+    }
+
+    /**
      * @return Factory
      */
     public function insert(): Factory

@@ -65,4 +65,11 @@ interface IContentQueryBuilder
      */
     public function titleLike(string $value): IContentQueryController;
 
+    /**
+     * @param string $column
+     * @param string $value
+     * @return \Content\Query\IContentQueryController
+     */
+    public function findBy(string $column, string $value): IContentQueryController;
+
 }

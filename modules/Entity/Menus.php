@@ -25,19 +25,19 @@ class Menus
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, nullable=true)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="position", type="string", length=255, nullable=true)
+     * @ORM\Column(name="position", type="string", length=255, nullable=false)
      */
     private $position;
 
     /**
-     * @ORM\OneToMany(targetEntity="Entity\MenuItems", mappedBy="menu")
+     * @ORM\OneToMany(targetEntity="Entity\MenuItems", mappedBy="menu", cascade={"persist","remove"})
      */
     private $menuItems;
 
@@ -104,13 +104,17 @@ class Menus
     }
 
     /**
-     * Get menuItems
+     * Get menuItems and sort by `order` ASC
      * 
      * @return MenuItems
      */
     public function getMenuItems()
     {
-        return $this->menuItems;
+        $iterator = $this->menuItems->getIterator();
+        $iterator->uasort(function($a, $b){
+            return $a->getSequence() <=> $b->getSequence();
+        });
+        return $iterator;
     }
 
 }

@@ -15,15 +15,9 @@ class MenuController extends Controller
 
     public function insert()
     {
-        $this->validAndAddToEntity(array());
+        $this->validAndAddToEntity(array('Name', 'Position'));
         $this->_em->persist($this->_entity);
         $this->_em->flush();
-    }
-
-    public function remove()
-    {
-        $this->_em->remove($this->_entity);
-        $this->_em->flush($this->_entity);
     }
 
 }

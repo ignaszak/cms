@@ -74,10 +74,19 @@ abstract class Controller
     /**
      * @param array $array
      */
-    public function findBy(array $array)
+    public function findOneBy(array $array)
     {
         $entityName = get_class($this->_entity);
         $this->_entity = $this->_em->getRepository($entityName)->findOneBy($array);
+    }
+
+    /**
+     * @param array $array
+     */
+    public function findBy(array $array)
+    {
+        $entityName = get_class($this->_entity);
+        $this->_entity = $this->_em->getRepository($entityName)->findBy($array);
     }
 
     /**
@@ -104,6 +113,19 @@ abstract class Controller
         $entityObject = $this->_em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
         $this->setToDataArray($name, array($entityObject));
+    }
+
+    public function remove()
+    {
+        if (is_array($this->_entity)) {
+            foreach ($this->_entity as $entity) {
+                $this->_em->remove($entity);
+            }
+            $this->_em->flush();
+        } else {
+            $this->_em->remove($this->_entity);
+            $this->_em->flush($this->_entity);
+        }
     }
 
     /**
@@ -162,7 +184,6 @@ abstract class Controller
     }
 
     abstract public function insert();
-    abstract public function remove();
 
 }
 

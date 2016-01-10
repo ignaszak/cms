@@ -136,6 +136,16 @@ class ContentQueryBuilder implements IContentQueryBuilder
     }
 
     /**
+     * {@inheritDoc}
+     * @see \Content\Query\IContentQueryBuilder::findBy($column, $value)
+     */
+    public function findBy(string $column, string $value): IContentQueryController
+    {
+        $this->set('c.' . $column, $value);
+        return $this->_contentQueryController;
+    }
+
+    /**
      * @param string $column
      * @param string $value
      */

@@ -11,7 +11,7 @@ class ContentValidation extends Validator
      * @param \Entity\Categories $_category
      * @return boolean
      */
-    public function validCategory($_category)
+    public function validCategory($_category): bool
     {
         return $this->validObject($_category, 'category');
     }
@@ -20,7 +20,7 @@ class ContentValidation extends Validator
      * @param \Entity\Users $_author
      * @return boolean
      */
-    public function validAuthor($_author)
+    public function validAuthor($_author): bool
     {
         return $this->validObject($_author, 'author');
     }
@@ -29,7 +29,7 @@ class ContentValidation extends Validator
      * @param \DateTime $_date
      * @return boolean
      */
-    public function validDate($_date)
+    public function validDate($_date): bool
     {
         return $_date instanceof \DateTime;
     }
@@ -38,17 +38,35 @@ class ContentValidation extends Validator
      * @param string $title
      * @return boolean
      */
-    public function validTitle($title)
+    public function validTitle($title): bool
     {
         return parent::$_auraFilter->validate($title, 'strlenMin', 1)
             && parent::$_auraFilter->sanitize($title, 'string');
     }
 
     /**
+     * @param string $name
+     * @return boolean
+     */
+    public function validName($name): bool
+    {
+        return $this->validTitle($name);
+    }
+
+    /**
+     * @param string $position
+     * @return boolean
+     */
+    public function validPosition($position): bool
+    {
+        return $this->validTitle($position);
+    }
+
+    /**
      * @param string $alias
      * @return boolean
      */
-    public function validAlias($alias)
+    public function validAlias($alias): bool
     {
         return parent::$_auraFilter->validate($alias, 'strlenMin', 1)
         && parent::$_auraFilter->sanitize($alias, 'string');
@@ -58,7 +76,7 @@ class ContentValidation extends Validator
      * @param string $content
      * @return boolean
      */
-    public function validContent($content)
+    public function validContent($content): bool
     {
         return parent::$_auraFilter->validate($content, 'strlenMin', 1)
             && parent::$_auraFilter->sanitize($content, 'string');
@@ -69,7 +87,7 @@ class ContentValidation extends Validator
      * @param string $name
      * @return boolean
      */
-    private function validObject($_object, $name)
+    private function validObject($_object, $name): bool
     {
         $_entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');

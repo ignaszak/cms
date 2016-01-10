@@ -3,6 +3,7 @@
 namespace ViewHelper\Extension;
 
 use Content\Query\Content as Query;
+use Content\Query\IContentQueryController;
 
 class Page
 {
@@ -49,6 +50,26 @@ class Page
     {
         $this->_query->setContent('page')->force();
         return $this->_query->getContent();
+    }
+
+    /**
+     * @return IContentQueryController
+     */
+    public function setPageQuery(): IContentQueryController
+    {
+        $this->_postQuery = $this->_query->setContent('page')
+            ->force()
+            ->paginate(false);
+
+        return $this->_postQuery;
+    }
+
+    /**
+     * @return array
+     */
+    public function getPageQuery(): array
+    {
+        return $this->_postQuery->getContent();
     }
 
     private function setPageFromDB()

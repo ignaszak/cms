@@ -29,6 +29,13 @@ class MenuItems
     private $menuId;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="sequence", type="integer", nullable=false)
+     */
+    private $sequence;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, nullable=true)
@@ -43,7 +50,7 @@ class MenuItems
     private $adress;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Menus", inversedBy="menuItems")
+     * @ORM\ManyToOne(targetEntity="Entity\Menus", inversedBy="menuItems", cascade={"persist"})
      * @ORM\JoinColumn(name="menu_id", referencedColumnName="id", nullable=true)
      */
     private $menu;
@@ -80,6 +87,30 @@ class MenuItems
     public function getMenuId()
     {
         return $this->menuId;
+    }
+
+    /**
+     * Set sequence
+     *
+     * @param string $order
+     *
+     * @return Menus
+     */
+    public function setSequence($sequence)
+    {
+        $this->sequence = $sequence;
+
+        return $this;
+    }
+
+    /**
+     * Get sequence
+     *
+     * @return string
+     */
+    public function getSequence()
+    {
+        return $this->sequence;
     }
 
     /**
