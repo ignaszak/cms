@@ -11,5 +11,6 @@ ViewHelper\ViewHelperExtension::addExtensionClass(array(
     'System\\Router\\Route',
     'Content\\Query\\Content',
     'Breadcrumbs\\Breadcrumbs',
-    'Module\\Module'
+    'Module\\Module',
+    'Menu\\Menu'
 ));
