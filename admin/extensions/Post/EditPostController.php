@@ -18,7 +18,7 @@ class EditPostController extends Controller
 
         if ($this->getRoute('adminPostAction') == 'delete' && $this->getRoute('alias')) {
             $controller = new Factory(new PostController);
-            $controller->findBy(
+            $controller->findOneBy(
                     array('alias' => $this->getRoute('alias'))
                 )
                 ->remove();

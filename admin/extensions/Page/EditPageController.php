@@ -4,6 +4,9 @@ namespace AdminController\Page;
 
 use FrontController\Controller;
 use FrontController\ViewHelperController;
+use Content\Controller\Factory;
+use Content\Controller\PageController;
+use System\Server;
 
 class EditPageController extends Controller
 {
@@ -12,6 +15,16 @@ class EditPageController extends Controller
     {
         $this->setViewHelperName('AdminEditPage');
         $this->_view->addView('theme/page-edit.html');
+
+        if ($this->getRoute('adminPageAction') == 'delete' && $this->getRoute('alias')) {
+            $controller = new Factory(new PageController);
+            $controller->findOneBy(
+                array('alias' => $this->getRoute('alias'))
+                )
+                ->remove();
+
+                Server::headerLocation("admin/page/view/");
+        }
     }
 
     /**

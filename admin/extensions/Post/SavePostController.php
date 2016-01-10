@@ -38,7 +38,7 @@ class SavePostController extends Controller
 
     private function getCategoryId(): int
     {
-        if (!is_int(@$_POST['categoryId'])) {
+        if (!is_numeric(@$_POST['categoryId'])) {
             $this->setContent('category')->limit(1);
             $catArray = $this->getContent();
             return $catArray[0]->getId();
