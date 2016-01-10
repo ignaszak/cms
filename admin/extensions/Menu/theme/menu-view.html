@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="panel panel-default panel-white">
-        <div class="panel-heading"><h3>View pages</h3></div>
+        <div class="panel-heading"><h3>View menus</h3></div>
         <div class="panel-body">
 
             <table class="table table-hover">
@@ -8,10 +8,7 @@
                     <tr>
                         <th>#</th>
                         <th>Title</th>
-                        <th class="visible-xs">Inf</th>
-                        <th class="hidden-xs">Alias</th>
-                        <th class="hidden-xs">Author</th>
-                        <th class="hidden-xs">Date</th>
+                        <th class="hidden-xs">Position</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -27,35 +24,24 @@
                         $i = ($page - 1)*$this->getPageLimit() + 1;
                     }
 
-                    foreach ($this->getAdminViewPage() as $post) :
-                        $author = $post->getAuthor();
+                    foreach ($this->getAdminViewMenu() as $menu) :
                 ?>
 
                     <tr>
                         <th scope="row"><?php echo $i; ?></th>
                         <td>
-                            <a href="<?php echo $this->getAdminViewPageLink() . 'edit/' . $post->getAlias(); ?>">
-                                <b><?php echo $post->getTitle(); ?></b>
+                            <a href="<?php echo $this->getAdminViewMenuLink() . 'edit/' . $menu->getId(); ?>">
+                                <b><?php echo $menu->getName(); ?></b>
                             </a>
-                            <p class="visible-xs">
-                                <small><?php echo $post->getDate(); ?></small>
-                            </p>
                         </td>
-                        <td class="visible-xs">
-                            <small>
-                                Author: <?php echo $author->getLogin(); ?>
-                            </small>
-                        </td>
-                        <td class="hidden-xs"><?php echo $post->getAlias(); ?></td>
-                        <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
-                        <td class="hidden-xs"><?php echo $post->getDate(); ?></td>
+                        <td><?php echo $menu->getPosition(); ?></td>
                         <td>
                             <a class="btn btn-xs btn-default"
-                            href="<?php echo $this->getAdminViewPageLink(); ?>edit/<?php echo $post->getAlias(); ?>">
+                            href="<?php echo $this->getAdminViewMenuLink(); ?>edit/<?php echo $menu->getId(); ?>">
                                 <i class="fa fa-pencil-square-o"></i>
                             </a>
                             <a class="btn btn-xs btn-danger" data-toggle="a-confirm"
-                            href="<?php echo $this->getAdminViewPageLink(); ?>delete/<?php echo $post->getAlias(); ?>">
+                            href="<?php echo $this->getAdminViewMenuLink(); ?>delete/<?php echo $menu->getId(); ?>">
                                 <i class="fa fa-times"></i>
                             </a>
                         </td>

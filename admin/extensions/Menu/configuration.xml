@@ -12,7 +12,7 @@
                 <controller>AdminController\Menu\ViewMenuController</controller>
             </item>
             <item>
-                <pattern>{adminMenuAction}</pattern>
+                <pattern>{adminMenuAction:add}</pattern>
                 <controller>AdminController\Menu\EditMenuController</controller>
             </item>
             <item>
@@ -21,6 +21,10 @@
             </item>
             <item>
                 <pattern>{adminMenuAction:save}</pattern>
+                <controller>AdminController\Menu\SaveMenuController</controller>
+            </item>
+            <item>
+                <pattern>{adminMenuAction:delete}/{id}</pattern>
                 <controller>AdminController\Menu\SaveMenuController</controller>
             </item>
 
@@ -33,12 +37,6 @@
                 <controller>AdminController\Menu\AjaxEditController</controller>
             </item>
         </route>
-        <token>
-            <item>
-                <name>adminMenuAction</name>
-                <pattern>(add|delete)</pattern>
-            </item>
-        </token>
     </router>
 
     <menu>

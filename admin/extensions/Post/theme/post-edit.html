@@ -4,23 +4,17 @@
 
 <script>
 $(document).ready(function() {
-
     $('#summernote').summernote({
         height: 300,
         focus: true
     });
-
-    $("#delete").click(function() {
-        $('form').attr("action", "<?php echo $this->getAdminEditPost('deleteLink'); ?>");     
-    });
-
 });
 </script>
 
 <style>
-    .well-controls {
+    .controls {
         display: block;
-        padding: 5px;
+        padding: 5px 0px 5px 0px;
         margin-bottom: 5px;
     }
     .div-scroll {
@@ -35,96 +29,105 @@ $(document).ready(function() {
 
 <div class="container-fluid">
 
-    <h1><?php echo $this->getAdminEditPost('formTitle'); ?></h1>
-
     <form method="post" action="<?php echo $this->getAdminEditPost('formLink'); ?>">
 
-        <input type="hidden" name="id" value="<?php echo $this->getAdminEditPost('id'); ?>">
+        <div class="panel panel-default panel-white">
+            <div class="panel-heading"><h3><?php echo $this->getAdminEditPost('formTitle'); ?></h3></div>
+            <div class="panel-body">
 
-        <div class="well well-controls input-group">
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-floppy-o"></i> Save
-            </button>
+                <input type="hidden" name="id" value="<?php echo $this->getAdminEditPost('id'); ?>">
 
-            <script>
-                $(document).ready(function(){
-                    $("#viewButton").click(function(){
-                        $("div.modal-body").html( $("#summernote").val() );
-                    });
-                });
-            </script>
-            <button type="button" id="viewButton" class="btn btn-default" data-toggle="modal" data-target="#view">
-                <i class="fa fa-eye"></i> View
-            </button>
-             <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="viewLabel">
-                <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="viewLabel"><?php echo $this->getAdminEditPost('title'); ?></h4>
-                        </div>
-                        <div class="modal-body"></div>
-                    </div>
-                </div>
-            </div>
+                    <!-- BUTTONS -->
+                    <div class="controls input-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-floppy-o"></i> Save
+                        </button>
 
-            <script>
-            $(document).ready(function(){
-                /**
-                 * Public Button
-                 */
-                if ($("#publicButton input").val() == 1) {
-                    $("#publicButton i").removeClass('fa-square-o').addClass('fa-check-square-o');
-                    $("#publicButton label").addClass('active');
-                    $("#itemPublic").val(1);
-                }
-                $("#publicButton").click(function(){
-                    if ($("#publicButton input").val() == 1) {
-                        $("#publicButton i").removeClass('fa-check-square-o').addClass('fa-square-o');
-                        $("#itemPublic").val(0);
-                    } else {
-                        $("#publicButton i").removeClass('fa-square-o').addClass('fa-check-square-o');
-                        $("#itemPublic").val(1);
-                    }
-                });
-            });
-            </script>
-            <div class="btn-group" id="publicButton" data-toggle="buttons">
-                <label class="btn btn-success">
-                <input type="hidden" id="itemPublic" name="public" value="<?php echo $this->getAdminEditPost('public'); ?>">
-                    <input type="checkbox" value="<?php echo $this->getAdminEditPost('public'); ?>" autocomplete="off">
-                    <i class="fa fa-newspaper-o"></i> Public: <i class="fa fa-square-o"></i>
-                </label>
-            </div>
-            <button type="submit" class="btn btn-danger" id="delete">
-                <i class="fa fa-times"></i> Delete
-            </button>
-        </div>
-
-        <div class="form-group" style="margin-bottom: 5px;">
-            <input type="text" name="title" value="<?php echo $this->getAdminEditPost('title'); ?>" class="form-control input-lg" placeholder="Title">
-        </div>
-
-        <div class="form-group">
-            <textarea name="content" id="summernote"><?php echo $this->getAdminEditPost('content'); ?></textarea>
-        </div>
-
-        <div class="row">
-            <div class="col-sm-4">
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">Chose category:</div>
-                    <div class="panel-body div-scroll">
                         <script>
-                            var category_id = "<?php echo $this->getAdminEditPost('catId') ?? 1; ?>";
+                        $(document).ready(function(){
+                            $("#viewButton").click(function(){
+                                $("div.modal-body").html( $("#summernote").val() );
+                            });
+                        });
                         </script>
-                        <?php $this->loadFile('category-jstree-buttons.html'); ?>
-                        <?php $this->loadFile('category-jstree.html'); ?>
-                    </div>
-                </div>
 
+                        <button type="button" id="viewButton" class="btn btn-default" data-toggle="modal" data-target="#view">
+                            <i class="fa fa-eye"></i> View
+                        </button>
+                         <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="viewLabel">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="viewLabel"><?php echo $this->getAdminEditPost('title'); ?></h4>
+                                    </div>
+                                    <div class="modal-body"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                        $(document).ready(function(){
+                            /**
+                             * Public Button
+                             */
+                            if ($("#publicButton input").val() == 1) {
+                                $("#publicButton i").removeClass('fa-square-o').addClass('fa-check-square-o');
+                                $("#publicButton label").addClass('active');
+                                $("#itemPublic").val(1);
+                            }
+                            $("#publicButton").click(function(){
+                                if ($("#publicButton input").val() == 1) {
+                                    $("#publicButton i").removeClass('fa-check-square-o').addClass('fa-square-o');
+                                    $("#itemPublic").val(0);
+                                } else {
+                                    $("#publicButton i").removeClass('fa-square-o').addClass('fa-check-square-o');
+                                    $("#itemPublic").val(1);
+                                }
+                            });
+                        });
+                        </script>
+
+                        <div class="btn-group" id="publicButton" data-toggle="buttons">
+                            <label class="btn btn-success">
+                            <input type="hidden" id="itemPublic" name="public" value="<?php echo $this->getAdminEditPost('public'); ?>">
+                                <input type="checkbox" value="<?php echo $this->getAdminEditPost('public'); ?>" autocomplete="off">
+                                <i class="fa fa-newspaper-o"></i> Public: <i class="fa fa-square-o"></i>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger"
+                        data-toggle="button-form-confirm"
+                        data-href="<?php echo $this->getAdminEditPost('deleteLink'); ?>">
+                            <i class="fa fa-times"></i> Delete
+                        </button>
+
+                    </div>
+
+                    <!-- TITLE -->
+                    <div class="form-group" style="margin-bottom: 5px;">
+                        <input type="text" name="title" value="<?php echo $this->getAdminEditPost('title'); ?>" class="form-control input-lg" placeholder="Title">
+                    </div>
+
+                    <!-- CONTENT -->
+                    <div class="form-group">
+                        <textarea name="content" id="summernote"><?php echo $this->getAdminEditPost('content'); ?></textarea>
+                    </div>
+
+                </div>
             </div>
-        </div>
+
+            <!-- CATEGORY -->
+            <div class="panel panel-default panel-white">
+                <div class="panel-heading"><h3>Chose category</h3></div>
+                <div class="panel-body div-scroll">
+                    <script>
+                    var category_id = "<?php echo $this->getAdminEditPost('catId') ?? 1; ?>";
+                    </script>
+                    <?php $this->loadFile('category-jstree-buttons.html'); ?>
+                    <?php $this->loadFile('category-jstree.html'); ?>
+                </div>
+            </div>
 
     </form>
 

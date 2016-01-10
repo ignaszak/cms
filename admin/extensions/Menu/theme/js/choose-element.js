@@ -22,8 +22,8 @@ $(function () {
 			function( data ) {
 				data[0].number = catId;
 				$('div.add-elemnt-buttons button#add').click(function(){
-					data[id].id = '';
-					add_element(data[id]);
+					data[0].id = '';
+					add_element(data[0]);
 				});
 			}
 		);
@@ -44,6 +44,7 @@ $(function () {
 			data.id = ''
 			add_element(data);
 		}
+		order();
 	});
 	
 	if (edit_adress != '') {
@@ -53,6 +54,7 @@ $(function () {
 				for (i = 0; i < data.length; ++i) {
 					element_schema(data[i]);
 				}
+				
 			}
 		);
 	}
@@ -114,6 +116,7 @@ function add_element(data) {
 				alert('Please insert item title.');
 			} else {
 				data.itemTitle = title;
+				data.sequence = $('div#menu a').length + 1;
 				element_schema(data);
 			}
 		}
@@ -128,7 +131,12 @@ function element_schema_title(obj) {
 }
 
 function element_schema_delete(obj){
-	$(obj).parent().remove();
+	var parentObj = $(obj).parent();
+	var objId = parentObj.find('input[name="menuId[]"]').val();
+	parentObj.remove();
+	$('div#menu').append(
+		'<input type="hidden" name="menuRemove[]" value="' + objId + '">'
+	);
 }
 
 function element_schema(data) {
@@ -137,14 +145,41 @@ function element_schema(data) {
 	$('div#menu').append(
 		'<a href="javascript:void(0);" class="list-group-item">' +
 		'<span id="icon">' + get_icon(data.alias) + '</span>' +
+		'<button onclick="javascript:move_up(this);" type="button" class="btn btn-default btn-xs up"><i class="fa fa-arrow-up"></i></button>' +
+		'<button onclick="javascript:move_down(this);" type="button" class="btn btn-default btn-xs down"><i class="fa fa-arrow-down"></i></button>' +
 		(data.id != '' ? '<input type="hidden" name="menuId[]" value="' + data.id + '">' : '') +
 		'<input type="hidden" name="menuAdress[]" value="' + data.link + '">' +
+		'<input type="hidden" name="menuSequence[]" value="' + data.sequence + '">' +
 		'<button type="button" class="btn btn-default btn-xs" onclick="element_schema_delete(this)"><i class="fa fa-times"></i></button>' +
 		'<input type="text" class="edit-item" onchange="element_schema_title(this)" name="menuTitle[]" value="' + data.itemTitle + '">' +
 		'<p class="list-group-item-text">' +
 		get_category(data.category) + (data.alias == 'link' ? data.link : data.title) +
 		'</p></a>'
 	);
+}
+
+function move_up(obj) {
+	var thisParent = $(obj).parent();
+	var prevParent = thisParent.prev();
+	var thisInputId = thisParent.find('input[name="menuSequence[]"]');
+	var prevInputId = prevParent.find('input[name="menuSequence[]"]');
+	var thisId = thisInputId.val();
+	var prevId = prevInputId.val();
+	thisInputId.val(prevId);
+	prevInputId.val(thisId);
+	thisParent.insertBefore(prevParent);
+}
+
+function move_down(obj) {
+	var thisParent = $(obj).parent();
+	var nextParent = thisParent.next();
+	var thisInputId = thisParent.find('input[name="menuSequence[]"]');
+	var nextInputId = nextParent.find('input[name="menuSequence[]"]');
+	var thisId = thisInputId.val();
+	var nextId = nextInputId.val();
+	thisInputId.val(nextId);
+	nextInputId.val(thisId);
+	thisParent.insertAfter(nextParent);
 }
 
 function get_icon(alias) {

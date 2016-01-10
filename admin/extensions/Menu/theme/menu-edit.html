@@ -57,19 +57,45 @@ var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
         border: 1px solid #ccc;
         background: #FFF;
     }
+    div#menu a button.up {
+        position: absolute;
+        top: 5px;
+        right: 57px;
+        color: #5f5f5f;
+    }
+    div#menu a button.down {
+        position: absolute;
+        top: 5px;
+        right: 30px;
+        color: #5f5f5f;
+    }
+    .controls {
+        display: block;
+        padding: 5px 0px 5px 0px;
+        margin-bottom: 5px;
+    }
 </style>
 
 <div class="container-fluid">
 
-    <h1>Create new menu</h1>
-
-    <div class="panel panel-default">
-        <div class="panel-heading">New menu</div>
+    <div class="panel panel-default panel-white">
+        <div class="panel-heading"><h3><?php echo $this->getAdminLoadMenuFormTitle(); ?></h3></div>
         <div class="panel-body">
 
             <form class="form-horizontal" action="<?php echo $this->getAdminAdress(); ?>/menu/save" method="post">
 
                 <input type="hidden" name="id" value="<?php echo $this->getAdminLoadMenuId(); ?>">
+
+                <div class="input-group controls">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-floppy-o"></i> Save
+                    </button>
+                    <button type="submit" class="btn btn-danger"
+                    data-toggle="button-form-confirm"
+                    data-href="<?php echo $this->getAdminLoadMenuDelete(); ?>">
+                        <i class="fa fa-times"></i> Delete
+                    </button>
+                </div>
 
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">Menu name</label>
@@ -84,7 +110,7 @@ var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
                     <label for="name" class="col-sm-2 control-label">Position</label>
                     <div class="col-sm-8">
                         <select class="form-control" name="position">
-                            <option value="1">1</option>
+                            <option value="head">head</option>
                         </select>
                     </div>
                 </div>
@@ -222,14 +248,6 @@ var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
                     <label class="col-sm-2 control-label">Menu items</label>
                     <div class="col-sm-offset-2 col-sm-10" style="margin-left: 0px;">
                         <div id="menu" class="list-group"></div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <button type="submit" class="btn btn-primary">
-                            <i class="fa fa-floppy-o"></i> Save
-                        </button>
                     </div>
                 </div>
 

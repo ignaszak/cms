@@ -12,11 +12,11 @@
                 <controller>AdminController\Page\ViewPageController</controller>
             </item>
             <item>
-                <pattern>{adminPageAction}</pattern>
+                <pattern>{adminPageAction:add}</pattern>
                 <controller>AdminController\Page\EditPageController</controller>
             </item>
             <item>
-                <pattern>{adminPageAction:edit}/{alias}</pattern>
+                <pattern>{adminPageAction}/{alias}</pattern>
                 <controller>AdminController\Page\EditPageController</controller>
             </item>
             <item>
@@ -27,7 +27,7 @@
         <token>
             <item>
                 <name>adminPageAction</name>
-                <pattern>(add|delete)</pattern>
+                <pattern>(delete|edit)</pattern>
             </item>
         </token>
     </router>

@@ -1,7 +1,6 @@
 <div class="container-fluid">
-<h1>View posts</h1>
-<div class="panel panel-default">
-    <div class="panel-heading">Posts list</div>
+<div class="panel panel-default panel-white">
+    <div class="panel-heading"><h3>View posts</h3></div>
     <div class="panel-body">
 
         <table class="table table-hover">
@@ -53,16 +52,14 @@
                     <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
                     <td class="hidden-xs"><?php echo $post->getDate(); ?></td>
                     <td>
-                        <div class="dropdown">
-                            <button class="btn btn-default dropdown-toggle" type="button"
-                                id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                <span class="glyphicon glyphicon-menu-hamburger"></span>
-                            </button>
-                            <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
-                                <li><a href="<?php echo $this->getAdminAdress(); ?>/post/p/edit/<?php echo $post->getAlias(); ?>">Edit</a></li>
-                                <li><a href="<?php echo $this->getAdminAdress(); ?>/post/p/delete/<?php echo $post->getAlias(); ?>">Delete</a></li>
-                            </ul>
-                        </div>
+                        <a class="btn btn-xs btn-default"
+                        href="<?php echo $this->getAdminAdress(); ?>/post/p/edit/<?php echo $post->getAlias(); ?>">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </a>
+                        <a class="btn btn-xs btn-danger" data-toggle="a-confirm"
+                        href="<?php echo $this->getAdminAdress(); ?>/post/p/delete/<?php echo $post->getAlias(); ?>">
+                            <i class="fa fa-times"></i>
+                        </a>
                     </td>
                 </tr>
 
