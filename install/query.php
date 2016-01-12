@@ -24,7 +24,7 @@ function executeSqlFile($conn, $file)
 }
 
 $conn = $db = new PDO(
-    'mysql:host=' . DBSettings::DB_HOST . ';dbname=test',
+    'mysql:host=' . DBSettings::DB_HOST . ';dbname=' . DBSettings::DB_NAME,
     DBSettings::DB_USER,
     DBSettings::DB_PASSWORD
 );
