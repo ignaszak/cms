@@ -52,7 +52,6 @@
             propertyName="dbName"
             promptChar=": "
         />
-        <echo>${dbName}</echo>
     </target>
 
     <!-- ============================================  -->
@@ -74,7 +73,6 @@
             propertyName="email"
             promptChar=": "
         />
-                <echo>${dbName}</echo>
     </target>
 
     <!-- ============================================  -->
@@ -94,7 +92,6 @@
                 </replacetokens>
             </filterchain>
         </copy>
-                <echo>${dbName}</echo>
     </target>
 
     <!-- ============================================  -->
@@ -112,7 +109,6 @@
                 </replacetokens>
             </filterchain>
         </copy>
-                <echo>${dbName}</echo>
     </target>
 
     <!-- ============================================  -->
@@ -153,7 +149,6 @@
             </filterchain>
         </copy>
         <php expression="require('./install/query.php');" />
-                <echo>${dbName}</echo>
     </target>
 
     <!-- ============================================  -->
