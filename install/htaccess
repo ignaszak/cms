@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteBase @rewriteBase@
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule . @baseDir@/index.php [L]

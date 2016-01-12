@@ -9,7 +9,7 @@ defined('ACCESS') or die();
 
 // Run installer if DBSettings.php not exists
 if (!file_exists(__DIR__ . '/conf/DB/DBSettings.php')) {
-    header('Location: ./install');
+    die('File \'' . __DIR__ . '/conf/DB/DBSettings.php\' not exists.');
 }
 
 // Configure exception handler

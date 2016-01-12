@@ -1,4 +1,6 @@
 $ cat .gitignore
+install/tmp_structure.sql
+install/tmp_data.sql
 themes/CV/
 cache/
 vendor/
