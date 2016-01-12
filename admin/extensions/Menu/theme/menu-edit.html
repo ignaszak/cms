@@ -3,78 +3,7 @@ var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
 var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
 </script>
 <script src="<?php echo $this->getAdminAdress(); ?>/extensions/Menu/theme/js/choose-element.js"></script>
-
-<style>
-    .list-group {
-        margin: 0px;
-    }
-    .choose-element {
-        margin-top: 15px;
-        overflow: scroll;
-        overflow-x: hidden;
-        max-height: 400px;
-    }
-    .nav-stacked li+li {
-        margin: 0px;
-    }
-    .choose-element li a {
-        padding-top: 6px;
-        padding-bottom: 6px;
-    }
-    span#icon {
-        font-size: 30px;
-        float: left;
-        width: 40px;
-    }
-    .add-elemnt-buttons li a span {
-        color: #5f5f5f;
-    }
-    .add-elemnt-buttons li a p {
-        margin: 10px;
-    }
-    .add-elemnt-buttons li a.active, .add-elemnt-buttons li a:focus {
-        background: #337AB7;
-        color: #FFFFFF;
-    }
-    .add-elemnt-buttons li a.active span, .add-elemnt-buttons li a:focus span {
-        color: #c4c4c4;
-    }
-    input[name="search"] {
-        margin-right: 5px;
-    }
-    div#menu a button {
-        position: absolute;
-        top: 5px;
-        right: 5px;
-    }
-    .edit-item {
-        margin: 0px;
-        border: 1px solid transparent;
-        background: transparent;
-        font-weight: bold;
-    }
-    .edit-item:hover {
-        border: 1px solid #ccc;
-        background: #FFF;
-    }
-    div#menu a button.up {
-        position: absolute;
-        top: 5px;
-        right: 57px;
-        color: #5f5f5f;
-    }
-    div#menu a button.down {
-        position: absolute;
-        top: 5px;
-        right: 30px;
-        color: #5f5f5f;
-    }
-    .controls {
-        display: block;
-        padding: 5px 0px 5px 0px;
-        margin-bottom: 5px;
-    }
-</style>
+<link rel="stylesheet" href="<?php echo $this->getAdminAdress(); ?>/extensions/Menu/theme/css/style.css">
 
 <div class="container-fluid">
 
@@ -102,14 +31,16 @@ var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
                     <div class="col-sm-8">
                         <input type="text" class="form-control" name="name"
                         value="<?php echo $this->getAdminLoadMenuName(); ?>"
-                        placeholder="Menu name">
+                        placeholder="Menu name"
+                        minlength="3"
+                        required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="name" class="col-sm-2 control-label">Position</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="position">
+                        <select class="form-control" name="position" required>
                             <option value="head">head</option>
                         </select>
                     </div>
@@ -229,7 +160,7 @@ var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
                                         <input type="text" class="form-control" name="linkTitle"
                                         value="" placeholder="Item title">
                                         <input type="text" class="form-control" name="linkAdress"
-                                        value="" placeholder="Link" style="margin-top: 15px;">
+                                        value="http://" placeholder="Link" style="margin-top: 15px;">
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">
@@ -257,3 +188,8 @@ var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
     </div>
 
 </div>
+<script>
+$().ready(function() {
+    $("form").validate();
+});
+</script>
