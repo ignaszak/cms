@@ -28,10 +28,11 @@ class SaveMenuController extends Controller
             $this->removeMenuItemsEntity();
             Server::headerLocation("admin/menu/edit/{$this->lastId}");
 
-        } elseif (Router::getRoute('adminMenuAction') == 'delete') {
+        } elseif (Router::getRoute('adminMenuAction') == 'delete' && !empty($_POST['id'])) {
             $this->removeMenuWithMenuItems();
-            Server::headerLocation("admin/menu/view/");
         }
+
+        Server::headerLocation("admin/menu/view/");
     }
 
     private function saveMenuEntityAndSetLastAddedId()
