@@ -168,8 +168,8 @@
     <!-- Target: clear_cms_configurator_files          -->
     <!-- ============================================  -->
     <target name="clear_cms_configurator_files" depends="create_folders">
-        <delete dir="${project.basedir}/install/tmp_structure.sql" />
-        <delete dir="${project.basedir}/install/tmp_data.sql" />
+        <delete file="${project.basedir}/install/tmp_structure.sql" />
+        <delete file="${project.basedir}/install/tmp_data.sql" />
     </target>
 
     <!-- ============================================  -->
