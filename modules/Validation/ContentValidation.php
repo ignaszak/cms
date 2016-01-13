@@ -82,6 +82,36 @@ class ContentValidation extends Validator
             && parent::$_auraFilter->sanitize($content, 'string');
     }
 
+    public function validLogin(string $content): bool
+    {
+        return true;
+    }
+
+    public function validEmail(string $content): bool
+    {
+        return true;
+    }
+
+    public function validPassword(string $content): bool
+    {
+        return true;
+    }
+
+    public function validRegDate($content): bool
+    {
+        return true;
+    }
+
+    public function validLogDate($content): bool
+    {
+        return true;
+    }
+
+    public function validRole(string $content): bool
+    {
+        return true;
+    }
+
     /**
      * @param \Entity $_object
      * @param string $name

@@ -96,6 +96,16 @@ class Factory
     }
 
     /**
+     * @return Factory
+     */
+    public function update(): Factory
+    {
+        $this->_controller->update();
+
+        return $this;
+    }
+
+    /**
      * @param string $string
      * @return string
      */

@@ -83,17 +83,4 @@ class FormUser
         return FormGenerator::render();
     }
 
-    public function inputRePassword(array $customItem = null)
-    {
-        FormGenerator::start('password');
-        FormGenerator::addName('userRePassword');
-        FormGenerator::addItem(array(
-            'class' => 'form-control',
-            'id'    => 'userRePassword'
-        ));
-        FormGenerator::addItem($customItem);
-        FormGenerator::required();
-        return FormGenerator::render();
-    }
-
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace Controller;
+namespace Controller\User;
 
 use FrontController\Controller;
 
-class UserAuthController extends Controller
+class UserViewController extends Controller
 {
 
     public function run()

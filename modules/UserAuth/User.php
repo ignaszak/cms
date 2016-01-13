@@ -8,6 +8,9 @@ use Ignaszak\Registry\RegistryFactory;
 class User
 {
 
+    /**
+     * @var \Entity\Users
+     */
     private $userSession;
 
     public function __construct()
@@ -42,21 +45,4 @@ class User
         }
     }
 
-    public function login($userEmailOrLogin, $userPassword, $userRemember)
-    {
-        $userLoginAuth = new UserLoginAuth($this);
-        $userLoginAuth->login($userEmailOrLogin, $userPassword, $userRemember);
-    }
-
-    public function logout()
-    {
-        $userLoginAuth = new UserLoginAuth($this);
-        $userLoginAuth->logout();
-    }
-
-    public function registration($userLogin, $userEmail, $userPassword, $userRePassword)
-    {
-        $userRegistrationAuth = new UserRegistrationAuth($this);
-        $userRegistrationAuth->registration($userLogin, $userEmail, $userPassword, $userRePassword);
-    }
 }
