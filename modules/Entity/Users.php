@@ -3,6 +3,7 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use UserAuth\HashPass;
 
 /**
  * Users
@@ -136,7 +137,7 @@ class Users
     }
 
     /**
-     * Set password
+     * Set hashed password
      *
      * @param string $password
      *
@@ -144,7 +145,7 @@ class Users
      */
     public function setPassword($password)
     {
-        $this->password = $password;
+        $this->password = HashPass::hash($password);
 
         return $this;
     }

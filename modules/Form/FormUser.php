@@ -4,83 +4,166 @@ namespace Form;
 
 use Ignaszak\Registry\RegistryFactory;
 
-class FormUser
+class FormUser extends Form
 {
 
-    private  $_conf;
+    /**
+     * @var \Conf\Conf
+     */
+    private $_conf;
+
+    /**
+     * @var string
+     */
     private $formAction;
 
-    public function __construct($formAction)
+    /**
+     * @param string $formAction
+     */
+    public function __construct(string $formAction)
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->formAction = $formAction;
     }
 
+    /**
+     * @return string
+     */
+    public function getFormMessage(): string
+    {
+        $response = $this->getFormResponseData();
+        $array = array();
+
+        if (@$response['error']['incorrectLogin'])
+            $array[] = 'Incorrect login.';
+        if (@$response['formLoginDoubled'])
+            $array[] = 'Login alredy exists.';
+        if (@$response['error']['incorrectEmail'])
+            $array[] = 'Incorrect email.';
+        if (@$response['formEmailDoubled'])
+            $array[] = 'Email alredy exists.';
+        if (@$response['error']['incorrectPassword'])
+            $array[] = 'Incorrect password.';
+
+        return implode('<br>', $array);
+    }
+
+    /**
+     * @return string
+     */
     public function getFormActionAdress()
     {
         return $this->_conf->getBaseUrl() . 'user/post/' . $this->selectAction();
     }
 
-    public function getAjaxActionAdress()
+    /**
+     * @param array $customItem
+     * @return string
+     */
+    public function inputLogin(array $customItem = null): string
     {
-        return $this->_conf->getBaseUrl() . 'user/ajax/' . $this->selectAction();
+        return $this->generateInput(
+            'text',
+            'userLogin',
+            array(
+                'class' => 'form-control',
+                'id'    => 'userLogin'
+            ),
+            $customItem
+        );
     }
 
-    private function selectAction()
+    /**
+     * @param array $customItem
+     * @return string
+     */
+    public function inputEmail(array $customItem = null): string
+    {
+        return $this->generateInput(
+            'email',
+            'userEmail',
+            array(
+                'class' => 'form-control',
+                'id'    => 'userEmail'
+            ),
+            $customItem
+        );
+    }
+
+    /**
+     * @param array $customItem
+     * @return string
+     */
+    public function inputPassword(array $customItem = null): string
+    {
+        return $this->generateInput(
+            'password',
+            'userPassword',
+            array(
+                'class'     => 'form-control',
+                'id'        => 'userPassword',
+                'minlength' => '8'
+            ),
+            $customItem
+        );
+    }
+
+    /**
+     * @return string
+     */
+    private function selectAction(): string
     {
         switch ($this->formAction) {
             case 'registration':
                 return 'registration';
-                break;
+            break;
             case 'login':
                 return 'login';
-                break;
+            break;
             case 'logout':
                 return 'logout';
-                break;
+            break;
             case 'remind':
                 return 'remind';
-                break;
+            break;
         }
     }
 
-    public function inputLogin(array $customItem = null)
+    /**
+     * @param string $type
+     * @param string $name
+     * @param array $item
+     * @param array $customItem
+     * @return string
+     */
+    private function generateInput(string $type, string $name, array $item, array $customItem = null): string
     {
-        FormGenerator::start('text');
-        FormGenerator::addName('userLogin');
-        FormGenerator::addItem(array(
-            'class' => 'form-control',
-            'id'    => 'userLogin'
-        ));
+        FormGenerator::start($type);
+        FormGenerator::addName($name);
+        FormGenerator::addItem($item);
+        $this->addResponseInputValue($name);
         FormGenerator::addItem($customItem);
         FormGenerator::required();
         return FormGenerator::render();
     }
 
-    public function inputEmail(array $customItem = null)
+    /**
+     * @param string $name
+     */
+    private function addResponseInputValue(string $name)
     {
-        FormGenerator::start('email');
-        FormGenerator::addName('userEmail');
-        FormGenerator::addItem(array(
-            'class' => 'form-control',
-            'id'    => 'userEmail'
-        ));
-        FormGenerator::addItem($customItem);
-        FormGenerator::required();
-        return FormGenerator::render();
-    }
-
-    public function inputPassword(array $customItem = null)
-    {
-        FormGenerator::start('password');
-        FormGenerator::addName('userPassword');
-        FormGenerator::addItem(array(
-            'class' => 'form-control',
-            'id'    => 'userPassword'
-        ));
-        FormGenerator::addItem($customItem);
-        FormGenerator::required();
-        return FormGenerator::render();
+        if ($this->formAction == 'registration') {
+            $response = $this->getFormResponseData();
+            if ($name == 'userLogin' && !@$response['error']['incorrectLogin']) {
+                FormGenerator::addItem(array(
+                    'value' => @$response['data']['setLogin']
+                ));
+            } elseif ($name == 'userEmail' && !@$response['error']['incorrectEmail']) {
+                FormGenerator::addItem(array(
+                    'value' => @$response['data']['setEmail']
+                ));
+            }
+        }
     }
 
 }

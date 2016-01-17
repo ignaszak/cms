@@ -43,7 +43,7 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
 
     private function mockView()
     {
-        $_view = \Mockery::mock('View');
+        $_view = \Mockery::mock('alias:View\View');
         $_view->shouldReceive('addView');
         RegistryFactory::start()->set('view', $_view);
     }

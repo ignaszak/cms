@@ -5,50 +5,64 @@ namespace Form;
 class Form
 {
 
+    /**
+     * @var Form
+     */
     private static $_formInstance;
+
+    /**
+     * @var string
+     */
     private $formType;
 
-    public function getFormResponseData($key='')
+    /**
+     * @param string $key
+     * @return (array|integer)
+     */
+    public function getFormResponseData(string $key = '')
     {
         $responseArray = \System\Server::getReferData();
         return (!empty($key) ? @$responseArray[$key] : @$responseArray);
     }
 
-    public function createForm($formType)
+    /**
+     * @param unknown $formType
+     * @return \Form\Form
+     */
+    public function createForm(string $formType)
     {
-        $this->setFormType($formType);
+        $this->formType = $formType;
 
         switch ($this->getFormGroup()) {
             case 'user':
                 $this->setFormInstance('FormUser');
                 break;
         }
-        return $this->getFormInstance();
-    }
-
-    private function setFormInstance($formClassName)
-    {
-        $className = __NAMESPACE__ . '\\' . $formClassName;
-        return self::$_formInstance = new $className($this->getFormAction());
-    }
-
-    private function getFormInstance()
-    {
         return self::$_formInstance;
     }
 
-    private function setFormType($formType)
+    /**
+     * @param string $formClassName
+     */
+    private function setFormInstance(string $formClassName)
     {
-        $this->formType = $formType;
+        $className = __NAMESPACE__ . '\\' . $formClassName;
+        self::$_formInstance = new $className($this->getFormAction());
     }
 
-    private function getFormGroup()
+    /**
+     * @return string
+     */
+    private function getFormGroup(): string
     {
         $formTypeArray = explode('-', $this->formType);
         return $formTypeArray[0];
     }
 
-    private function getFormAction()
+    /**
+     * @return string
+     */
+    private function getFormAction(): string
     {
         $formTypeArray = explode('-', $this->formType);
         return $formTypeArray[1];

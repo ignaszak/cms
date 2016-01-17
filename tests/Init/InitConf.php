@@ -12,13 +12,13 @@ class InitConf
         $_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $array = array(
             'getId' => null,
-            'getSiteTitle' => null,
-            'getAdminEmail' => null,
+            'getSiteTitle' => '',
+            'getAdminEmail' => '',
             'getPostLimit' => null,
-            'getDateFormat' => null,
-            'getBaseUrl' => null,
-            'getRequestUri' => null,
-            'getTheme' => null
+            'getDateFormat' => '',
+            'getBaseUrl' => '',
+            'getRequestUri' => '',
+            'getTheme' => ''
         );
         MockTest::inject($_conf, 'optionsArray', $array);
     }

@@ -10,32 +10,45 @@ namespace Form;
 class FormGenerator
 {
 
+    /**
+     * @var string
+     */
     private static $formContent;
 
+    /**
+     * @var array
+     */
     private static $formElementsArray = array(
         'text'      => 'input type="text"',
         'email'     => 'input type="email"',
         'password'  => 'input type="password"'
     );
 
+    /**
+     * @var array
+     */
     private static $formItemsArray = array();
 
-    public static function start($formElementName)
+    /**
+     * @param string $formElementName
+     */
+    public static function start(string $formElementName)
     {
-        self::$formContent = '<' . self::returnElementFromName($formElementName);
+        self::$formContent = '<' . self::$formElementsArray[$formElementName];
         self::$formItemsArray = array();
     }
 
-    private static function returnElementFromName($name)
-    {
-        return self::$formElementsArray[$name];
-    }
-
-    public static function addName($name)
+    /**
+     * @param string $name
+     */
+    public static function addName(string $name)
     {
         self::$formContent .= ' name="' . $name . '"';
     }
 
+    /**
+     * @param array $itemArray
+     */
     public static function addItem(array $itemArray = null)
     {
         $formItemsArray = self::$formItemsArray;
@@ -54,7 +67,10 @@ class FormGenerator
         self::$formContent .= ' required';
     }
 
-    public static function render()
+    /**
+     * @return string
+     */
+    public static function render(): string
     {
         self::addItemsToElement();
         return self::$formContent .= '>';
