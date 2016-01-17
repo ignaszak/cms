@@ -34,7 +34,7 @@ class FormGenerator
      */
     public static function start(string $formElementName)
     {
-        self::$formContent = '<' . self::$formElementsArray[$formElementName];
+        self::$formContent = '<' . @self::$formElementsArray[$formElementName];
         self::$formItemsArray = array();
     }
 

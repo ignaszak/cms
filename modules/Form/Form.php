@@ -19,14 +19,14 @@ class Form
      * @param string $key
      * @return (array|integer)
      */
-    public function getFormResponseData(string $key = '')
+    public function getFormResponseData(string $key = "")
     {
         $responseArray = \System\Server::getReferData();
         return (!empty($key) ? @$responseArray[$key] : @$responseArray);
     }
 
     /**
-     * @param unknown $formType
+     * @param string $formType
      * @return \Form\Form
      */
     public function createForm(string $formType)
@@ -35,7 +35,7 @@ class Form
 
         switch ($this->getFormGroup()) {
             case 'user':
-                $this->setFormInstance('FormUser');
+                $this->setFormInstance('Form\FormUser');
                 break;
         }
         return self::$_formInstance;
@@ -44,9 +44,8 @@ class Form
     /**
      * @param string $formClassName
      */
-    private function setFormInstance(string $formClassName)
+    private function setFormInstance(string $className)
     {
-        $className = __NAMESPACE__ . '\\' . $formClassName;
         self::$_formInstance = new $className($this->getFormAction());
     }
 
