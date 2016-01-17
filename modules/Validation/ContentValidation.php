@@ -3,8 +3,9 @@
 namespace Validation;
 
 use Ignaszak\Registry\RegistryFactory;
+use Respect\Validation\Validator as V;
 
-class ContentValidation extends Validator
+class ContentValidation
 {
 
     /**
@@ -13,7 +14,7 @@ class ContentValidation extends Validator
      */
     public function validCategory($_category): bool
     {
-        return $this->validObject($_category, 'category');
+        return $this->validEntityController($_category, 'category');
     }
 
     /**
@@ -22,7 +23,7 @@ class ContentValidation extends Validator
      */
     public function validAuthor($_author): bool
     {
-        return $this->validObject($_author, 'author');
+        return $this->validEntityController($_author, 'author');
     }
 
     /**
@@ -31,35 +32,40 @@ class ContentValidation extends Validator
      */
     public function validDate($_date): bool
     {
-        return $_date instanceof \DateTime;
+        return V::instance('DateTime')->validate($_date);
     }
 
     /**
+     * Post, category and page title
+     *
      * @param string $title
      * @return boolean
      */
     public function validTitle($title): bool
     {
-        return parent::$_auraFilter->validate($title, 'strlenMin', 1)
-            && parent::$_auraFilter->sanitize($title, 'string');
+        return V::stringType()->length(5, null)->validate($title);
     }
 
     /**
+     * Menu name
+     *
      * @param string $name
      * @return boolean
      */
     public function validName($name): bool
     {
-        return $this->validTitle($name);
+        return V::stringType()->length(5, null)->validate($name);
     }
 
     /**
+     * Menu position
+     *
      * @param string $position
      * @return boolean
      */
     public function validPosition($position): bool
     {
-        return $this->validTitle($position);
+        return V::slug()->validate($position);
     }
 
     /**
@@ -68,8 +74,7 @@ class ContentValidation extends Validator
      */
     public function validAlias($alias): bool
     {
-        return parent::$_auraFilter->validate($alias, 'strlenMin', 1)
-        && parent::$_auraFilter->sanitize($alias, 'string');
+        return V::slug()->validate($alias);
     }
 
     /**
@@ -78,38 +83,61 @@ class ContentValidation extends Validator
      */
     public function validContent($content): bool
     {
-        return parent::$_auraFilter->validate($content, 'strlenMin', 1)
-            && parent::$_auraFilter->sanitize($content, 'string');
+        return V::stringType()->length(5, null)->validate($content);
     }
 
-    public function validLogin(string $content): bool
+    /**
+     * @param string $login
+     * @return boolean
+     */
+    public function validLogin($login): bool
     {
-        return true;
+        return V::alnum('_')->noWhitespace()->length(2, null)->validate($login);
     }
 
-    public function validEmail(string $content): bool
+    /**
+     * @param string $email
+     * @return boolean
+     */
+    public function validEmail($email): bool
     {
-        return true;
+        return V::email()->validate($email);
     }
 
-    public function validPassword(string $content): bool
+    /**
+     * @param string $password
+     * @return boolean
+     */
+    public function validPassword($password): bool
     {
-        return true;
+        return V::alnum()->noWhitespace()->length(8, null)->validate($password);
     }
 
-    public function validRegDate($content): bool
+    /**
+     * @param \DateTime $_regDate
+     * @return boolean
+     */
+    public function validRegDate($_regDate): bool
     {
-        return true;
+        return V::instance('DateTime')->validate($_regDate);
     }
 
-    public function validLogDate($content): bool
+    /**
+     * @param \DateTime $_logDate
+     * @return boolean
+     */
+    public function validLogDate($_logDate): bool
     {
-        return true;
+        return V::instance('DateTime')->validate($_logDate);
     }
 
-    public function validRole(string $content): bool
+    /**
+     * @param string $role
+     * @return boolean
+     */
+    public function validRole($role): bool
     {
-        return true;
+        return V::in(['admin', 'moderator', 'user'])->validate($role);
     }
 
     /**
@@ -117,7 +145,7 @@ class ContentValidation extends Validator
      * @param string $name
      * @return boolean
      */
-    private function validObject($_object, $name): bool
+    private function validEntityController($_object, $name): bool
     {
         $_entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');
