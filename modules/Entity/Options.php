@@ -38,9 +38,9 @@ class Options
     /**
      * @var integer
      *
-     * @ORM\Column(name="post_limit", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="limit", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $postLimit;
+    private $limit;
 
     /**
      * @var string
@@ -130,27 +130,27 @@ class Options
     }
 
     /**
-     * Set postLimit
+     * Set limit
      *
-     * @param integer $postLimit
+     * @param integer $limit
      *
      * @return Options
      */
-    public function setPostLimit($postLimit)
+    public function setLimit($limit)
     {
-        $this->postLimit = $postLimit;
+        $this->limit = $limit;
 
         return $this;
     }
 
     /**
-     * Get postLimit
+     * Get limit
      *
      * @return integer
      */
-    public function getPostLimit()
+    public function getLimit()
     {
-        return $this->postLimit;
+        return $this->limit;
     }
 
     /**

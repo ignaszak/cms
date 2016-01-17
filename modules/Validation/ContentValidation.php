@@ -54,7 +54,7 @@ class ContentValidation
      */
     public function validName($name): bool
     {
-        return V::stringType()->length(5, null)->validate($name);
+        return V::stringType()->length(2, null)->validate($name);
     }
 
     /**

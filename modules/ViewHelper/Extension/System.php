@@ -55,9 +55,9 @@ class System
     /**
      * @return integer
      */
-    public function getPageLimit(): int
+    public function getLimit(): int
     {
-        return $this->_conf->getPostLimit();
+        return $this->_conf->getLimit();
     }
 
     /**

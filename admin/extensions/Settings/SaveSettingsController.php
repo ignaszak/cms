@@ -20,7 +20,7 @@ class SaveSettingsController extends Controller
         $controller->find(1)
             ->setSiteTitle(  @$_POST['title']      ?? $_option->getSiteTitle() )
             ->setAdminEmail( @$_POST['email']      ?? $_option->getAdminEmail() )
-            ->setPostLimit(  @$_POST['postLimit']  ?? $_option->getPostLimit() )
+            ->setLimit(      @$_POST['limit']      ?? $_option->getLimit() )
             ->setDateFormat( @$_POST['dateFormat'] ?? $_option->getDateFormat() )
             ->setBaseUrl(     $this->getBaseUrl()  ?? $_option->getBaseUrl() )
             ->setRequestUri( @$_POST['requestURI'] ?? $_option->getRequestUri() )

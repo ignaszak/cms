@@ -219,7 +219,7 @@ class ContentQueryController extends IContentQueryController
     private function paginateQuery()
     {
         $page = Router::getRoute('page');
-        $limit = $this->_conf->getPostLimit();
+        $limit = $this->_conf->getLimit();
         $offset = $limit * (($page ? $page : 1) - 1);
 
         $query = $this->contentQuery
