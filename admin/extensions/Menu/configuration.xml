@@ -8,23 +8,23 @@
     <router>
         <route>
             <item>
-                <pattern>{adminMenuAction:view}/{page}</pattern>
+                <pattern>{action:view}/{page}</pattern>
                 <controller>AdminController\Menu\ViewMenuController</controller>
             </item>
             <item>
-                <pattern>{adminMenuAction:add}</pattern>
+                <pattern>{action:add}</pattern>
                 <controller>AdminController\Menu\EditMenuController</controller>
             </item>
             <item>
-                <pattern>{adminMenuAction:edit}/{id}</pattern>
+                <pattern>{action:edit}/{id}</pattern>
                 <controller>AdminController\Menu\EditMenuController</controller>
             </item>
             <item>
-                <pattern>{adminMenuAction:save}</pattern>
+                <pattern>{action:save}</pattern>
                 <controller>AdminController\Menu\SaveMenuController</controller>
             </item>
             <item>
-                <pattern>{adminMenuAction:delete}/{id}</pattern>
+                <pattern>{action:delete}/{id}</pattern>
                 <controller>AdminController\Menu\SaveMenuController</controller>
             </item>
 

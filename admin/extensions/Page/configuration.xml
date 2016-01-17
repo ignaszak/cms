@@ -8,28 +8,22 @@
     <router>
         <route>
             <item>
-                <pattern>{adminPageAction:view}/{page}</pattern>
+                <pattern>{action:view}/{page}</pattern>
                 <controller>AdminController\Page\ViewPageController</controller>
             </item>
             <item>
-                <pattern>{adminPageAction:add}</pattern>
+                <pattern>{action:add}</pattern>
                 <controller>AdminController\Page\EditPageController</controller>
             </item>
             <item>
-                <pattern>{adminPageAction}/{alias}</pattern>
+                <pattern>{action:(delete|edit)}/{alias}</pattern>
                 <controller>AdminController\Page\EditPageController</controller>
             </item>
             <item>
-                <pattern>{adminPageAction:save}</pattern>
+                <pattern>{action:save}</pattern>
                 <controller>AdminController\Page\SavePageController</controller>
             </item>
         </route>
-        <token>
-            <item>
-                <name>adminPageAction</name>
-                <pattern>(delete|edit)</pattern>
-            </item>
-        </token>
     </router>
 
     <menu>

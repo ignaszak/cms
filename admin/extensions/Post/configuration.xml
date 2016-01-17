@@ -8,20 +8,20 @@
     <router>
         <route>
             <item>
-                <pattern>p/{adminPostAction:view}/{page}</pattern>
+                <pattern>p/{action:view}/{page}</pattern>
                 <controller>AdminController\Post\ViewPostController</controller>
             </item>
             <item>
-                <pattern>p/{adminPostAction:form}</pattern>
+                <pattern>p/{action:form}</pattern>
                 <controller>AdminController\Post\SavePostController</controller>
             </item>
             <item>
-                <pattern>p/{adminPostAction}/{alias}</pattern>
+                <pattern>p/{action:(add|edit|delete)}/{alias}</pattern>
                 <controller>AdminController\Post\EditPostController</controller>
             </item>
 
             <item>
-                <pattern>c/{adminPostAction:view}/</pattern>
+                <pattern>c/{action:view}/</pattern>
                 <controller>AdminController\Post\ViewCategoryController</controller>
             </item>
             <item>
@@ -29,16 +29,10 @@
                 <controller>AdminController\Post\AjaxViewCategoryController</controller>
             </item>
             <item>
-                <pattern>c/{adminPostAction:form}</pattern>
+                <pattern>c/{action:form}</pattern>
                 <controller>AdminController\Post\AjaxSaveCategoryController</controller>
             </item>
         </route>
-        <token>
-            <item>
-                <name>adminPostAction</name>
-                <pattern>(add|edit|delete)</pattern>
-            </item>
-        </token>
     </router>
 
     <menu>
