@@ -14,11 +14,6 @@ class ControllerHelper
     private $_controller;
 
     /**
-     * @var ViewHelper
-     */
-    private $_viewHelper;
-
-    /**
      * @var string
      */
     private $viewHelperName;
@@ -29,20 +24,6 @@ class ControllerHelper
     public function __construct(Controller $_controller)
     {
         $this->_controller = $_controller;
-        $this->_viewHelper = RegistryFactory::start()->register('ViewHelper\ViewHelper');
-    }
-
-    /**
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call(string $name, array $arguments)
-    {
-        return call_user_func_array(array(
-            $this->_viewHelper,
-            $name
-        ), $arguments);
     }
 
     /**

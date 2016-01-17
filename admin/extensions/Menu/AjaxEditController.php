@@ -13,6 +13,7 @@ class AjaxEditController extends Controller
     {
         $menuItems = $this->getMenuItemsArray();
         $array = array();
+
         foreach ($menuItems as $item) {
             $adressArray = explode('/', $item->getAdress());
             $alias = preg_match('/^(page|post|category)/', $adressArray[0]) ?
@@ -26,12 +27,12 @@ class AjaxEditController extends Controller
             );
 
             if ($alias != 'link') {
-                $this->view()->setContent($alias)
+                $this->query()->setContent($alias)
                     ->alias($adressArray[1])
                     ->limit(1)
                     ->paginate(false)
                     ->force();
-                $content = $this->view()->getContent()[0];
+                $content = $this->query()->getContent()[0];
                 $arrayItem['title'] = $content->getTitle();
 
                 if ($alias == 'post')
@@ -45,18 +46,18 @@ class AjaxEditController extends Controller
         echo json_encode($array);
         exit;
     }
-    
+
     /**
      * @return MenuItems[]
      */
     private function getMenuItemsArray()
     {
-        $this->view()->setContent('menu')
+        $this->query()->setContent('menu')
             ->id(Router::getRoute('id'))
             ->limit(1)
             ->paginate(false)
             ->force();
-        $menu = $this->view()->getContent();
+        $menu = $this->query()->getContent();
         return $menu[0]->getMenuItems();
     }
 

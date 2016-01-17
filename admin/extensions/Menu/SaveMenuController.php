@@ -7,7 +7,6 @@ use Content\Controller\Factory;
 use Content\Controller\MenuController;
 use Content\Controller\MenuItemsController;
 use System\Server;
-use System\Router\Storage as Router;
 
 class SaveMenuController extends Controller
 {
@@ -19,16 +18,29 @@ class SaveMenuController extends Controller
      */
     private $lastId;
 
+    /**
+     * @var string
+     */
+    public $action;
+
+    /**
+     * @var integer
+     */
+    public $id;
+
     public function run()
     {
-        if (Router::getRoute('adminMenuAction') == 'save') {
+        $this->action = $this->view()->getRoute('action');
+        $this->id = $this->view()->getRoute('id');
+
+        if ($this->action == 'save') {
 
             $this->saveMenuEntityAndSetLastAddedId();
             $this->saveMenuItemsEntity();
             $this->removeMenuItemsEntity();
             Server::headerLocation("admin/menu/edit/{$this->lastId}");
 
-        } elseif (Router::getRoute('adminMenuAction') == 'delete' && !empty($_POST['id'])) {
+        } elseif ($this->action == 'delete' && $this->id) {
             $this->removeMenuWithMenuItems();
         }
 
@@ -76,7 +88,7 @@ class SaveMenuController extends Controller
     private function removeMenuWithMenuItems()
     {
         $controller = new Factory(new MenuController);
-        $controller->find(Router::getRoute('id'))
+        $controller->find($this->id)
             ->remove();
     }
 

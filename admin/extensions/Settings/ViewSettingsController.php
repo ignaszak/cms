@@ -10,7 +10,7 @@ class ViewSettingsController extends Controller
 
     public function run()
     {
-        $this->_view->addView('theme/settings-view.html');
+        $this->view()->addView('theme/settings-view.html');
         $this->setViewHelperName('AdminSettings');
     }
 
@@ -32,8 +32,8 @@ class ViewSettingsController extends Controller
             public function __construct(Controller $_controller)
             {
                 parent::__construct($_controller);
-                $this->_controller->view()->setContent('options');
-                $this->_options = $this->_controller->view()->getContent()[0];
+                $this->_controller->query()->setContent('options');
+                $this->_options = $this->_controller->query()->getContent()[0];
             }
 
             /**
@@ -41,7 +41,7 @@ class ViewSettingsController extends Controller
              */
             public function getAdminSettingsFormAction(): string
             {
-                return $this->_controller->getAdminAdress() . "/settings/save";;
+                return $this->_controller->view()->getAdminAdress() . "/settings/save";;
             }
 
             /**

@@ -5,6 +5,7 @@ namespace Test\Modules\ViewHelper;
 use Test\Init\InitRouter;
 use Test\Init\InitDoctrine;
 use Test\Init\InitViewHelper;
+use Test\Init\InitConf;
 use ViewHelper\ViewHelper;
 use Ignaszak\Registry\RegistryFactory;
 
@@ -15,6 +16,7 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        InitConf::run();
         $this->_viewHelper = new ViewHelper;
     }
 

@@ -3,7 +3,6 @@
 namespace AdminController\Menu;
 
 use FrontController\Controller;
-use System\Router\Storage as Router;
 use FrontController\ViewHelperController;
 
 class EditMenuController extends Controller
@@ -11,7 +10,7 @@ class EditMenuController extends Controller
 
     public function run()
     {
-        $this->_view->addView('theme/menu-edit.html');
+        $this->view()->addView('theme/menu-edit.html');
         $this->setViewHelperName('AdminLoadMenu');
     }
 
@@ -22,17 +21,20 @@ class EditMenuController extends Controller
     {
         return new class ($this) extends ViewHelperController
         {
+            /**
+             * @var integer
+             */
             private $id;
 
             public function __construct(Controller $_controller)
             {
                 parent::__construct($_controller);
-                $this->id = Router::getRoute('id');
+                $this->id = $this->_controller->view()->getRoute('id');
             }
 
             public function getAdminLoadMenuFormTitle(): string
             {
-                return Router::getRoute('adminMenuAction') == 'edit' ?
+                return $this->_controller->view()->getRoute('action') == 'edit' ?
                     "Edit menu" : "Create new menu";
             }
 
@@ -43,12 +45,12 @@ class EditMenuController extends Controller
 
             public function getAdminLoadMenuName(): string
             {
-                $this->_controller->view()->setContent('menu')
+                $this->_controller->query()->setContent('menu')
                     ->id($this->id)
                     ->limit(1)
                     ->paginate(false)
                     ->force();
-                $content = $this->_controller->view()->getContent();
+                $content = $this->_controller->query()->getContent();
                 return count($content) ? $content[0]->getName() : "";
             }
 

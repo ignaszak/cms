@@ -4,7 +4,6 @@ namespace AdminController\Post;
 
 use FrontController\Controller;
 use Ignaszak\Registry\RegistryFactory;
-use System\Router\Storage as Router;
 
 class AjaxViewCategoryController extends Controller
 {
@@ -36,7 +35,8 @@ class AjaxViewCategoryController extends Controller
                 $string .= $i > 0 ? ", " : "";
                 $string .= "{\n    \"id\" : {$cat->getId()},";
                 $string .= "\n    \"text\" : \"{$cat->getTitle()}\"";
-                $selected = (Router::getRoute('id') == $cat->getId()) ? ",\n    \"state\" : { \"selected\" : true }" : "";
+                $selected = ($this->view()->getRoute('id') == $cat->getId()) ?
+                    ",\n    \"state\" : { \"selected\" : true }" : "";
                 $string .= $selected;
                 $children = $this->getAdminViewCategoryTreeview($cat->getId());
                 if (!empty($children)) {

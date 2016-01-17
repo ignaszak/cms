@@ -11,7 +11,7 @@ class ViewPageController extends Controller
     public function run()
     {
         $this->setViewHelperName('AdminViewPage');
-        $this->_view->addView('theme/page-view.html');
+        $this->view()->addView('theme/page-view.html');
     }
 
     /**
@@ -23,13 +23,13 @@ class ViewPageController extends Controller
         {
             public function getAdminViewPage()
             {
-                $this->_controller->setContent('page')->status('all');
-                return $this->_controller->getContent();
+                $this->_controller->query()->setContent('page')->status('all');
+                return $this->_controller->query()->getContent();
             }
 
             public function getAdminViewPageLink()
             {
-                return $this->_controller->getAdminAdress() . "/page/";
+                return $this->_controller->view()->getAdminAdress() . "/page/";
             }
         };
     }

@@ -24,7 +24,7 @@ class SavePostController extends Controller
         $controller
             // Sets data
             ->setReference('category', $this->getCategoryId())
-            ->setReference('author', $this->getUserId())
+            ->setReference('author', $this->view()->getUserId())
             ->setDate(new \DateTime)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
@@ -39,8 +39,8 @@ class SavePostController extends Controller
     private function getCategoryId(): int
     {
         if (!is_numeric(@$_POST['categoryId'])) {
-            $this->setContent('category')->limit(1);
-            $catArray = $this->getContent();
+            $this->query()->setContent('category')->limit(1);
+            $catArray = $this->query()->getContent();
             return $catArray[0]->getId();
         } else {
             return $_POST['categoryId'];

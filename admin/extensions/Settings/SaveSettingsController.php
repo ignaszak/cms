@@ -12,8 +12,8 @@ class SaveSettingsController extends Controller
 
     public function run()
     {
-        $this->view()->setContent('options');
-        $_option = $this->view()->getContent()[0];
+        $this->query()->setContent('options');
+        $_option = $this->query()->getContent()[0];
 
         
         $controller = new Factory(new OptionController);
@@ -22,7 +22,7 @@ class SaveSettingsController extends Controller
             ->setAdminEmail( @$_POST['email']      ?? $_option->getAdminEmail() )
             ->setPostLimit(  @$_POST['postLimit']  ?? $_option->getPostLimit() )
             ->setDateFormat( @$_POST['dateFormat'] ?? $_option->getDateFormat() )
-            ->setBaseUrl(    $this->getBaseUrl()   ?? $_option->getBaseUrl() )
+            ->setBaseUrl(     $this->getBaseUrl()  ?? $_option->getBaseUrl() )
             ->setRequestUri( @$_POST['requestURI'] ?? $_option->getRequestUri() )
             ->setTheme(      @$_POST['theme']      ?? $_option->getTheme() )
             ->insert();

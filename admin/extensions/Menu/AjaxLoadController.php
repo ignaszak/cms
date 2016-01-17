@@ -3,15 +3,14 @@
 namespace AdminController\Menu;
 
 use FrontController\Controller;
-use System\Router\Storage as Router;
 
 class AjaxLoadController extends Controller
 {
 
     public function run()
     {
-        $alias = Router::getRoute('alias');
-        $page = Router::getRoute('page');
+        $alias = $this->view()->getRoute('alias');
+        $page = $this->view()->getRoute('page');
 
         if ($alias != 'category') {
             $content = $this->selectPostOrPage($alias);
@@ -40,12 +39,12 @@ class AjaxLoadController extends Controller
      */
     private function selectCategory(int $catId): array
     {
-        $this->view()->setContent('category')
+        $this->query()->setContent('category')
             ->id($catId)
             ->limit(1)
             ->paginate(false)
             ->force();
-        return $this->view()->getContent();
+        return $this->query()->getContent();
     }
 
     /**
@@ -54,15 +53,15 @@ class AjaxLoadController extends Controller
     private function selectPostOrPage(string $alias): array
     {
         if (empty(@$_POST['search'])) {
-            $this->view()->setContent($alias)
+            $this->query()->setContent($alias)
                 ->force();
         } else {
-            $this->view()->setContent($alias)
+            $this->query()->setContent($alias)
                 ->titleLike($_POST['search'])
                 ->paginate(false)
                 ->force();
         }
-        return $this->view()->getContent();
+        return $this->query()->getContent();
     }
 
 }

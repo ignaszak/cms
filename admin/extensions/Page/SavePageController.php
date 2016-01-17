@@ -23,7 +23,7 @@ class SavePageController extends Controller
 
         $controller
             // Sets data
-            ->setReference('author', $this->getUserId())
+            ->setReference('author', $this->view()->getUserId())
             ->setDate(new \DateTime)
             ->setTitle($_POST['title'])
             ->setAlias($alias)

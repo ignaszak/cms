@@ -11,16 +11,28 @@ use System\Server;
 class EditPageController extends Controller
 {
 
+    /**
+     * @var string
+     */
+    public $action;
+
+    /**
+     * @var string
+     */
+    public $alias;
+
     public function run()
     {
-        $this->setViewHelperName('AdminEditPage');
-        $this->_view->addView('theme/page-edit.html');
+        $this->action = $this->view()->getRoute('action');
+        $this->alias = $this->view()->getRoute('alias');
 
-        if ($this->getRoute('adminPageAction') == 'delete' && $this->getRoute('alias')) {
+        $this->setViewHelperName('AdminEditPage');
+        $this->view()->addView('theme/page-edit.html');
+
+        if ($this->action == 'delete' && $this->alias) {
             $controller = new Factory(new PageController);
-            $controller->findOneBy(
-                array('alias' => $this->getRoute('alias'))
-                )
+            $controller
+                ->findOneBy(array('alias' => $this->alias))
                 ->remove();
 
                 Server::headerLocation("admin/page/view/");
@@ -40,7 +52,8 @@ class EditPageController extends Controller
             public function __construct(Controller $_controller)
             {
                 parent::__construct($_controller);
-                $this->returnData = $this->_controller->getFormResponseData('data');
+                $this->returnData = $this->_controller->view()
+                    ->getFormResponseData('data');
             }
 
             public function getAdminEditPage(string $key)
@@ -52,23 +65,24 @@ class EditPageController extends Controller
                 $data['content'] = $this->returnData['setContent'];
                 $data['public'] = $this->returnData['setPublic'];
                 $data['formTitle'] = 'Add new page';
-                $data['formLink'] = $this->_controller->getAdminAdress() . "/page/save";
+                $data['formLink'] = $this->_controller->view()
+                    ->getAdminAdress() . "/page/save";
 
-                if ($this->_controller->getRoute('adminPageAction') == 'edit' &&
-                    $this->_controller->getRoute('alias')) {
+                if ($this->_controller->action == 'edit' &&
+                    $this->_controller->alias) {
 
                         $data['formTitle'] = 'Edit page';
 
-                        $this->_controller->setContent('page')
-                            ->alias($this->_controller->getRoute('alias'));
+                        $this->_controller->query()->setContent('page')
+                            ->alias($this->_controller->alias);
 
-                        foreach ($this->_controller->getContent() as $post) {
+                        foreach ($this->_controller->query()->getContent() as $post) {
                             $data['id'] = $post->getId();
                             $data['title'] = $post->getTitle();
                             $data['content'] = $post->getContent();
                             $data['public'] = $post->getPublic();
-                            $data['deleteLink'] = $this->_controller->getAdminAdress() .
-                                "/page/delete" . $post->getAlias();
+                            $data['deleteLink'] = "{$this->_controller->view()
+                                ->getAdminAdress()}/page/delete{$post->getAlias()}";
                         }
 
                     }

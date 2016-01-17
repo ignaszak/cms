@@ -9,7 +9,7 @@ class ViewPageController extends Controller
 
     public function run()
     {
-        $this->_view->addView('page.html');
+        $this->view()->addView('page.html');
     }
 
 }

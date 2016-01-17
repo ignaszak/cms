@@ -4,7 +4,6 @@ namespace Controller\User;
 
 use FrontController\Controller;
 use System\Server;
-use UserAuth\HashPass;
 use Content\Controller\Factory;
 use Content\Controller\UserController;
 use Ignaszak\Registry\RegistryFactory;
@@ -53,7 +52,7 @@ class UserRegistrationController extends Controller
             $controller
                 ->setLogin($this->login)
                 ->setEmail($this->email)
-                ->setPassword(HashPass::hash($this->password))
+                ->setPassword($this->password)
                 ->setRegDate(new \DateTime('now'))
                 ->setLogDate(new \DateTime('now'))
                 ->setRole('user')

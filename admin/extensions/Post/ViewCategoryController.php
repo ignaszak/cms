@@ -9,7 +9,7 @@ class ViewCategoryController extends Controller
 
     public function run()
     {
-        $this->_view->addView('theme/category-view.html');
+        $this->view()->addView('theme/category-view.html');
     }
 
 }

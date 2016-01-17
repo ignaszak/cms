@@ -9,7 +9,7 @@ class UserViewController extends Controller
 
     public function run()
     {
-        $this->_view->addView('user.html');
+        $this->view()->addView('user.html');
     }
 
 }

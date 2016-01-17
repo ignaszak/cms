@@ -13,16 +13,6 @@ abstract class Controller
     private static $_controllerHelper;
 
     /**
-     * @var \View\View
-     */
-    protected $_view;
-
-    /**
-     * @var \Content\Query\Content
-     */
-    private $_query;
-
-    /**
      * @return Controller
      */
     public static function instance(): Controller
@@ -46,17 +36,6 @@ abstract class Controller
     }
 
     /**
-     * Init before Controller::run()
-     */
-    public function setUp()
-    {
-        $this->_view = RegistryFactory::start()->get('view');
-        $this->_query = new \Content\Query\Content;
-    }
-
-    abstract public function run();
-
-    /**
      * Init after Controller::run()
      */
     public function runModules()
@@ -69,7 +48,7 @@ abstract class Controller
      */
     public function view(): \View\View
     {
-        return $this->_view;
+        return RegistryFactory::start()->get('view');
     }
 
     /**
@@ -77,7 +56,9 @@ abstract class Controller
      */
     public function query(): \Content\Query\Content
     {
-        return $this->_query;
+        return RegistryFactory::start()->register('Content\Query\Content');
     }
+
+    abstract public function run();
 
 }

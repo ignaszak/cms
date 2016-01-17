@@ -11,7 +11,7 @@ class ViewPostController extends Controller
     public function run()
     {
         $this->setViewHelperName('AdminViewPost');
-        $this->_view->addView('theme/post-view.html');
+        $this->view()->addView('theme/post-view.html');
     }
 
     /**
@@ -23,13 +23,13 @@ class ViewPostController extends Controller
         {
             public function getAdminViewPost()
             {
-                $this->_controller->setContent('post')->status('all');
-                return $this->_controller->getContent();
+                $this->_controller->query()->setContent('post')->status('all');
+                return $this->_controller->query()->getContent();
             }
 
             public function getAdminViewPostLink()
             {
-                return $this->_controller->getAdminAdress() . "/post/p/edit/";
+                return $this->_controller->view()->getAdminAdress() . "/post/p/edit/";
             }
         };
     }

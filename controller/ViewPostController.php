@@ -9,7 +9,7 @@ class ViewPostController extends Controller
 
     public function run()
     {
-        $this->_view->addView('post.html');
+        $this->view()->addView('post.html');
     }
 
 }
