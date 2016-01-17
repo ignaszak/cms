@@ -15,12 +15,11 @@ class SaveSettingsController extends Controller
         $this->query()->setContent('options');
         $_option = $this->query()->getContent()[0];
 
-        
         $controller = new Factory(new OptionController);
         $controller->find(1)
             ->setSiteTitle(  @$_POST['title']      ?? $_option->getSiteTitle() )
             ->setAdminEmail( @$_POST['email']      ?? $_option->getAdminEmail() )
-            ->setLimit(      @$_POST['limit']      ?? $_option->getLimit() )
+            ->setViewLimit(  @$_POST['viewLimit']  ?? $_option->getViewLimit() )
             ->setDateFormat( @$_POST['dateFormat'] ?? $_option->getDateFormat() )
             ->setBaseUrl(     $this->getBaseUrl()  ?? $_option->getBaseUrl() )
             ->setRequestUri( @$_POST['requestURI'] ?? $_option->getRequestUri() )

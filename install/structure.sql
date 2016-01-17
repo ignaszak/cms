@@ -51,7 +51,7 @@ CREATE TABLE `options` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `site_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `admin_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `post_limit` int(10) unsigned NOT NULL DEFAULT '10',
+  `view_limit` int(10) unsigned NOT NULL DEFAULT '10',
   `date_format` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'j.n.Y H:i',
   `base_url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `request_uri` varchar(255) COLLATE utf8_unicode_ci NOT NULL,

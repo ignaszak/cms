@@ -68,7 +68,7 @@ class PaginationGenerator
 
     private function setParams()
     {
-        $this->limit = $this->_conf->getLimit();
+        $this->limit = $this->_conf->getViewLimit();
         $this->countSite = $this->getSitesNumber();
     }
 

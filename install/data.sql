@@ -8,7 +8,7 @@ VALUES
 
 
 INSERT INTO `@dbName@`.`options`
-    (`id`, `site_title`, `admin_email`, `post_limit`, `date_format`, `base_url`, `request_uri`, `theme`)
+    (`id`, `site_title`, `admin_email`, `view_limit`, `date_format`, `base_url`, `request_uri`, `theme`)
 VALUES
     (1,'@siteName@','@email@',10,'d.m.Y H:i','@siteAdress@','@rewriteBase@','Default');
 

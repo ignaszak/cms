@@ -14,7 +14,7 @@ class InitConf
             'getId' => null,
             'getSiteTitle' => '',
             'getAdminEmail' => '',
-            'getPostLimit' => null,
+            'getViewLimit' => null,
             'getDateFormat' => '',
             'getBaseUrl' => '',
             'getRequestUri' => '',

@@ -38,9 +38,9 @@ class Options
     /**
      * @var integer
      *
-     * @ORM\Column(name="limit", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="view_limit", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
-    private $limit;
+    private $viewLimit;
 
     /**
      * @var string
@@ -130,27 +130,27 @@ class Options
     }
 
     /**
-     * Set limit
+     * Set viewLimit
      *
-     * @param integer $limit
+     * @param integer $viewLimit
      *
      * @return Options
      */
-    public function setLimit($limit)
+    public function setViewLimit($viewLimit)
     {
-        $this->limit = $limit;
+        $this->viewLimit = $viewLimit;
 
         return $this;
     }
 
     /**
-     * Get limit
+     * Get viewLimit
      *
      * @return integer
      */
-    public function getLimit()
+    public function getViewLimit()
     {
-        return $this->limit;
+        return $this->viewLimit;
     }
 
     /**

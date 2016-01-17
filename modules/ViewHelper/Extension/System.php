@@ -55,9 +55,9 @@ class System
     /**
      * @return integer
      */
-    public function getLimit(): int
+    public function getViewLimit(): int
     {
-        return $this->_conf->getLimit();
+        return $this->_conf->getViewLimit();
     }
 
     /**
