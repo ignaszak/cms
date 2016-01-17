@@ -2,7 +2,6 @@
 
 namespace ViewHelper\Extension;
 
-use Content\Query\Content as Query;
 use Content\Query\IContentQueryController;
 use Ignaszak\Registry\RegistryFactory;
 use System\Router\Storage as Router;
@@ -20,14 +19,9 @@ class Post
      */
     private $_post = array();
 
-    /**
-     * @var IContentQueryController
-     */
-    private $_postQuery;
-
     public function __construct()
     {
-        $this->_query = new Query;
+        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
     }
 
     /**
@@ -46,26 +40,6 @@ class Post
     {
         if (empty($this->_post)) $this->selectPosts();
         return $this->_post;
-    }
-
-    /**
-     * @return IContentQueryController
-     */
-    public function setPostQuery(): IContentQueryController
-    {
-        $this->_postQuery = $this->_query->setContent('post')
-            ->force()
-            ->paginate(false);
-
-        return $this->_postQuery;
-    }
-
-    /**
-     * @return array
-     */
-    public function getPostQuery(): array
-    {
-        return $this->_postQuery->getContent();
     }
 
     private function selectPosts()

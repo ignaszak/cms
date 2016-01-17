@@ -4,35 +4,89 @@ namespace ViewHelper\Extension;
 
 use Conf\Conf;
 use Ignaszak\Registry\RegistryFactory;
+use Content\Query\IContentQueryController;
 
 class System
 {
 
+    /**
+     * @var \Conf\Conf
+     */
     private $_conf;
+
+    /**
+     * @var \Content\Query\Content
+     */
+    private $_query;
+
+    private $_setQuery;
 
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
     }
 
-    public function getSiteTitle()
+    /**
+     * @return string
+     */
+    public function getSiteTitle(): string
     {
         return $this->_conf->getSiteTitle();
     }
 
-    public function getSiteAdress()
+    /**
+     * @return string
+     */
+    public function getSiteAdress(): string
     {
         return $this->_conf->getBaseUrl();
     }
 
-    public function getThemeUrl()
+    /**
+     * @return string
+     */
+    public function getThemeUrl(): string
     {
-        return $this->_conf->getBaseUrl() . RegistryFactory::start()->get('view')->getThemeFolder();
+        return $this->_conf->getBaseUrl() . RegistryFactory::start()
+            ->get('view')->getThemeFolder();
     }
 
-    public function getPageLimit()
+    /**
+     * @return integer
+     */
+    public function getPageLimit(): int
     {
         return $this->_conf->getPostLimit();
+    }
+
+    /**
+     * @param string $table
+     * @return IContentQueryController
+     */
+    public function setQuery(string $table): IContentQueryController
+    {
+        $this->_setQuery = $this->_query->setContent($table)
+            ->force()
+            ->paginate(false);
+
+        return $this->_setQuery;
+    }
+
+    /**
+     * @return array
+     */
+    public function getResult(): array
+    {
+        return $this->_setQuery->getContent();
+    }
+
+    /**
+     * @return Entity
+     */
+    public function getSingleResult()
+    {
+        return $this->_setQuery->getContent()[0];
     }
 
 }
