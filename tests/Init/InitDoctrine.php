@@ -116,6 +116,8 @@ return array(
             'getSingleScalarResult' => $queryBuilder,
             'setParameter' => $queryBuilder,
             'orderBy' => $queryBuilder,
+            'setContentQuery' => $queryBuilder,
+            'findBy' => $queryBuilder,
             'getResult' => $result
         ));
         return $queryBuilder;

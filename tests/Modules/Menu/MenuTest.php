@@ -3,9 +3,11 @@
 namespace Test\Modules\Menu;
 
 use Menu\Menu;
+use Test\Init\InitQueryContent;
 use Test\Init\InitDoctrine;
 use Test\Init\InitConf;
 use Test\Mock\MockTest;
+use Ignaszak\Registry\RegistryFactory;
 
 class MenuTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,6 +16,14 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
+        $stub = \Mockery::mock('alias:MenuItems');
+        $stub->shouldReceive(array(
+            'getAdress',
+            'getTitle',
+            'getMenuItems' => $stub
+        ));
+        $value = InitQueryContent::getContent(array($stub));
+        RegistryFactory::start()->set('Content\Query\Content', $value);
         InitDoctrine::queryBuilderResult(array(null));
         InitDoctrine::getRepositoryResult(array(null));
         InitConf::run(); // Sets site adress as '';
@@ -27,14 +37,6 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadMenuItemsArrayToProperty()
     {
-        $stubMenuItems = \Mockery::mock('MenuItems');
-        $stubMenuItems->shouldReceive(array(
-            'getAdress',
-            'getTitle'
-        ));
-        $stubMenu = \Mockery::mock('Menu');
-        $stubMenu->shouldReceive('getMenuItems')->andReturn($stubMenuItems)->once();
-        InitDoctrine::queryBuilderResult(array($stubMenu));
         MockTest::callMockMethod(self::$_menu, 'loadMenuItmsByPosition', array('head'));
     }
 

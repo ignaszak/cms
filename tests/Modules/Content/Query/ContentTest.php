@@ -11,9 +11,13 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 {
 
     private $_content;
+    private $result;
 
     public function setUp()
     {
+        InitConf::run();
+        $this->result = 'anyResult';
+        InitDoctrine::queryBuilderResult(array($this->result));
         $this->_content = new Content;
     }
 
@@ -24,14 +28,14 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 
     public function testReturnResultFromContentQueryBuilder()
     {
-        InitConf::run();
-        $result = 'anyResult';
-        InitDoctrine::queryBuilderResult(array($result));
         $stub = \Mockery::mock('Entity\Posts');
         InitEntityController::mock('post', $stub);
+        $entityName = \PHPUnit_Framework_Assert::readAttribute(
+            $this->_content->setContent('post'),
+        'entityName');
         $this->assertEquals(
-            array($result),
-            $this->_content->setContent('post')->getContent()
+            'Entity\Posts',
+            $entityName
         );
     }
 

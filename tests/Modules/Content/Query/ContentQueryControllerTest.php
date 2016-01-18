@@ -7,7 +7,6 @@ use Test\Init\InitDoctrine;
 use Test\Init\InitConf;
 use Test\Init\InitRouter;
 use Test\Mock\MockTest;
-use Mockery\Mock;
 
 class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +35,7 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('createQueryBuilder');
         $em->shouldReceive('andwhere')->once();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
+        $this->_contentQueryController->contentQuery = $em;
         $this->_contentQueryController->status('public');
         MockTest::callMockMethod($this->_contentQueryController, 'statusHandler');
     }
@@ -46,7 +45,7 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('createQueryBuilder');
         $em->shouldReceive('andwhere')->once();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
+        $this->_contentQueryController->contentQuery = $em;
         $this->_contentQueryController->status('edit');
         MockTest::callMockMethod($this->_contentQueryController, 'statusHandler');
     }
@@ -56,7 +55,7 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('createQueryBuilder');
         $em->shouldReceive('andwhere')->never();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
+        $this->_contentQueryController->contentQuery = $em;
         $this->_contentQueryController->status('all');
         MockTest::callMockMethod($this->_contentQueryController, 'statusHandler');
     }
@@ -80,7 +79,7 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
     {
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('setMaxResults')->never();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
+        $this->_contentQueryController->contentQuery = $em;
         MockTest::callMockMethod($this->_contentQueryController, 'setLimit');
     }
 
@@ -88,7 +87,7 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
     {
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('setMaxResults')->once();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
+        $this->_contentQueryController->contentQuery = $em;
         $anyLimit = 1;
         $this->_contentQueryController->limit($anyLimit);
         MockTest::callMockMethod($this->_contentQueryController, 'setLimit');

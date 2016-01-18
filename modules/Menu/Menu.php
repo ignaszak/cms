@@ -2,14 +2,13 @@
 
 namespace Menu;
 
-use Content\Query\Content as Query;
 use Ignaszak\Registry\RegistryFactory;
 
 class Menu
 {
 
     /**
-     * @var Query
+     * @var \Content\Query\Content
      */
     private $_query;
 
@@ -25,7 +24,7 @@ class Menu
 
     public function __construct()
     {
-        $this->_query = new Query;
+        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
     }
 

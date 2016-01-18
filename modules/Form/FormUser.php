@@ -45,7 +45,7 @@ class FormUser extends Form
         if (@$response['error']['incorrectPassword'])
             $array[] = 'Incorrect password.';
 
-        return implode('<br>', $array);
+        return count($array) ? implode('<br>', $array) : "";
     }
 
     /**

@@ -7,7 +7,6 @@ use Test\Init\InitDoctrine;
 use Test\Init\InitViewHelper;
 use Test\Init\InitConf;
 use ViewHelper\ViewHelper;
-use Ignaszak\Registry\RegistryFactory;
 
 class ViewHelperTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,21 +17,12 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
     {
         InitConf::run();
         $this->_viewHelper = new ViewHelper;
+
     }
 
     public function tearDown()
     {
-        \Mockery::close();
         InitDoctrine::clear();
-    }
-
-    public function test__call()
-    {
-        $siteTitle = RegistryFactory::start('file')->register('Conf\Conf')
-            ->getSiteTitle();
-        \Conf\DB\DBDoctrine::em()->clear();
-        $getSiteTitle = $this->_viewHelper->getSiteTitle();
-        $this->assertEquals($siteTitle, $getSiteTitle);
     }
 
     /**
