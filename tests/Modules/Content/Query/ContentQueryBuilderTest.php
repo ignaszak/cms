@@ -11,6 +11,13 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
     private $_contentQueryBuilder;
+    
+    public function setUp()
+    {
+        $this->_contentQueryBuilder = new ContentQueryBuilder(
+            $this->getMockIContentQueryController(InitDoctrine::queryBuilder(array(null)))
+        );
+    }
 
     public function tearDown()
     {
@@ -19,13 +26,57 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSet()
     {
+        $this->mockAndWhereAndSetParameterMethods();
+        MockTest::callMockMethod($this->_contentQueryBuilder, 'set', array('column', 'value'));
+    }
+
+    public function testGetReference()
+    {
+        $column = 'table.column';
+        $reference = MockTest::callMockMethod($this->_contentQueryBuilder, 'getReference', array($column));
+        $this->assertEquals('table', $reference);
+    }
+
+    public function testGetEmptyReference()
+    {
+        $column = '';
+        $reference = MockTest::callMockMethod($this->_contentQueryBuilder, 'getReference', array($column));
+        $this->assertEmpty($reference);
+    }
+
+    public function testLike()
+    {
+        $this->mockAndWhereAndSetParameterMethods();
+        MockTest::callMockMethod($this->_contentQueryBuilder, 'like', array('column', 'value'));
+    }
+
+    public function testJoin()
+    {
+        $stub = \Mockery::mock('QuerBuilder');
+        $stub->shouldReceive('join')->andReturnSelf()->once();
+        $this->_contentQueryBuilder = new ContentQueryBuilder(
+            $this->getMockIContentQueryController($stub)
+        );
+        MockTest::callMockMethod($this->_contentQueryBuilder, 'join', array('column'));
+    }
+
+    public function testAddMysqlDateFormatExtension()
+    {
+        $stub = \Mockery::mock('EntityManager');
+        $stub->shouldReceive('getConfiguration')->andReturnSelf()->once();
+        $stub->shouldReceive('addCustomDatetimeFunction')->andReturnSelf()->once();
+        InitDoctrine::mock($stub);
+        $this->_contentQueryBuilder->date('2016-01-19');
+    }
+
+    private function mockAndWhereAndSetParameterMethods()
+    {
         $stub = \Mockery::mock('QuerBuilder');
         $stub->shouldReceive('andwhere')->andReturnSelf()->once();
         $stub->shouldReceive('setParameter')->andReturnSelf()->once();
         $this->_contentQueryBuilder = new ContentQueryBuilder(
             $this->getMockIContentQueryController($stub)
         );
-        MockTest::callMockMethod($this->_contentQueryBuilder, 'set', array('column', 'value'));
     }
 
     private function getMockIContentQueryController($contentQuery = null): IContentQueryController
