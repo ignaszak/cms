@@ -12,13 +12,6 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
 
     private $_contentQueryBuilder;
 
-    public function setUp()
-    {
-        $this->_contentQueryBuilder = new ContentQueryBuilder(
-            $this->getMockIContentQueryController()
-        );
-    }
-
     public function tearDown()
     {
         InitDoctrine::clear();
@@ -26,7 +19,12 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function testSet()
     {
-        $this->_contentQueryBuilder
+        $stub = \Mockery::mock('QuerBuilder');
+        $stub->shouldReceive('andwhere')->andReturnSelf()->once();
+        $stub->shouldReceive('setParameter')->andReturnSelf()->once();
+        $this->_contentQueryBuilder = new ContentQueryBuilder(
+            $this->getMockIContentQueryController($stub)
+        );
         MockTest::callMockMethod($this->_contentQueryBuilder, 'set', array('column', 'value'));
     }
 
