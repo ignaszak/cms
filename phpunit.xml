@@ -10,6 +10,9 @@
     <filter>
         <whitelist>
             <directory suffix=".php">modules/</directory>
+            <directory suffix=".php">admin/</directory>
+            <directory suffix=".php">conf/</directory>
+            <directory suffix=".php">controller/</directory>
         </whitelist>
     </filter>
 

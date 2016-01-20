@@ -1,4 +1,5 @@
 $ cat .gitignore
+doc/
 install/tmp_structure.sql
 install/tmp_data.sql
 themes/CV/

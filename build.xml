@@ -2,6 +2,10 @@
 
 <project name="CMS configurator" default="main">
 
+    <php expression="require __DIR__ . '/vendor/autoload.php';" />
+    <php expression="$conf = new App\Conf\Configuration;" />
+    <property name="DBConfDir" value="${project.basedir}/conf/DB" />
+    <property name="AppConfDir" value="${project.basedir}/modules/App/Conf" />
     <property name="rewriteBase" value="/" override="true" />
     <property name="role" value="admin" override="true" />
 
@@ -17,7 +21,7 @@
     <!-- ============================================  -->
     <target name="site" depends="start">
         <input
-            message="Please insert your site adress (example: http://www.example.com)"
+            message="Please insert your site adress (example: http://www.example.com/)"
             propertyname="siteAdress"
             promptChar=": "
         />
@@ -26,6 +30,9 @@
             propertyname="siteName"
             promptChar=": "
         />
+        <php expression="$conf->setAdress(${siteAdress});" />
+        <php expression="$conf->getBaseUrl();" returnProperty="baseUrl"/>
+        <php expression="$conf->getRequestUrl();" returnProperty="rewriteBase"/>
     </target>
 
     <!-- ============================================  -->
@@ -80,8 +87,8 @@
     <!-- ============================================  -->
     <target name="create_db_conf_file" depends="administrator">
         <copy
-            file="${project.basedir}/install/DBSettings.php"
-            tofile="${project.basedir}/conf/DB/DBSettings.php"
+            file="${AppConfDir}/DBSettings.php"
+            tofile="${DBConfDir}/DBSettings.php"
         >
             <filterchain>
                 <replacetokens>
@@ -93,13 +100,22 @@
             </filterchain>
         </copy>
     </target>
+	
+    <!-- ============================================  -->
+    <!-- Target: create_folders                        -->
+    <!-- ============================================  -->
+    <target name="create_folders" depends="create_db_conf_file">
+        <mkdir dir="${project.basedir}/cache/session" />
+        <mkdir dir="${project.basedir}/cache/registry" />
+        <mkdir dir="${project.basedir}/cache/tmp" />
+    </target>
 
     <!-- ============================================  -->
     <!-- Target: create_htaccess_file                  -->
     <!-- ============================================  -->
-    <target name="create_htaccess_file" depends="create_db_conf_file">
+    <target name="create_htaccess_file" depends="create_folders">
         <copy
-            file="${project.basedir}/install/htaccess"
+            file="${AppConfDir}/htaccess"
             tofile="${project.basedir}/.htaccess"
         >
             <filterchain>
@@ -115,22 +131,21 @@
     <!-- Target: create_sql_query                      -->
     <!-- ============================================  -->
     <target name="create_sql_query" depends="create_htaccess_file">
-        <php expression="require('./vendor/autoload.php');" />
         <php expression="\UserAuth\HashPass::hash(${password});" returnProperty="hashPassword"/>
         <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');" returnProperty="regDate"/>
         <copy
-            file="${project.basedir}/install/structure.sql"
-            tofile="${project.basedir}/install/tmp_structure.sql"
+            file="${AppConfDir}/structure.sql"
+            tofile="${project.basedir}/cache/tmp/tmp_structure.sql"
         >
             <filterchain>
                 <replacetokens>
-                    <token key="dbName"       value="${dbName}" />
+                    <token key="dbName" value="${dbName}" />
                 </replacetokens>
             </filterchain>
         </copy>
         <copy
-            file="${project.basedir}/install/data.sql"
-            tofile="${project.basedir}/install/tmp_data.sql"
+            file="${AppConfDir}/data.sql"
+            tofile="${project.basedir}/cache/tmp/tmp_data.sql"
         >
             <filterchain>
                 <replacetokens>
@@ -148,29 +163,21 @@
                 </replacetokens>
             </filterchain>
         </copy>
-        <php expression="require('./install/query.php');" />
-    </target>
-
-    <!-- ============================================  -->
-    <!-- Target: create_folders                        -->
-    <!-- ============================================  -->
-    <target name="create_folders" depends="create_sql_query">
-        <mkdir dir="${project.basedir}/cache/session" />
-        <mkdir dir="${project.basedir}/cache/registry" />
+        <php expression="$conf->createDataBase();" />
     </target>
 
     <!-- ============================================  -->
     <!-- Target: clear_cms_configurator_files          -->
     <!-- ============================================  -->
-    <target name="clear_cms_configurator_files" depends="create_folders">
-        <delete file="${project.basedir}/install/tmp_structure.sql" />
-        <delete file="${project.basedir}/install/tmp_data.sql" />
+    <target name="clear_tmp" depends="create_sql_query">
+        <delete file="${project.basedir}/cache/tmp/tmp_structure.sql" />
+        <delete file="${project.basedir}/cache/tmp/tmp_data.sql" />
     </target>
 
     <!-- ============================================  -->
     <!-- Target: main                                  -->
     <!-- ============================================  -->
-    <target name="main" depends="clear_cms_configurator_files">
+    <target name="main" depends="clear_tmp">
         <echo message="Configuration completed." />
     </target>
 
