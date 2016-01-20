@@ -21,7 +21,8 @@
 		"mockery/mockery" : "*",
 		"swiftmailer/swiftmailer" : "*",
 		"respect/validation" : "*",
-		"gregwar/captcha" : "*"
+		"gregwar/captcha" : "*",
+		"mikey179/vfsStream" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {

@@ -6,16 +6,19 @@ class MockTest
 {
 
     /**
-     * @param object $object
+     * @param object|string $object
      * @param string $method
      * @param array $args
      * @return mixed
      */
     public static function callMockMethod($object, string $method, array $args = array())
     {
-        $class = new \ReflectionClass(get_class($object));
+        $class = new \ReflectionClass(
+            is_object($object) ? get_class($object) : $object
+        );
         $method = $class->getMethod($method);
         $method->setAccessible(true);
+        $object = is_object($object) ? $object : $class;
         return $method->invokeArgs($object, $args);
     }
 

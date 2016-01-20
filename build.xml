@@ -2,8 +2,6 @@
 
 <project name="CMS configurator" default="main">
 
-    <php expression="require __DIR__ . '/vendor/autoload.php';" />
-    <php expression="$conf = new App\Conf\Configuration;" />
     <property name="DBConfDir" value="${project.basedir}/conf/DB" />
     <property name="AppConfDir" value="${project.basedir}/modules/App/Conf" />
     <property name="rewriteBase" value="/" override="true" />
@@ -30,9 +28,10 @@
             propertyname="siteName"
             promptChar=": "
         />
-        <php expression="$conf->setAdress(${siteAdress});" />
-        <php expression="$conf->getBaseUrl();" returnProperty="baseUrl"/>
-        <php expression="$conf->getRequestUrl();" returnProperty="rewriteBase"/>
+        <php expression="require('${project.basedir}/vendor/autoload.php');" />
+        <php expression="\App\Conf\Configuration::setAdress('${siteAdress}');" />
+        <php expression="\App\Conf\Configuration::getBaseUrl();" returnProperty="baseUrl"/>
+        <php expression="\App\Conf\Configuration::getRequestUrl();" returnProperty="rewriteBase"/>
     </target>
 
     <!-- ============================================  -->
@@ -131,6 +130,7 @@
     <!-- Target: create_sql_query                      -->
     <!-- ============================================  -->
     <target name="create_sql_query" depends="create_htaccess_file">
+        <php expression="require('${project.basedir}/vendor/autoload.php');" />
         <php expression="\UserAuth\HashPass::hash(${password});" returnProperty="hashPassword"/>
         <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');" returnProperty="regDate"/>
         <copy
@@ -163,7 +163,7 @@
                 </replacetokens>
             </filterchain>
         </copy>
-        <php expression="$conf->createDataBase();" />
+        <php expression="\App\Conf\Configuration::createDataBase();" />
     </target>
 
     <!-- ============================================  -->
