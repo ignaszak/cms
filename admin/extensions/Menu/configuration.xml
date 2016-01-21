@@ -1,53 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <conf>
 
-    <title>Menu</title>
-    <base>menu</base>
-    <icon>fa fa-bars</icon>
+	<title>Menu</title>
+	<base>menu</base>
+	<icon>fa fa-bars</icon>
 
-    <router>
-        <route>
-            <item>
-                <pattern>{action:view}/{page}</pattern>
-                <controller>AdminController\Menu\ViewMenuController</controller>
-            </item>
-            <item>
-                <pattern>{action:add}</pattern>
-                <controller>AdminController\Menu\EditMenuController</controller>
-            </item>
-            <item>
-                <pattern>{action:edit}/{id}</pattern>
-                <controller>AdminController\Menu\EditMenuController</controller>
-            </item>
-            <item>
-                <pattern>{action:save}</pattern>
-                <controller>AdminController\Menu\SaveMenuController</controller>
-            </item>
-            <item>
-                <pattern>{action:delete}/{id}</pattern>
-                <controller>AdminController\Menu\SaveMenuController</controller>
-            </item>
+	<router>
+		<route>
+			<item>
+				<pattern>{action:view}/{page}</pattern>
+				<controller>AdminController\Menu\ViewMenuController</controller>
+			</item>
+			<item>
+				<pattern>{action:add}</pattern>
+				<controller>AdminController\Menu\EditMenuController</controller>
+			</item>
+			<item>
+				<pattern>{action:edit}/{id}</pattern>
+				<controller>AdminController\Menu\EditMenuController</controller>
+			</item>
+			<item>
+				<pattern>{action:save}</pattern>
+				<controller>AdminController\Menu\SaveMenuController</controller>
+			</item>
+			<item>
+				<pattern>{action:delete}/{id}</pattern>
+				<controller>AdminController\Menu\SaveMenuController</controller>
+			</item>
 
-            <item>
-                <pattern>ajax/{alias:(page|post|category)}/{page}/load.json</pattern>
-                <controller>AdminController\Menu\AjaxLoadController</controller>
-            </item>
-            <item>
-                <pattern>ajax/{id}/edit.json</pattern>
-                <controller>AdminController\Menu\AjaxEditController</controller>
-            </item>
-        </route>
-    </router>
+			<item>
+				<pattern>ajax/{alias:(page|post|category)}/{page}/load.json</pattern>
+				<controller>AdminController\Menu\AjaxLoadController</controller>
+			</item>
+			<item>
+				<pattern>ajax/{id}/edit.json</pattern>
+				<controller>AdminController\Menu\AjaxEditController</controller>
+			</item>
+		</route>
+	</router>
 
-    <menu>
-        <item>
-            <title>Create new menu</title>
-            <link>add</link>
-        </item>
-        <item>
-            <title>View menus</title>
-            <link>view/</link>
-        </item>
-    </menu>
+	<menu>
+		<item>
+			<title>Create new menu</title>
+			<link>add</link>
+		</item>
+		<item>
+			<title>View menus</title>
+			<link>view/</link>
+		</item>
+	</menu>
 
 </conf>

@@ -1,5 +1,4 @@
 <?php
-
 namespace Content\Controller;
 
 use Entity\Pages;
@@ -10,7 +9,7 @@ class PageController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->_entity = new Pages;
+        $this->_entity = new Pages();
     }
 
     public function insert()
@@ -19,5 +18,4 @@ class PageController extends Controller
         $this->_em->persist($this->_entity);
         $this->_em->flush();
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\Menu;
 
 use Menu\Menu;
@@ -22,12 +21,18 @@ class MenuTest extends \PHPUnit_Framework_TestCase
             'getTitle',
             'getMenuItems' => $stub
         ));
-        $value = InitQueryContent::getContent(array($stub));
+        $value = InitQueryContent::getContent(array(
+            $stub
+        ));
         RegistryFactory::start()->set('Content\Query\Content', $value);
-        InitDoctrine::queryBuilderResult(array(null));
-        InitDoctrine::getRepositoryResult(array(null));
+        InitDoctrine::queryBuilderResult(array(
+            null
+        ));
+        InitDoctrine::getRepositoryResult(array(
+            null
+        ));
         InitConf::run(); // Sets site adress as '';
-        self::$_menu = new Menu;
+        self::$_menu = new Menu();
     }
 
     public function tearDown()
@@ -37,29 +42,35 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadMenuItemsArrayToProperty()
     {
-        MockTest::callMockMethod(self::$_menu, 'loadMenuItmsByPosition', array('head'));
+        MockTest::callMockMethod(self::$_menu, 'loadMenuItmsByPosition', array(
+            'head'
+        ));
     }
 
     public function testIfAdressIsCorrectUrl()
     {
         $anyAdressUrl = 'http://example.com';
-        $adress = MockTest::callMockMethod(self::$_menu, 'validAdress', array($anyAdressUrl));
+        $adress = MockTest::callMockMethod(self::$_menu, 'validAdress', array(
+            $anyAdressUrl
+        ));
         $this->assertEquals($anyAdressUrl, $adress);
     }
 
     public function testIfAdressIsCMSRoute()
     {
         $anyRoute = 'post/alias';
-        $adress = MockTest::callMockMethod(self::$_menu, 'validAdress', array($anyRoute));
+        $adress = MockTest::callMockMethod(self::$_menu, 'validAdress', array(
+            $anyRoute
+        ));
         $this->assertEquals($anyRoute, $adress);
     }
 
     public function testCreateMenuFromMenuItemsArray()
     {
-        $menuString = MockTest::callMockMethod(self::$_menu,
-            'createMenu', array(''));
+        $menuString = MockTest::callMockMethod(self::$_menu, 'createMenu', array(
+            ''
+        ));
         $this->assertNotEmpty($menuString);
         $this->assertTrue(is_string($menuString));
     }
-
 }

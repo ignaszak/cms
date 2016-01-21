@@ -9,75 +9,77 @@
 <?php else: ?>
 
 <div class="row">
-    <div class="col-sm-6">
+ <div class="col-sm-6">
 
-        <?php $form = $this->createForm('user-registration'); ?>
+  <?php $form = $this->createForm('user-registration'); ?>
 
-        <h1>Registration</h1>
+  <h1>Registration</h1>
 
-        <p class="bg-danger">
-        <?php echo $form->getFormMessage(); ?>
-        </p>
+  <p class="bg-danger">
+   <?php echo $form->getFormMessage(); ?>
+  </p>
 
-        <form action="<?php echo $form->getFormActionAdress(); ?>" method="post" id="registration">
+  <form action="<?php echo $form->getFormActionAdress(); ?>"
+   method="post" id="registration">
 
-            <div class="form-group">
-                <label for="login">Enter Login</label>
-                <?php echo $form->inputLogin(); ?>
-            </div>
+   <div class="form-group">
+    <label for="login">Enter Login</label>
+    <?php echo $form->inputLogin(); ?>
+   </div>
 
-            <div class="form-group">
-                <label for="email">Enter Email</label>
-                <?php echo $form->inputEmail(); ?>
-            </div>
+   <div class="form-group">
+    <label for="email">Enter Email</label>
+    <?php echo $form->inputEmail(); ?>
+   </div>
 
-            <div class="form-group">
-                <label for="password">Enter Password</label>
-                <?php echo $form->inputPassword(); ?>
-            </div>
+   <div class="form-group">
+    <label for="password">Enter Password</label>
+    <?php echo $form->inputPassword(); ?>
+   </div>
 
-            <div class="input-group">
-                <button class="btn btn-success">Sign up</button>
-            </div>
+   <div class="input-group">
+    <button class="btn btn-success">Sign up</button>
+   </div>
 
-        </form>
+  </form>
 
-        <script>
+  <script>
         $().ready(function() {
             $("#registration").validate();
         });
         </script>
 
-    </div>
+ </div>
 </div>
 
 <div class="row">
-    <div class="col-sm-6">
+ <div class="col-sm-6">
 
-        <?php $form = $this->createForm('user-remind'); ?>
+  <?php $form = $this->createForm('user-remind'); ?>
 
-        <h1>Remind password</h1>
+  <h1>Remind password</h1>
 
-        <form action="<?php echo $form->getFormActionAdress(); ?>" method="post" id="remind">
+  <form action="<?php echo $form->getFormActionAdress(); ?>"
+   method="post" id="remind">
 
-            <div class="form-group">
-                <label for="email">Enter Email</label>
-                <?php echo $form->inputEmail(); ?>
-            </div>
+   <div class="form-group">
+    <label for="email">Enter Email</label>
+    <?php echo $form->inputEmail(); ?>
+   </div>
 
-            <div class="input-group">
-                <button class="btn btn-primary">Send</button>
-            </div>
+   <div class="input-group">
+    <button class="btn btn-primary">Send</button>
+   </div>
 
-        </form>
+  </form>
 
-        <script>
+  <script>
         $().ready(function() {
             $("#remind").validate();
         });
         </script>
 
-    </div>
+ </div>
 </div>
 
 <?php endif; ?>

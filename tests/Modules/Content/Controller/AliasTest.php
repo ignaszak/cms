@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\Content\Controller;
 
 use Test\Mock\MockTest;
@@ -13,9 +12,9 @@ class AliasTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_alias = new Alias(new \Entity\Posts);
+        $this->_alias = new Alias(new \Entity\Posts());
     }
-    
+
     public function tearDown()
     {
         InitDoctrine::clear();
@@ -25,24 +24,22 @@ class AliasTest extends \PHPUnit_Framework_TestCase
     {
         $string = "Any String @ # % ć Ż ą";
         $alias = "any-string-c-z-a";
-        $createAliasFromString = MockTest::callMockMethod(
-            $this->_alias,
-            'createAliasFromString',
-            array($string)
-        );
+        $createAliasFromString = MockTest::callMockMethod($this->_alias, 'createAliasFromString', array(
+            $string
+        ));
         $this->assertEquals($alias, $createAliasFromString);
     }
 
     public function testAliasExistsInDB()
     {
         $alias = 'new-post';
-        InitDoctrine::getRepositoryResult(array($alias));
-        $this->_alias = new Alias(new \Entity\Posts);
-        $aliasNotExistsInDB = MockTest::callMockMethod(
-            $this->_alias,
-            'isAliasNotExistsInDB',
-            array($alias)
-        );
+        InitDoctrine::getRepositoryResult(array(
+            $alias
+        ));
+        $this->_alias = new Alias(new \Entity\Posts());
+        $aliasNotExistsInDB = MockTest::callMockMethod($this->_alias, 'isAliasNotExistsInDB', array(
+            $alias
+        ));
         $this->assertFalse($aliasNotExistsInDB);
     }
 
@@ -50,10 +47,12 @@ class AliasTest extends \PHPUnit_Framework_TestCase
     {
         $existingAlias = 'alias';
         $entity = \Mockery::mock('Entity\Posts');
-        $entity->shouldReceive('getAlias')->andReturnValues(array($existingAlias));
+        $entity->shouldReceive('getAlias')->andReturnValues(array(
+            $existingAlias
+        ));
         $this->_alias = new Alias($entity);
         $alias = $this->_alias->getAlias($existingAlias);
-
+        
         $this->assertEquals($alias, $existingAlias);
     }
 
@@ -67,5 +66,4 @@ class AliasTest extends \PHPUnit_Framework_TestCase
         $alias = $this->_alias->getAlias($string);
         $this->assertEquals('anystring', $alias);
     }
-
 }

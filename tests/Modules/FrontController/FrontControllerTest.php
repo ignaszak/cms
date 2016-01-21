@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\FrontController;
 
 use FrontController\FrontController;
@@ -13,8 +12,7 @@ class FrontControllerTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getMock('FrontController\CommandHandler');
         $stub->expects($this->once())
             ->method('getCommand');
-
+        
         FrontController::run($stub);
     }
-
 }

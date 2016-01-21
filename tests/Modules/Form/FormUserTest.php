@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\Form;
 
 use Form\FormUser;
@@ -10,6 +9,7 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @var \Form
      */
     private $_formUser;
@@ -63,14 +63,7 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
         $referData['error']['incorrectPassword'] = 1;
         $this->referData($referData);
         $message = $this->_formUser->getFormMessage();
-        $this->assertEquals(
-            'Incorrect login.<br>' .
-            'Login alredy exists.<br>' .
-            'Incorrect email.<br>' .
-            'Email alredy exists.<br>' .
-            'Incorrect password.',
-            $message
-        );
+        $this->assertEquals('Incorrect login.<br>' . 'Login alredy exists.<br>' . 'Incorrect email.<br>' . 'Email alredy exists.<br>' . 'Incorrect password.', $message);
     }
 
     public function testGetEmptyFormMessage()
@@ -80,61 +73,61 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetInputLogin()
     {
-        $this->assertEquals(
-            '<input type="text" name="userLogin" required class="form-control" id="userLogin" value="">',
-            $this->_formUser->inputLogin()
-        );
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" value="">', $this->_formUser->inputLogin());
     }
 
     public function testGetInputLoginWithReferLoginData()
     {
-        $refer = array('data' => array('setLogin' => 'AnyLogin'));
+        $refer = array(
+            'data' => array(
+                'setLogin' => 'AnyLogin'
+            )
+        );
         $this->referData($refer);
-        $this->assertEquals(
-            '<input type="text" name="userLogin" required class="form-control" id="userLogin" value="AnyLogin">',
-            $this->_formUser->inputLogin()
-            );
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" value="AnyLogin">', $this->_formUser->inputLogin());
     }
 
     public function testGetInputLoginWithInccorectLogin()
     {
         $refer = array(
-            'error' => array('incorrectLogin' => 1),
-            'data' => array('setLogin' => 'AnyLogin')
+            'error' => array(
+                'incorrectLogin' => 1
+            ),
+            'data' => array(
+                'setLogin' => 'AnyLogin'
+            )
         );
         $this->referData($refer);
-        $this->assertEquals(
-            '<input type="text" name="userLogin" required class="form-control" id="userLogin">',
-            $this->_formUser->inputLogin()
-            );
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin">', $this->_formUser->inputLogin());
     }
 
     public function testGetInputEmailWithReferEmailData()
     {
-        $refer = array('data' => array('setEmail' => 'any@email.com'));
+        $refer = array(
+            'data' => array(
+                'setEmail' => 'any@email.com'
+            )
+        );
         $this->referData($refer);
-        $this->assertEquals(
-            '<input type="email" name="userEmail" required class="form-control" id="userEmail" value="any@email.com">',
-            $this->_formUser->inputEmail()
-            );
+        $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail" value="any@email.com">', $this->_formUser->inputEmail());
     }
 
     public function testGetInputEmailWithInccorectEmail()
     {
         $refer = array(
-            'error' => array('incorrectEmail' => 1),
-            'data' => array('setEmail' => 'any@email.com')
+            'error' => array(
+                'incorrectEmail' => 1
+            ),
+            'data' => array(
+                'setEmail' => 'any@email.com'
+            )
         );
         $this->referData($refer);
-        $this->assertEquals(
-            '<input type="email" name="userEmail" required class="form-control" id="userEmail">',
-            $this->_formUser->inputEmail()
-            );
+        $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail">', $this->_formUser->inputEmail());
     }
 
     private function referData($data = '')
     {
         MockTest::injectStatic('System\Server', 'readReferDataArray', $data);
     }
-
 }

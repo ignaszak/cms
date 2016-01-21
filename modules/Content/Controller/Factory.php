@@ -1,16 +1,17 @@
 <?php
-
 namespace Content\Controller;
 
 class Factory
 {
 
     /**
+     *
      * @var Controller
      */
     private $_controller;
 
     /**
+     *
      * @param Controller $_controller
      */
     public function __construct(Controller $_controller)
@@ -19,6 +20,7 @@ class Factory
     }
 
     /**
+     *
      * @param string $name
      * @param array $arguments
      * @return Factory
@@ -26,11 +28,12 @@ class Factory
     public function __call($name, $arguments): Factory
     {
         $this->_controller->setToDataArray($name, $arguments);
-
+        
         return $this;
     }
 
     /**
+     *
      * @param string $entityName
      * @param int $by
      * @return Factory
@@ -38,74 +41,81 @@ class Factory
     public function setReference(string $entityName, int $by): Factory
     {
         $this->_controller->setReference($entityName, $by);
-
+        
         return $this;
     }
 
     /**
+     *
      * @param int $id
      * @return Factory
      */
     public function find(int $id): Factory
     {
         $this->_controller->find($id);
-
+        
         return $this;
     }
 
     /**
+     *
      * @param array $array
      * @return Factory
      */
     public function findBy(array $array): Factory
     {
         $this->_controller->findBy($array);
-
+        
         return $this;
     }
 
     /**
+     *
      * @param array $array
      * @return Factory
      */
     public function findOneBy(array $array): Factory
     {
         $this->_controller->findOneBy($array);
-
+        
         return $this;
     }
 
     /**
+     *
      * @return Factory
      */
     public function insert(): Factory
     {
         $this->_controller->insert();
-
+        
         return $this;
     }
 
     /**
+     *
      * @return Factory
      */
     public function remove(): Factory
     {
         $this->_controller->remove();
-
+        
         return $this;
     }
 
     /**
+     *
      * @return Factory
      */
     public function update(): Factory
     {
         $this->_controller->update();
-
+        
         return $this;
     }
 
     /**
+     *
      * @param string $string
      * @return string
      */
@@ -116,11 +126,11 @@ class Factory
     }
 
     /**
+     *
      * @return integer
      */
     public function getId(): int
     {
         return $this->_controller->getEntity()->getId();
     }
-
 }

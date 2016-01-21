@@ -1,5 +1,4 @@
 <?php
-
 use Doctrine\ORM\Tools\Console\ConsoleRunner;
 use Conf\DB\DBDoctrine;
 

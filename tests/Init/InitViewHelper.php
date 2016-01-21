@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Init;
 
 use ViewHelper\ViewHelperExtension;
@@ -24,5 +23,4 @@ class InitViewHelper
         $reflection->setAccessible(true);
         $reflection->setValue(null, array());
     }
-
 }

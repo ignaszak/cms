@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Page;
 
 use FrontController\Controller;
@@ -15,23 +14,25 @@ class ViewPageController extends Controller
     }
 
     /**
+     *
      * @return ViewHelperController
      */
     public function setViewHelper()
     {
-        return new class ($this) extends ViewHelperController
-        {
-            public function getAdminViewPage()
-            {
-                $this->_controller->query()->setContent('page')->status('all');
-                return $this->_controller->query()->getContent();
-            }
+        return new class($this) extends ViewHelperController {
 
-            public function getAdminViewPageLink()
-            {
-                return $this->_controller->view()->getAdminAdress() . "/page/";
-            }
+        public function getAdminViewPage()
+        {
+            $this->_controller->query()
+                ->setContent('page')
+                ->status('all');
+            return $this->_controller->query()->getContent();
+        }
+
+        public function getAdminViewPageLink()
+        {
+            return $this->_controller->view()->getAdminAdress() . "/page/";
+        }
         };
     }
-
 }

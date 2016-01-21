@@ -1,5 +1,4 @@
 <?php
-
 namespace FrontController;
 
 use System\Router\Route;
@@ -11,13 +10,13 @@ class CommandHandler
 
     /**
      * Used to check inheritance with user defined controller class
-     * 
+     *
      * @var \ReflectionClass('\FrontController\Controller')
      */
     private $_base;
 
     /**
-     * 
+     *
      * @var DefaultController
      */
     private $_default;
@@ -30,7 +29,7 @@ class CommandHandler
 
     /**
      * Implements user controller class when is defined, exists and is child of Controller
-     * 
+     *
      * @param Route $_route
      * @throws InvalidControllerException
      * @return boolean
@@ -49,7 +48,7 @@ class CommandHandler
     {
         if (class_exists($controllerClass)) {
             $reflectionControllerClass = new \ReflectionClass($controllerClass);
-        
+            
             if ($reflectionControllerClass->isSubclassOf($this->_base)) {
                 $controller = $controllerClass::instance();
                 $controller->run();
@@ -61,5 +60,4 @@ class CommandHandler
         }
         return false;
     }
-
 }

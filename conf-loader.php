@@ -1,14 +1,11 @@
 <?php
-
 use Ignaszak\Registry\RegistryFactory;
 use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Router\Start as Router;
 use UserAuth\User;
 
-defined('ACCESS') or die();
-
 // Run installer if DBSettings.php not exists
-if (!file_exists(__DIR__ . '/conf/DB/DBSettings.php')) {
+if (! file_exists(__DIR__ . '/conf/DB/DBSettings.php')) {
     die('File \'' . __DIR__ . '/conf/DB/DBSettings.php\' not exists.');
 }
 
@@ -16,7 +13,7 @@ if (!file_exists(__DIR__ . '/conf/DB/DBSettings.php')) {
 require __DIR__ . '/conf/exception-handler.php';
 
 // Configure and start session
-session_save_path (__DIR__ . '/cache/session');
+session_save_path(__DIR__ . '/cache/session');
 session_start();
 
 // Define registry tmp path
@@ -24,7 +21,7 @@ RegistryConf::setTmpPath(__DIR__ . '/cache/registry');
 
 // This method loads refer data from session
 // and pass their into System\Server::getReferData().
-// This method is used e.g. to show message about 
+// This method is used e.g. to show message about
 // invalid login or password
 System\Server::readReferData();
 
@@ -40,21 +37,21 @@ require __DIR__ . '/conf/router.php';
 $router->run();
 
 // LOAD VIEW PATTERN
-RegistryFactory::start()->set('view', new View\View);
+RegistryFactory::start()->set('view', new View\View());
 $view = RegistryFactory::start()->get('view');
 
 // CHECK PERMISSIONS TO ADMIN PANEL AND LOAD ADMIN VIEW HELPER EXTENSIONS
 // User classes
-RegistryFactory::start()->set('user', new User);
+RegistryFactory::start()->set('user', new User());
 $user = RegistryFactory::start()->get('user');
 // Default view helper classes
 require __DIR__ . '/conf/view-helper.php';
 // Check admin panel route
 if (System\Router\Storage::isRouteName('admin')) {
     // If not logged open login panel
-    if (!$user->isUserLoggedIn()) {
+    if (! $user->isUserLoggedIn()) {
         $view->loadFile('../../extensions/Index/login.html');
-        exit;
+        exit();
     }
     // Check permissions
     if ($user->getUserSession()->getRole() != 'admin') {

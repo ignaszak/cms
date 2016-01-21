@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\View;
 
 use View\Conf;
@@ -12,7 +11,7 @@ class ConfTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_viewConf = new Conf;
+        $this->_viewConf = new Conf();
     }
 
     public function testAdminThemePath()
@@ -32,5 +31,4 @@ class ConfTest extends \PHPUnit_Framework_TestCase
         $this->_viewConf->configureThemePath();
         $this->assertNotContains('admin', $this->_viewConf->getThemePath());
     }
-
 }

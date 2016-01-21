@@ -1,5 +1,4 @@
 <?php
-
 namespace Content\Controller;
 
 use System\Server;
@@ -12,36 +11,43 @@ abstract class Controller
 {
 
     /**
+     *
      * @var EntityManager
      */
     protected $_em;
 
     /**
+     *
      * @var Entity
      */
     protected $_entity;
 
     /**
+     *
      * @var ContentValidation
      */
     protected $_contentValidation;
 
     /**
+     *
      * @var array
      */
     protected $dataArray = array();
 
     /**
+     *
      * @var string[]
      */
     protected $validPatternsArray = array();
 
     /**
+     *
      * @var EntityController
      */
     private $_entityController;
 
     /**
+     *
      * @var string[]
      */
     private $errorArray = array();
@@ -49,12 +55,12 @@ abstract class Controller
     public function __construct()
     {
         $this->_em = DBDoctrine::em();
-        $this->_contentValidation = new ContentValidation;
-        $this->_entityController = RegistryFactory::start()
-            ->register('Entity\Controller\EntityController');
+        $this->_contentValidation = new ContentValidation();
+        $this->_entityController = RegistryFactory::start()->register('Entity\Controller\EntityController');
     }
 
     /**
+     *
      * @return Entity
      */
     public function getEntity()
@@ -63,6 +69,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @param int $id
      */
     public function find(int $id)
@@ -72,6 +79,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @param array $array
      */
     public function findOneBy(array $array)
@@ -81,6 +89,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @param array $array
      */
     public function findBy(array $array)
@@ -90,6 +99,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @param string $name
      * @param array $arguments
      * @throws InvalidMethodException
@@ -104,6 +114,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @param string $entityName
      * @param int $by
      */
@@ -112,7 +123,9 @@ abstract class Controller
         $entityClass = $this->_entityController->getEntity($entityName);
         $entityObject = $this->_em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
-        $this->setToDataArray($name, array($entityObject));
+        $this->setToDataArray($name, array(
+            $entityObject
+        ));
     }
 
     public function remove()
@@ -129,6 +142,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @param array $validPatternsArray
      */
     protected function validAndAddToEntity(array $validPatternsArray)
@@ -142,16 +156,17 @@ abstract class Controller
     private function validData()
     {
         foreach ($this->validPatternsArray as $pattern) {
-
+            
             $this->errorArray["incorrect$pattern"] = 1;
             $method = "valid$pattern";
-
+            
             foreach ($this->dataArray as $name => $arguments) {
-
-                if (strpos($name, $pattern) !== false){
-
-                    if ($this->_contentValidation->$method($arguments))
+                
+                if (strpos($name, $pattern) !== false) {
+                    
+                    if ($this->_contentValidation->$method($arguments)) {
                         unset($this->errorArray["incorrect$pattern"]);
+                    }
                 }
             }
         }
@@ -160,8 +175,8 @@ abstract class Controller
     private function sendErrorsIfExists()
     {
         if (count($this->errorArray) > 0) {
-
-            foreach ($this->dataArray as $key=>$data) {
+            
+            foreach ($this->dataArray as $key => $data) {
                 if (is_object($data)) {
                     if (method_exists($data, 'getId')) {
                         $this->dataArray[$key] = $data->getId();
@@ -170,8 +185,11 @@ abstract class Controller
                     }
                 }
             }
-
-            Server::setReferData(array('data'=>$this->dataArray,'error'=>$this->errorArray));
+            
+            Server::setReferData(array(
+                'data' => $this->dataArray,
+                'error' => $this->errorArray
+            ));
             Server::headerLocationReferer();
         }
     }
@@ -184,6 +202,4 @@ abstract class Controller
     }
 
     abstract public function insert();
-
 }
-

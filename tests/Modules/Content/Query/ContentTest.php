@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\Content\Query;
 
 use Content\Query\Content;
@@ -11,14 +10,17 @@ class ContentTest extends \PHPUnit_Framework_TestCase
 {
 
     private $_content;
+
     private $result;
 
     public function setUp()
     {
         InitConf::run();
         $this->result = 'anyResult';
-        InitDoctrine::queryBuilderResult(array($this->result));
-        $this->_content = new Content;
+        InitDoctrine::queryBuilderResult(array(
+            $this->result
+        ));
+        $this->_content = new Content();
     }
 
     public function tearDown()
@@ -30,13 +32,7 @@ class ContentTest extends \PHPUnit_Framework_TestCase
     {
         $stub = \Mockery::mock('Entity\Posts');
         InitEntityController::mock('post', $stub);
-        $entityName = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_content->setContent('post'),
-        'entityName');
-        $this->assertEquals(
-            'Entity\Posts',
-            $entityName
-        );
+        $entityName = \PHPUnit_Framework_Assert::readAttribute($this->_content->setContent('post'), 'entityName');
+        $this->assertEquals('Entity\Posts', $entityName);
     }
-
 }

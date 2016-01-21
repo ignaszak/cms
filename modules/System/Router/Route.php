@@ -1,5 +1,4 @@
 <?php
-
 namespace System\Router;
 
 use Ignaszak\Router\Client;
@@ -18,6 +17,7 @@ class Route
      *
      * @param array $rout
      * @return
+     *
      */
     public function getRoute($route = null)
     {
@@ -25,6 +25,7 @@ class Route
     }
 
     /**
+     *
      * @param string $name
      * @return string
      */
@@ -34,11 +35,11 @@ class Route
     }
 
     /**
+     *
      * @return string
      */
     public function getRouteDefault()
     {
         return Storage::getDefaultRoute();
     }
-
 }

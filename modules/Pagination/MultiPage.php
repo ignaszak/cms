@@ -1,5 +1,4 @@
 <?php
-
 namespace Pagination;
 
 class MultiPage extends PaginationTheme
@@ -8,11 +7,11 @@ class MultiPage extends PaginationTheme
     public function getTheme()
     {
         if ($this->_pg->getCountSite() > 1) {
-
+            
             $prevLink = $this->_pg->getPrevLink();
             $nextLink = $this->_pg->getNextLink();
             $link = $this->_pg->getLinkWhitoutPage();
-
+            
             $pagination = <<<EOT
 <nav>
     <ul class="pagination">
@@ -30,7 +29,7 @@ EOT;
         </li>
 EOT;
             }
-
+            
             $pagination .= <<<EOT
         <li class="{$this->_pg->getNextDisabled()}">
             <a href="$link$nextLink" aria-label="Next">
@@ -40,9 +39,8 @@ EOT;
     </ul>
 </nav>
 EOT;
-
+            
             return $pagination;
         }
     }
-
 }

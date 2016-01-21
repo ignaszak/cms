@@ -1,5 +1,4 @@
 <?php
-
 namespace Entity\Controller;
 
 use System\Router\Storage as Router;
@@ -10,22 +9,33 @@ abstract class IPostsQuery
 {
 
     /**
+     *
      * @var boolean
      */
     private $showAllText = false;
 
     abstract public function getId();
+
     abstract public function getCategoryId();
+
     abstract public function getAuthorId();
+
     abstract public function getDate($format = "");
+
     abstract public function getTitle();
+
     abstract public function getAlias();
+
     abstract public function getContent();
+
     abstract public function getPublic();
+
     abstract public function getAuthor();
+
     abstract public function getCategory();
 
     /**
+     *
      * @return string
      */
     public function getLink()
@@ -35,6 +45,7 @@ abstract class IPostsQuery
     }
 
     /**
+     *
      * @return string
      */
     public function getCategoryLink()
@@ -44,6 +55,7 @@ abstract class IPostsQuery
     }
 
     /**
+     *
      * @return string
      */
     public function getDateLink($format = 'Y-m-d')
@@ -53,19 +65,16 @@ abstract class IPostsQuery
     }
 
     /**
+     *
      * @param int $cut
      * @return string
      */
     public function getText($cut = 500)
     {
-        if (Router::getRoute('route1') == 'post' || !$cut || $this->showAllText) {
+        if (Router::getRoute('route1') == 'post' || ! $cut || $this->showAllText) {
             return $this->getContent();
         } else {
-            return (new TextFormat)->truncateHtml(
-                $this->getContent(),
-                $cut,
-                "..."
-            ) . $this->getMoreLink();
+            return (new TextFormat())->truncateHtml($this->getContent(), $cut, "...") . $this->getMoreLink();
         }
     }
 
@@ -75,11 +84,11 @@ abstract class IPostsQuery
     }
 
     /**
+     *
      * @return string
      */
     private function getMoreLink()
     {
         return "<a href=\"{$this->getLink()}\">Read more</a>";
     }
-
 }

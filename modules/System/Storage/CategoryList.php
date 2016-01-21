@@ -1,5 +1,4 @@
 <?php
-
 namespace System\Storage;
 
 use Content\Query\Content as Query;
@@ -9,18 +8,20 @@ class CategoryList
 {
 
     /**
+     *
      * @var Query
      */
     private $_query;
 
     /**
+     *
      * @var \Entity\Categories[]
      */
     private $categoryArray;
 
     public function __construct()
     {
-        $this->_query = new Query;
+        $this->_query = new Query();
         $this->_query->setContent('category')
             ->paginate(false)
             ->force();
@@ -28,16 +29,20 @@ class CategoryList
     }
 
     /**
+     *
      * @param string $alias
      * @return integer
      */
     public function getIdByAlias(string $alias): int
     {
-        $this->_query->setContent('category')->alias($alias)->force();
+        $this->_query->setContent('category')
+            ->alias($alias)
+            ->force();
         return $this->_query->getContent()[0]->getId();
     }
 
     /**
+     *
      * @return \Entity\Categories[]
      */
     public function get(): array
@@ -46,6 +51,7 @@ class CategoryList
     }
 
     /**
+     *
      * @param string $alias
      * @return \Entity\Categories[]
      */
@@ -53,7 +59,7 @@ class CategoryList
     {
         $array = array();
         $alias = $alias ?? Router::getRoute('alias');
-        if (!empty($alias)) {
+        if (! empty($alias)) {
             $parentId = $this->getIdByAlias($alias);
             $array[] = $parentId;
         }

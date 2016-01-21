@@ -1,5 +1,4 @@
 <?php
-
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -13,33 +12,30 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Categories
 {
+
     /**
-     * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var integer @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var integer
      *
-     * @ORM\Column(name="parent_id", type="integer", precision=0, scale=0, nullable=true, unique=false)
+     * @var integer @ORM\Column(name="parent_id", type="integer", precision=0, scale=0, nullable=true, unique=false)
      */
     private $parentId;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $title;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="alias", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="alias", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $alias;
 
@@ -48,13 +44,14 @@ class Categories
      */
     private $post;
 
-    public function __construct() {
-        $this->post = new ArrayCollection;
+    public function __construct()
+    {
+        $this->post = new ArrayCollection();
     }
 
     /**
      * Set id
-     * 
+     *
      * @param integer $id
      *
      * @return integer
@@ -62,7 +59,7 @@ class Categories
     public function setId($id)
     {
         $this->id = $id;
-
+        
         return $this;
     }
 
@@ -86,7 +83,7 @@ class Categories
     public function setParentId($parentId)
     {
         $this->parentId = $parentId;
-
+        
         return $this;
     }
 
@@ -110,7 +107,7 @@ class Categories
     public function setTitle($title)
     {
         $this->title = $title;
-
+        
         return $this;
     }
 
@@ -134,7 +131,7 @@ class Categories
     public function setAlias($alias)
     {
         $this->alias = $alias;
-
+        
         return $this;
     }
 
@@ -156,10 +153,9 @@ class Categories
     public function getPost()
     {
         $iterator = $this->post->getIterator();
-        $iterator->uasort(function($a, $b){
+        $iterator->uasort(function ($a, $b) {
             return $b->getId() <=> $a->getId();
         });
         return $iterator;
     }
-
 }

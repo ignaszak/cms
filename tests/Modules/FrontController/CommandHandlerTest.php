@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\FrontController;
 
 use FrontController\CommandHandler;
@@ -12,7 +11,7 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_commandHandler = new CommandHandler;
+        $this->_commandHandler = new CommandHandler();
     }
 
     public function testConstructor()
@@ -47,5 +46,4 @@ class CommandHandlerTest extends \PHPUnit_Framework_TestCase
         $_view->shouldReceive('addView');
         RegistryFactory::start()->set('view', $_view);
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace UserAuth;
 
 $baseDir = dirname(dirname(__DIR__));
@@ -25,5 +24,4 @@ class HashPass
     {
         return password_verify($password, $hash);
     }
-
 }

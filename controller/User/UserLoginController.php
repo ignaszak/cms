@@ -1,5 +1,4 @@
 <?php
-
 namespace Controller\User;
 
 use FrontController\Controller;
@@ -13,21 +12,25 @@ class UserLoginController extends Controller
 {
 
     /**
+     *
      * @var \Entity\Users
      */
     private $_userEntity;
 
     /**
+     *
      * @var string
      */
     private $login;
 
     /**
+     *
      * @var string
      */
     private $password;
 
     /**
+     *
      * @var string
      */
     private $remember;
@@ -38,42 +41,42 @@ class UserLoginController extends Controller
         if ($_user->isUserLoggedIn()) {
             Server::headerLocationReferer();
         }
-
+        
         $this->login = $_POST['userLogin'];
         $this->password = $_POST['userPassword'];
         $this->remember = @$_POST['userRemember'];
-
+        
         $userId = $this->getUserId();
-
+        
         if ($userId === 0) {
-            Server::setReferData(array('incorrectLoginData'=>1));
+            Server::setReferData(array(
+                'incorrectLoginData' => 1
+            ));
             Server::headerLocationReferer();
         } else {
-            $controller = new Factory(new UserController);
-            $controller
-                ->find($userId)
+            $controller = new Factory(new UserController());
+            $controller->find($userId)
                 ->setLogDate(new \DateTime('now'))
                 ->update();
-
+            
             $this->setSession();
             Server::headerLocationReferer();
         }
     }
 
     /**
+     *
      * @return integer
      */
     private function getUserId(): int
     {
-        $this->query()->setContent('user')
-            ->findBy(
-                $this->isEmail($this->login) ? 'email' : 'login',
-                $this->login
-            )
+        $this->query()
+            ->setContent('user')
+            ->findBy($this->isEmail($this->login) ? 'email' : 'login', $this->login)
             ->force()
             ->paginate(false);
         $result = $this->query()->getContent();
-
+        
         if (count($result) === 1 && HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
             $this->_userEntity = $result[0];
             return $this->_userEntity->getId();
@@ -82,6 +85,7 @@ class UserLoginController extends Controller
     }
 
     /**
+     *
      * @param string $value
      * @return boolean
      */
@@ -98,5 +102,4 @@ class UserLoginController extends Controller
             RegistryFactory::start('session')->set('userSession', $this->_userEntity);
         }
     }
-
 }

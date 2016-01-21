@@ -1,7 +1,4 @@
 <?php
-
-defined('ACCESS') or die();
-
 $router->add('post', 'post/{page}', 'Controller\ViewPostController');
 $router->add('post', 'post/{alias}', 'Controller\ViewPostController');
 $router->add('post', 'post/{alias}/{page}', 'Controller\ViewPostController');

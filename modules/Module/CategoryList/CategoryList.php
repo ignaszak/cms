@@ -1,5 +1,4 @@
 <?php
-
 namespace Module\CategoryList;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -14,8 +13,7 @@ class CategoryList
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->categoryList = RegistryFactory::start()
-            ->register('System\Storage\CategoryList')->get();
+        $this->categoryList = RegistryFactory::start()->register('System\Storage\CategoryList')->get();
     }
 
     public function getCategoryList(int $parentId = 1): string
@@ -39,5 +37,4 @@ class CategoryList
         $string .= "</ul>";
         return $categoriesExists ? $string : "";
     }
-
 }

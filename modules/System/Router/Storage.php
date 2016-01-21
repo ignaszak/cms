@@ -1,5 +1,4 @@
 <?php
-
 namespace System\Router;
 
 use Ignaszak\Router\Client;
@@ -36,5 +35,4 @@ class Storage
     {
         return Client::getDefaultRoute();
     }
-
 }

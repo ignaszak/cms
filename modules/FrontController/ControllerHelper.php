@@ -1,5 +1,4 @@
 <?php
-
 namespace FrontController;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -9,16 +8,19 @@ class ControllerHelper
 {
 
     /**
+     *
      * @var Controller
      */
     private $_controller;
 
     /**
+     *
      * @var string
      */
     private $viewHelperName;
 
     /**
+     *
      * @param Controller $_controller
      */
     public function __construct(Controller $_controller)
@@ -27,6 +29,7 @@ class ControllerHelper
     }
 
     /**
+     *
      * @param string $name
      */
     public function setViewHelperName(string $name)
@@ -35,6 +38,7 @@ class ControllerHelper
     }
 
     /**
+     *
      * @return boolean
      */
     public function loadViewHelperSetter(): bool
@@ -46,5 +50,4 @@ class ControllerHelper
         }
         return false;
     }
-
 }

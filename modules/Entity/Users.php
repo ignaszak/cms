@@ -1,5 +1,4 @@
 <?php
-
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -13,54 +12,48 @@ use UserAuth\HashPass;
  */
 class Users
 {
+
     /**
-     * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var integer @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="login", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="login", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $login;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="email", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $email;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="password", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $password;
 
     /**
-     * @var \DateTime
      *
-     * @ORM\Column(name="reg_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @var \DateTime @ORM\Column(name="reg_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
     private $regDate;
 
     /**
-     * @var \DateTime
      *
-     * @ORM\Column(name="log_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @var \DateTime @ORM\Column(name="log_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
     private $logDate;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="role", type="string", precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="role", type="string", precision=0, scale=0, nullable=false, unique=false)
      */
     private $role;
 
@@ -74,7 +67,7 @@ class Users
     public function setId($id)
     {
         return $this->id = $id;
-
+        
         return $this;
     }
 
@@ -98,7 +91,7 @@ class Users
     public function setLogin($login)
     {
         $this->login = $login;
-
+        
         return $this;
     }
 
@@ -122,7 +115,7 @@ class Users
     public function setEmail($email)
     {
         $this->email = $email;
-
+        
         return $this;
     }
 
@@ -146,7 +139,7 @@ class Users
     public function setPassword($password)
     {
         $this->password = HashPass::hash($password);
-
+        
         return $this;
     }
 
@@ -170,7 +163,7 @@ class Users
     public function setRegDate($regDate)
     {
         $this->regDate = $regDate;
-
+        
         return $this;
     }
 
@@ -194,7 +187,7 @@ class Users
     public function setLogDate($logDate)
     {
         $this->logDate = $logDate;
-
+        
         return $this;
     }
 
@@ -218,7 +211,7 @@ class Users
     public function setRole($role)
     {
         $this->role = $role;
-
+        
         return $this;
     }
 
@@ -232,4 +225,3 @@ class Users
         return $this->role;
     }
 }
-

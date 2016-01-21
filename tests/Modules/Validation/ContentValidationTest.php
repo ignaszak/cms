@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\Validation;
 
 use Validation\ContentValidation;
@@ -11,24 +10,24 @@ class ContentValidationTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_contentValidation = new ContentValidation;
+        $this->_contentValidation = new ContentValidation();
     }
 
     public function testValidCategory()
     {
-        $validCategory = $this->_contentValidation->validCategory(new \Entity\Categories);
+        $validCategory = $this->_contentValidation->validCategory(new \Entity\Categories());
         $this->assertTrue($validCategory);
     }
 
     public function testValidAuthor()
     {
-        $validAuthor = $this->_contentValidation->validAuthor(new \Entity\Users);
+        $validAuthor = $this->_contentValidation->validAuthor(new \Entity\Users());
         $this->assertTrue($validAuthor);
     }
 
     public function testValidDate()
     {
-        $validDate = $this->_contentValidation->validDate(new \DateTime);
+        $validDate = $this->_contentValidation->validDate(new \DateTime());
         $this->assertTrue($validDate);
     }
 
@@ -37,7 +36,6 @@ class ContentValidationTest extends \PHPUnit_Framework_TestCase
         $title = "New Title";
         $validTitle = $this->_contentValidation->validTitle($title);
         $this->assertTrue($validTitle);
-
     }
 
     public function testValidAlias()
@@ -53,5 +51,4 @@ class ContentValidationTest extends \PHPUnit_Framework_TestCase
         $validContent = $this->_contentValidation->validContent($content);
         $this->assertTrue($validContent);
     }
-
 }

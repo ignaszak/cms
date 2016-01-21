@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <conf>
 
-    <title>Pages</title>
-    <base>page</base>
-    <icon>fa fa fa-book</icon>
+	<title>Pages</title>
+	<base>page</base>
+	<icon>fa fa fa-book</icon>
 
-    <router>
-        <route>
-            <item>
-                <pattern>{action:view}/{page}</pattern>
-                <controller>AdminController\Page\ViewPageController</controller>
-            </item>
-            <item>
-                <pattern>{action:add}</pattern>
-                <controller>AdminController\Page\EditPageController</controller>
-            </item>
-            <item>
-                <pattern>{action:(delete|edit)}/{alias}</pattern>
-                <controller>AdminController\Page\EditPageController</controller>
-            </item>
-            <item>
-                <pattern>{action:save}</pattern>
-                <controller>AdminController\Page\SavePageController</controller>
-            </item>
-        </route>
-    </router>
+	<router>
+		<route>
+			<item>
+				<pattern>{action:view}/{page}</pattern>
+				<controller>AdminController\Page\ViewPageController</controller>
+			</item>
+			<item>
+				<pattern>{action:add}</pattern>
+				<controller>AdminController\Page\EditPageController</controller>
+			</item>
+			<item>
+				<pattern>{action:(delete|edit)}/{alias}</pattern>
+				<controller>AdminController\Page\EditPageController</controller>
+			</item>
+			<item>
+				<pattern>{action:save}</pattern>
+				<controller>AdminController\Page\SavePageController</controller>
+			</item>
+		</route>
+	</router>
 
-    <menu>
-        <item>
-            <title>Add new page</title>
-            <link>add</link>
-        </item>
-        <item>
-            <title>View pages</title>
-            <link>view/</link>
-        </item>
-    </menu>
+	<menu>
+		<item>
+			<title>Add new page</title>
+			<link>add</link>
+		</item>
+		<item>
+			<title>View pages</title>
+			<link>view/</link>
+		</item>
+	</menu>
 
 </conf>

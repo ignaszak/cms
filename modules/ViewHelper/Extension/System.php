@@ -1,5 +1,4 @@
 <?php
-
 namespace ViewHelper\Extension;
 
 use Conf\Conf;
@@ -10,11 +9,13 @@ class System
 {
 
     /**
+     *
      * @var \Conf\Conf
      */
     private $_conf;
 
     /**
+     *
      * @var \Content\Query\Content
      */
     private $_query;
@@ -28,6 +29,7 @@ class System
     }
 
     /**
+     *
      * @return string
      */
     public function getSiteTitle(): string
@@ -36,6 +38,7 @@ class System
     }
 
     /**
+     *
      * @return string
      */
     public function getSiteAdress(): string
@@ -44,15 +47,16 @@ class System
     }
 
     /**
+     *
      * @return string
      */
     public function getThemeUrl(): string
     {
-        return $this->_conf->getBaseUrl() . RegistryFactory::start()
-            ->get('view')->getThemeFolder();
+        return $this->_conf->getBaseUrl() . RegistryFactory::start()->get('view')->getThemeFolder();
     }
 
     /**
+     *
      * @return integer
      */
     public function getViewLimit(): int
@@ -61,6 +65,7 @@ class System
     }
 
     /**
+     *
      * @param string $table
      * @return IContentQueryController
      */
@@ -69,11 +74,12 @@ class System
         $this->_setQuery = $this->_query->setContent($table)
             ->force()
             ->paginate(false);
-
+        
         return $this->_setQuery;
     }
 
     /**
+     *
      * @return array
      */
     public function getResult(): array
@@ -82,11 +88,11 @@ class System
     }
 
     /**
+     *
      * @return Entity
      */
     public function getSingleResult()
     {
         return $this->_setQuery->getContent()[0];
     }
-
 }

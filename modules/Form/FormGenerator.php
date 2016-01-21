@@ -1,5 +1,4 @@
 <?php
-
 namespace Form;
 
 /**
@@ -11,25 +10,29 @@ class FormGenerator
 {
 
     /**
+     *
      * @var string
      */
     private static $formContent;
 
     /**
+     *
      * @var array
      */
     private static $formElementsArray = array(
-        'text'      => 'input type="text"',
-        'email'     => 'input type="email"',
-        'password'  => 'input type="password"'
+        'text' => 'input type="text"',
+        'email' => 'input type="email"',
+        'password' => 'input type="password"'
     );
 
     /**
+     *
      * @var array
      */
     private static $formItemsArray = array();
 
     /**
+     *
      * @param string $formElementName
      */
     public static function start(string $formElementName)
@@ -39,6 +42,7 @@ class FormGenerator
     }
 
     /**
+     *
      * @param string $name
      */
     public static function addName(string $name)
@@ -47,18 +51,19 @@ class FormGenerator
     }
 
     /**
+     *
      * @param array $itemArray
      */
     public static function addItem(array $itemArray = null)
     {
         $formItemsArray = self::$formItemsArray;
-
-        if (!empty($itemArray)) {
-            foreach ($itemArray as $key=>$item) {
+        
+        if (! empty($itemArray)) {
+            foreach ($itemArray as $key => $item) {
                 $formItemsArray[$key] = $item;
             }
         }
-
+        
         self::$formItemsArray = $formItemsArray;
     }
 
@@ -68,6 +73,7 @@ class FormGenerator
     }
 
     /**
+     *
      * @return string
      */
     public static function render(): string
@@ -79,11 +85,11 @@ class FormGenerator
     private static function addItemsToElement()
     {
         $itemArray = array();
-
-        foreach (self::$formItemsArray as $key=>$value) {
+        
+        foreach (self::$formItemsArray as $key => $value) {
             $itemArray[] = $key . '="' . $value . '"';
         }
-
+        
         self::$formContent .= ' ' . implode(' ', $itemArray);
     }
 }

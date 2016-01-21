@@ -1,5 +1,4 @@
 <?php
-
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -15,54 +14,48 @@ use Entity\Controller\IPagesQuery;
  */
 class Pages extends IPagesQuery
 {
+
     /**
-     * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var integer @ORM\Column(name="id", type="integer", nullable=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var integer
      *
-     * @ORM\Column(name="author_id", type="integer", nullable=true)
+     * @var integer @ORM\Column(name="author_id", type="integer", nullable=true)
      */
     private $authorId;
 
     /**
-     * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime", nullable=true)
+     * @var \DateTime @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @var string @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="alias", type="string", length=255, nullable=true)
+     * @var string @ORM\Column(name="alias", type="string", length=255, nullable=true)
      */
     private $alias;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="content", type="text", nullable=true)
+     * @var string @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
 
     /**
-     * @var integer
      *
-     * @ORM\Column(name="public", type="integer", nullable=true)
+     * @var integer @ORM\Column(name="public", type="integer", nullable=true)
      */
     private $public;
 
@@ -92,7 +85,7 @@ class Pages extends IPagesQuery
     public function setAuthorId($authorId)
     {
         $this->authorId = $authorId;
-
+        
         return $this;
     }
 
@@ -116,7 +109,7 @@ class Pages extends IPagesQuery
     public function setDate($date)
     {
         $this->date = $date;
-
+        
         return $this;
     }
 
@@ -127,11 +120,8 @@ class Pages extends IPagesQuery
      */
     public function getDate($format = "")
     {
-        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
-        ->getDateFormat();
-        return $this->date->format(
-            (empty($format) ? $dateFormat : $format)
-            );
+        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')->getDateFormat();
+        return $this->date->format((empty($format) ? $dateFormat : $format));
     }
 
     /**
@@ -144,7 +134,7 @@ class Pages extends IPagesQuery
     public function setTitle($title)
     {
         $this->title = $title;
-
+        
         return $this;
     }
 
@@ -168,7 +158,7 @@ class Pages extends IPagesQuery
     public function setAlias($alias)
     {
         $this->alias = $alias;
-
+        
         return $this;
     }
 
@@ -192,7 +182,7 @@ class Pages extends IPagesQuery
     public function setContent($content)
     {
         $this->content = $content;
-
+        
         return $this;
     }
 
@@ -216,7 +206,7 @@ class Pages extends IPagesQuery
     public function setPublic($public)
     {
         $this->public = $public;
-
+        
         return $this;
     }
 
@@ -240,7 +230,7 @@ class Pages extends IPagesQuery
     public function setAuthor($author)
     {
         return $this->user = $author;
-    
+        
         return $this;
     }
 
@@ -253,6 +243,4 @@ class Pages extends IPagesQuery
     {
         return $this->user;
     }
-
 }
-

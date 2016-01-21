@@ -1,5 +1,4 @@
 <?php
-
 namespace ViewHelper\Extension;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -8,11 +7,13 @@ class Page
 {
 
     /**
+     *
      * @var Query
      */
     private $_query;
 
     /**
+     *
      * @var \Entity\Pages[0]
      */
     private $_page;
@@ -23,6 +24,7 @@ class Page
     }
 
     /**
+     *
      * @return boolean
      */
     public function havePage(): bool
@@ -32,17 +34,19 @@ class Page
     }
 
     /**
+     *
      * @return \Entity\Pages
      */
     public function getPage(): \Entity\Pages
     {
-        if (empty($this->_page)) $this->setPageFromDB();
-        return (array_key_exists(0, $this->_page)) ?
-            $this->_page[0] :
-            new \Entity\Pages;
+        if (empty($this->_page)) {
+            $this->setPageFromDB();
+        }
+        return (array_key_exists(0, $this->_page)) ? $this->_page[0] : new \Entity\Pages();
     }
 
     /**
+     *
      * @return \Entity\Pages[]
      */
     public function getPages(): array
@@ -56,5 +60,4 @@ class Page
         $this->_query->setContent('page');
         $this->_page = $this->_query->getContent();
     }
-
 }

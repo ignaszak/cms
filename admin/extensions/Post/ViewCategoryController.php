@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Post;
 
 use FrontController\Controller;
@@ -11,5 +10,4 @@ class ViewCategoryController extends Controller
     {
         $this->view()->addView('theme/category-view.html');
     }
-
 }

@@ -1,10 +1,8 @@
 <?php
-
 namespace Test\Modules\App\Conf;
 
 use App\Conf\Configuration;
 use Test\Mock\MockTest;
-use org\bovigo\vfs\vfsStream as Vsf;
 
 class ConfigurationTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,18 +34,9 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $conn->method('prepare')->willReturn($stmt);
-        MockTest::callMockMethod(
-            'App\Conf\Configuration',
-            'executeSqlFile',
-            array($conn, $this->mockSqlFile())
-        );
+        MockTest::callMockMethod('App\Conf\Configuration', 'executeSqlFile', array(
+            $conn,
+            MockTest::mockFile('any/sql/file.sql')
+        ));
     }
-
-    private function mockSqlFile(): string
-    {
-        $root = Vsf::setup('dir');
-        Vsf::newFile('foo')->at($root)->withContent('~');
-        return Vsf::url('dir/foo');
-    }
-
 }

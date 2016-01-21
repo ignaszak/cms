@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Post;
 
 use FrontController\Controller;
@@ -12,18 +11,18 @@ class AjaxViewCategoryController extends Controller
 
     public function __construct()
     {
-        $this->categoryArray = RegistryFactory::start()
-            ->register('System\Storage\CategoryList')->get();
+        $this->categoryArray = RegistryFactory::start()->register('System\Storage\CategoryList')->get();
     }
 
     public function run()
     {
         header("Content-type: application/json; charset=utf-8");
         echo $this->getAdminViewCategoryTreeview();
-        exit;
+        exit();
     }
 
     /**
+     *
      * @return string
      */
     public function getAdminViewCategoryTreeview(int $parentId = 0): string
@@ -35,20 +34,18 @@ class AjaxViewCategoryController extends Controller
                 $string .= $i > 0 ? ", " : "";
                 $string .= "{\n    \"id\" : {$cat->getId()},";
                 $string .= "\n    \"text\" : \"{$cat->getTitle()}\"";
-                $selected = ($this->view()->getRoute('id') == $cat->getId()) ?
-                    ",\n    \"state\" : { \"selected\" : true }" : "";
+                $selected = ($this->view()->getRoute('id') == $cat->getId()) ? ",\n    \"state\" : { \"selected\" : true }" : "";
                 $string .= $selected;
                 $children = $this->getAdminViewCategoryTreeview($cat->getId());
-                if (!empty($children)) {
+                if (! empty($children)) {
                     $string .= ",\n    \"children\" : [\n";
                     $string .= "        $children";
                     $string .= "\n    ]";
                 }
                 $string .= "\n}";
-                ++$i;
+                ++ $i;
             }
         }
-        return !empty($string) ? "{$string}" : "";
+        return ! empty($string) ? "{$string}" : "";
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Conf;
 
 use Test\Mock\MockTest;
@@ -12,7 +11,7 @@ class ConfTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_conf = new Conf;
+        $this->_conf = new Conf();
     }
 
     /**
@@ -35,5 +34,4 @@ class ConfTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertNotNull($this->_conf->getSiteTitle());
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Pagination;
 
 abstract class PaginationTheme
@@ -13,5 +12,4 @@ abstract class PaginationTheme
     }
 
     abstract public function getTheme();
-
 }

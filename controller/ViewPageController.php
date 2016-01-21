@@ -1,5 +1,4 @@
 <?php
-
 namespace Controller;
 
 use FrontController\Controller;
@@ -11,5 +10,4 @@ class ViewPageController extends Controller
     {
         $this->view()->addView('page.html');
     }
-
 }

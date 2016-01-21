@@ -1,6 +1,9 @@
 <!-- include summernote css/js-->
-<link href="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.css" rel="stylesheet">
-<script src="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.min.js"></script>
+<link
+ href="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.css"
+ rel="stylesheet">
+<script
+ src="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.min.js"></script>
 
 <script>
 $(document).ready(function() {
@@ -12,37 +15,45 @@ $(document).ready(function() {
 </script>
 
 <style>
-    .controls {
-        display: block;
-        padding: 5px 0px 5px 0px;
-        margin-bottom: 5px;
-    }
-    .div-scroll {
-        min-height: 200px;
-        max-height: 300px;
-        overflow-y: scroll;
-    }
-    .note-editor .btn {
-        height: 30px;
-    }
+.controls {
+ display: block;
+ padding: 5px 0px 5px 0px;
+ margin-bottom: 5px;
+}
+
+.div-scroll {
+ min-height: 200px;
+ max-height: 300px;
+ overflow-y: scroll;
+}
+
+.note-editor .btn {
+ height: 30px;
+}
 </style>
 
 <div class="container-fluid">
 
-    <form method="post" action="<?php echo $this->getAdminEditPage('formLink'); ?>">
+ <form method="post"
+  action="<?php echo $this->getAdminEditPage('formLink'); ?>">
 
-        <div class="panel panel-default panel-white">
-            <div class="panel-heading"><h3><?php echo $this->getAdminEditPage('formTitle'); ?></h3></div>
-            <div class="panel-body">
+  <div class="panel panel-default panel-white">
+   <div class="panel-heading">
+    <h3>
+     <?php echo $this->getAdminEditPage('formTitle'); ?>
+    </h3>
+   </div>
+   <div class="panel-body">
 
-                <input type="hidden" name="id" value="<?php echo $this->getAdminEditPage('id'); ?>">
+    <input type="hidden" name="id"
+     value="<?php echo $this->getAdminEditPage('id'); ?>">
 
-                <div class="controls input-group">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-floppy-o"></i> Save
-                    </button>
+    <div class="controls input-group">
+     <button type="submit" class="btn btn-primary">
+      <i class="fa fa-floppy-o"></i> Save
+     </button>
 
-                    <script>
+     <script>
                     $(document).ready(function(){
                         $("#viewButton").click(function(){
                             $("div.modal-body").html( $("#summernote").val() );
@@ -50,23 +61,30 @@ $(document).ready(function() {
                     });
                     </script>
 
-                    <button type="button" id="viewButton" class="btn btn-default" data-toggle="modal" data-target="#view">
-                        <i class="fa fa-eye"></i> View
-                    </button>
+     <button type="button" id="viewButton" class="btn btn-default"
+      data-toggle="modal" data-target="#view">
+      <i class="fa fa-eye"></i> View
+     </button>
 
-                     <div class="modal fade" id="view" tabindex="-1" role="dialog" aria-labelledby="viewLabel">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="viewLabel"><?php echo $this->getAdminEditPage('title'); ?></h4>
-                                </div>
-                                <div class="modal-body"></div>
-                            </div>
-                        </div>
-                    </div>
+     <div class="modal fade" id="view" tabindex="-1" role="dialog"
+      aria-labelledby="viewLabel">
+      <div class="modal-dialog modal-lg" role="document">
+       <div class="modal-content">
+        <div class="modal-header">
+         <button type="button" class="close" data-dismiss="modal"
+          aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+         </button>
+         <h4 class="modal-title" id="viewLabel">
+          <?php echo $this->getAdminEditPage('title'); ?>
+         </h4>
+        </div>
+        <div class="modal-body"></div>
+       </div>
+      </div>
+     </div>
 
-                    <script>
+     <script>
                     $(document).ready(function(){
                         /**
                          * Public Button
@@ -88,33 +106,38 @@ $(document).ready(function() {
                     });
                     </script>
 
-                    <div class="btn-group" id="publicButton" data-toggle="buttons">
-                        <label class="btn btn-success">
-                        <input type="hidden" id="itemPublic" name="public" value="<?php echo $this->getAdminEditPage('public'); ?>">
-                            <input type="checkbox" value="<?php echo $this->getAdminEditPage('public'); ?>" autocomplete="off">
-                            <i class="fa fa-newspaper-o"></i> Public: <i class="fa fa-square-o"></i>
-                        </label>
-                    </div>
+     <div class="btn-group" id="publicButton" data-toggle="buttons">
+      <label class="btn btn-success"> <input type="hidden"
+       id="itemPublic" name="public"
+       value="<?php echo $this->getAdminEditPage('public'); ?>">
+       <input type="checkbox"
+       value="<?php echo $this->getAdminEditPage('public'); ?>"
+       autocomplete="off"> <i class="fa fa-newspaper-o"></i>
+       Public: <i class="fa fa-square-o"></i>
+      </label>
+     </div>
 
-                    <button type="submit" class="btn btn-danger"
-                    data-toggle="button-form-confirm"
-                    data-href="<?php echo $this->getAdminEditPage('deleteLink'); ?>">
-                        <i class="fa fa-times"></i> Delete
-                    </button>
+     <button type="submit" class="btn btn-danger"
+      data-toggle="button-form-confirm"
+      data-href="<?php echo $this->getAdminEditPage('deleteLink'); ?>">
+      <i class="fa fa-times"></i> Delete
+     </button>
 
-                </div>
+    </div>
 
-                <div class="form-group" style="margin-bottom: 5px;">
-                    <input type="text" name="title" value="<?php echo $this->getAdminEditPage('title'); ?>" class="form-control input-lg" placeholder="Title">
-                </div>
+    <div class="form-group" style="margin-bottom: 5px;">
+     <input type="text" name="title"
+      value="<?php echo $this->getAdminEditPage('title'); ?>"
+      class="form-control input-lg" placeholder="Title">
+    </div>
 
-                <div class="form-group">
-                    <textarea name="content" id="summernote"><?php echo $this->getAdminEditPage('content'); ?></textarea>
-                </div>
+    <div class="form-group">
+     <textarea name="content" id="summernote"><?php echo $this->getAdminEditPage('content'); ?></textarea>
+    </div>
 
-            </div>
-        </div>
+   </div>
+  </div>
 
-    </form>
+ </form>
 
 </div>

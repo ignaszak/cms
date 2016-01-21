@@ -1,5 +1,4 @@
 <?php
-
 namespace Validation;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -9,6 +8,7 @@ class ContentValidation
 {
 
     /**
+     *
      * @param \Entity\Categories $_category
      * @return boolean
      */
@@ -18,6 +18,7 @@ class ContentValidation
     }
 
     /**
+     *
      * @param \Entity\Users $_author
      * @return boolean
      */
@@ -27,6 +28,7 @@ class ContentValidation
     }
 
     /**
+     *
      * @param \DateTime $_date
      * @return boolean
      */
@@ -69,6 +71,7 @@ class ContentValidation
     }
 
     /**
+     *
      * @param string $alias
      * @return boolean
      */
@@ -78,6 +81,7 @@ class ContentValidation
     }
 
     /**
+     *
      * @param string $content
      * @return boolean
      */
@@ -87,15 +91,19 @@ class ContentValidation
     }
 
     /**
+     *
      * @param string $login
      * @return boolean
      */
     public function validLogin($login): bool
     {
-        return V::alnum('_')->noWhitespace()->length(2, null)->validate($login);
+        return V::alnum('_')->noWhitespace()
+            ->length(2, null)
+            ->validate($login);
     }
 
     /**
+     *
      * @param string $email
      * @return boolean
      */
@@ -105,15 +113,19 @@ class ContentValidation
     }
 
     /**
+     *
      * @param string $password
      * @return boolean
      */
     public function validPassword($password): bool
     {
-        return V::alnum()->noWhitespace()->length(8, null)->validate($password);
+        return V::alnum()->noWhitespace()
+            ->length(8, null)
+            ->validate($password);
     }
 
     /**
+     *
      * @param \DateTime $_regDate
      * @return boolean
      */
@@ -123,6 +135,7 @@ class ContentValidation
     }
 
     /**
+     *
      * @param \DateTime $_logDate
      * @return boolean
      */
@@ -132,25 +145,29 @@ class ContentValidation
     }
 
     /**
+     *
      * @param string $role
      * @return boolean
      */
     public function validRole($role): bool
     {
-        return V::in(['admin', 'moderator', 'user'])->validate($role);
+        return V::in([
+            'admin',
+            'moderator',
+            'user'
+        ])->validate($role);
     }
 
     /**
+     *
      * @param \Entity $_object
      * @param string $name
      * @return boolean
      */
     private function validEntityController($_object, $name): bool
     {
-        $_entityController = RegistryFactory::start()
-            ->register('Entity\Controller\EntityController');
+        $_entityController = RegistryFactory::start()->register('Entity\Controller\EntityController');
         $class = $_entityController->getEntity($name);
         return $_object instanceof $class;
     }
-
 }

@@ -1,21 +1,23 @@
 <div class="container-fluid">
-    <div class="panel panel-default panel-white">
-        <div class="panel-heading"><h3>View menus</h3></div>
-        <div class="panel-body">
+ <div class="panel panel-default panel-white">
+  <div class="panel-heading">
+   <h3>View menus</h3>
+  </div>
+  <div class="panel-body">
 
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th class="hidden-xs">Position</th>
-                        <th></th>
-                    </tr>
-                </thead>
+   <table class="table table-hover">
+    <thead>
+     <tr>
+      <th>#</th>
+      <th>Title</th>
+      <th class="hidden-xs">Position</th>
+      <th></th>
+     </tr>
+    </thead>
 
-                <tbody>
+    <tbody>
 
-                <?php
+     <?php
                     $page = $this->getRoute('page');
 
                     if ($page == 1 || empty($page)) {
@@ -27,37 +29,38 @@
                     foreach ($this->getAdminViewMenu() as $menu) :
                 ?>
 
-                    <tr>
-                        <th scope="row"><?php echo $i; ?></th>
-                        <td>
-                            <a href="<?php echo $this->getAdminViewMenuLink() . 'edit/' . $menu->getId(); ?>">
-                                <b><?php echo $menu->getName(); ?></b>
-                            </a>
-                        </td>
-                        <td><?php echo $menu->getPosition(); ?></td>
-                        <td>
-                            <a class="btn btn-xs btn-default"
-                            href="<?php echo $this->getAdminViewMenuLink(); ?>edit/<?php echo $menu->getId(); ?>">
-                                <i class="fa fa-pencil-square-o"></i>
-                            </a>
-                            <a class="btn btn-xs btn-danger" data-toggle="a-confirm"
-                            href="<?php echo $this->getAdminViewMenuLink(); ?>delete/<?php echo $menu->getId(); ?>">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </td>
-                    </tr>
+     <tr>
+      <th scope="row">
+       <?php echo $i; ?>
+      </th>
+      <td><a
+       href="<?php echo $this->getAdminViewMenuLink() . 'edit/' . $menu->getId(); ?>">
+        <b> <?php echo $menu->getName(); ?>
+       </b>
+      </a></td>
+      <td>
+       <?php echo $menu->getPosition(); ?>
+      </td>
+      <td><a class="btn btn-xs btn-default"
+       href="<?php echo $this->getAdminViewMenuLink(); ?>edit/<?php echo $menu->getId(); ?>">
+        <i class="fa fa-pencil-square-o"></i>
+      </a> <a class="btn btn-xs btn-danger" data-toggle="a-confirm"
+       href="<?php echo $this->getAdminViewMenuLink(); ?>delete/<?php echo $menu->getId(); ?>">
+        <i class="fa fa-times"></i>
+      </a></td>
+     </tr>
 
-                <?php
+     <?php
                     ++$i;
                     endforeach;
                 ?>
 
-                </tbody>
+    </tbody>
 
-            </table>
+   </table>
 
-            <?php echo $this->getPaginationTheme('pagination'); ?>
+   <?php echo $this->getPaginationTheme('pagination'); ?>
 
-        </div>
-    </div>
+  </div>
+ </div>
 </div>

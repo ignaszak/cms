@@ -1,25 +1,20 @@
-<phpunit
-    bootstrap="vendor/autoload.php"
-    colors="true"
-    stopOnError="false"
-    stopOnFailure="false"
-    stopOnIncomplete="false"
-    stopOnSkipped="false"
-    stopOnRisky="false">
+<phpunit bootstrap="vendor/autoload.php" colors="true"
+	stopOnError="false" stopOnFailure="false" stopOnIncomplete="false"
+	stopOnSkipped="false" stopOnRisky="false">
 
-    <filter>
-        <whitelist>
-            <directory suffix=".php">modules/</directory>
-            <directory suffix=".php">admin/</directory>
-            <directory suffix=".php">conf/</directory>
-            <directory suffix=".php">controller/</directory>
-        </whitelist>
-    </filter>
+	<filter>
+		<whitelist>
+			<directory suffix=".php">modules/</directory>
+			<directory suffix=".php">admin/</directory>
+			<directory suffix=".php">conf/</directory>
+			<directory suffix=".php">controller/</directory>
+		</whitelist>
+	</filter>
 
-    <testsuites>
-        <testsuite name="CMSTests">
-            <directory>./tests/</directory>
-        </testsuite>
-    </testsuites>
+	<testsuites>
+		<testsuite name="CMSTests">
+			<directory>./tests/</directory>
+		</testsuite>
+	</testsuites>
 
 </phpunit>

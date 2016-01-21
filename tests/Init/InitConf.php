@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Init;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -7,6 +6,7 @@ use Test\Mock\MockTest;
 
 class InitConf
 {
+
     public static function run()
     {
         $_conf = RegistryFactory::start('file')->register('Conf\Conf');

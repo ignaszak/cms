@@ -1,5 +1,4 @@
 <?php
-
 namespace Pagination;
 
 class PagerAlign extends PaginationTheme
@@ -8,7 +7,7 @@ class PagerAlign extends PaginationTheme
     public function getTheme()
     {
         if ($this->_pg->getCountSite() > 1) {
-
+            
             return <<<EOT
 <nav>
     <ul class="pager">
@@ -27,5 +26,4 @@ class PagerAlign extends PaginationTheme
 EOT;
         }
     }
-
 }

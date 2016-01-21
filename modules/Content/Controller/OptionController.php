@@ -1,5 +1,4 @@
 <?php
-
 namespace Content\Controller;
 
 use Entity\Options;
@@ -11,7 +10,7 @@ class OptionController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->_entity = new Options;
+        $this->_entity = new Options();
     }
 
     public function insert()
@@ -22,6 +21,7 @@ class OptionController extends Controller
         RegistryFactory::start('file')->remove('Conf\Conf');
     }
 
-    public function remove() {}
-
+    public function remove()
+    {
+    }
 }

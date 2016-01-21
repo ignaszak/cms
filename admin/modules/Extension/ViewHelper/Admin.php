@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Extension\ViewHelper;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -37,5 +36,4 @@ class Admin extends \Admin\Extension\ExtensionInstances
     {
         return Exception::getLogFileArray();
     }
-
 }

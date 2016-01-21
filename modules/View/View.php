@@ -1,5 +1,4 @@
 <?php
-
 namespace View;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -10,30 +9,33 @@ class View
 {
 
     /**
+     *
      * @var Conf
      */
     private $_viewConf;
 
     /**
+     *
      * @var ViewHelper
      */
     private $_viewHelper;
 
     /**
+     *
      * @var string
      */
     private $viewFileName;
 
     public function __construct()
     {
-        $this->_viewConf = new Conf;
+        $this->_viewConf = new Conf();
         $this->_viewHelper = RegistryFactory::start()->register('ViewHelper\ViewHelper');
         $this->configure();
     }
 
     /**
      * Call methods from ViewHelper
-     * 
+     *
      * @param string $name
      * @param array $arguments
      * @return mixed FiewHelper methods
@@ -47,6 +49,7 @@ class View
     }
 
     /**
+     *
      * @param string $fileName
      */
     public function addView(string $fileName)
@@ -56,7 +59,7 @@ class View
 
     public function loadView()
     {
-        if (!empty($this->viewFileName)) {
+        if (! empty($this->viewFileName)) {
             if (Router::isRouteName('admin')) {
                 $this->loadAdminExtensionThemeFile($this->viewFileName);
             } else {
@@ -66,18 +69,20 @@ class View
     }
 
     /**
+     *
      * @param string $fileName
      */
     public function loadFile(string $fileName)
     {
         $file = "{$this->_viewConf->getThemePath()}/{$fileName}";
-
+        
         if (file_exists($file) && is_file($file) && is_readable($file)) {
             include($file);
         }
     }
 
     /**
+     *
      * @param string $fileName
      */
     public function loadExtensionFile(string $fileName)
@@ -91,6 +96,7 @@ class View
     }
 
     /**
+     *
      * @return string
      */
     public function getThemeFolder(): string
@@ -102,5 +108,4 @@ class View
     {
         $this->_viewConf->configureThemePath();
     }
-
 }

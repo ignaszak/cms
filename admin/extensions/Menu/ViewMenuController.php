@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Menu;
 
 use FrontController\Controller;
@@ -15,23 +14,25 @@ class ViewMenuController extends Controller
     }
 
     /**
+     *
      * @return ViewHelperController
      */
     public function setViewHelper()
     {
-        return new class ($this) extends ViewHelperController
-        {
-            public function getAdminViewMenu()
-            {
-                $this->_controller->query()->setContent('menu')->status('all');
-                return $this->_controller->query()->getContent();
-            }
+        return new class($this) extends ViewHelperController {
 
-            public function getAdminViewMenuLink()
-            {
-                return $this->_controller->view()->getAdminAdress() . "/menu/";
-            }
+        public function getAdminViewMenu()
+        {
+            $this->_controller->query()
+                ->setContent('menu')
+                ->status('all');
+            return $this->_controller->query()->getContent();
+        }
+
+        public function getAdminViewMenuLink()
+        {
+            return $this->_controller->view()->getAdminAdress() . "/menu/";
+        }
         };
     }
-
 }

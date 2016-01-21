@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Init;
 
 class InitQueryContent
@@ -14,9 +13,8 @@ class InitQueryContent
             'limit' => $stub,
             'paginate' => $stub,
             'force' => $stub,
-            'getContent' => $return,
+            'getContent' => $return
         ));
         return $stub;
     }
-
 }

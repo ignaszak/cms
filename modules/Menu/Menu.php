@@ -1,5 +1,4 @@
 <?php
-
 namespace Menu;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -8,16 +7,19 @@ class Menu
 {
 
     /**
+     *
      * @var \Content\Query\Content
      */
     private $_query;
 
     /**
+     *
      * @var \Conf\Conf
      */
     private $_conf;
 
     /**
+     *
      * @var \Entity\MenuItems[]
      */
     private $menuItemsArray = array();
@@ -29,6 +31,7 @@ class Menu
     }
 
     /**
+     *
      * @param string $position
      * @return string
      */
@@ -39,6 +42,7 @@ class Menu
     }
 
     /**
+     *
      * @param string $position
      */
     private function loadMenuItmsByPosition(string $position)
@@ -49,9 +53,10 @@ class Menu
             ->paginate(false)
             ->force();
         $content = $this->_query->getContent();
-
-        if (array_key_exists(0, $content))
+        
+        if (array_key_exists(0, $content)) {
             $this->menuItemsArray = $content[0]->getMenuItems();
+        }
     }
 
     private function createMenu(string $class): string
@@ -66,16 +71,16 @@ class Menu
     }
 
     /**
+     *
      * @param string $adress
      * @return string
      */
     private function validAdress(string $adress): string
     {
-        if (!filter_var($adress, FILTER_VALIDATE_URL) === false) {
+        if (! filter_var($adress, FILTER_VALIDATE_URL) === false) {
             return $adress;
         } else {
             return $this->_conf->getBaseUrl() . $adress;
         }
     }
-
 }

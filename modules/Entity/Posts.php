@@ -1,5 +1,4 @@
 <?php
-
 namespace Entity;
 
 use Entity\Users;
@@ -16,61 +15,54 @@ use Aura\Filter\Rule\Sanitize\Integer;
  */
 class Posts extends IPostsQuery
 {
+
     /**
-     * @var integer
      *
-     * @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @var integer @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     *      @ORM\Id
+     *      @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
-     * @var integer
      *
-     * @ORM\Column(name="category_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @var integer @ORM\Column(name="category_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
     private $categoryId;
 
     /**
-     * @var integer
      *
-     * @ORM\Column(name="author_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @var integer @ORM\Column(name="author_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
     private $authorId;
 
     /**
-     * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @var \DateTime @ORM\Column(name="date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
      */
     private $date;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $title;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="alias", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="alias", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
      */
     private $alias;
 
     /**
-     * @var string
      *
-     * @ORM\Column(name="content", type="text", precision=0, scale=0, nullable=false, unique=false)
+     * @var string @ORM\Column(name="content", type="text", precision=0, scale=0, nullable=false, unique=false)
      */
     private $content;
 
     /**
-     * @var Integer
      *
-     * @ORM\Column(name="public", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @var Integer @ORM\Column(name="public", type="integer", precision=0, scale=0, nullable=false, unique=false)
      */
     private $public;
 
@@ -112,7 +104,7 @@ class Posts extends IPostsQuery
     public function setCategoryId($categoryId)
     {
         $this->categoryId = $categoryId;
-
+        
         return $this;
     }
 
@@ -136,7 +128,7 @@ class Posts extends IPostsQuery
     public function setAuthorId($authorId)
     {
         $this->authorId = $authorId;
-
+        
         return $this;
     }
 
@@ -160,7 +152,7 @@ class Posts extends IPostsQuery
     public function setDate($date)
     {
         $this->date = $date;
-
+        
         return $this;
     }
 
@@ -171,11 +163,8 @@ class Posts extends IPostsQuery
      */
     public function getDate($format = "")
     {
-        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
-            ->getDateFormat();
-        return $this->date->format(
-            (empty($format) ? $dateFormat : $format)
-        );
+        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')->getDateFormat();
+        return $this->date->format((empty($format) ? $dateFormat : $format));
     }
 
     /**
@@ -188,7 +177,7 @@ class Posts extends IPostsQuery
     public function setTitle($title)
     {
         $this->title = $title;
-
+        
         return $this;
     }
 
@@ -212,7 +201,7 @@ class Posts extends IPostsQuery
     public function setAlias($alias)
     {
         $this->alias = $alias;
-
+        
         return $this;
     }
 
@@ -236,7 +225,7 @@ class Posts extends IPostsQuery
     public function setContent($content)
     {
         $this->content = $content;
-
+        
         return $this;
     }
 
@@ -260,7 +249,7 @@ class Posts extends IPostsQuery
     public function setPublic($public)
     {
         $this->public = $public;
-
+        
         return $this;
     }
 
@@ -284,7 +273,7 @@ class Posts extends IPostsQuery
     public function setAuthor($author)
     {
         return $this->user = $author;
-
+        
         return $this;
     }
 
@@ -308,7 +297,7 @@ class Posts extends IPostsQuery
     public function setCategory($category)
     {
         return $this->category = $category;
-
+        
         return $this;
     }
 
@@ -321,6 +310,4 @@ class Posts extends IPostsQuery
     {
         return $this->category;
     }
-
 }
-

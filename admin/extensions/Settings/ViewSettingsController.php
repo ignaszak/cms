@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Settings;
 
 use FrontController\Controller;
@@ -15,52 +14,58 @@ class ViewSettingsController extends Controller
     }
 
     /**
+     *
      * @return ViewHelperController
      */
     public function setViewHelper()
     {
-        return new class ($this) extends ViewHelperController
-        {
+        return new class($this) extends ViewHelperController {
+
             /**
+             *
              * @var \Entity\Options
              */
-            private $_options;
+        private $_options;
 
             /**
+             *
              * @param Controller $_controller
              */
-            public function __construct(Controller $_controller)
-            {
-                parent::__construct($_controller);
-                $this->_controller->query()->setContent('options');
-                $this->_options = $this->_controller->query()->getContent()[0];
-            }
+        public function __construct(Controller $_controller)
+        {
+            parent::__construct($_controller);
+            $this->_controller->query()->setContent('options');
+            $this->_options = $this->_controller->query()->getContent()[0];
+        }
 
             /**
+             *
              * @return string
              */
-            public function getAdminSettingsFormAction(): string
-            {
-                return $this->_controller->view()->getAdminAdress() . "/settings/save";;
-            }
+        public function getAdminSettingsFormAction(): string
+        {
+            return $this->_controller->view()->getAdminAdress() . "/settings/save";
+            ;
+        }
 
             /**
+             *
              * @return \Entity\Options
              */
-            public function getAdminSettings(): \Entity\Options
-            {
-                return $this->_options;
-            }
+        public function getAdminSettings(): \Entity\Options
+        {
+            return $this->_options;
+        }
 
             /**
+             *
              * @return array
              */
-            public function getAdminSettingsThemesList(): array
-            {
-                $baseDir = dirname(dirname(dirname(__DIR__)));
-                return glob($baseDir . "/themes/*", GLOB_ONLYDIR);
-            }
+        public function getAdminSettingsThemesList(): array
+        {
+            $baseDir = dirname(dirname(dirname(__DIR__)));
+            return glob($baseDir . "/themes/*", GLOB_ONLYDIR);
+        }
         };
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\Content\Query;
 
 use Content\Query\ContentQueryController;
@@ -19,7 +18,9 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         InitRouter::add('admin', '{alias:route}');
         InitRouter::run();
         InitConf::run();
-        InitDoctrine::queryBuilderResult(array(null)); // Symulate no result
+        InitDoctrine::queryBuilderResult(array(
+            null
+        )); // Symulate no result
         $entity = $this->getMockBuilder('Entity\Posts')->getMock();
         $entity->method('getPublic');
         $this->_contentQueryController = new ContentQueryController(get_class($entity));
@@ -62,16 +63,14 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
 
     public function testAliasNotEmptyAndResultIsNotForced()
     {
-        $method = MockTest::callMockMethod($this->_contentQueryController,
-            'isAliasEmptyOrIsResultForced');
+        $method = MockTest::callMockMethod($this->_contentQueryController, 'isAliasEmptyOrIsResultForced');
         $this->assertFalse($method);
     }
 
     public function testAliasNotEmptyAndResultIsForced()
     {
         $this->_contentQueryController->force();
-        $method = MockTest::callMockMethod($this->_contentQueryController,
-            'isAliasEmptyOrIsResultForced');
+        $method = MockTest::callMockMethod($this->_contentQueryController, 'isAliasEmptyOrIsResultForced');
         $this->assertTrue($method);
     }
 
@@ -92,5 +91,4 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         $this->_contentQueryController->limit($anyLimit);
         MockTest::callMockMethod($this->_contentQueryController, 'setLimit');
     }
-
 }

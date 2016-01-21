@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Menu;
 
 use FrontController\Controller;
@@ -11,13 +10,13 @@ class AjaxLoadController extends Controller
     {
         $alias = $this->view()->getRoute('alias');
         $page = $this->view()->getRoute('page');
-
+        
         if ($alias != 'category') {
             $content = $this->selectPostOrPage($alias);
         } else { // $page as categoryId
             $content = $this->selectCategory($page);
         }
-
+        
         $array = array();
         foreach ($content as $row) {
             $rowArray = array();
@@ -25,21 +24,25 @@ class AjaxLoadController extends Controller
             $rowArray['title'] = $row->getTitle();
             $rowArray['link'] = "{$alias}/{$row->getAlias()}";
             $rowArray['alias'] = $alias;
-            if ($alias == 'post') $rowArray['category'] = $row->getCategory()->getTitle();
+            if ($alias == 'post') {
+                $rowArray['category'] = $row->getCategory()->getTitle();
+            }
             $array[] = $rowArray;
         }
-
+        
         header("Content-type: application/json; charset=utf-8");
         echo json_encode($array);
-        exit;
+        exit();
     }
 
     /**
+     *
      * @return array
      */
     private function selectCategory(int $catId): array
     {
-        $this->query()->setContent('category')
+        $this->query()
+            ->setContent('category')
             ->id($catId)
             ->limit(1)
             ->paginate(false)
@@ -48,20 +51,22 @@ class AjaxLoadController extends Controller
     }
 
     /**
+     *
      * @return array
      */
     private function selectPostOrPage(string $alias): array
     {
         if (empty(@$_POST['search'])) {
-            $this->query()->setContent($alias)
+            $this->query()
+                ->setContent($alias)
                 ->force();
         } else {
-            $this->query()->setContent($alias)
+            $this->query()
+                ->setContent($alias)
                 ->titleLike($_POST['search'])
                 ->paginate(false)
                 ->force();
         }
         return $this->query()->getContent();
     }
-
 }

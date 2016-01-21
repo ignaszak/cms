@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\Form;
 
 use Form\Form;
@@ -9,25 +8,38 @@ class FormTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
+     *
      * @var \Form
      */
     private $_form;
 
     public function setUp()
     {
-        $this->_form = new Form;
+        $this->_form = new Form();
     }
 
     public function testGetRefererDataArray()
     {
-        $referData = array(1,2,3,4,5);
+        $referData = array(
+            1,
+            2,
+            3,
+            4,
+            5
+        );
         MockTest::injectStatic('System\Server', 'readReferDataArray', $referData);
         $this->assertEquals($referData, $this->_form->getFormResponseData());
     }
 
     public function testGetSingleRefererDataByKey()
     {
-        $referData = array(5,4,3,2,1);
+        $referData = array(
+            5,
+            4,
+            3,
+            2,
+            1
+        );
         MockTest::injectStatic('System\Server', 'readReferDataArray', $referData);
         $this->assertEquals(4, $this->_form->getFormResponseData(1));
     }
@@ -52,5 +64,4 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $action = MockTest::callMockMethod($this->_form, 'getFormAction');
         $this->assertEquals('anyAction', $action);
     }
-
 }

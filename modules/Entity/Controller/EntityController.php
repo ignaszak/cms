@@ -1,5 +1,4 @@
 <?php
-
 namespace Entity\Controller;
 
 use CMSException\DBException;
@@ -8,6 +7,7 @@ class EntityController
 {
 
     /**
+     *
      * @var Entity[]
      */
     private static $entityArray = array();
@@ -25,21 +25,23 @@ class EntityController
     }
 
     /**
+     *
      * @param string $name
      * @param string $entity
      */
     public function addEntity(string $name, string $entity)
     {
-        
         if (class_exists($entity)) {
-            if (!array_key_exists($name, self::$entityArray))
+            if (! array_key_exists($name, self::$entityArray)) {
                 self::$entityArray[$name] = $entity;
+            }
         } else {
             throw new DBException('Entity not exists');
         }
     }
 
     /**
+     *
      * @param string $name
      * @throws DBException
      * @return Entity
@@ -52,5 +54,4 @@ class EntityController
             throw new DBException('Invalid entity name');
         }
     }
-
 }

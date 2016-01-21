@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Init;
 
 use Conf\DB\DBDoctrine;
@@ -12,39 +11,36 @@ class InitDoctrine
 
     /**
      * Creates connection to test data base
-     * 
+     *
      * @param string $host
      * @param string $user
      * @param string $password
      * @param string $db
-     * @param string $driver default pdo_mysql
-     * @param string $charset default utf8
+     * @param string $driver
+     *            default pdo_mysql
+     * @param string $charset
+     *            default utf8
      */
-    public static function connect(
-        string $host,
-        string $user,
-        string $password,
-        string $db,
-        string $driver = 'pdo_mysql',
-        string $charset = 'utf8'
-    )
+    public static function connect(string $host, string $user, string $password, string $db, string $driver = 'pdo_mysql', string $charset = 'utf8')
     {
         // Configure Doctrine Entity Manager
-        $paths = array(dirname(dirname(__DIR__)) . '/modules/Entity');
+        $paths = array(
+            dirname(dirname(__DIR__)) . '/modules/Entity'
+        );
         $isDevMode = true;
         $dbParams = array(
-            'driver'    => $driver,
-            'host'      => $host,
-            'user'      => $user,
-            'password'  => $password,
-            'dbname'    => $db,
-            'charset'   => $charset
+            'driver' => $driver,
+            'host' => $host,
+            'user' => $user,
+            'password' => $password,
+            'dbname' => $db,
+            'charset' => $charset
         );
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null, false);
         $_em = EntityManager::create($dbParams, $config);
         $platform = $_em->getConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'string');
-
+        
         // Insert Entity Manager to DBDoctrine
         self::mock($_em);
     }
@@ -58,15 +54,9 @@ class InitDoctrine
         $initDoctrineSettings = __DIR__ . '/InitDoctrineSettings.php';
         if (file_exists($initDoctrineSettings)) {
             $connection = include $initDoctrineSettings;
-            self::connect(
-                $connection['host'],
-                $connection['user'],
-                $connection['password'],
-                $connection['db']
-            );
+            self::connect($connection['host'], $connection['user'], $connection['password'], $connection['db']);
         } else {
-            throw new \Exception(
-"File '{$initDoctrineSettings}' not found.
+            throw new \Exception("File '{$initDoctrineSettings}' not found.
 Please create 'InitDoctrineSettings.php' file in '" . __DIR__ . "' directory with content:
 <?php
 
@@ -76,12 +66,12 @@ return array(
     'password' => /* password */,
     'db'       => /* data base name */
 );
-"
-            );
+");
         }
     }
 
     /**
+     *
      * @param \PHPUnit_Framework_MockObject_Builder_Stub $stub
      */
     public static function mock($stub)
@@ -99,7 +89,7 @@ return array(
 
     /**
      * Create mock createQueryBuilder method
-     * 
+     *
      * @param array $result
      * @return object
      */
@@ -124,6 +114,7 @@ return array(
     }
 
     /**
+     *
      * @param array $result
      */
     public static function queryBuilderResult(array $result)
@@ -147,14 +138,13 @@ return array(
     }
 
     /**
+     *
      * @param array $result
      */
     public static function getRepositoryResult(array $result)
     {
         $em = \Mockery::mock('EntityManager');
-        $em->shouldReceive('getRepository')
-            ->andReturn(self::repository($result));
+        $em->shouldReceive('getRepository')->andReturn(self::repository($result));
         self::mock($em);
     }
-
 }

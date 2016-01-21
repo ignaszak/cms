@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Post;
 
 use FrontController\Controller;
@@ -15,23 +14,25 @@ class ViewPostController extends Controller
     }
 
     /**
+     *
      * @return ViewHelperController
      */
     public function setViewHelper()
     {
-        return new class ($this) extends ViewHelperController
-        {
-            public function getAdminViewPost()
-            {
-                $this->_controller->query()->setContent('post')->status('all');
-                return $this->_controller->query()->getContent();
-            }
+        return new class($this) extends ViewHelperController {
 
-            public function getAdminViewPostLink()
-            {
-                return $this->_controller->view()->getAdminAdress() . "/post/p/edit/";
-            }
+        public function getAdminViewPost()
+        {
+            $this->_controller->query()
+                ->setContent('post')
+                ->status('all');
+            return $this->_controller->query()->getContent();
+        }
+
+        public function getAdminViewPostLink()
+        {
+            return $this->_controller->view()->getAdminAdress() . "/post/p/edit/";
+        }
         };
     }
-
 }

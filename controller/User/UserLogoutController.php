@@ -1,5 +1,4 @@
 <?php
-
 namespace Controller\User;
 
 use FrontController\Controller;
@@ -18,5 +17,4 @@ class UserLogoutController extends Controller
         }
         Server::headerLocationReferer();
     }
-
 }

@@ -1,38 +1,41 @@
 <?php
-
 namespace Form;
 
 class Form
 {
 
     /**
+     *
      * @var Form
      */
     private static $_formInstance;
 
     /**
+     *
      * @var string
      */
     private $formType;
 
     /**
+     *
      * @param string $key
      * @return (array|integer)
      */
     public function getFormResponseData(string $key = "")
     {
         $responseArray = \System\Server::getReferData();
-        return (!empty($key) ? @$responseArray[$key] : @$responseArray);
+        return (! empty($key) ? @$responseArray[$key] : @$responseArray);
     }
 
     /**
+     *
      * @param string $formType
      * @return \Form\Form
      */
     public function createForm(string $formType)
     {
         $this->formType = $formType;
-
+        
         switch ($this->getFormGroup()) {
             case 'user':
                 $this->setFormInstance('Form\FormUser');
@@ -42,6 +45,7 @@ class Form
     }
 
     /**
+     *
      * @param string $formClassName
      */
     private function setFormInstance(string $className)
@@ -50,6 +54,7 @@ class Form
     }
 
     /**
+     *
      * @return string
      */
     private function getFormGroup(): string
@@ -59,6 +64,7 @@ class Form
     }
 
     /**
+     *
      * @return string
      */
     private function getFormAction(): string
@@ -66,5 +72,4 @@ class Form
         $formTypeArray = explode('-', $this->formType);
         return $formTypeArray[1];
     }
-
 }

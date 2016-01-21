@@ -2,183 +2,150 @@
 
 <project name="CMS configurator" default="main">
 
-    <property name="DBConfDir" value="${project.basedir}/conf/DB" />
-    <property name="AppConfDir" value="${project.basedir}/modules/App/Conf" />
-    <property name="rewriteBase" value="/" override="true" />
-    <property name="role" value="admin" override="true" />
+	<property name="DBConfDir" value="${project.basedir}/conf/DB" />
+	<property name="AppConfDir" value="${project.basedir}/modules/App/Conf" />
+	<property name="rewriteBase" value="/" override="true" />
+	<property name="role" value="admin" override="true" />
 
-    <!-- ============================================  -->
-    <!-- Target: start                                 -->
-    <!-- ============================================  -->
-    <target name="start">
-        <echo message="Welcom to ${phing.project.name}. Please follow these steps to finish configuration." />
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: start -->
+	<!-- ============================================ -->
+	<target name="start">
+		<echo
+			message="Welcom to ${phing.project.name}. Please follow these steps to finish configuration." />
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: site                                  -->
-    <!-- ============================================  -->
-    <target name="site" depends="start">
-        <input
-            message="Please insert your site adress (example: http://www.example.com/)"
-            propertyname="siteAdress"
-            promptChar=": "
-        />
-        <input
-            message="Please insert your site name"
-            propertyname="siteName"
-            promptChar=": "
-        />
-        <php expression="require('${project.basedir}/vendor/autoload.php');" />
-        <php expression="\App\Conf\Configuration::setAdress('${siteAdress}');" />
-        <php expression="\App\Conf\Configuration::getBaseUrl();" returnProperty="baseUrl"/>
-        <php expression="\App\Conf\Configuration::getRequestUrl();" returnProperty="rewriteBase"/>
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: site -->
+	<!-- ============================================ -->
+	<target name="site" depends="start">
+		<input
+			message="Please insert your site adress (example: http://www.example.com/)"
+			propertyname="siteAdress" promptChar=": " />
+		<input message="Please insert your site name" propertyname="siteName"
+			promptChar=": " />
+		<php expression="require('${project.basedir}/vendor/autoload.php');" />
+		<php expression="\App\Conf\Configuration::setAdress('${siteAdress}');" />
+		<php expression="\App\Conf\Configuration::getBaseUrl();"
+			returnProperty="baseUrl" />
+		<php expression="\App\Conf\Configuration::getRequestUrl();"
+			returnProperty="rewriteBase" />
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: database                              -->
-    <!-- ============================================  -->
-    <target name="database" depends="site">
-        <input
-            message="Please insert your database host"
-            propertyName="dbHost"
-            promptChar=": "
-        />
-        <input
-            message="Please insert your database user"
-            propertyName="dbUser"
-            promptChar=": "
-        />
-        <input
-            message="Please insert your database password"
-            propertyName="dbPassword"
-            promptChar=": "
-        />
-        <input
-            message="Please insert your database name"
-            propertyName="dbName"
-            promptChar=": "
-        />
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: database -->
+	<!-- ============================================ -->
+	<target name="database" depends="site">
+		<input message="Please insert your database host" propertyName="dbHost"
+			promptChar=": " />
+		<input message="Please insert your database user" propertyName="dbUser"
+			promptChar=": " />
+		<input message="Please insert your database password"
+			propertyName="dbPassword" promptChar=": " />
+		<input message="Please insert your database name" propertyName="dbName"
+			promptChar=": " />
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: administrator                         -->
-    <!-- ============================================  -->
-    <target name="administrator" depends="database">
-        <input
-            message="Please insert your user login"
-            propertyName="login"
-            promptChar=": "
-        />
-        <input
-            message="Please insert your user password"
-            propertyName="password"
-            promptChar=": "
-        />
-        <input
-            message="Please insert your email"
-            propertyName="email"
-            promptChar=": "
-        />
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: administrator -->
+	<!-- ============================================ -->
+	<target name="administrator" depends="database">
+		<input message="Please insert your user login" propertyName="login"
+			promptChar=": " />
+		<input message="Please insert your user password" propertyName="password"
+			promptChar=": " />
+		<input message="Please insert your email" propertyName="email"
+			promptChar=": " />
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: create_db_conf_file                   -->
-    <!-- ============================================  -->
-    <target name="create_db_conf_file" depends="administrator">
-        <copy
-            file="${AppConfDir}/DBSettings.php"
-            tofile="${DBConfDir}/DBSettings.php"
-        >
-            <filterchain>
-                <replacetokens>
-                    <token key="dbHost"     value="${dbHost}" />
-                    <token key="dbUser"     value="${dbUser}" />
-                    <token key="dbPassword" value="${dbPassword}" />
-                    <token key="dbName"     value="${dbName}" />
-                </replacetokens>
-            </filterchain>
-        </copy>
-    </target>
-	
-    <!-- ============================================  -->
-    <!-- Target: create_folders                        -->
-    <!-- ============================================  -->
-    <target name="create_folders" depends="create_db_conf_file">
-        <mkdir dir="${project.basedir}/cache/session" />
-        <mkdir dir="${project.basedir}/cache/registry" />
-        <mkdir dir="${project.basedir}/cache/tmp" />
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: create_db_conf_file -->
+	<!-- ============================================ -->
+	<target name="create_db_conf_file" depends="administrator">
+		<copy file="${AppConfDir}/DBSettings.php" tofile="${DBConfDir}/DBSettings.php">
+			<filterchain>
+				<replacetokens>
+					<token key="dbHost" value="${dbHost}" />
+					<token key="dbUser" value="${dbUser}" />
+					<token key="dbPassword" value="${dbPassword}" />
+					<token key="dbName" value="${dbName}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: create_htaccess_file                  -->
-    <!-- ============================================  -->
-    <target name="create_htaccess_file" depends="create_folders">
-        <copy
-            file="${AppConfDir}/htaccess"
-            tofile="${project.basedir}/.htaccess"
-        >
-            <filterchain>
-                <replacetokens>
-                    <token key="rewriteBase" value="${rewriteBase}" />
-                    <token key="baseDir"     value="${project.basedir}" />
-                </replacetokens>
-            </filterchain>
-        </copy>
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: create_folders -->
+	<!-- ============================================ -->
+	<target name="create_folders" depends="create_db_conf_file">
+		<mkdir dir="${project.basedir}/cache/session" />
+		<mkdir dir="${project.basedir}/cache/registry" />
+		<mkdir dir="${project.basedir}/cache/tmp" />
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: create_sql_query                      -->
-    <!-- ============================================  -->
-    <target name="create_sql_query" depends="create_htaccess_file">
-        <php expression="require('${project.basedir}/vendor/autoload.php');" />
-        <php expression="\UserAuth\HashPass::hash(${password});" returnProperty="hashPassword"/>
-        <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');" returnProperty="regDate"/>
-        <copy
-            file="${AppConfDir}/structure.sql"
-            tofile="${project.basedir}/cache/tmp/tmp_structure.sql"
-        >
-            <filterchain>
-                <replacetokens>
-                    <token key="dbName" value="${dbName}" />
-                </replacetokens>
-            </filterchain>
-        </copy>
-        <copy
-            file="${AppConfDir}/data.sql"
-            tofile="${project.basedir}/cache/tmp/tmp_data.sql"
-        >
-            <filterchain>
-                <replacetokens>
-                    <token key="dbName"       value="${dbName}" />
-                    <token key="login"        value="${login}" />
-                    <token key="email"        value="${email}" />
-                    <token key="hashPassword" value="${hashPassword}" />
-                    <token key="regDate"      value="${regDate}" />
-                    <token key="logDate"      value="${regDate}" />
-                    <token key="role"         value="${role}" />
-                    <token key="siteName"     value="${siteName}" />
-                    <token key="email"        value="${email}" />
-                    <token key="siteAdress"   value="${siteAdress}" />
-                    <token key="rewriteBase"  value="${rewriteBase}" />
-                </replacetokens>
-            </filterchain>
-        </copy>
-        <php expression="\App\Conf\Configuration::createDataBase();" />
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: create_htaccess_file -->
+	<!-- ============================================ -->
+	<target name="create_htaccess_file" depends="create_folders">
+		<copy file="${AppConfDir}/htaccess" tofile="${project.basedir}/.htaccess">
+			<filterchain>
+				<replacetokens>
+					<token key="rewriteBase" value="${rewriteBase}" />
+					<token key="baseDir" value="${project.basedir}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: clear_cms_configurator_files          -->
-    <!-- ============================================  -->
-    <target name="clear_tmp" depends="create_sql_query">
-        <delete file="${project.basedir}/cache/tmp/tmp_structure.sql" />
-        <delete file="${project.basedir}/cache/tmp/tmp_data.sql" />
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: create_sql_query -->
+	<!-- ============================================ -->
+	<target name="create_sql_query" depends="create_htaccess_file">
+		<php expression="require('${project.basedir}/vendor/autoload.php');" />
+		<php expression="\UserAuth\HashPass::hash(${password});"
+			returnProperty="hashPassword" />
+		<php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');"
+			returnProperty="regDate" />
+		<copy file="${AppConfDir}/structure.sql" tofile="${project.basedir}/cache/tmp/tmp_structure.sql">
+			<filterchain>
+				<replacetokens>
+					<token key="dbName" value="${dbName}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		<copy file="${AppConfDir}/data.sql" tofile="${project.basedir}/cache/tmp/tmp_data.sql">
+			<filterchain>
+				<replacetokens>
+					<token key="dbName" value="${dbName}" />
+					<token key="login" value="${login}" />
+					<token key="email" value="${email}" />
+					<token key="hashPassword" value="${hashPassword}" />
+					<token key="regDate" value="${regDate}" />
+					<token key="logDate" value="${regDate}" />
+					<token key="role" value="${role}" />
+					<token key="siteName" value="${siteName}" />
+					<token key="email" value="${email}" />
+					<token key="siteAdress" value="${siteAdress}" />
+					<token key="rewriteBase" value="${rewriteBase}" />
+				</replacetokens>
+			</filterchain>
+		</copy>
+		<php expression="\App\Conf\Configuration::createDataBase();" />
+	</target>
 
-    <!-- ============================================  -->
-    <!-- Target: main                                  -->
-    <!-- ============================================  -->
-    <target name="main" depends="clear_tmp">
-        <echo message="Configuration completed." />
-    </target>
+	<!-- ============================================ -->
+	<!-- Target: clear_cms_configurator_files -->
+	<!-- ============================================ -->
+	<target name="clear_tmp" depends="create_sql_query">
+		<delete file="${project.basedir}/cache/tmp/tmp_structure.sql" />
+		<delete file="${project.basedir}/cache/tmp/tmp_data.sql" />
+	</target>
+
+	<!-- ============================================ -->
+	<!-- Target: main -->
+	<!-- ============================================ -->
+	<target name="main" depends="clear_tmp">
+		<echo message="Configuration completed." />
+	</target>
 
 </project>

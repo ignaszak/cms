@@ -1,5 +1,4 @@
 <?php
-
 namespace Content\Controller;
 
 use Entity\MenuItems;
@@ -10,7 +9,7 @@ class MenuItemsController extends Controller
     public function __construct()
     {
         parent::__construct();
-        $this->_entity = new MenuItems;
+        $this->_entity = new MenuItems();
     }
 
     public function insert()
@@ -19,5 +18,4 @@ class MenuItemsController extends Controller
         $this->_em->persist($this->_entity);
         $this->_em->flush();
     }
-
 }

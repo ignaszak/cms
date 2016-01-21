@@ -1,7 +1,4 @@
 <?php
-
-defined('ACCESS') or die();
-
 ViewHelper\ViewHelperExtension::addExtensionClass(array(
     'ViewHelper\\Extension\\User',
     'ViewHelper\\Extension\\Page',

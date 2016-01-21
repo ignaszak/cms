@@ -1,5 +1,4 @@
 <?php
-
 namespace Admin\Extension;
 
 class ExtensionLoader extends ExtensionInstances
@@ -21,24 +20,23 @@ class ExtensionLoader extends ExtensionInstances
 
     private function loadXmlExtensionConfigureFiles()
     {
-
         $folderArray = scandir(parent::$extensionsDir);
-
+        
         foreach ($folderArray as $extension) {
-            if (!in_array($extension, array(".", "..", "Index"))) 
-            {
-                $configureFile = parent::$extensionsDir."/$extension/configuration.xml";
-
+            if (! in_array($extension, array(
+                ".",
+                "..",
+                "Index"
+            ))) {
+                $configureFile = parent::$extensionsDir . "/$extension/configuration.xml";
+                
                 if (file_exists($configureFile)) {
-                    parent::$extensionArray = array_merge(
-                        parent::$extensionArray,
+                    parent::$extensionArray = array_merge(parent::$extensionArray, array(
                         array(
-                            array(
-                                'xml' => simplexml_load_file($configureFile),
-                                'extensionDir' => parent::$extensionsDir."/$extension"
-                            )
+                            'xml' => simplexml_load_file($configureFile),
+                            'extensionDir' => parent::$extensionsDir . "/$extension"
                         )
-                    );
+                    ));
                 }
             }
         }
@@ -47,27 +45,19 @@ class ExtensionLoader extends ExtensionInstances
     private function addRouterPattern()
     {
         $router = \Ignaszak\Router\Start::instance();
-
+        
         foreach (parent::$extensionArray as $xmlArray) {
             $xml = $xmlArray['xml'];
-
+            
             foreach ($xml->router->route->item as $item) {
-
+                
                 if (isset($item->controller)) {
-                    $router->add(
-                        'admin',
-                        "(" . ADMIN_URL . ")/{$xml->base}/{$item->pattern}",
-                        (string) $item->controller
-                    );
+                    $router->add('admin', "(" . ADMIN_URL . ")/{$xml->base}/{$item->pattern}", (string) $item->controller);
                 } else {
-                    $router->add(
-                        'admin',
-                        "(" . ADMIN_URL . ")/{$xml->base}/{$item->pattern}"
-                    );
+                    $router->add('admin', "(" . ADMIN_URL . ")/{$xml->base}/{$item->pattern}");
                 }
-
             }
-
+            
             if (isset($xml->router->token->item)) {
                 foreach ($xml->router->token->item as $item) {
                     $router->addToken("$item->name", $item->pattern);
@@ -79,11 +69,10 @@ class ExtensionLoader extends ExtensionInstances
     private function loadActiveXmlExtension()
     {
         $extensionFolder = $this->getActiveExtensionFolderFromUrl();
-
-        if (!empty($extensionFolder)) {
-            $configureFile = parent::$extensionsDir."/$extensionFolder/configuration.xml";
+        
+        if (! empty($extensionFolder)) {
+            $configureFile = parent::$extensionsDir . "/$extensionFolder/configuration.xml";
             parent::$activeExtension = simplexml_load_file($configureFile);
         }
     }
-
 }

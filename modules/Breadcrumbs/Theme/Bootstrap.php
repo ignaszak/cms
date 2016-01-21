@@ -1,5 +1,4 @@
 <?php
-
 namespace Breadcrumbs\Theme;
 
 use Breadcrumbs\BreadcrumbsGenerator;
@@ -8,11 +7,13 @@ class Bootstrap implements Theme
 {
 
     /**
+     *
      * @var BreadcrumbsGenerator
      */
     private $_bg;
 
     /**
+     *
      * @param BreadcrumbsGenerator $_bg
      */
     public function __construct(BreadcrumbsGenerator $_bg)
@@ -21,7 +22,9 @@ class Bootstrap implements Theme
     }
 
     /**
+     *
      * {@inheritDoc}
+     *
      * @see \Breadcrumbs\Theme\Theme::getTheme()
      */
     public function getTheme(): string
@@ -36,11 +39,10 @@ class Bootstrap implements Theme
             } else {
                 $breadcrum .= "<li><a href=\"{$cat['link']}\">{$cat['title']}</a></li>";
             }
-            ++$i;
+            ++ $i;
         }
         $breadcrum .= "</ol>";
-
+        
         return count($categories) ? $breadcrum : "";
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace UserAuth;
 
 use Conf\DB\DBDoctrine;
@@ -9,6 +8,7 @@ class User
 {
 
     /**
+     *
      * @var \Entity\Users
      */
     private $userSession;
@@ -20,12 +20,10 @@ class User
 
     public function isUserLoggedIn()
     {
-        return isset($this->userSession) && DBDoctrine::em()
-            ->getRepository('Entity\Users')
-            ->findBy(array(
-                'login' => $this->userSession->getLogin(),
-                'password' => $this->userSession->getPassword()
-            ));
+        return isset($this->userSession) && DBDoctrine::em()->getRepository('Entity\Users')->findBy(array(
+            'login' => $this->userSession->getLogin(),
+            'password' => $this->userSession->getPassword()
+        ));
     }
 
     public function getUserSession()
@@ -37,12 +35,11 @@ class User
     {
         $session = RegistryFactory::start('session')->get('userSession');
         $cookie = RegistryFactory::start('cookie')->get('userSession');
-
+        
         if ($session instanceof \Entity\Users) {
             $this->userSession = $session;
         } elseif ($cookie instanceof \Entity\Users) {
             $this->userSession = $cookie;
         }
     }
-
 }

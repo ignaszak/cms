@@ -1,5 +1,4 @@
 <?php
-
 namespace ViewHelper\Extension;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -48,5 +47,4 @@ class User
     {
         return $this->_user->getUserSession()->getRole();
     }
-
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace FrontController;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -8,21 +7,24 @@ abstract class Controller
 {
 
     /**
+     *
      * @var ControllerHelper
      */
     private static $_controllerHelper;
 
     /**
+     *
      * @return Controller
      */
     public static function instance(): Controller
     {
-        $_controller = new static;
+        $_controller = new static();
         self::$_controllerHelper = new ControllerHelper($_controller);
         return $_controller;
     }
 
     /**
+     *
      * @param string $name
      * @param array $arguments
      * @return mixed
@@ -44,6 +46,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @return \View\View
      */
     public function view(): \View\View
@@ -52,6 +55,7 @@ abstract class Controller
     }
 
     /**
+     *
      * @return \Content\Query\Content
      */
     public function query(): \Content\Query\Content
@@ -60,5 +64,4 @@ abstract class Controller
     }
 
     abstract public function run();
-
 }

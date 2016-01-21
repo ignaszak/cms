@@ -1,69 +1,85 @@
 .list-group {
-    margin: 0px;
+ margin: 0px;
 }
+
 .choose-element {
-    margin-top: 15px;
-    overflow: scroll;
-    overflow-x: hidden;
-    max-height: 400px;
+ margin-top: 15px;
+ overflow: scroll;
+ overflow-x: hidden;
+ max-height: 400px;
 }
+
 .nav-stacked li+li {
-    margin: 0px;
+ margin: 0px;
 }
+
 .choose-element li a {
-    padding-top: 6px;
-    padding-bottom: 6px;
+ padding-top: 6px;
+ padding-bottom: 6px;
 }
+
 span#icon {
-    font-size: 30px;
-    float: left;
-    width: 40px;
+ font-size: 30px;
+ float: left;
+ width: 40px;
 }
+
 .add-elemnt-buttons li a span {
-    color: #5f5f5f;
+ color: #5f5f5f;
 }
+
 .add-elemnt-buttons li a p {
-    margin: 10px;
+ margin: 10px;
 }
+
 .add-elemnt-buttons li a.active, .add-elemnt-buttons li a:focus {
-    background: #337AB7;
-    color: #FFFFFF;
+ background: #337AB7;
+ color: #FFFFFF;
 }
-.add-elemnt-buttons li a.active span, .add-elemnt-buttons li a:focus span {
-    color: #c4c4c4;
+
+.add-elemnt-buttons li a.active span, .add-elemnt-buttons li a:focus span
+ {
+ color: #c4c4c4;
 }
+
 input[name="search"] {
-    margin-right: 5px;
+ margin-right: 5px;
 }
+
 div#menu a button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+ position: absolute;
+ top: 5px;
+ right: 5px;
 }
+
 .edit-item {
-    margin: 0px;
-    border: 1px solid transparent;
-    background: transparent;
-    font-weight: bold;
+ margin: 0px;
+ border: 1px solid transparent;
+ background: transparent;
+ font-weight: bold;
 }
+
 .edit-item:hover {
-    border: 1px solid #ccc;
-    background: #FFF;
+ border: 1px solid #ccc;
+ background: #FFF;
 }
+
 div#menu a button.up {
-    position: absolute;
-    top: 5px;
-    right: 57px;
-    color: #5f5f5f;
+ position: absolute;
+ top: 5px;
+ right: 57px;
+ color: #5f5f5f;
 }
+
 div#menu a button.down {
-    position: absolute;
-    top: 5px;
-    right: 30px;
-    color: #5f5f5f;
+ position: absolute;
+ top: 5px;
+ right: 30px;
+ color: #5f5f5f;
 }
+
 .controls {
-    display: block;
-    padding: 5px 0px 5px 0px;
-    margin-bottom: 5px;
+ display: block;
+ padding: 5px 0px 5px 0px;
+ margin-bottom: 5px;
 }

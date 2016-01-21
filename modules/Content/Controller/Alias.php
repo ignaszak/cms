@@ -1,5 +1,4 @@
 <?php
-
 namespace Content\Controller;
 
 use Conf\DB\DBDoctrine;
@@ -9,29 +8,32 @@ class Alias
 {
 
     /**
+     *
      * @var EntityManager
      */
     private $_em;
 
     /**
+     *
      * @var Entity
      */
     private $_entity;
 
     /**
+     *
      * @var string
      */
     private $entityName;
 
     /**
+     *
      * @param Entity $_entity
      * @throws InvalidInstanceException
      */
     public function __construct($_entity)
     {
-        if (!is_object($_entity)) {
-            throw new InvalidInstanceException('Second argument passed to ' .
-                __CLASS__ . '::aliasNotExistsInDB() must be an Entity instance');
+        if (! is_object($_entity)) {
+            throw new InvalidInstanceException('Second argument passed to ' . __CLASS__ . '::aliasNotExistsInDB() must be an Entity instance');
         } else {
             $this->_em = DBDoctrine::em();
             $this->_entity = $_entity;
@@ -40,6 +42,7 @@ class Alias
     }
 
     /**
+     *
      * @param string $string
      * @return string
      */
@@ -54,6 +57,7 @@ class Alias
     }
 
     /**
+     *
      * @param string $alias
      * @return string
      */
@@ -68,6 +72,7 @@ class Alias
     }
 
     /**
+     *
      * @param string $string
      * @return string
      */
@@ -81,15 +86,16 @@ class Alias
     }
 
     /**
+     *
      * @param string $alias
      * @param Entity $_entity
      * @return boolean
      */
     private function isAliasNotExistsInDB(string $alias): bool
     {
-        $query = $this->_em->getRepository($this->entityName)
-            ->findBy(array('alias' => $alias));
+        $query = $this->_em->getRepository($this->entityName)->findBy(array(
+            'alias' => $alias
+        ));
         return count($query) ? false : true;
     }
-
 }

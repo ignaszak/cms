@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\ViewHelper;
 
 use Test\Init\InitRouter;
@@ -16,8 +15,7 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         InitConf::run();
-        $this->_viewHelper = new ViewHelper;
-
+        $this->_viewHelper = new ViewHelper();
     }
 
     public function tearDown()
@@ -39,8 +37,9 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
         InitRouter::start('post', 'post');
         InitRouter::add('post', 'post');
         InitRouter::run();
-        InitDoctrine::queryBuilderResult(array('AnyResult'));
+        InitDoctrine::queryBuilderResult(array(
+            'AnyResult'
+        ));
         $this->assertNotEmpty($this->_viewHelper->display());
     }
-
 }

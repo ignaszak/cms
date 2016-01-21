@@ -1,5 +1,4 @@
 <?php
-
 namespace View;
 
 use System\Router\Storage as Router;
@@ -10,17 +9,19 @@ class Conf
 
     /**
      * Current theme absolute path
+     *
      * @var string
      */
     private $themePath;
 
     /**
+     *
      * @var string
      */
     private $themeFolder;
 
     /**
-     * 
+     *
      * @var \Conf\Conf
      */
     private $_conf;
@@ -33,7 +34,7 @@ class Conf
     public function configureThemePath()
     {
         $baseDir = dirname(dirname(__DIR__));
-
+        
         if (Router::isRouteName('admin')) {
             $adminFolder = defined('ADMIN_FOLDER') ? ADMIN_FOLDER : "admin";
             $this->themeFolder = "{$adminFolder}/themes/Default";
@@ -45,6 +46,7 @@ class Conf
     }
 
     /**
+     *
      * @return string
      */
     public function getThemePath(): string
@@ -53,11 +55,11 @@ class Conf
     }
 
     /**
+     *
      * @return string
      */
     public function getThemeFolder(): string
     {
         return $this->themeFolder;
     }
-
 }

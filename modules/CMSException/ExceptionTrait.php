@@ -1,5 +1,4 @@
 <?php
-
 namespace CMSException;
 
 trait ExceptionTrait
@@ -14,5 +13,4 @@ trait ExceptionTrait
     {
         return __CLASS__ . ": [{$this->code}]: {$this->message}\n";
     }
-
 }

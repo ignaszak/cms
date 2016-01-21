@@ -1,7 +1,7 @@
 <?php
 namespace CMSException;
 
-class ConfException extends \Exception
+class FileException extends \Exception
 {
     
     use ExceptionTrait;

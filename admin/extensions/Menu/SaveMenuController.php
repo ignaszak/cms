@@ -1,5 +1,4 @@
 <?php
-
 namespace AdminController\Menu;
 
 use FrontController\Controller;
@@ -19,11 +18,13 @@ class SaveMenuController extends Controller
     private $lastId;
 
     /**
+     *
      * @var string
      */
     public $action;
 
     /**
+     *
      * @var integer
      */
     public $id;
@@ -32,27 +33,27 @@ class SaveMenuController extends Controller
     {
         $this->action = $this->view()->getRoute('action');
         $this->id = $this->view()->getRoute('id');
-
+        
         if ($this->action == 'save') {
-
+            
             $this->saveMenuEntityAndSetLastAddedId();
             $this->saveMenuItemsEntity();
             $this->removeMenuItemsEntity();
             Server::headerLocation("admin/menu/edit/{$this->lastId}");
-
         } elseif ($this->action == 'delete' && $this->id) {
             $this->removeMenuWithMenuItems();
         }
-
+        
         Server::headerLocation("admin/menu/view/");
     }
 
     private function saveMenuEntityAndSetLastAddedId()
     {
-        $controller = new Factory(new MenuController);
-        if (!empty(@$_POST['id'])) $controller->find($_POST['id']);
-        $controller
-            ->setName($_POST['name'])
+        $controller = new Factory(new MenuController());
+        if (! empty(@$_POST['id'])) {
+            $controller->find($_POST['id']);
+        }
+        $controller->setName($_POST['name'])
             ->setPosition($_POST['position'])
             ->insert();
         $this->lastId = $controller->getId();
@@ -62,11 +63,12 @@ class SaveMenuController extends Controller
     {
         $idArray = @$_POST['menuId'];
         $countAdress = count($_POST['menuAdress']);
-        for ($i = 0; $i < $countAdress; ++$i) {
-            $controller = new Factory(new MenuItemsController);
-            if (!empty($idArray[$i])) $controller->find($idArray[$i]);
-            $controller
-                ->setReference('menu', $this->lastId)
+        for ($i = 0; $i < $countAdress; ++ $i) {
+            $controller = new Factory(new MenuItemsController());
+            if (! empty($idArray[$i])) {
+                $controller->find($idArray[$i]);
+            }
+            $controller->setReference('menu', $this->lastId)
                 ->setSequence($_POST['menuSequence'][$i])
                 ->setTitle($_POST['menuTitle'][$i])
                 ->setAdress($_POST['menuAdress'][$i])
@@ -78,18 +80,15 @@ class SaveMenuController extends Controller
     {
         $removeIdArray = @$_POST['menuRemove'];
         $count = count($removeIdArray);
-        for ($i = 0; $i < $count; ++$i) {
-            $controller = new Factory(new MenuItemsController);
-            $controller->find($removeIdArray[$i])
-                ->remove();
+        for ($i = 0; $i < $count; ++ $i) {
+            $controller = new Factory(new MenuItemsController());
+            $controller->find($removeIdArray[$i])->remove();
         }
     }
 
     private function removeMenuWithMenuItems()
     {
-        $controller = new Factory(new MenuController);
-        $controller->find($this->id)
-            ->remove();
+        $controller = new Factory(new MenuController());
+        $controller->find($this->id)->remove();
     }
-
 }

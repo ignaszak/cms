@@ -1,5 +1,4 @@
 <?php
-
 namespace Test\Modules\ViewHelper;
 
 use Test\Mock\MockTest;
@@ -13,7 +12,7 @@ class ViewHelperExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_viewHelperExtension = new ViewHelperExtension;
+        $this->_viewHelperExtension = new ViewHelperExtension();
     }
 
     public function tearDown()
@@ -24,7 +23,9 @@ class ViewHelperExtensionTest extends \PHPUnit_Framework_TestCase
     public function testGetExtensionInstanceFromMethodName()
     {
         $name = 'getSiteTitle';
-        $getExtensionInstanceFromMethodName = MockTest::callMockMethod($this->_viewHelperExtension, 'getExtensionInstanceFromMethodName', array($name));
+        $getExtensionInstanceFromMethodName = MockTest::callMockMethod($this->_viewHelperExtension, 'getExtensionInstanceFromMethodName', array(
+            $name
+        ));
         $this->assertInstanceOf('ViewHelper\Extension\\System', $getExtensionInstanceFromMethodName);
     }
 
@@ -46,15 +47,18 @@ class ViewHelperExtensionTest extends \PHPUnit_Framework_TestCase
     public function testReturnExtensionClassNameFromMethodName()
     {
         $name = 'getSiteTitle';
-        $returnExtensionClassNameFromMethodName = MockTest::callMockMethod($this->_viewHelperExtension, 'returnExtensionClassNameFromMethodName', array($name));
+        $returnExtensionClassNameFromMethodName = MockTest::callMockMethod($this->_viewHelperExtension, 'returnExtensionClassNameFromMethodName', array(
+            $name
+        ));
         $this->assertEquals('ViewHelper\Extension\\System', $returnExtensionClassNameFromMethodName);
     }
 
     public function testGetClassNameWithoutNamespace()
     {
         $name = 'Test\Modules\ViewHelper';
-        $getClassNameWithoutNamespace = MockTest::callMockMethod($this->_viewHelperExtension, 'getClassNameWithoutNamespace', array($name));
+        $getClassNameWithoutNamespace = MockTest::callMockMethod($this->_viewHelperExtension, 'getClassNameWithoutNamespace', array(
+            $name
+        ));
         $this->assertEquals('ViewHelper', $getClassNameWithoutNamespace);
     }
-
 }
