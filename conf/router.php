@@ -1,4 +1,6 @@
 <?php
+$router->add('admin', '(' . ADMIN_URL . ')/');
+
 $router->add('post', 'post/{page}', 'Controller\ViewPostController');
 $router->add('post', 'post/{alias}', 'Controller\ViewPostController');
 $router->add('post', 'post/{alias}/{page}', 'Controller\ViewPostController');

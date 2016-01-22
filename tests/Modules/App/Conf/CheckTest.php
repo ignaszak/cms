@@ -7,45 +7,45 @@ use Test\Mock\MockTest;
 class CheckTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_check;
-
-    public function setUp()
+    public function testExists()
     {
-        $this->_check = new Check();
+        $check = new Check(MockTest::mockFile('anyFile'));
+        $this->assertTrue($check->exists());
     }
 
-    public function testFileExists()
+    public function testNotExists()
     {
-        $this->assertTrue($this->_check->fileExists(MockTest::mockFile('anyFile')));
-    }
-
-    public function testFileNotExists()
-    {
-        $this->assertFalse($this->_check->fileExists('NoExistingFileOrFolder'));
+        $check = new Check('NoExistingFileOrFolder');
+        $this->assertFalse($check->exists());
     }
 
     public function testIsReadableWithNoExistingFile()
     {
-        $this->assertFalse($this->_check->isReadable('NoExistingFileOrFolder'));
+        $check = new Check('NoExistingFileOrFolder');
+        $this->assertFalse($check->isReadable());
     }
 
     public function testIsReadableWithNoPermissionToRead()
     {
-        $this->assertFalse($this->_check->isReadable(MockTest::mockFile('anyFileOrFolder', 0000)));
+        $check = new Check(MockTest::mockFile('anyFileOrFolder', 0000));
+        $this->assertFalse($check->isReadable());
     }
 
     public function testIsReadable()
     {
-        $this->assertTrue($this->_check->isReadable(MockTest::mockFile('anyFileOrFolder', 0440)));
+        $check = new Check(MockTest::mockFile('anyFileOrFolder', 0440));
+        $this->assertTrue($check->isReadable());
     }
 
     public function testIsWritable()
     {
-        $this->assertTrue($this->_check->isWritable(MockTest::mockFile('anyFileOrFolder', 0666)));
+        $check = new Check(MockTest::mockFile('anyFileOrFolder', 0666));
+        $this->assertTrue($check->isWritable());
     }
 
     public function testIsNotWritable()
     {
-        $this->assertFalse($this->_check->isWritable(MockTest::mockFile('anyFileOrFolder', 0444)));
+        $check = new Check(MockTest::mockFile('anyFileOrFolder', 0444));
+        $this->assertFalse($check->isWritable());
     }
 }

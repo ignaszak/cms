@@ -1,41 +1,75 @@
 <?php
 namespace App\Conf;
 
-use CMSException\FileException;
-
 class Check
 {
 
     /**
      *
-     * @var string[]
+     * @var string
+     */
+    private $file;
+
+    /**
+     *
+     * @var array
      */
     private $messageArray = array();
 
-    public function fileExists(string $filename): bool
+    /**
+     *
+     * @param string $file
+     */
+    public function __construct(string $file)
     {
-        if (! file_exists($filename)) {
-            $this->messageArray[] = "File '{$filename}' not exist.";
+        $this->file = $file;
+    }
+
+    /**
+     *
+     * @return boolean
+     */
+    public function exists(): bool
+    {
+        if (! file_exists($this->file)) {
+            $this->messageArray[] = "'{$this->file}' not exist.";
             return false;
         }
         return true;
     }
 
-    public function isWritable(string $filename): bool
+    /**
+     *
+     * @return boolean
+     */
+    public function isWritable(): bool
     {
-        if (! is_writable($filename)) {
-            $this->messageArray[] = "Permission denied could not write to '{$filename}'";
+        if (! is_writable($this->file)) {
+            $this->messageArray[] = "Permission denied could not write to '{$this->file}'";
             return false;
         }
         return true;
     }
 
-    public function isReadable(string $filename): bool
+    /**
+     *
+     * @return boolean
+     */
+    public function isReadable(): bool
     {
-        if (! is_readable($filename)) {
-            $this->messageArray[] = "Permission denied could not read from '{$filename}'";
+        if (! is_readable($this->file)) {
+            $this->messageArray[] = "Permission denied could not read from '{$this->file}'";
             return false;
         }
         return true;
+    }
+
+    /**
+     *
+     * @return array
+     */
+    public function getMessage(): array
+    {
+        return $this->messageArray;
     }
 }
