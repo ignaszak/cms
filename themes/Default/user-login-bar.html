@@ -1,107 +1,81 @@
-<?php if (!$this->isUserLoggedIn()): ?>
+                        <?php if (!$this->isUserLoggedIn()): ?>
 
-<!-- Login form controller -->
-<script>
-    $(document).ready(function(){
+                        <script src="<?php echo $this->getThemeUrl(); ?>/js/user-login-bar.js"></script>
+                        <?php if ($this->getFormResponseData('incorrectLoginData')): ?>
+                        <script src="<?php echo $this->getThemeUrl(); ?>/js/user-login-bar-error.js"></script>
+                        <?php endif; ?>
 
-        /**
-         * Tooltip
-         */
-        $('[data-toggle="tooltip"]').tooltip();
+                        <?php $form = $this->createForm('user-login'); ?>
 
-        <?php if ($this->getFormResponseData('incorrectLoginData')): ?>
-            /**
-             * Generate invalid data error
-             */
-            popoverCloseButton = '<a href="#" class="close" data-dismiss="alert">×</a>';
-            $('form#login .login-group').popover({
-                trigger: 'manual',
-                placement : 'bottom',
-                html : true,
-                title: '<b>Invalid data!</b>' + popoverCloseButton,
-                content : '<div style="min-width:300px; max-width:600px;">Following fields are incorrect:<br>login/email or password.<br><a href="#">Remind password</a></div>'
-            });
-            $(document).on("click", ".popover .close" , function(){
-                $(this).parents(".popover").popover('hide');
-            });
-            $('form#login .login-group').popover('show');
-        <?php endif; ?>
+                        <form action="<?php echo $form->getFormActionAdress(); ?>"
+                        id="login" method="post" class="form-inline">
 
-        /**
-         * User remember button
-         */
-         var userRemember = 0;
-         $("#userRemember").click(function(){
-            if (userRemember == 0) {
-                $("#userRemember i").removeClass('fa-square-o').addClass('fa-check-square-o');
-                userRemember = 1;
-            } else {
-                $("#userRemember i").removeClass('fa-check-square-o').addClass('fa-square-o');
-                userRemember = 0;
-            }
-         });
+                            <div class="input-group login-group">
+                                <?php
+                                echo $form->inputLogin(array(
+                                    'placeholder' => 'Login or Email',
+                                    'style' => 'max-width: 120px;'
+                                ));
+                                echo $form->inputPassword(array(
+                                    'placeholder' => 'Password',
+                                    'style' => 'max-width: 120px;'
+                                ));
+                                ?>
+                                <div class="input-group" data-toggle="tooltip"
+                                data-placement="bottom" title="Remember me">
+                                    <div class="btn-group" id="userRemember"
+                                    data-toggle="buttons">
+                                        <label class="btn btn-primary">
+                                            <input type="checkbox" name="userRemember"
+                                            value="1" autocomplete="off">
+                                                <i class="fa fa-square-o"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                                <button class="btn btn-primary">Sign in</button>
+                            </div>
 
-    });
-    </script>
+                            <div class="input-group" style="text-align: center;">
+                                <button type="button" class="btn btn-success"
+                                onclick="window.location='<?php echo $this->getSiteAdress(); ?>user';">
+                                    Sign up
+                                </button>
+                            </div>
 
-<?php $form = $this->createForm('user-login'); ?>
+                        </form>
 
-<form action="<?php echo $form->getFormActionAdress(); ?>" id="login"
- method="post" class="form-inline">
+                        <?php
+                        else:
+                        $form = $this->createForm('user-logout');
+                        ?>
 
- <div class="input-group login-group">
-  <?php echo $form->inputLogin(array(
-                'placeholder' => 'Login or Email',
-                'style' => 'max-width: 120px;'
-            )); ?>
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary">
+                                Hello
+                                <?php echo $this->getUserLogin(); ?>
+                            </button>
+                            <button type="button"
+                            class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true"
+                            aria-expanded="false">
+                                <span class="caret"></span>
+                                <span class="sr-only">
+                                    Toggle Dropdown
+                                </span>
+                            </button>
+                            <ul class="dropdown-menu pull-right">
+                                <li>
+                                    <a href="<?php echo $this->getSiteAdress(); ?>admin">
+                                        Admin panel
+                                    </a>
+                                </li>
+                                <li role="separator" class="divider"></li>
+                                <li>
+                                    <a href="<?php echo $form->getFormActionAdress(); ?>">
+                                        Log out
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
 
-  <?php echo $form->inputPassword(array(
-                'placeholder' => 'Password',
-                'style' => 'max-width: 120px;'
-            )); ?>
-
-  <div class="input-group" data-toggle="tooltip" data-placement="bottom"
-   title="Remember me">
-   <div class="btn-group" id="userRemember" data-toggle="buttons">
-    <label class="btn btn-primary"> <input type="checkbox"
-     name="userRemember" value="1" autocomplete="off"><i
-     class="fa fa-square-o"></i>
-    </label>
-   </div>
-  </div>
-
-  <button class="btn btn-primary">Sign in</button>
- </div>
-
- <div class="input-group" style="text-align: center;">
-  <button type="button" class="btn btn-success"
-   onclick="window.location='<?php echo $this->getSiteAdress(); ?>user';">Sign
-   up</button>
- </div>
-
-</form>
-
-<?php else: ?>
-
-<?php $form = $this->createForm('user-logout'); ?>
-
-<div class="btn-group">
- <button type="button" class="btn btn-primary">
-  Hello
-  <?php echo $this->getUserLogin(); ?>
- </button>
- <button type="button" class="btn btn-primary dropdown-toggle"
-  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  <span class="caret"></span> <span class="sr-only">Toggle
-   Dropdown</span>
- </button>
- <ul class="dropdown-menu pull-right">
-  <li><a href="<?php echo $this->getSiteAdress(); ?>admin">Admin
-    panel</a></li>
-  <li role="separator" class="divider"></li>
-  <li><a href="<?php echo $form->getFormActionAdress(); ?>">Log
-    out</a></li>
- </ul>
-</div>
-
-<?php endif; ?>
+                        <?php endif; ?>
