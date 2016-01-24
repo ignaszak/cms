@@ -12,13 +12,21 @@ class Server
 
     public static function getHttpReferer()
     {
-        return (! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl());
+        return (! empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] :
+            RegistryFactory::start('file')->register('Conf\Conf')
+                ->getBaseUrl());
     }
 
     public static function getHttpRequest()
     {
-        $conf_req = RegistryFactory::start('file')->register('Conf\Conf')->getRequestUri();
-        return ($_SERVER['REQUEST_URI'] != $conf_req ? substr($_SERVER['REQUEST_URI'], strlen($conf_req) - strlen($_SERVER['REQUEST_URI'])) : "");
+        $conf_req = RegistryFactory::start('file')->register('Conf\Conf')
+            ->getRequestUri();
+        return ($_SERVER['REQUEST_URI'] != $conf_req ?
+            substr(
+                $_SERVER['REQUEST_URI'],
+                strlen($conf_req) -
+                strlen($_SERVER['REQUEST_URI'])
+            ) : "");
     }
 
     public static function headerLocationReferer()
@@ -31,7 +39,8 @@ class Server
     public static function headerLocation(string $location)
     {
         self::setRefererSession();
-        header('Location: ' . RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl() . $location);
+        header('Location: ' . RegistryFactory::start('file')
+            ->register('Conf\Conf')->getBaseUrl() . $location);
         exit();
     }
 

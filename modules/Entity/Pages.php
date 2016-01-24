@@ -85,7 +85,7 @@ class Pages extends IPagesQuery
     public function setAuthorId($authorId)
     {
         $this->authorId = $authorId;
-        
+
         return $this;
     }
 
@@ -109,7 +109,7 @@ class Pages extends IPagesQuery
     public function setDate($date)
     {
         $this->date = $date;
-        
+
         return $this;
     }
 
@@ -120,7 +120,8 @@ class Pages extends IPagesQuery
      */
     public function getDate($format = "")
     {
-        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')->getDateFormat();
+        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
+            ->getDateFormat();
         return $this->date->format((empty($format) ? $dateFormat : $format));
     }
 
@@ -134,7 +135,7 @@ class Pages extends IPagesQuery
     public function setTitle($title)
     {
         $this->title = $title;
-        
+
         return $this;
     }
 
@@ -158,7 +159,7 @@ class Pages extends IPagesQuery
     public function setAlias($alias)
     {
         $this->alias = $alias;
-        
+
         return $this;
     }
 
@@ -182,7 +183,7 @@ class Pages extends IPagesQuery
     public function setContent($content)
     {
         $this->content = $content;
-        
+
         return $this;
     }
 
@@ -206,7 +207,7 @@ class Pages extends IPagesQuery
     public function setPublic($public)
     {
         $this->public = $public;
-        
+
         return $this;
     }
 
@@ -230,7 +231,7 @@ class Pages extends IPagesQuery
     public function setAuthor($author)
     {
         return $this->user = $author;
-        
+
         return $this;
     }
 

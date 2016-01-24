@@ -53,7 +53,7 @@ class Menu
             ->paginate(false)
             ->force();
         $content = $this->_query->getContent();
-        
+
         if (array_key_exists(0, $content)) {
             $this->menuItemsArray = $content[0]->getMenuItems();
         }

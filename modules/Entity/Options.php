@@ -82,7 +82,7 @@ class Options
     public function setSiteTitle($siteTitle)
     {
         $this->siteTitle = $siteTitle;
-        
+
         return $this;
     }
 
@@ -106,7 +106,7 @@ class Options
     public function setAdminEmail($adminEmail)
     {
         $this->adminEmail = $adminEmail;
-        
+
         return $this;
     }
 
@@ -130,7 +130,7 @@ class Options
     public function setViewLimit($viewLimit)
     {
         $this->viewLimit = $viewLimit;
-        
+
         return $this;
     }
 
@@ -154,7 +154,7 @@ class Options
     public function setDateFormat($dateFormat)
     {
         $this->dateFormat = $dateFormat;
-        
+
         return $this;
     }
 
@@ -178,7 +178,7 @@ class Options
     public function setBaseUrl($baseUrl)
     {
         $this->baseUrl = $baseUrl;
-        
+
         return $this;
     }
 
@@ -202,7 +202,7 @@ class Options
     public function setRequestUri($requestUri)
     {
         $this->requestUri = $requestUri;
-        
+
         return $this;
     }
 
@@ -226,7 +226,7 @@ class Options
     public function setTheme($theme)
     {
         $this->theme = $theme;
-        
+
         return $this;
     }
 

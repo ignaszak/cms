@@ -13,7 +13,8 @@ class CategoryList
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->categoryList = RegistryFactory::start()->register('System\Storage\CategoryList')->get();
+        $this->categoryList = RegistryFactory::start()
+            ->register('System\Storage\CategoryList')->get();
     }
 
     public function getCategoryList(int $parentId = 1): string
@@ -28,7 +29,8 @@ class CategoryList
         unset($this->categoryList[0]);
         foreach ($this->categoryList as $cat) {
             if ($parentId == $cat->getParentId()) {
-                $string .= "<li><a href=\"{$this->_conf->getBaseUrl()}category/{$cat->getAlias()}\">";
+                $string .= "<li><a href=\"{$this->_conf->getBaseUrl()}" .
+                    "category/{$cat->getAlias()}\">";
                 $string .= "{$cat->getTitle()}</a>";
                 $string .= $this->getCategoryList($cat->getId());
                 $string .= "</li>";

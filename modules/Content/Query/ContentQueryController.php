@@ -140,13 +140,13 @@ class ContentQueryController extends IContentQueryController
         $this->statusHandler();
         $this->orderHandler();
         $this->queryController();
-        
+
         if (! $this->isPaginationEnabled) {
             $this->getQueryAndResult();
         }
-        
+
         $this->countQuery();
-        
+
         return $this->entityContentArray;
     }
 
@@ -158,7 +158,7 @@ class ContentQueryController extends IContentQueryController
         $query = DBDoctrine::em()->createQueryBuilder()
             ->select('c')
             ->from($this->entityName, 'c');
-        
+
         $this->contentQuery = $query;
     }
 
@@ -208,7 +208,7 @@ class ContentQueryController extends IContentQueryController
     private function queryController()
     {
         if ($this->isPaginationEnabled) {
-            
+
             if ($this->isAliasEmptyOrIsResultForced()) {
                 $this->paginateQuery();
             } else {
@@ -238,12 +238,12 @@ class ContentQueryController extends IContentQueryController
         $page = Router::getRoute('page');
         $limit = $this->_conf->getViewLimit();
         $offset = $limit * (($page ? $page : 1) - 1);
-        
+
         $query = $this->contentQuery->getQuery()
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getResult();
-        
+
         $this->entityContentArray = $query;
     }
 
@@ -274,7 +274,7 @@ class ContentQueryController extends IContentQueryController
     private function getQueryAndResult()
     {
         $query = $this->contentQuery->getQuery()->getResult();
-        
+
         $this->entityContentArray = $query;
     }
 
@@ -283,7 +283,7 @@ class ContentQueryController extends IContentQueryController
         $query = $this->contentQuery->select('COUNT(c)')
             ->getQuery()
             ->getSingleScalarResult();
-        
+
         parent::$countQuery = $query;
     }
 }

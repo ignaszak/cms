@@ -39,15 +39,15 @@ class ViewHelper
     public function __call($name, $arguments)
     {
         $extensionInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName($name);
-        
+
         if (method_exists($extensionInstance, $name)) {
-            
+
             return call_user_func_array(array(
                 $extensionInstance,
                 $name
             ), $arguments);
         } else {
-            
+
             throw new InvalidClassException("No class correspond to <b>$name</b> method");
         }
         return null;
@@ -61,30 +61,30 @@ class ViewHelper
     public function display()
     {
         $_contentInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName('Content');
-        
+
         switch (Router::getRoute()) {
-            
+
             case 'post':
                 $_contentInstance->setContent('post');
                 break;
-            
+
             case 'category':
                 $_contentInstance->setContent('post')
                     ->categoryId(RegistryFactory::start()->register('System\Storage\CategoryList')
                     ->child())
                     ->force();
                 break;
-            
+
             case 'date':
                 $_contentInstance->setContent('post')
                     ->date(Router::getRoute('date'))
                     ->force();
                 break;
-            
+
             default:
                 $_contentInstance->setContent('post');
         }
-        
+
         return $_contentInstance->getContent();
     }
 }

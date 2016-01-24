@@ -28,7 +28,8 @@ abstract class IPagesQuery
      */
     public function getLink()
     {
-        $_conf = RegistryFactory::start()->register('Conf\Conf');
+        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
+        ;
         return "{$_conf->getBaseUrl()}page/{$this->getAlias()}";
     }
 

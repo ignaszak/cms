@@ -40,7 +40,8 @@ abstract class IPostsQuery
      */
     public function getLink()
     {
-        $_conf = RegistryFactory::start()->register('Conf\Conf');
+        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
+        ;
         return "{$_conf->getBaseUrl()}post/{$this->getAlias()}";
     }
 
@@ -50,7 +51,8 @@ abstract class IPostsQuery
      */
     public function getCategoryLink()
     {
-        $_conf = RegistryFactory::start()->register('Conf\Conf');
+        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
+        ;
         return "{$_conf->getBaseUrl()}category/{$this->getCategory()->getAlias()}";
     }
 
@@ -60,7 +62,8 @@ abstract class IPostsQuery
      */
     public function getDateLink($format = 'Y-m-d')
     {
-        $_conf = RegistryFactory::start()->register('Conf\Conf');
+        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
+        ;
         return "{$_conf->getBaseUrl()}date/{$this->getDate($format)}";
     }
 

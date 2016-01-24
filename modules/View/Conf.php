@@ -34,7 +34,7 @@ class Conf
     public function configureThemePath()
     {
         $baseDir = dirname(dirname(__DIR__));
-        
+
         if (Router::isRouteName('admin')) {
             $adminFolder = defined('ADMIN_FOLDER') ? ADMIN_FOLDER : "admin";
             $this->themeFolder = "{$adminFolder}/themes/Default";

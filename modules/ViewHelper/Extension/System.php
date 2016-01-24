@@ -24,8 +24,10 @@ class System
 
     public function __construct()
     {
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
+        $this->_conf = RegistryFactory::start('file')
+            ->register('Conf\Conf');
+        $this->_query = RegistryFactory::start()
+            ->register('Content\Query\Content');
     }
 
     /**
@@ -74,7 +76,7 @@ class System
         $this->_setQuery = $this->_query->setContent($table)
             ->force()
             ->paginate(false);
-        
+
         return $this->_setQuery;
     }
 

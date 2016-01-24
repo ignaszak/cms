@@ -36,7 +36,7 @@ class FormUser extends Form
     {
         $response = $this->getFormResponseData();
         $array = array();
-        
+
         if (@$response['error']['incorrectLogin']) {
             $array[] = 'Incorrect login.';
         }
@@ -52,7 +52,7 @@ class FormUser extends Form
         if (@$response['error']['incorrectPassword']) {
             $array[] = 'Incorrect password.';
         }
-        
+
         return count($array) ? implode('<br>', $array) : "";
     }
 

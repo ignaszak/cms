@@ -1,7 +1,6 @@
 <?php
 namespace Test\Conf;
 
-use Test\Mock\MockTest;
 use Conf\Conf;
 
 class ConfTest extends \PHPUnit_Framework_TestCase

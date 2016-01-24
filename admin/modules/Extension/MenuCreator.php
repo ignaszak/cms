@@ -15,21 +15,22 @@ class MenuCreator extends ExtensionInstances
 
     public static function createMenu()
     {
-        $baseUrl = RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl();
+        $baseUrl = RegistryFactory::start('file')->register('Conf\Conf')
+            ->getBaseUrl();
         $menu = "<ul id=\"accordion\" class=\"accordion\">" . PHP_EOL;
-        
+
         foreach (parent::$extensionArray as $xmlArray) {
             $xml = $xmlArray['xml'];
-            
+
             $liActive = self::returnActiveMenuClass($xml->base, 'li');
             $menu .= "<li {$liActive}>
                         <div class=\"link\"><i class=\"{$xml->icon}\">
                             </i>{$xml->title}<i class=\"fa fa-chevron-down\"></i>
                         </div>" . PHP_EOL;
-            
+
             $ulActive = self::returnActiveMenuClass($xml->base, 'ul');
             $menu .= "<ul class=\"submenu\" {$ulActive}>";
-            
+
             foreach ($xml->menu->item as $item) {
                 $aActive = self::returnActiveMenuClass("{$xml->base}/{$item->link}", 'a');
                 $menu .= "<li>
@@ -38,12 +39,12 @@ class MenuCreator extends ExtensionInstances
                             </a>
                          </li>";
             }
-            
+
             $menu .= "</ul>" . PHP_EOL . "</li>" . PHP_EOL;
         }
-        
+
         $menu .= "</ul>";
-        
+
         self::$sidebarMenu = $menu;
     }
 
@@ -66,7 +67,7 @@ class MenuCreator extends ExtensionInstances
     {
         $link = str_replace('/', '\\/', $link);
         $request = Server::getHttpRequest();
-        
+
         if (preg_match("/($link)/", $request)) {
             if ($element == 'li') {
                 return 'class="open"';

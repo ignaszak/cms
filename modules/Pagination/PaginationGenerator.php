@@ -83,18 +83,18 @@ class PaginationGenerator
     private function createPaginationArray()
     {
         $paginationArray = array();
-        
+
         for ($i = 0; $i < $this->countSite; ++ $i) {
             $paginationArray[$i] = array(
                 'number' => ($i + 1),
                 'link' => $this->getLinkWhitoutPage() . ($i + 1)
             );
         }
-        
+
         $currentPage = $this->getCurrentPage();
         $prevLink = ($currentPage == 1 ? 1 : $currentPage - 1);
         $nextLink = ($currentPage == $this->countSite ? $currentPage : ($currentPage + 1));
-        
+
         $this->paginationArray['array'] = $paginationArray;
         $this->paginationArray['prevLink'] = $prevLink;
         $this->paginationArray['nextLink'] = $nextLink;

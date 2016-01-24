@@ -104,7 +104,7 @@ class Posts extends IPostsQuery
     public function setCategoryId($categoryId)
     {
         $this->categoryId = $categoryId;
-        
+
         return $this;
     }
 
@@ -128,7 +128,7 @@ class Posts extends IPostsQuery
     public function setAuthorId($authorId)
     {
         $this->authorId = $authorId;
-        
+
         return $this;
     }
 
@@ -152,7 +152,7 @@ class Posts extends IPostsQuery
     public function setDate($date)
     {
         $this->date = $date;
-        
+
         return $this;
     }
 
@@ -163,7 +163,8 @@ class Posts extends IPostsQuery
      */
     public function getDate($format = "")
     {
-        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')->getDateFormat();
+        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
+            ->getDateFormat();
         return $this->date->format((empty($format) ? $dateFormat : $format));
     }
 
@@ -177,7 +178,7 @@ class Posts extends IPostsQuery
     public function setTitle($title)
     {
         $this->title = $title;
-        
+
         return $this;
     }
 
@@ -201,7 +202,7 @@ class Posts extends IPostsQuery
     public function setAlias($alias)
     {
         $this->alias = $alias;
-        
+
         return $this;
     }
 
@@ -225,7 +226,7 @@ class Posts extends IPostsQuery
     public function setContent($content)
     {
         $this->content = $content;
-        
+
         return $this;
     }
 
@@ -249,7 +250,7 @@ class Posts extends IPostsQuery
     public function setPublic($public)
     {
         $this->public = $public;
-        
+
         return $this;
     }
 
@@ -273,7 +274,7 @@ class Posts extends IPostsQuery
     public function setAuthor($author)
     {
         return $this->user = $author;
-        
+
         return $this;
     }
 
@@ -297,7 +298,7 @@ class Posts extends IPostsQuery
     public function setCategory($category)
     {
         return $this->category = $category;
-        
+
         return $this;
     }
 
