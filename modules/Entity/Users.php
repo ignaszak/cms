@@ -7,7 +7,7 @@ use UserAuth\HashPass;
 /**
  * Users
  *
- * @ORM\Table(name="users")
+ * @ORM\Table(name="users", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})})
  * @ORM\Entity
  */
 class Users
@@ -67,7 +67,7 @@ class Users
     public function setId($id)
     {
         return $this->id = $id;
-        
+
         return $this;
     }
 
@@ -91,7 +91,7 @@ class Users
     public function setLogin($login)
     {
         $this->login = $login;
-        
+
         return $this;
     }
 
@@ -115,7 +115,7 @@ class Users
     public function setEmail($email)
     {
         $this->email = $email;
-        
+
         return $this;
     }
 
@@ -139,7 +139,7 @@ class Users
     public function setPassword($password)
     {
         $this->password = HashPass::hash($password);
-        
+
         return $this;
     }
 
@@ -163,7 +163,7 @@ class Users
     public function setRegDate($regDate)
     {
         $this->regDate = $regDate;
-        
+
         return $this;
     }
 
@@ -187,7 +187,7 @@ class Users
     public function setLogDate($logDate)
     {
         $this->logDate = $logDate;
-        
+
         return $this;
     }
 
@@ -211,7 +211,7 @@ class Users
     public function setRole($role)
     {
         $this->role = $role;
-        
+
         return $this;
     }
 

@@ -5,12 +5,11 @@ use Entity\Users;
 use Entity\Controller\IPostsQuery;
 use Doctrine\ORM\Mapping as ORM;
 use Ignaszak\Registry\RegistryFactory;
-use Aura\Filter\Rule\Sanitize\Integer;
 
 /**
  * Posts
  *
- * @ORM\Table(name="posts")
+ * @ORM\Table(name="posts", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})})
  * @ORM\Entity
  */
 class Posts extends IPostsQuery
@@ -80,7 +79,7 @@ class Posts extends IPostsQuery
 
     /**
      * @ORM\ManyToOne(targetEntity="Entity\Categories", cascade={"persist"})
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false, onDelete="SET NULL")
      */
     private $category;
 
