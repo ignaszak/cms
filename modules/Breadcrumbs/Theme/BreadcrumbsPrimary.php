@@ -42,10 +42,10 @@ class BreadcrumbsPrimary implements Theme
             } else {
                 $breadcrum .= "<li><a href=\"{$cat['link']}\">{$cat['title']}</a></li>";
             }
-            ++ $i;
+            ++$i;
         }
         $breadcrum .= "</ol>";
-        
+
         return count($categories) ? $breadcrum : "";
     }
 }
