@@ -20,7 +20,7 @@ class Check
      *
      * @param string $file
      */
-    public function __construct(string $file)
+    public function add(string $file)
     {
         $this->file = $file;
     }

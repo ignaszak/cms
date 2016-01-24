@@ -64,23 +64,23 @@ class Load
     }
 
     /**
-     * Start session
-     */
-    public function loadSession()
-    {
-        session_save_path("{$this->baseDir}/cache/session");
-        session_start();
-    }
-
-    /**
-     * This method loads refer data from session
+     * Start session and loads refer data from session
      * and pass their into System\Server::getReferData().
      * This method is used e.g. to show message about
      * invalid login or password
      */
-    public function loadRefererData()
+    public function loadSession()
     {
+        session_start();
         Server::readReferData();
+    }
+
+    /**
+     * Configures Registry tmp path
+     */
+    public function loadRegistryConf()
+    {
+        RegistryConf::setTmpPath("{$this->baseDir}/cache/registry");
     }
 
     /**
@@ -89,7 +89,6 @@ class Load
      */
     public function loadRegistry()
     {
-        RegistryConf::setTmpPath("{$this->baseDir}/cache/registry");
         RegistryFactory::start()->set('view', new View);
         $this->view = RegistryFactory::start()->get('view');
         RegistryFactory::start()->set('user', new User);
@@ -103,8 +102,11 @@ class Load
     public function loadRouter()
     {
         $router = Router::instance();
-        $router->baseURL = RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl();
+        $router->baseURL = RegistryFactory::start('file')
+            ->register('Conf\Conf')->getBaseUrl();
         $router->defaultRoute = 'post';
+        $router->add('admin', 'admin/');
+        new \Admin\Extension\ExtensionLoader;
         require "{$this->baseDir}/conf/router.php";
         $router->run();
     }
@@ -125,7 +127,6 @@ class Load
             if ($this->user->getUserSession()->getRole() != 'admin') {
                 Server::headerLocation(''); // Go to main page
             }
-            new \Admin\Extension\ExtensionLoader();
             // Admin view helper classes
             require "{$this->baseDir}/" . ADMIN_FOLDER . "/conf/view-helper.php";
         }
