@@ -11,17 +11,17 @@
 	<!-- Target: start -->
 	<!-- ============================================ -->
 	<target name="start">
-		<echo
-			message="Welcom to ${phing.project.name}. Please follow these steps to finish configuration." />
+		<echo message="Welcom to ${phing.project.name}.
+		Please follow these steps to finish configuration." />
 	</target>
 
 	<!-- ============================================ -->
 	<!-- Target: site -->
 	<!-- ============================================ -->
 	<target name="site" depends="start">
-		<input
-			message="Please insert your site adress (example: http://www.example.com/)"
-			propertyname="siteAdress" promptChar=": " />
+		<input message="Please insert your site adress
+		(example: http://www.example.com/)"
+		propertyname="siteAdress" promptChar=": " />
 		<input message="Please insert your site name" propertyname="siteName"
 			promptChar=": " />
 		<php expression="require('${project.basedir}/vendor/autoload.php');" />
@@ -52,8 +52,8 @@
 	<target name="administrator" depends="database">
 		<input message="Please insert your user login" propertyName="login"
 			promptChar=": " />
-		<input message="Please insert your user password" propertyName="password"
-			promptChar=": " />
+		<input message="Please insert your user password"
+		propertyName="password" promptChar=": " />
 		<input message="Please insert your email" propertyName="email"
 			promptChar=": " />
 	</target>
@@ -62,7 +62,8 @@
 	<!-- Target: create_db_conf_file -->
 	<!-- ============================================ -->
 	<target name="create_db_conf_file" depends="administrator">
-		<copy file="${AppConfDir}/DBSettings.php" tofile="${DBConfDir}/DBSettings.php">
+		<copy file="${AppConfDir}/DBSettings.php"
+		tofile="${DBConfDir}/DBSettings.php" overwrite="true">
 			<filterchain>
 				<replacetokens>
 					<token key="dbHost" value="${dbHost}" />
@@ -87,7 +88,8 @@
 	<!-- Target: create_htaccess_file -->
 	<!-- ============================================ -->
 	<target name="create_htaccess_file" depends="create_folders">
-		<copy file="${AppConfDir}/htaccess" tofile="${project.basedir}/.htaccess">
+		<copy file="${AppConfDir}/htaccess"
+		tofile="${project.basedir}/.htaccess" overwrite="true">
 			<filterchain>
 				<replacetokens>
 					<token key="rewriteBase" value="${rewriteBase}" />
@@ -106,14 +108,16 @@
 			returnProperty="hashPassword" />
 		<php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');"
 			returnProperty="regDate" />
-		<copy file="${AppConfDir}/structure.sql" tofile="${project.basedir}/cache/tmp/tmp_structure.sql">
+		<copy file="${AppConfDir}/structure.sql"
+		tofile="${project.basedir}/cache/tmp/tmp_structure.sql" overwrite="true">
 			<filterchain>
 				<replacetokens>
 					<token key="dbName" value="${dbName}" />
 				</replacetokens>
 			</filterchain>
 		</copy>
-		<copy file="${AppConfDir}/data.sql" tofile="${project.basedir}/cache/tmp/tmp_data.sql">
+		<copy file="${AppConfDir}/data.sql"
+		tofile="${project.basedir}/cache/tmp/tmp_data.sql" overwrite="true">
 			<filterchain>
 				<replacetokens>
 					<token key="dbName" value="${dbName}" />
