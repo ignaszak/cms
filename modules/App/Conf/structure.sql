@@ -131,11 +131,11 @@ CREATE TABLE `options` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DELIMITER //
-CREATE TRIGGER `set_default_cat_id_in_posts`
+DELIMITER ;;
+/*!50003 TRIGGER `set_default_cat_id_in_posts`
 AFTER DELETE
     ON `categories` FOR EACH ROW
     BEGIN
         UPDATE `posts` SET `category_id` = 1 WHERE `category_id` IS NULL;
-    END; //
+    END */;;
 DELIMITER ;
