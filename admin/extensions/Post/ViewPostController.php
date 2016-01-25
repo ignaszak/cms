@@ -19,7 +19,8 @@ class ViewPostController extends Controller
      */
     public function setViewHelper()
     {
-        return new class($this) extends ViewHelperController {
+        return new class($this) extends ViewHelperController
+        {
 
         public function getAdminViewPost()
         {

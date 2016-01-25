@@ -13,29 +13,24 @@ class SavePostController extends Controller
     {
         // Initialize
         $controller = new Factory(new PostController());
-        
+
         // Find entity by id to update
         if ($_POST['id']) {
             $controller->find($_POST['id']);
         }
-        
+
         $alias = $controller->getAlias($_POST['title']);
         $public = @$_POST['public'] == 1 ? 1 : 0;
-        
-        $controller->
-        // Sets data
-        setReference('category', $this->getCategoryId())
-            ->setReference('author', $this->view()
-            ->getUserId())
+
+        $controller->setReference('category', $this->getCategoryId())
+            ->setReference('author', $this->view()->getUserId())
             ->setDate(new \DateTime())
             ->setTitle($_POST['title'])
             ->setAlias($alias)
             ->setContent($_POST['content'])
             ->setPublic($public)
-            ->
-        // Execute
-        insert();
-        
+            ->insert();
+
         Server::headerLocation("admin/post/p/edit/$alias");
     }
 

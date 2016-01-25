@@ -28,13 +28,13 @@ class EditPostController extends Controller
         $this->alias = $this->view()->getRoute('alias');
         $this->setViewHelperName('AdminEditPost');
         $this->view()->addView('theme/post-edit.html');
-        
+
         if ($this->action == 'delete' && $this->alias) {
             $controller = new Factory(new PostController());
             $controller->findOneBy(array(
                 'alias' => $this->alias
             ))->remove();
-            
+
             Server::headerLocation("admin/post/p/view/");
         }
     }
@@ -58,7 +58,7 @@ class EditPostController extends Controller
         public function getAdminEditPost(string $key)
         {
             $data = array();
-                
+
             $data['id'] = null;
             $data['title'] = $this->returnData['setTitle'];
             $data['content'] = $this->returnData['setContent'];
@@ -66,25 +66,25 @@ class EditPostController extends Controller
             $data['public'] = $this->returnData['setPublic'];
             $data['formTitle'] = 'Add new post';
             $data['formLink'] = $this->_controller->view()->getAdminAdress() . "/post/p/form";
-                
+
             if ($this->_controller->action == 'edit' && $this->_controller->alias) {
-                    
+
                 $data['formTitle'] = 'Edit post';
-                    
+
                 $this->_controller->query()
                     ->setContent('post')
                     ->alias($this->_controller->alias);
-                    
+
                 foreach ($this->_controller->query()->getContent() as $post) {
                     $data['id'] = $post->getId();
-                    $data['catId'] = $post->getCategoryId();
+                    $data['catId'] = $post->getCategory()->getId();
                     $data['title'] = $post->getTitle();
                     $data['content'] = $post->getContent();
                     $data['public'] = $post->getPublic();
                     $data['deleteLink'] = $this->_controller->view()->getAdminAdress() . "/post/p/delete/" . $post->getAlias();
                 }
             }
-                
+
             return @$data[$key];
         }
         };
