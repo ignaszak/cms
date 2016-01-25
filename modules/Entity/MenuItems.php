@@ -1,4 +1,5 @@
 <?php
+
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,47 +7,48 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MenuItems
  *
- * @ORM\Table(name="menu_items", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})})
+ * @ORM\Table(name="menu_items", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})}, indexes={@ORM\Index(name="FK_MENU_ITEMS_MENU", columns={"menu_id"})})
  * @ORM\Entity
  */
 class MenuItems
 {
-
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="id", type="integer", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="menu_id", type="integer", nullable=false)
-     */
-    private $menuId;
-
-    /**
-     *
-     * @var integer @ORM\Column(name="sequence", type="integer", nullable=false)
+     * @ORM\Column(name="sequence", type="integer", nullable=false)
      */
     private $sequence;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="adress", type="string", length=255, nullable=true)
+     * @ORM\Column(name="adress", type="string", length=255, nullable=true)
      */
     private $adress;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Menus", inversedBy="menuItems", cascade={"persist"})
-     * @ORM\JoinColumn(name="menu_id", referencedColumnName="id", nullable=true)
+     * @var \Entity\Menus
+     *
+     * @ORM\ManyToOne(targetEntity="Entity\Menus")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="menu_id", referencedColumnName="id")
+     * })
      */
     private $menu;
 
@@ -70,7 +72,7 @@ class MenuItems
     public function setMenuId($menuId)
     {
         $this->menuId = $menuId;
-        
+
         return $this;
     }
 
@@ -94,7 +96,7 @@ class MenuItems
     public function setSequence($sequence)
     {
         $this->sequence = $sequence;
-        
+
         return $this;
     }
 
@@ -118,7 +120,7 @@ class MenuItems
     public function setTitle($title)
     {
         $this->title = $title;
-        
+
         return $this;
     }
 
@@ -142,7 +144,7 @@ class MenuItems
     public function setAdress($adress)
     {
         $this->adress = $adress;
-        
+
         return $this;
     }
 
@@ -166,7 +168,7 @@ class MenuItems
     public function setMenu($menu)
     {
         $this->menu = $menu;
-        
+
         return $this;
     }
 

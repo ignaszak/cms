@@ -1,4 +1,5 @@
 <?php
+
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,29 +13,32 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Menus
 {
-
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="id", type="integer", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="name", type="string", length=255, nullable=false)
+     * @ORM\Column(name="name", type="string", length=255, nullable=false)
      */
     private $name;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="position", type="string", length=255, nullable=false)
+     * @ORM\Column(name="position", type="string", length=255, nullable=false)
      */
     private $position;
 
     /**
      * @ORM\OneToMany(targetEntity="Entity\MenuItems", mappedBy="menu", cascade={"persist","remove"})
+     * @ORM\OrderBy({"sequence" = "ASC"})
      */
     private $menuItems;
 
@@ -63,7 +67,7 @@ class Menus
     public function setName($name)
     {
         $this->name = $name;
-        
+
         return $this;
     }
 
@@ -87,7 +91,7 @@ class Menus
     public function setPosition($position)
     {
         $this->position = $position;
-        
+
         return $this;
     }
 
@@ -102,16 +106,12 @@ class Menus
     }
 
     /**
-     * Get menuItems and sort by `order` ASC
+     * Get menuItems
      *
      * @return MenuItems
      */
     public function getMenuItems()
     {
-        $iterator = $this->menuItems->getIterator();
-        $iterator->uasort(function ($a, $b) {
-            return $a->getSequence() <=> $b->getSequence();
-        });
-        return $iterator;
+        return $this->menuItems;
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -12,50 +13,56 @@ use UserAuth\HashPass;
  */
 class Users
 {
-
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="login", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="login", type="string", length=255, nullable=false)
      */
     private $login;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="email", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="email", type="string", length=255, nullable=false)
      */
     private $email;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="password", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
      */
     private $password;
 
     /**
+     * @var \DateTime
      *
-     * @var \DateTime @ORM\Column(name="reg_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="reg_date", type="datetime", nullable=false)
      */
     private $regDate;
 
     /**
+     * @var \DateTime
      *
-     * @var \DateTime @ORM\Column(name="log_date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="log_date", type="datetime", nullable=false)
      */
     private $logDate;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="role", type="string", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="role", type="string", nullable=false)
      */
-    private $role;
+    private $role = 'user';
 
     /**
      * Set id

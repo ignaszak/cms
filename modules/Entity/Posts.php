@@ -1,87 +1,91 @@
 <?php
+
 namespace Entity;
 
-use Entity\Users;
-use Entity\Controller\IPostsQuery;
 use Doctrine\ORM\Mapping as ORM;
+use Entity\Controller\IPostsQuery;
+use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
 
 /**
  * Posts
  *
- * @ORM\Table(name="posts", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})})
+ * @ORM\Table(name="posts", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})}, indexes={@ORM\Index(name="FK_POST_CAT", columns={"category_id"}), @ORM\Index(name="FK_POST_USER", columns={"author_id"})})
  * @ORM\Entity
  */
 class Posts extends IPostsQuery
 {
-
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
+     * @var \DateTime
      *
-     * @var integer @ORM\Column(name="category_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     */
-    private $categoryId;
-
-    /**
-     *
-     * @var integer @ORM\Column(name="author_id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     */
-    private $authorId;
-
-    /**
-     *
-     * @var \DateTime @ORM\Column(name="date", type="datetime", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="date", type="datetime", nullable=false)
      */
     private $date;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="title", type="string", length=255, nullable=false)
      */
     private $title;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="alias", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="alias", type="string", length=255, nullable=false)
      */
     private $alias;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="content", type="text", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="content", type="text", nullable=false)
      */
     private $content;
 
     /**
+     * @var integer
      *
-     * @var Integer @ORM\Column(name="public", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="public", type="integer", nullable=false)
      */
     private $public;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Users", cascade={"persist"})
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
-     */
-    private $user;
-
-    /**
+     * @var \Entity\Categories
+     *
      * @ORM\ManyToOne(targetEntity="Entity\Categories", inversedBy="post")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=true)
      */
     private $categories;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Categories", cascade={"persist"})
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id", nullable=false, onDelete="SET NULL")
+     * @var \Entity\Categories
+     *
+     * @ORM\ManyToOne(targetEntity="Entity\Categories")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * })
      */
     private $category;
+
+    /**
+     * @var \Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * })
+     */
+    private $author;
 
     /**
      * Get id
@@ -91,54 +95,6 @@ class Posts extends IPostsQuery
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set categoryId
-     *
-     * @param integer $categoryId
-     *
-     * @return Posts
-     */
-    public function setCategoryId($categoryId)
-    {
-        $this->categoryId = $categoryId;
-
-        return $this;
-    }
-
-    /**
-     * Get categoryId
-     *
-     * @return integer
-     */
-    public function getCategoryId()
-    {
-        return $this->categoryId;
-    }
-
-    /**
-     * Set authorId
-     *
-     * @param integer $authorId
-     *
-     * @return Posts
-     */
-    public function setAuthorId($authorId)
-    {
-        $this->authorId = $authorId;
-
-        return $this;
-    }
-
-    /**
-     * Get authorId
-     *
-     * @return integer
-     */
-    public function getAuthorId()
-    {
-        return $this->authorId;
     }
 
     /**
@@ -163,7 +119,7 @@ class Posts extends IPostsQuery
     public function getDate($format = "")
     {
         $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
-            ->getDateFormat();
+        ->getDateFormat();
         return $this->date->format((empty($format) ? $dateFormat : $format));
     }
 
@@ -272,7 +228,7 @@ class Posts extends IPostsQuery
      */
     public function setAuthor($author)
     {
-        return $this->user = $author;
+        return $this->author = $author;
 
         return $this;
     }
@@ -284,7 +240,7 @@ class Posts extends IPostsQuery
      */
     public function getAuthor()
     {
-        return $this->user;
+        return $this->author;
     }
 
     /**

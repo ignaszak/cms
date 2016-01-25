@@ -16,10 +16,6 @@ abstract class IPostsQuery
 
     abstract public function getId();
 
-    abstract public function getCategoryId();
-
-    abstract public function getAuthorId();
-
     abstract public function getDate($format = "");
 
     abstract public function getTitle();

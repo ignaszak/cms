@@ -1,4 +1,5 @@
 <?php
+
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -6,59 +7,66 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Options
  *
- * @ORM\Table(name="options")
+ * @ORM\Table(name="options", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})})
  * @ORM\Entity
  */
 class Options
 {
-
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="id", type="integer", precision=0, scale=0, nullable=false, unique=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="site_title", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="site_title", type="string", length=255, nullable=false)
      */
     private $siteTitle;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="admin_email", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="admin_email", type="string", length=255, nullable=false)
      */
     private $adminEmail;
 
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="view_limit", type="integer", precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="view_limit", type="integer", nullable=false)
      */
-    private $viewLimit;
+    private $viewLimit = '10';
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="date_format", type="string", length=20, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="date_format", type="string", length=20, nullable=false)
      */
-    private $dateFormat;
+    private $dateFormat = 'j.n.Y H:i';
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="base_url", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="base_url", type="string", length=255, nullable=false)
      */
     private $baseUrl;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="request_uri", type="string", length=255, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="request_uri", type="string", length=255, nullable=false)
      */
     private $requestUri;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="theme", type="string", length=50, precision=0, scale=0, nullable=false, unique=false)
+     * @ORM\Column(name="theme", type="string", length=50, nullable=false)
      */
     private $theme;
 

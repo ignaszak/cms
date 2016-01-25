@@ -1,69 +1,73 @@
 <?php
+
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Entity\Controller\IPagesQuery;
 use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
-use Entity\Controller\IPagesQuery;
 
 /**
  * Pages
  *
- * @ORM\Table(name="pages", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})})
+ * @ORM\Table(name="pages", uniqueConstraints={@ORM\UniqueConstraint(name="id_UNIQUE", columns={"id"})}, indexes={@ORM\Index(name="FK_PAGE_USER", columns={"author_id"})})
  * @ORM\Entity
  */
 class Pages extends IPagesQuery
 {
-
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="id", type="integer", nullable=false)
-     *      @ORM\Id
-     *      @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
+     * @var \DateTime
      *
-     * @var integer @ORM\Column(name="author_id", type="integer", nullable=true)
-     */
-    private $authorId;
-
-    /**
-     *
-     * @var \DateTime @ORM\Column(name="date", type="datetime", nullable=true)
+     * @ORM\Column(name="date", type="datetime", nullable=true)
      */
     private $date;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="title", type="string", length=255, nullable=true)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      */
     private $title;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="alias", type="string", length=255, nullable=true)
+     * @ORM\Column(name="alias", type="string", length=255, nullable=true)
      */
     private $alias;
 
     /**
+     * @var string
      *
-     * @var string @ORM\Column(name="content", type="text", nullable=true)
+     * @ORM\Column(name="content", type="text", nullable=true)
      */
     private $content;
 
     /**
+     * @var integer
      *
-     * @var integer @ORM\Column(name="public", type="integer", nullable=true)
+     * @ORM\Column(name="public", type="integer", nullable=true)
      */
     private $public;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Entity\Users", cascade={"persist"})
-     * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false)
+     * @var \Entity\Users
+     *
+     * @ORM\ManyToOne(targetEntity="Entity\Users")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="author_id", referencedColumnName="id")
+     * })
      */
-    private $user;
+    private $author;
 
     /**
      * Get id
@@ -121,7 +125,7 @@ class Pages extends IPagesQuery
     public function getDate($format = "")
     {
         $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
-            ->getDateFormat();
+        ->getDateFormat();
         return $this->date->format((empty($format) ? $dateFormat : $format));
     }
 
@@ -230,7 +234,7 @@ class Pages extends IPagesQuery
      */
     public function setAuthor($author)
     {
-        return $this->user = $author;
+        return $this->author = $author;
 
         return $this;
     }
@@ -242,6 +246,6 @@ class Pages extends IPagesQuery
      */
     public function getAuthor()
     {
-        return $this->user;
+        return $this->author;
     }
 }
