@@ -104,7 +104,7 @@ class BreadcrumbsGenerator
                 ->alias($alias)
                 ->force();
             $content = $this->_query->getContent()[0];
-            $categoryId = ($name == 'category') ? $content->getId() : $content->getCategoryId();
+            $categoryId = ($name == 'category') ? $content->getId() : $content->getCategory()->getId();
             $this->breadcrumbsArray = $this->getCategoryList();
             return $this->generateBreadcrumbs($categoryId);
         }

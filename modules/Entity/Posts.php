@@ -25,6 +25,20 @@ class Posts extends IPostsQuery
     private $id;
 
     /**
+     * @var integer
+     *
+     * @ORM\Column(name="category_id", type="integer", nullable=true)
+     */
+    private $categoryId;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="author_id", type="integer", nullable=false)
+     */
+    private $authorId;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime", nullable=false)
