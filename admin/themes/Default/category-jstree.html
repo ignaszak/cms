@@ -1,6 +1,9 @@
 <script>
 $(document).ready(function(){
     $('[data-toggle="jstree-confirm"]').confirmation({
+    	title : '<b>Are you sure?</b><br />' +
+    			'Every child category will be also removed. ' +
+    			'Posts with this category will receive master \'Home\' category.',
         onConfirm : function () {
             jstree_category_delete();
         }
