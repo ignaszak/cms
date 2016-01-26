@@ -79,8 +79,9 @@
 	<!-- Target: create_folders -->
 	<!-- ============================================ -->
 	<target name="create_folders" depends="create_db_conf_file">
-		<mkdir dir="${project.basedir}/cache/session" />
 		<mkdir dir="${project.basedir}/cache/registry" />
+		<exec command="chmod -R 777 ${project.basedir}/cache" />
+		<exec command="chmod -R 777 ${project.basedir}/cache/registry" />
 		<mkdir dir="${project.basedir}/cache/tmp" />
 	</target>
 
@@ -108,20 +109,12 @@
 			returnProperty="hashPassword" />
 		<php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');"
 			returnProperty="regDate" />
-		<copy file="${AppConfDir}/structure.sql"
-		tofile="${project.basedir}/cache/tmp/tmp_structure.sql" overwrite="true">
+		<copy file="${AppConfDir}/db.sql"
+		tofile="${project.basedir}/cache/tmp/tmp_db.sql" overwrite="true">
 			<filterchain>
 				<replacetokens>
-					<token key="dbName" value="${dbName}" />
 					<token key="dbHost" value="${dbHost}" />
 					<token key="dbUser" value="${dbUser}" />
-				</replacetokens>
-			</filterchain>
-		</copy>
-		<copy file="${AppConfDir}/data.sql"
-		tofile="${project.basedir}/cache/tmp/tmp_data.sql" overwrite="true">
-			<filterchain>
-				<replacetokens>
 					<token key="dbName" value="${dbName}" />
 					<token key="login" value="${login}" />
 					<token key="email" value="${email}" />
@@ -143,8 +136,7 @@
 	<!-- Target: clear_cms_configurator_files -->
 	<!-- ============================================ -->
 	<target name="clear_tmp" depends="create_sql_query">
-		<delete file="${project.basedir}/cache/tmp/tmp_structure.sql" />
-		<delete file="${project.basedir}/cache/tmp/tmp_data.sql" />
+		<delete file="${project.basedir}/cache/tmp/tmp_db.sql" />
 	</target>
 
 	<!-- ============================================ -->

@@ -3,6 +3,8 @@ namespace App\Conf;
 
 use Conf\DB\DBSettings;
 
+include("php-mysqlimporter.php");
+
 class Configuration
 {
 
@@ -53,26 +55,15 @@ class Configuration
 
     public static function createDataBase()
     {
-        $conn = new \PDO('mysql:host=' . DBSettings::DB_HOST . ';dbname=' . DBSettings::DB_NAME, DBSettings::DB_USER, DBSettings::DB_PASSWORD);
+        $mysqlImport = new \MySQLImporter(
+            DBSettings::DB_HOST,
+            DBSettings::DB_USER,
+            DBSettings::DB_PASSWORD
+        );
         $baseDir = dirname(dirname(dirname(__DIR__)));
-        self::executeSqlFile($conn, $baseDir . '/cache/tmp/tmp_structure.sql');
-        self::executeSqlFile($conn, $baseDir . '/cache/tmp/tmp_data.sql');
-    }
-
-    /**
-     *
-     * @param \PDO $conn
-     * @param string $file
-     */
-    private static function executeSqlFile(\PDO $conn, string $file)
-    {
-        $sql = file_get_contents($file);
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        
-        do { // Required due to "MySQL has gone away!" issue
-            $stmt->fetch();
-            $stmt->closeCursor();
-        } while ($stmt->nextRowset());
+        $mysqlImport->doImport(
+            "{$baseDir}/cache/tmp/tmp_db.sql",
+            DBSettings::DB_NAME
+        );
     }
 }
