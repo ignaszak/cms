@@ -1,4 +1,7 @@
-USE @dbName@;
+-- ignaszak/cms
+-- https://github.com/ignaszak/cms
+
+USE `@dbName@`;
 
 INSERT INTO `@dbName@`.`users`
     (`id`, `login`, `email`, `password`, `reg_date`, `log_date`, `role`)

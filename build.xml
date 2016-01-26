@@ -113,6 +113,8 @@
 			<filterchain>
 				<replacetokens>
 					<token key="dbName" value="${dbName}" />
+					<token key="dbHost" value="${dbHost}" />
+					<token key="dbUser" value="${dbUser}" />
 				</replacetokens>
 			</filterchain>
 		</copy>
