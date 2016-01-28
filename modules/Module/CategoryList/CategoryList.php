@@ -17,9 +17,9 @@ class CategoryList
             ->register('System\Storage\CategoryList')->get();
     }
 
-    public function getCategoryList(int $parentId = 1): string
+    public function getCategoryList(string $arg, int $parentId = 1): string
     {
-        $string = "<ul class=\"nav nav-stacked\">";
+        $string = "<ul {$arg}>";
         if (array_key_exists(0, $this->categoryList)) {
             $string .= "<li><a href=\"{$this->_conf->getBaseUrl()}\">";
             $string .= "{$this->categoryList[0]->getTitle()}</a>";
@@ -32,7 +32,7 @@ class CategoryList
                 $string .= "<li><a href=\"{$this->_conf->getBaseUrl()}" .
                     "category/{$cat->getAlias()}\">";
                 $string .= "{$cat->getTitle()}</a>";
-                $string .= $this->getCategoryList($cat->getId());
+                $string .= $this->getCategoryList($arg, $cat->getId());
                 $string .= "</li>";
             }
         }
