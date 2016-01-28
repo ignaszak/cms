@@ -1,18 +1,59 @@
         <?php $this->loadFile('header.html'); ?>
 
         <div class="container-fluid">
+
+            <?php echo $this->getBreadcrumbsTheme(); ?>
+
             <div class="row">
 
                 <div class="col-md-2">
-                    <?php $this->loadFile('sidebar-category.html'); ?>
+
+                    <!-- CATEGORY SIDEBAR -->
+                    <div class="sidebar-category hidden-xs">
+                        <div class="panel panel-default">
+                            <div class="panel-body"></div>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-10">
-                    <?php echo $this->getBreadcrumbsTheme('primary'); ?>
+
+                <div class="col-md-7">
                     <?php $this->loadView(); ?>
+                </div>
+
+                <div class="col-md-3">
+
+                    <!-- SEARCH -->
+                    <div class="panel panel-default hidden-xs">
+                        <div class="panel-body">
+                            <form role="search">
+                                <div class="form-group">
+                                    <div class="input-group input-group-xs">
+                                        <input type="text" placeholder="Search ..."
+                                        class="form-control input-sm" id="search">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default btn-sm"
+                                            type="button">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- NEW POSTS -->
+                    <div class="panel panel-default hidden-xs">
+                        <div class="panel-heading">New posts</div>
+                        <div class="panel-body">
+                            ...
+                        </div>
+                    </div>
+
                 </div>
 
             </div>
         </div>
 
         <?php $this->loadFile('footer.html'); ?>
-

@@ -8,56 +8,139 @@
 
                     <?php else: ?>
 
-                    <div class="row">
+                    <div class="row well">
                         <div class="col-sm-6">
-                            <?php $form = $this->createForm('user-registration'); ?>
-                            <h1>Registration</h1>
+                            <?php $form = $this->createForm('user-login'); ?>
                             <p class="bg-danger">
                                 <?php echo $form->getFormMessage(); ?>
                             </p>
                             <form action="<?php echo $form->getFormActionAdress(); ?>"
-                            method="post" id="registration">
-                                <div class="form-group">
-                                    <label for="login">Enter Login</label>
-                                    <?php echo $form->inputLogin(); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label for="email">Enter Email</label>
-                                    <?php echo $form->inputEmail(); ?>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Enter Password</label>
-                                    <?php echo $form->inputPassword(); ?>
-                                </div>
-                                <div class="input-group">
-                                    <button class="btn btn-success">
-                                        Sign up
-                                    </button>
-                                </div>
+                            id="login" method="post" class="form-horizontal">
+                                <fieldset>
+                                    <legend>Login</legend>
+                                    <div class="form-group">
+                                        <label for="inputLogin" class="col-sm-4 control-label">
+                                            Login/Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <?php echo $form->inputLogin([
+                                                'placeholder' => 'Login or Email',
+                                                'minlength' => '2'
+                                            ]); ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 0px;">
+                                        <label for="inputPassword" class="col-sm-4 control-label">
+                                            Password
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <?php echo $form->inputPassword([
+                                                'placeholder' => 'Password',
+                                                'minlength' => '8'
+                                            ]); ?>
+                                        </div>
+                                    </div>
+                                    <div class="checkbox" style="padding-top: 10px; margin-bottom: 10px;">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            <label>
+                                                <input type="checkbox"> Remember me
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            <button type="submit" class="btn btn-primary">
+                                                Sign in
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </form>
                             <script>
-                            $().ready(function() {
-                                $("#registration").validate();
-                            });
+                            $("form#login").validate();
+                            </script>
+                        </div>
+                        <div class="col-sm-6">
+                            <?php $form = $this->createForm('user-registration'); ?>
+                            <p class="bg-danger">
+                                <?php echo $form->getFormMessage(); ?>
+                            </p>
+                            <form action="<?php echo $form->getFormActionAdress(); ?>"
+                            id="registration" method="post" class="form-horizontal">
+                                <fieldset>
+                                    <legend>Registration</legend>
+                                    <div class="form-group">
+                                        <label for="inputLogin" class="col-sm-4 control-label">
+                                            Login
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <?php echo $form->inputLogin([
+                                                'placeholder' => 'Login',
+                                                    'minlength' => '2'
+                                            ]); ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputPassword" class="col-sm-4 control-label">
+                                            Password
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <?php echo $form->inputPassword([
+                                                'placeholder' => 'Password',
+                                                'minlength' => '8'
+                                            ]); ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputEmail" class="col-sm-4 control-label">
+                                            Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <?php echo $form->inputEmail([
+                                                'placeholder' => 'Email'
+                                            ]); ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            <button type="submit" class="btn btn-success">
+                                                Sign up
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                            <script>
+                            $("#loginBarModal form#registration").validate();
                             </script>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-sm-6">
+                    <div class="row well">
+                        <div class="col-sm-offset-3 col-sm-6">
                             <?php $form = $this->createForm('user-remind'); ?>
-                            <h1>Remind password</h1>
                             <form action="<?php echo $form->getFormActionAdress(); ?>"
-                            method="post" id="remind">
-                                <div class="form-group">
-                                    <label for="email">Enter Email</label>
-                                    <?php echo $form->inputEmail(); ?>
-                                </div>
-                                <div class="input-group">
-                                    <button class="btn btn-primary">
-                                        Send
-                                    </button>
-                                </div>
+                            method="post" id="remind" class="form-horizontal">
+                                <fieldset>
+                                    <legend>Remind password</legend>
+                                    <div class="form-group">
+                                        <label for="inputLogin" class="col-sm-4 control-label">
+                                            Email
+                                        </label>
+                                        <div class="col-sm-8">
+                                            <?php echo $form->inputEmail([
+                                            'placeholder' => 'Email'
+                                        ]); ?>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-4 col-sm-8">
+                                            <button type="submit" class="btn btn-primary">
+                                                Send
+                                            </button>
+                                        </div>
+                                    </div>
+                                </fieldset>
                             </form>
                             <script>
                             $().ready(function() {
@@ -65,6 +148,7 @@
                             });
                             </script>
                         </div>
+                        <div class="col-sm-offset-3"></div>
                     </div>
 
                     <?php endif; ?>

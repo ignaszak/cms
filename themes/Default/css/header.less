@@ -1,77 +1,21 @@
-@theme-path: './themes/Default';
-@header-background-image: '../images/header-1.jpg';
-
-.rounded-corners (@radius: 5px) {
-    -webkit-border-radius: @radius;
-    -moz-border-radius: @radius;
-    -ms-border-radius: @radius;
-    -o-border-radius: @radius;
-    border-radius: @radius;
+.panel {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+        0 3px 1px -2px rgba(0, 0, 0, .2),
+        0 1px 5px 0 rgba(0, 0, 0, .12);
 }
 
-.head-panel {
-    color: #FFF;
-    background: url(@header-background-image);
-    background-size: 100% 350px;
+.panel-default>.panel-heading {
+    background-color: #FFF;
+}
 
-    .login-panel {
-        position: absolute;
-        right: 10px;
-        padding: 7px;
-        margin-top: 5px;
-        background-color: fade(#000, 20%);
+@media only screen and (min-width: 769px) {
 
-        .form-control {
-            background-color: transparent;
-            border-color: #2e6da4;
-        }
-
-        .login-group {
-            label {
-                -moz-border-radius: 0px;
-                -webkit-border-radius: 0px;
-                border-radius: 0px;
-            }
-
-            button {
-                -moz-border-radius: 0px 4px 4px 0px;
-                -webkit-border-radius: 0px 4px 4px 0px;
-                border-radius: 0px 4px 4px 0px;
-            }
-        }
-
-        .rounded-corners;
-    }
-
-    .head-panel-container {
-        height: 300px;
-
+    .head-panel {
+        height: 150px;
+        text-align: center;
         h1 {
-            position: absolute;
-            top: 70px;
-            left: 50px;
             margin: 0px;
-            font-size: 60px;
-            text-decoration: bold;
         }
-    }
-
-    .navbar-inverse {
-        height: 50px;
-        background-color: fade(#000, 50%);
-    }
-
-    #userRemember label {
-        width: 35px;
-    }
-
-    .popover-title {
-        color: #FFF;
-        background-color: #337ab7;
-    }
-
-    .popover-content {
-        color: #000;
     }
 
 }
