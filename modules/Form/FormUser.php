@@ -35,25 +35,29 @@ class FormUser extends Form
     public function getFormMessage(): string
     {
         $response = $this->getFormResponseData();
-        $array = array();
-
-        if (@$response['error']['incorrectLogin']) {
-            $array[] = 'Incorrect login.';
+        if (@$response['form'] == $this->formAction) {
+            $array = array();
+            if (@$response['error']['incorrectLoginOrPassword']) {
+                $array[] = 'Incorrect login or/and password.';
+            }
+            if (@$response['error']['incorrectLogin']) {
+                $array[] = 'Incorrect login.';
+            }
+            if (@$response['error']['formLoginDoubled']) {
+                $array[] = 'Login alredy exists.';
+            }
+            if (@$response['error']['incorrectEmail']) {
+                $array[] = 'Incorrect email.';
+            }
+            if (@$response['error']['formEmailDoubled']) {
+                $array[] = 'Email alredy exists.';
+            }
+            if (@$response['error']['incorrectPassword']) {
+                $array[] = 'Incorrect password.';
+            }
+            return count($array) ? implode('<br>', $array) : "";
         }
-        if (@$response['formLoginDoubled']) {
-            $array[] = 'Login alredy exists.';
-        }
-        if (@$response['error']['incorrectEmail']) {
-            $array[] = 'Incorrect email.';
-        }
-        if (@$response['formEmailDoubled']) {
-            $array[] = 'Email alredy exists.';
-        }
-        if (@$response['error']['incorrectPassword']) {
-            $array[] = 'Incorrect password.';
-        }
-
-        return count($array) ? implode('<br>', $array) : "";
+        return "";
     }
 
     /**

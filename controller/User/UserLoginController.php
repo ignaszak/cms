@@ -41,24 +41,25 @@ class UserLoginController extends Controller
         if ($_user->isUserLoggedIn()) {
             Server::headerLocationReferer();
         }
-        
+
         $this->login = $_POST['userLogin'];
         $this->password = $_POST['userPassword'];
         $this->remember = @$_POST['userRemember'];
-        
+
         $userId = $this->getUserId();
-        
+
         if ($userId === 0) {
-            Server::setReferData(array(
-                'incorrectLoginData' => 1
-            ));
+            Server::setReferData([
+                'form' => 'login',
+                'error' => ['incorrectLoginOrPassword' => 1]
+            ]);
             Server::headerLocationReferer();
         } else {
             $controller = new Factory(new UserController());
             $controller->find($userId)
                 ->setLogDate(new \DateTime('now'))
                 ->update();
-            
+
             $this->setSession();
             Server::headerLocationReferer();
         }
@@ -76,7 +77,7 @@ class UserLoginController extends Controller
             ->force()
             ->paginate(false);
         $result = $this->query()->getContent();
-        
+
         if (count($result) === 1 && HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
             $this->_userEntity = $result[0];
             return $this->_userEntity->getId();

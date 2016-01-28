@@ -30,18 +30,18 @@ class UserRegistrationController extends Controller
 
     public function run()
     {
+        Server::setReferData(['form' => 'registration']);
         $_user = RegistryFactory::start()->get('user');
+
         if ($_user->isUserLoggedIn()) {
-            Server::setReferData(array(
-                'userMustBeLogout' => 1
-            ));
+            Server::setReferData(['error' => ['userMustBeLogout' => 1]]);
             Server::headerLocationReferer();
         }
-        
+
         $this->login = $_POST['userLogin'];
         $this->email = $_POST['userEmail'];
         $this->password = $_POST['userPassword'];
-        
+
         $referData = array();
         if (! $this->dataNotExistInDatabase('login', $this->login)) {
             $referData['formLoginDoubled'] = 1;
@@ -49,9 +49,9 @@ class UserRegistrationController extends Controller
         if (! $this->dataNotExistInDatabase('email', $this->email)) {
             $referData['formEmailDoubled'] = 1;
         }
-        
+
         if (count($referData) > 0) {
-            Server::setReferData($referData);
+            Server::setReferData(['error' => $referData]);
             Server::headerLocationReferer();
         } else {
             $controller = new Factory(new UserController());
@@ -62,10 +62,8 @@ class UserRegistrationController extends Controller
                 ->setLogDate(new \DateTime('now'))
                 ->setRole('user')
                 ->insert();
-            
-            Server::setReferData(array(
-                'registrationSuccess' => 1
-            ));
+
+            Server::setReferData(['registrationSuccess' => 1]);
             Server::headerLocationReferer();
         }
     }
