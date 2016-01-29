@@ -84,4 +84,12 @@ interface IContentQueryBuilder
      * @return \Content\Query\IContentQueryController
      */
     public function findBy(string $column, string $value): IContentQueryController;
+
+    /**
+     *
+     * @param string $query
+     * @param array $params
+     * @return \Content\Query\IContentQueryController
+     */
+    public function query(string $query, array $params = null): IContentQueryController;
 }

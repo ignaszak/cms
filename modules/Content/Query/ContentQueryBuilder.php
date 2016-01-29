@@ -94,10 +94,13 @@ class ContentQueryBuilder implements IContentQueryBuilder
     public function date(string $value): IContentQueryController
     {
         $date = explode('-', $value);
-        
+
         $emConfig = DBDoctrine::em()->getConfiguration();
-        $emConfig->addCustomDatetimeFunction('DATE_FORMAT', 'DoctrineExtensions\Query\Mysql\DateFormat');
-        
+        $emConfig->addCustomDatetimeFunction(
+            'DATE_FORMAT',
+            'DoctrineExtensions\Query\Mysql\DateFormat'
+        );
+
         $format = "";
         if (array_key_exists(0, $date)) {
             $format = "%Y";
@@ -108,9 +111,9 @@ class ContentQueryBuilder implements IContentQueryBuilder
         if (array_key_exists(2, $date)) {
             $format .= "-%d";
         }
-        
+
         $this->set('DATE_FORMAT(c.date, \'' . $format . '\')', $value);
-        
+
         return $this->_contentQueryController;
     }
 
@@ -176,12 +179,30 @@ class ContentQueryBuilder implements IContentQueryBuilder
 
     /**
      *
+     * {@inheritDoc}
+     * @see \Content\Query\IContentQueryBuilder::query($query, $params)
+     */
+    public function query(string $query, array $params = null): IContentQueryController
+    {
+        $query = $this->_contentQueryController->contentQuery
+            ->andwhere($query);
+        if (is_array($params)) {
+            $query->setParameters($params);
+        }
+        $this->_contentQueryController->setContentQuery($query);
+        return $this->_contentQueryController;
+    }
+
+    /**
+     *
      * @param string $column
      * @param string $value
      */
     private function like(string $column, string $value)
     {
-        $query = $this->_contentQueryController->contentQuery->andwhere('c.' . $column . ' LIKE :value')->setParameter('value', '%' . $value . '%');
+        $query = $this->_contentQueryController->contentQuery
+            ->andwhere('c.' . $column . ' LIKE :value')
+            ->setParameter('value', '%' . $value . '%');
         $this->_contentQueryController->setContentQuery($query);
     }
 
@@ -192,9 +213,10 @@ class ContentQueryBuilder implements IContentQueryBuilder
     private function join(string $column)
     {
         $reference = $this->getReference($column);
-        
-        $query = $this->_contentQueryController->contentQuery->join('c.' . $reference, $reference);
-        
+
+        $query = $this->_contentQueryController->contentQuery
+            ->join('c.' . $reference, $reference);
+
         $this->_contentQueryController->setContentQuery($query);
     }
 
@@ -205,8 +227,10 @@ class ContentQueryBuilder implements IContentQueryBuilder
      */
     private function set(string $column, $value)
     {
-        $query = $this->_contentQueryController->contentQuery->andwhere($column . ' IN(:value)')->setParameter('value', $value);
-        
+        $query = $this->_contentQueryController->contentQuery
+            ->andwhere($column . ' IN(:value)')
+            ->setParameter('value', $value);
+
         $this->_contentQueryController->setContentQuery($query);
     }
 
