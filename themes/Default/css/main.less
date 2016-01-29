@@ -1,0 +1,71 @@
+@bg-header-image: url('../img/header.jpg');
+
+.box-shadow-2 {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+        0 3px 1px -2px rgba(0, 0, 0, .2),
+        0 1px 5px 0 rgba(0, 0, 0, .12);
+}
+
+.panel {
+    .box-shadow-2;
+}
+
+.panel-default>.panel-heading {
+    background-color: #FFF;
+}
+
+.page-header {
+    margin-bottom: 0px;
+}
+
+div.breadcrumb {
+    background-color: #f5f5f5;
+    margin-bottom: 25px;
+    padding: 0px;
+}
+
+ol.breadcrumb {
+    margin-bottom: 0px;
+}
+
+footer {
+    background-color: #222222;
+    color: #FFF;
+    margin-top: 50px;
+    padding: 30px 0 30px 0;
+}
+
+form#search .input-group-btn {
+    vertical-align: top;
+}
+
+@media only screen and (min-width: 769px) {
+
+    .page-header {
+        background-image: @bg-header-image;
+        height: 400px;
+        text-align: center;
+        margin-top: 0px;
+        padding-top: 120px;
+
+        h1 {
+            background-color: fade(#000, 50%);
+            display: inline-block;
+            margin: 0px;
+            padding: 0 15px 0 15px;
+            color: #FFF;
+            font-size: 60px;
+            font-weight: bold;
+            text-align: center;
+
+            small {
+                display: inline-block;
+                padding-top: 10px;
+                border-top: 2px solid #FFF;
+                color: #FFF;
+                width: 500px;
+            }
+        }
+    }
+
+}

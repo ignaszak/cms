@@ -1,15 +1,17 @@
         <?php $this->loadFile('header.html'); ?>
 
-        <div class="container-fluid">
+        <div class="container">
 
-            <?php echo $this->getBreadcrumbsTheme(); ?>
+        <div class="visible-sm visible-xs">
+            <?php $this->loadFile('search-form.html'); ?>
+        </div>
 
             <div class="row">
 
                 <div class="col-md-2">
 
                     <!-- CATEGORY SIDEBAR -->
-                    <div class="sidebar-category hidden-xs">
+                    <div class="sidebar-category hidden-sm hidden-xs">
                         <div class="panel panel-default">
                             <div class="panel-body"></div>
                         </div>
@@ -17,37 +19,31 @@
 
                 </div>
 
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <?php $this->loadView(); ?>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
 
                     <!-- SEARCH -->
-                    <div class="panel panel-default hidden-xs">
-                        <div class="panel-body">
-                            <form role="search">
-                                <div class="form-group">
-                                    <div class="input-group input-group-xs">
-                                        <input type="text" placeholder="Search ..."
-                                        class="form-control input-sm" id="search">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default btn-sm"
-                                            type="button">
-                                                <i class="fa fa-search"></i>
-                                            </button>
-                                        </span>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                    <div class="hidden-sm hidden-xs">
+                        <?php $this->loadFile('search-form.html'); ?>
                     </div>
 
-                    <!-- NEW POSTS -->
-                    <div class="panel panel-default hidden-xs">
-                        <div class="panel-heading">New posts</div>
+                    <!-- RECENT POSTS -->
+                    <div class="panel panel-default hidden-sm hidden-xs">
+                        <div class="panel-heading">Recent posts</div>
                         <div class="panel-body">
-                            ...
+                            <?php
+                                $this->setQuery('post')
+                                    ->limit(3);
+                                foreach ($this->getResult() as $post):
+                            ?>
+                            <a href="<?php echo $post->getLink(); ?>">
+                                <?php echo $post->getTitle(); ?>
+                            </a>
+                            <br />
+                            <?php endforeach; ?>
                         </div>
                     </div>
 

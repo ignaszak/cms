@@ -1,5 +1,5 @@
                     <?php
-                    if ($this->havePost()): foreach ($this->getPosts() as $post):
+                    /*if ($this->havePost()):*/ foreach ($this->getSearchResult() as $post):
                     ?>
 
                     <section id="<?php echo $post->getAlias(); ?>">
@@ -39,10 +39,10 @@
                         </div>
                     </section>
 
-                    <?php endforeach; else: ?>
+                    <?php endforeach;/* else: ?>
 
                     <h1>No posts found</h1>
 
-                    <?php endif; ?>
+                    <?php endif;*/ ?>
 
                     <?php echo $this->getPaginationTheme('pager-align'); ?>
