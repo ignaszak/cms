@@ -51,8 +51,11 @@ class BreadcrumbsGenerator
             case 'date':
                 return $this->createDateBreadcrumbs();
                 break;
+            case 'search':
+                return $this->createSearchBreadcrumbs();
+                break;
             default:
-                return array();
+                return $this->getHome();
         }
     }
 
@@ -63,13 +66,7 @@ class BreadcrumbsGenerator
     private function createDateBreadcrumbs(): array
     {
         $dateArray = explode('-', Router::getRoute('date'));
-        $array = array(
-            array(
-                'title' => 'Home',
-                'id' => '',
-                'link' => $this->_conf->getBaseUrl()
-            )
-        );
+        $array = $this->getHome();
         $i = 1;
         foreach ($dateArray as $date) {
             $arraySlice = array_slice($dateArray, 0, $i);
@@ -108,7 +105,25 @@ class BreadcrumbsGenerator
             $this->breadcrumbsArray = $this->getCategoryList();
             return $this->generateBreadcrumbs($categoryId);
         }
-        return array();
+        return $this->getHome();
+    }
+
+    /**
+     *
+     * @return array
+     */
+    private function createSearchBreadcrumbs(): array
+    {
+        return array_merge(
+            $this->getHome(),
+            array(
+                array(
+                    'title' => 'Search',
+                    'id' => '',
+                    'link' => ''
+                )
+            )
+        );
     }
 
     /**
@@ -139,5 +154,17 @@ class BreadcrumbsGenerator
             }
         }
         return $array;
+    }
+
+    /**
+     * @return array
+     */
+    private function getHome(): array
+    {
+        return array(array(
+            'title' => 'Home',
+            'id' => '',
+            'link' => $this->_conf->getBaseUrl()
+        ));
     }
 }

@@ -42,7 +42,7 @@ class Bootstrap implements Theme
             ++ $i;
         }
         $breadcrum .= "</ol>";
-        
-        return count($categories) ? $breadcrum : "";
+
+        return $breadcrum;
     }
 }

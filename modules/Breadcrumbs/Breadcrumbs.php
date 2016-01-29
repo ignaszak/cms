@@ -35,7 +35,7 @@ class Breadcrumbs
             default:
                 $breadcrumbsTheme = new Theme\Bootstrap($this->_bg);
         }
-        
+
         return $breadcrumbsTheme->getTheme();
     }
 }
