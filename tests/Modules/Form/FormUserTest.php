@@ -56,10 +56,11 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
     public function testGetFormMessage()
     {
         $referData = array();
+        $referData['form'] = 'registration';
         $referData['error']['incorrectLogin'] = 1;
-        $referData['formLoginDoubled'] = 1;
+        $referData['error']['formLoginDoubled'] = 1;
         $referData['error']['incorrectEmail'] = 1;
-        $referData['formEmailDoubled'] = 1;
+        $referData['error']['formEmailDoubled'] = 1;
         $referData['error']['incorrectPassword'] = 1;
         $this->referData($referData);
         $message = $this->_formUser->getFormMessage();

@@ -64,4 +64,11 @@ class FormTest extends \PHPUnit_Framework_TestCase
         $action = MockTest::callMockMethod($this->_form, 'getFormAction');
         $this->assertEquals('anyAction', $action);
     }
+
+    public function testGetFormActionFromGroup()
+    {
+        $this->_form->createForm('anyGroupWithoutAction');
+        $action = MockTest::callMockMethod($this->_form, 'getFormAction');
+        $this->assertEquals('anyGroupWithoutAction', $action);
+    }
 }
