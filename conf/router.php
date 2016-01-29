@@ -16,6 +16,8 @@ $router->add('user', 'user/{method}/{action:login}', 'Controller\User\UserLoginC
 $router->add('user', 'user/{method}/{action:logout}', 'Controller\User\UserLogoutController');
 $router->add('user', 'user/{method}/{action:registration}', 'Controller\User\UserRegistrationController');
 
+$router->add('search', 'search/{page}', 'Controller\SearchController');
+
 $router->add('mail', 'mail/send', 'Controller\SendMailController');
 
 $router->addToken('id', '([0-9]*)');
