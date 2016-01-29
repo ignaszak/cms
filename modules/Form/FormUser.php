@@ -64,7 +64,7 @@ class FormUser extends Form
      *
      * @return string
      */
-    public function getFormActionAdress()
+    public function getFormActionAdress(): string
     {
         return $this->_conf->getBaseUrl() . 'user/post/' . $this->selectAction();
     }

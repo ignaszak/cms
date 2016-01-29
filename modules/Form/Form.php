@@ -35,10 +35,13 @@ class Form
     public function createForm(string $formType)
     {
         $this->formType = $formType;
-        
+
         switch ($this->getFormGroup()) {
             case 'user':
                 $this->setFormInstance('Form\FormUser');
+                break;
+            case 'search':
+                $this->setFormInstance('Form\FormSearch');
                 break;
         }
         return self::$_formInstance;
@@ -70,6 +73,6 @@ class Form
     private function getFormAction(): string
     {
         $formTypeArray = explode('-', $this->formType);
-        return $formTypeArray[1];
+        return @$formTypeArray[1] ?? $formTypeArray[0];
     }
 }
