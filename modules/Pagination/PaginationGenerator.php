@@ -9,13 +9,31 @@ use Ignaszak\Registry\RegistryFactory;
 class PaginationGenerator
 {
 
+    /**
+     *
+     * @var \Conf\Conf
+     */
     private $_conf;
 
+    /**
+     * Posts limit
+     *
+     * @var integer
+     */
     private $limit;
 
-    private $countSite;
+    /**
+     * Number of pages
+     *
+     * @var integer
+     */
+    private $countPage;
 
-    private $paginationArray = array();
+    /**
+     *
+     * @var array
+     */
+    private $paginationArray = [];
 
     public function __construct()
     {
@@ -24,45 +42,79 @@ class PaginationGenerator
         $this->createPaginationArray();
     }
 
-    public function getPaginationArray()
+    /**
+     * @return array
+     */
+    public function getPaginationArray(): array
     {
         return $this->paginationArray['array'];
     }
 
-    public function getPrevLink()
+    /**
+     *
+     * @return integer
+     */
+    public function getPrevLink(): int
     {
         return $this->paginationArray['prevLink'];
     }
 
-    public function getNextLink()
+    /**
+     *
+     * @return integer
+     */
+    public function getNextLink(): int
     {
         return $this->paginationArray['nextLink'];
     }
 
-    public function getPrevDisabled()
+    /**
+     * @return string
+     */
+    public function getPrevDisabled(): string
     {
         return $this->getCurrentPage() == 1 ? "disabled" : "";
     }
 
-    public function getNextDisabled()
+    /**
+     *
+     * @return string
+     */
+    public function getNextDisabled(): string
     {
-        return $this->getCurrentPage() == $this->countSite ? "disabled" : "";
+        return $this->getCurrentPage() == $this->countPage ? "disabled" : "";
     }
 
-    public function getCountSite()
+    /**
+     *
+     * @return integer
+     */
+    public function getCountPage(): int
     {
-        return $this->countSite;
+        return $this->countPage;
     }
 
-    public function getLinkWhitoutPage()
+    /**
+     * @return string
+     */
+    public function getLinkWhitoutPage(): string
     {
-        $request = Server::getHttpRequest();
-        $request = (empty($request) ? $request . Router::getDefaultRoute() . '/' : $request);
+        $requestWithoutFirstSlsh = preg_replace(
+            '/^\//',
+            '',
+            Server::getHttpRequest()
+        );
+        $request = empty($requestWithoutFirstSlsh) ?
+            Router::getDefaultRoute() . '/' : $requestWithoutFirstSlsh;
         $link = $this->_conf->getBaseUrl() . $request;
         return preg_replace('/([0-9]*)$/', '', $link);
     }
 
-    public function getCurrentPage()
+    /**
+     *
+     * @return integer
+     */
+    public function getCurrentPage(): int
     {
         $currentPage = Router::getRoute('page');
         return (empty($currentPage) ? 1 : $currentPage);
@@ -71,10 +123,13 @@ class PaginationGenerator
     private function setParams()
     {
         $this->limit = $this->_conf->getViewLimit();
-        $this->countSite = $this->getSitesNumber();
+        $this->countPage = $this->getSitesNumber();
     }
 
-    private function getSitesNumber()
+    /**
+     * @return integer
+     */
+    private function getSitesNumber(): int
     {
         $sites = Content::getCountQuery() / $this->limit;
         return ceil($sites);
@@ -84,7 +139,7 @@ class PaginationGenerator
     {
         $paginationArray = array();
 
-        for ($i = 0; $i < $this->countSite; ++ $i) {
+        for ($i = 0; $i < $this->countPage; ++ $i) {
             $paginationArray[$i] = array(
                 'number' => ($i + 1),
                 'link' => $this->getLinkWhitoutPage() . ($i + 1)
@@ -93,10 +148,12 @@ class PaginationGenerator
 
         $currentPage = $this->getCurrentPage();
         $prevLink = ($currentPage == 1 ? 1 : $currentPage - 1);
-        $nextLink = ($currentPage == $this->countSite ? $currentPage : ($currentPage + 1));
+        $nextLink = ($currentPage == $this->countPage ? $currentPage : ($currentPage + 1));
 
-        $this->paginationArray['array'] = $paginationArray;
-        $this->paginationArray['prevLink'] = $prevLink;
-        $this->paginationArray['nextLink'] = $nextLink;
+        $this->paginationArray = [
+            'array' => $paginationArray,
+            'prevLink' => $prevLink,
+            'nextLink' => $nextLink
+        ];
     }
 }

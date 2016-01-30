@@ -1,13 +1,18 @@
 <?php
-namespace Pagination;
+namespace Pagination\Theme;
 
-class PagerAlign extends PaginationTheme
+class PagerAlign extends Theme
 {
 
-    public function getTheme()
+    /**
+     *
+     * {@inheritDoc}
+     * @see \Pagination\Theme\Theme::getTheme()
+     */
+    public function getTheme(): string
     {
-        if ($this->_pg->getCountSite() > 1) {
-            
+        if ($this->_pg->getCountPage() > 1) {
+
             return <<<EOT
 <nav>
     <ul class="pager">
@@ -25,5 +30,6 @@ class PagerAlign extends PaginationTheme
 </nav>
 EOT;
         }
+        return "";
     }
 }

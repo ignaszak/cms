@@ -1,17 +1,22 @@
 <?php
-namespace Pagination;
+namespace Pagination\Theme;
 
-class MultiPage extends PaginationTheme
+class MultiPage extends Theme
 {
 
-    public function getTheme()
+    /**
+     *
+     * {@inheritDoc}
+     * @see \Pagination\Theme\Theme::getTheme()
+     */
+    public function getTheme(): string
     {
-        if ($this->_pg->getCountSite() > 1) {
-            
+        if ($this->_pg->getCountPage() > 1) {
+
             $prevLink = $this->_pg->getPrevLink();
             $nextLink = $this->_pg->getNextLink();
             $link = $this->_pg->getLinkWhitoutPage();
-            
+
             $pagination = <<<EOT
 <nav>
     <ul class="pagination">
@@ -29,7 +34,7 @@ EOT;
         </li>
 EOT;
             }
-            
+
             $pagination .= <<<EOT
         <li class="{$this->_pg->getNextDisabled()}">
             <a href="$link$nextLink" aria-label="Next">
@@ -39,8 +44,9 @@ EOT;
     </ul>
 </nav>
 EOT;
-            
+
             return $pagination;
         }
+        return "";
     }
 }
