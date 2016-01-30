@@ -27,11 +27,11 @@ body {
 #page-context {
     overflow-y: scroll;
     background-color: @color-content;
-    padding-top: 15px;
     bottom: 0px;
     -webkit-box-shadow: inset 1px 1px 4px 0px rgba(0,0,0,0.14);
     -moz-box-shadow: inset 1px 1px 4px 0px rgba(0,0,0,0.14);
     box-shadow: inset 1px 1px 4px 0px rgba(0,0,0,0.14);
+    padding: 0 3px 0 3px;
 }
 
 .navbar-collapse {
@@ -39,23 +39,53 @@ body {
     padding: 0px;
 }
 
+.container-fluid {
+    padding: 0px;
+}
+
+.panel-white {
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14),
+        0 3px 3px -2px rgba(0, 0, 0, .2),
+        0 1px 8px 0 rgba(0, 0, 0, .12);
+    margin-top: 15px;
+
+    h3 {
+        margin: 10px 0 10px 0;
+    }
+
+    .panel-heading, .panel-body {
+        background-color: @color-panel-heading;
+        padding: 0 5px 0 5px;
+    }
+}
+
+.container-fluid>.navbar-collapse,
+.container-fluid>.navbar-header,
+.container>.navbar-collapse,
+.container>.navbar-header {
+    margin: 0px
+}
+
 @media only screen and (min-width : @bootstrap-size-sm) {
+
+    .navbar>.container .navbar-brand,
+    .navbar>.container-fluid .navbar-brand {
+        margin-left: 0px;
+    }
 
     #page-context {
         margin-top: -1px;
         position: absolute;
         border-left: 1px solid @color-navbar-border;
+        padding: 0 15px 0 15px;
+
+        .panel-heading, .panel-body {
+            padding: 5px 15px 0 15px;
+        }
     }
 
     #sidebar-menu {
         width: 250px;
     }
 
-}
-
-.panel-white {
-    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, .14), 0 3px 3px -2px rgba(0, 0, 0, .2), 0 1px 8px 0 rgba(0, 0, 0, .12);
-    .panel-heading {
-        background-color: @color-panel-heading;
-    }
 }

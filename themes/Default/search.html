@@ -1,3 +1,7 @@
+                    <h2>Search Results for: <b><?php echo $this->getSearchFor(); ?></b></h2>
+
+                    <hr />
+
                     <?php
                     /*if ($this->havePost()):*/ foreach ($this->getSearchResult() as $post):
                     ?>
@@ -34,7 +38,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <?php echo $post->getText(); ?>
+                                <?php echo $post->getText(200); ?>
                             </div>
                         </div>
                     </section>
@@ -45,4 +49,6 @@
 
                     <?php endif;*/ ?>
 
-                    <?php echo $this->getPaginationTheme('pager-align'); ?>
+                    <div style="text-align: center;">
+                        <?php echo $this->getPaginationTheme(); ?>
+                    </div>

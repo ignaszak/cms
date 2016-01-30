@@ -1,6 +1,6 @@
         <?php $this->loadFile('header.html'); ?>
 
-        <div class="container">
+        <div class="container body-top">
 
         <div class="visible-sm visible-xs">
             <?php $this->loadFile('search-form.html'); ?>
@@ -10,10 +10,10 @@
 
                 <div class="col-md-2">
 
-                    <!-- CATEGORY SIDEBAR -->
-                    <div class="sidebar-category hidden-sm hidden-xs">
-                        <div class="panel panel-default">
-                            <div class="panel-body"></div>
+                    <div class="sidebar-affix">
+                        <!-- CATEGORY SIDEBAR -->
+                        <div class="sidebar-left sidebar-category
+                        hidden-sm hidden-xs">
                         </div>
                     </div>
 
@@ -25,20 +25,20 @@
 
                 <div class="col-md-2">
 
-                    <!-- SEARCH -->
-                    <div class="hidden-sm hidden-xs">
-                        <?php $this->loadFile('search-form.html'); ?>
-                    </div>
+                    <div class="sidebar-affix">
+                        <!-- SEARCH -->
+                        <div class="sidebar-right hidden-sm hidden-xs">
+                            <?php $this->loadFile('search-form.html'); ?>
+                        </div>
 
-                    <!-- RECENT POSTS -->
-                    <div class="panel panel-default hidden-sm hidden-xs">
-                        <div class="panel-heading">Recent posts</div>
-                        <div class="panel-body">
+                        <!-- RECENT POSTS -->
+                        <div class="sidebar-right">
+                            <h1>Recent posts</h1>
                             <?php
                                 $this->setQuery('post')
-                                    ->limit(3);
-                                foreach ($this->getResult() as $post):
-                            ?>
+                                ->limit(3);
+                            foreach ($this->getResult() as $post):
+                        ?>
                             <a href="<?php echo $post->getLink(); ?>">
                                 <?php echo $post->getTitle(); ?>
                             </a>
@@ -48,7 +48,6 @@
                     </div>
 
                 </div>
-
             </div>
         </div>
 
