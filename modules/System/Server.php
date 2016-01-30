@@ -60,7 +60,7 @@ class Server
         unset($_SESSION['systemReferData']);
     }
 
-    private static function setRefererSession()
+    public static function setRefererSession()
     {
         $_SESSION['systemReferData'] = serialize(self::$sendReferDataArray);
     }

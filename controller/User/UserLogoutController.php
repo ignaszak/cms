@@ -15,6 +15,9 @@ class UserLogoutController extends Controller
             RegistryFactory::start('cookie')->remove('userSession');
             RegistryFactory::start('session')->remove('userSession');
         }
+        Server::setReferData([
+            'search' => Server::getReferData()['search']
+        ]);
         Server::headerLocationReferer();
     }
 }

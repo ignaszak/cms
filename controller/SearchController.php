@@ -3,12 +3,20 @@ namespace Controller;
 
 use FrontController\Controller;
 use FrontController\ViewHelperController;
+use System\Server;
 
 class SearchController extends Controller
 {
+    /**
+     *
+     * @var string
+     */
+    public $search;
 
     public function run()
     {
+        $this->setSearch();
+        $this->setSearchToReferData();
         $this->setViewHelperName('Search');
         $this->view()->addView('search.html');
     }
@@ -22,9 +30,9 @@ class SearchController extends Controller
         return new class($this) extends ViewHelperController
         {
 
-        public function getSearchFor(): string
+        public function getSearchFor()
         {
-            return $_POST['search'];
+            return $this->_controller->search;
         }
 
         public function getSearchResult(): array
@@ -34,16 +42,28 @@ class SearchController extends Controller
                 ->force()
                 ->query(
                     "c.title LIKE :search OR
-                        c.content LIKE :search",
-                    [':search' => "%{$_POST['search']}%"]
+                            c.content LIKE :search",
+                    [':search' => "%{$this->_controller->search}%"]
                 );
             return $this->_controller->query()->getContent();
         }
-
-        public function getAdminViewPostLink()
-        {
-            return $this->_controller->view()->getAdminAdress() . "/post/p/edit/";
-        }
         };
+    }
+
+    private function setSearch()
+    {
+        if (!empty($_POST['search'])) {
+            $this->search = $_POST['search'];
+        } else {
+            $this->search = Server::getReferData()['search'];
+        }
+    }
+
+    private function setSearchToReferData()
+    {
+        Server::setReferData([
+            'search' => $this->search
+        ]);
+        Server::setRefererSession();
     }
 }
