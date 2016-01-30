@@ -1,20 +1,34 @@
 var onScrollMarginBotom = 30;
 
 function footerLocation() {
-	var sidebar = $('.sidebar-affix');
-	var container = sidebar.parent().parent();
-	var sidebarBottom = sidebar.offset().top + sidebar.outerHeight(true);
-	var containerBottom = container.position().top + container.outerHeight(true);
-	if (sidebarBottom > containerBottom) {
-		var footerTop = sidebarBottom;
-	} else {
-		var footerTop = containerBottom;
+
+	var footer = {
+		sidebar : $('.sidebar-affix'),
+		get sidebarBottom () {
+			var sidebarLeft = this.sidebar.eq(0).offset().top +
+				this.sidebar.eq(0).outerHeight(true);
+			var sidebarRight = this.sidebar.eq(1).offset().top +
+				this.sidebar.eq(1).outerHeight(true);
+			return sidebarLeft >= sidebarRight ?
+				sidebarLeft : sidebarRight;
+		},
+		get containerBottom () {
+			var container = this.sidebar.eq(1).parent().parent();
+			return container.offset().top + container.outerHeight(true);
+		},
+		get footerTop () {
+			var contentBottom = this.sidebarBottom >= this.containerBottom ?
+				this.sidebarBottom : this.containerBottom;
+			var windowBottom = $(window).height() -
+				$('footer').outerHeight(true) -
+				$('nav .container').outerHeight(true);
+			return windowBottom >= contentBottom ?
+				windowBottom : contentBottom;
+		}
 	}
+	console.log(footer.footerTop);
 	$('footer').css({
-    	'position' : 'absolute',
-    	'left' : 0,
-    	'right' : 0,
-    	'top' : footerTop
+    	'top' : footer.footerTop
     });
 }
 

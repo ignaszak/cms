@@ -2,9 +2,9 @@
 
         <div class="container body-top">
 
-        <div class="visible-sm visible-xs">
-            <?php $this->loadFile('search-form.html'); ?>
-        </div>
+            <div class="visible-sm visible-xs">
+                <?php $this->loadFile('search-form.html'); ?>
+            </div>
 
             <div class="row">
 
@@ -35,10 +35,10 @@
                         <div class="sidebar-right">
                             <h1>Recent posts</h1>
                             <?php
-                                $this->setQuery('post')
+                            $this->setQuery('post')
                                 ->limit(3);
                             foreach ($this->getResult() as $post):
-                        ?>
+                            ?>
                             <a href="<?php echo $post->getLink(); ?>">
                                 <?php echo $post->getTitle(); ?>
                             </a>
