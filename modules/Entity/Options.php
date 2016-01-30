@@ -31,6 +31,13 @@ class Options
     /**
      * @var string
      *
+     * @ORM\Column(name="site_description", type="string", length=255, nullable=true)
+     */
+    private $siteDescription;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="admin_email", type="string", length=255, nullable=false)
      */
     private $adminEmail;
@@ -90,6 +97,30 @@ class Options
     public function setSiteTitle($siteTitle)
     {
         $this->siteTitle = $siteTitle;
+
+        return $this;
+    }
+
+    /**
+     * Get siteDescription
+     *
+     * @return string
+     */
+    public function getSiteDescription()
+    {
+        return $this->siteDescription;
+    }
+
+    /**
+     * Set siteDescription
+     *
+     * @param string $siteDescription
+     *
+     * @return Options
+     */
+    public function setSiteDescription($siteDescription)
+    {
+        $this->siteDescription = $siteDescription;
 
         return $this;
     }

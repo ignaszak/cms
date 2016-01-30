@@ -43,6 +43,15 @@ class System
      *
      * @return string
      */
+    public function getSiteDescription(): string
+    {
+        return $this->_conf->getSiteDescription() ?? "";
+    }
+
+    /**
+     *
+     * @return string
+     */
     public function getSiteAdress(): string
     {
         return $this->_conf->getBaseUrl();

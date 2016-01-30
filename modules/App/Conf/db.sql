@@ -116,6 +116,7 @@ DROP TABLE IF EXISTS `options`;
 CREATE TABLE `options` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `site_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `site_description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `admin_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `view_limit` int(10) unsigned NOT NULL DEFAULT '10',
   `date_format` varchar(20) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'j.n.Y H:i',
@@ -136,6 +137,7 @@ LOCK TABLES `options` WRITE;
 INSERT INTO `options` VALUES (
   1,
   '@siteName@',
+  'Short site description',
   '@email@',
   10,
   'd.m.Y H:i',
