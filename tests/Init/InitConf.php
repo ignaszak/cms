@@ -7,7 +7,7 @@ use Test\Mock\MockTest;
 class InitConf
 {
 
-    public static function run()
+    public static function run(array $data = null)
     {
         $_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $array = array(
@@ -20,6 +20,13 @@ class InitConf
             'getRequestUri' => '',
             'getTheme' => ''
         );
+
+        if (! is_null($data)) {
+            foreach ($data as $key => $value) {
+                $array[$key] = $value;
+            }
+        }
+
         MockTest::inject($_conf, 'optionsArray', $array);
     }
 }
