@@ -46,6 +46,6 @@ class AjaxViewCategoryController extends Controller
                 ++ $i;
             }
         }
-        return ! empty($string) ? "{$string}" : "";
+        return $string ?? "";
     }
 }
