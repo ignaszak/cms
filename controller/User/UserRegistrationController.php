@@ -6,6 +6,8 @@ use System\Server;
 use Content\Controller\Factory;
 use Content\Controller\UserController;
 use Ignaszak\Registry\RegistryFactory;
+use Mail\Mail;
+use Mail\MailTransport;
 
 class UserRegistrationController extends Controller
 {
@@ -63,6 +65,8 @@ class UserRegistrationController extends Controller
                 ->setRole('user')
                 ->insert();
 
+            $this->sendMail();
+
             Server::setReferData(['registrationSuccess' => 1]);
             Server::headerLocationReferer();
         }
@@ -82,5 +86,20 @@ class UserRegistrationController extends Controller
             ->paginate(false);
         $result = $this->query()->getContent();
         return count($result) === 0 ? true : false;
+    }
+
+    private function sendMail()
+    {
+        $mailTransport = new MailTransport('mail');
+        $mail = new Mail($mailTransport->conf());
+        $mail->setSubject('Registration successful')
+            ->setFrom($mail->getAdminEmail())
+            ->setTo($this->email)
+            ->setBody(
+                "Welcome {$this->login} on {$this->view()->getSiteTitle()}.\n" .
+                "Thank you for registering at our site. You can find your credentials below:\n" .
+                "Login: {$this->login}\nPassword: {$this->password}\nEmail: {$this->email}"
+            );
+        $mail->send();
     }
 }
