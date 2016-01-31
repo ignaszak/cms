@@ -3,7 +3,6 @@ $(document).ready(function(){
         onConfirm : function () {
             window.location = $(this).attr('href');
         },
-        popout : true,
         placement : 'left'
     });
 
@@ -11,6 +10,6 @@ $(document).ready(function(){
         onConfirm : function () {
             $('form').attr("action", $(this).attr('data-href')).submit();
         },
-        popout : true
+        placement : 'bottom'
     });
 });
