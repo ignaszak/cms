@@ -13,28 +13,26 @@ class SavePageController extends Controller
     {
         // Initialize
         $controller = new Factory(new PageController());
-        
+        $date = new \DateTime();
+
         // Find entity by id to update
         if ($_POST['id']) {
             $controller->find($_POST['id']);
+            $date = $controller->entity()->getDate('DateTime');
         }
-        
+
         $alias = $controller->getAlias($_POST['title']);
         $public = @$_POST['public'] == 1 ? 1 : 0;
-        
-        $controller->
-        // Sets data
-        setReference('author', $this->view()
+
+        $controller->setReference('author', $this->view()
             ->getUserId())
-            ->setDate(new \DateTime())
+            ->setDate($date)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
             ->setContent($_POST['content'])
             ->setPublic($public)
-            ->
-        // Execute
-        insert();
-        
+            ->insert();
+
         Server::headerLocation("admin/page/edit/$alias");
     }
 }

@@ -132,9 +132,13 @@ class Posts extends IPostsQuery
      */
     public function getDate($format = "")
     {
-        $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
-        ->getDateFormat();
-        return $this->date->format((empty($format) ? $dateFormat : $format));
+        if ($format == "DateTime") {
+            return $this->date;
+        } else {
+            $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
+                ->getDateFormat();
+            return $this->date->format((empty($format) ? $dateFormat : $format));
+        }
     }
 
     /**

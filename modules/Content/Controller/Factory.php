@@ -28,7 +28,7 @@ class Factory
     public function __call($name, $arguments): Factory
     {
         $this->_controller->setToDataArray($name, $arguments);
-        
+
         return $this;
     }
 
@@ -41,7 +41,7 @@ class Factory
     public function setReference(string $entityName, int $by): Factory
     {
         $this->_controller->setReference($entityName, $by);
-        
+
         return $this;
     }
 
@@ -53,7 +53,7 @@ class Factory
     public function find(int $id): Factory
     {
         $this->_controller->find($id);
-        
+
         return $this;
     }
 
@@ -65,7 +65,7 @@ class Factory
     public function findBy(array $array): Factory
     {
         $this->_controller->findBy($array);
-        
+
         return $this;
     }
 
@@ -77,7 +77,7 @@ class Factory
     public function findOneBy(array $array): Factory
     {
         $this->_controller->findOneBy($array);
-        
+
         return $this;
     }
 
@@ -88,7 +88,7 @@ class Factory
     public function insert(): Factory
     {
         $this->_controller->insert();
-        
+
         return $this;
     }
 
@@ -99,7 +99,7 @@ class Factory
     public function remove(): Factory
     {
         $this->_controller->remove();
-        
+
         return $this;
     }
 
@@ -110,7 +110,7 @@ class Factory
     public function update(): Factory
     {
         $this->_controller->update();
-        
+
         return $this;
     }
 
@@ -132,5 +132,13 @@ class Factory
     public function getId(): int
     {
         return $this->_controller->getEntity()->getId();
+    }
+
+    /**
+     * @return \Entity
+     */
+    public function entity()
+    {
+        return $this->_controller->getEntity();
     }
 }

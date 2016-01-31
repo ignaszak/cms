@@ -13,10 +13,12 @@ class SavePostController extends Controller
     {
         // Initialize
         $controller = new Factory(new PostController());
+        $date = new \DateTime();
 
         // Find entity by id to update
         if ($_POST['id']) {
             $controller->find($_POST['id']);
+            $date = $controller->entity()->getDate('DateTime');
         }
 
         $alias = $controller->getAlias($_POST['title']);
@@ -24,7 +26,7 @@ class SavePostController extends Controller
 
         $controller->setReference('category', $this->getCategoryId())
             ->setReference('author', $this->view()->getUserId())
-            ->setDate(new \DateTime())
+            ->setDate($date)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
             ->setContent($_POST['content'])
