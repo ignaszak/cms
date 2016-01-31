@@ -1,0 +1,15 @@
+.controls {
+ display: block;
+ padding: 5px 0px 5px 0px;
+ margin-bottom: 5px;
+}
+
+.div-scroll {
+ min-height: 200px;
+ max-height: 300px;
+ overflow-y: scroll;
+}
+
+.note-editor .btn {
+ height: 30px;
+}

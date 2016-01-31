@@ -1,41 +1,9 @@
-<!-- include summernote css/js-->
-<link
- href="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.css"
- rel="stylesheet">
-<script
- src="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.min.js"></script>
 
-<script>
-$(document).ready(function() {
-    $('#summernote').summernote({
-        height: 300,
-        focus: true
-    });
-});
-</script>
-
-<style>
-.controls {
- display: block;
- padding: 5px 0px 5px 0px;
- margin-bottom: 5px;
-}
-
-.div-scroll {
- min-height: 200px;
- max-height: 300px;
- overflow-y: scroll;
-}
-
-.note-editor .btn {
- height: 30px;
-}
-</style>
 
 <div class="container-fluid">
 
  <form method="post"
-  action="<?php echo $this->getAdminEditPage('formLink'); ?>">
+  action="<?php echo $this->getAdminEditPage('formLink'); ?>" id="editor">
 
   <div class="panel panel-default panel-white">
    <div class="panel-heading">
@@ -128,7 +96,8 @@ $(document).ready(function() {
     <div class="form-group" style="margin-bottom: 5px;">
      <input type="text" name="title"
       value="<?php echo $this->getAdminEditPage('title'); ?>"
-      class="form-control input-lg" placeholder="Title">
+      class="form-control input-lg" placeholder="Title"
+      required>
     </div>
 
     <div class="form-group">

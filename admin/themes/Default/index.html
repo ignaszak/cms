@@ -18,6 +18,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet/less" href="<?php echo $this->getThemeUrl(); ?>/css/AccordionMenu.less">
     <link rel="stylesheet/less" href="<?php echo $this->getThemeUrl(); ?>/css/panel-bootstrap.less">
+    <link href="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.css" rel="stylesheet">
+    <link href="<?php echo $this->getThemeUrl(); ?>/summernote/summernote-custom.css" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -27,6 +29,8 @@
     <script src="<?php echo $this->getThemeUrl(); ?>/js/bootstrap-confirmation.js"></script>
     <script src="<?php echo $this->getThemeUrl(); ?>/js/confirmation.js"></script>
     <script src="<?php echo $this->getThemeUrl(); ?>/js/AccordionMenu.js"></script>
+    <script src="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.min.js"></script>
+    <script src="<?php echo $this->getThemeUrl(); ?>/summernote/summernote.js"></script>
     <script>
     less = {
         env: 'development',
@@ -71,6 +75,12 @@
         <?php $this->loadView(); ?>
         <?php $this->loadAdminExtensionThemeFile(); ?>
     </div>
+
+    <script>
+    $().ready(function() {
+        $("form#editor").validate();
+    });
+    </script>
 
 </body>
 </html>
