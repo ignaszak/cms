@@ -17,7 +17,7 @@ class MenuCreator extends ExtensionInstances
     {
         $baseUrl = RegistryFactory::start('file')->register('Conf\Conf')
             ->getBaseUrl();
-        $menu = "<ul id=\"accordion\" class=\"accordion\">" . PHP_EOL;
+        $menu = "";
 
         foreach (parent::$extensionArray as $xmlArray) {
             $xml = $xmlArray['xml'];
@@ -42,8 +42,6 @@ class MenuCreator extends ExtensionInstances
 
             $menu .= "</ul>" . PHP_EOL . "</li>" . PHP_EOL;
         }
-
-        $menu .= "</ul>";
 
         self::$sidebarMenu = $menu;
     }
