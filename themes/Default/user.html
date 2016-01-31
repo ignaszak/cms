@@ -1,11 +1,34 @@
-                    <?php if ($this->getFormResponseData('registrationSuccess')): ?>
+                    <?php
+                    if (! $this->isUserLoggedIn()):
+                        if ($this->getFormResponseData('registrationSuccess')):
+                    ?>
 
-                    <p>Registration Success!!!</p>
+                            <h2>Registration Successful.</h2>
+                            <hr />
+                            You can now log in.<br />
+                            <a href="<?php echo $this->getSiteAdress(); ?>user">
+                                Sign in.
+                            </a>
 
-                    <?php elseif ($this->getFormResponseData('userMustBeLogout')): ?>
+                        <?php
+                        elseif ($this->getFormResponseData('userMustBeLogout')):
+                        $form = $this->createForm('user-logout');
+                        ?>
 
-                    <p>Please log out before registration.</p>
+                            <h2>Registration.</h2>
+                            <hr />
+                            Please log out before registration.<br />
+                            <a href="<?php echo $form->getFormActionAdress(); ?>">
+                                Log out.
+                            </a>
 
-                    <?php else:
-                    $this->loadFile('user-login.html');
-                    endif; ?>
+                        <?php
+                        else:
+                            $this->loadFile('user-login.html');
+                        endif;
+                    else:
+                    ?>
+
+                    User account.
+
+                    <?php endif; ?>

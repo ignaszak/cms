@@ -1,0 +1,26 @@
+                            <?php $form = $this->createForm('user-logout'); ?>
+                            <li>
+                                <div class="link">
+                                    <i class="fa fa-user"></i>
+                                    Hello
+                                    <?php echo $this->getUserLogin(); ?>
+                                    <i class="fa fa-chevron-down"></i>
+                                </div>
+                                <ul class="submenu">
+                                    <li>
+                                        <a href="<?php echo $this->getSiteAdress(); ?>user">
+                                            User account
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $this->getSiteAdress(); ?>admin">
+                                            Admin panel
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="<?php echo $form->getFormActionAdress(); ?>">
+                                            Log out
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>

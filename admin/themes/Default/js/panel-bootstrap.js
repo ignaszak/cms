@@ -32,10 +32,8 @@ function responsivePanel() {
 }
 
 $(document).ready(function () {
-
     hideSidebarMenu();
     responsivePanel();
-
 });
 
 $(window).on('resize', function(){
