@@ -2,15 +2,15 @@
 
                     <hr />
 
-                    <?php
-                    /*if ($this->havePost()):*/ foreach ($this->getSearchResult() as $post):
-                    ?>
+                    <?php foreach ($this->getSearchResult() as $post): ?>
 
                     <section id="<?php echo $post->getAlias(); ?>">
                         <div class="row">
                             <div class="col-xs-12">
                                 <h2>
-                                    <?php echo $post->getTitle(); ?>
+                                    <a href="<?php echo $post->getLink(); ?>">
+                                        <?php echo $post->getTitle(); ?>
+                                    </a>
                                 </h2>
                             </div>
                         </div>
@@ -38,16 +38,14 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <?php echo $post->getText(200); ?>
+                                <?php echo $post->getText(); ?>
                             </div>
                         </div>
                     </section>
 
-                    <?php endforeach;/* else: ?>
+                    <hr class="delimiter" />
 
-                    <h1>No posts found</h1>
-
-                    <?php endif;*/ ?>
+                    <?php endforeach; ?>
 
                     <div style="text-align: center;">
                         <?php echo $this->getPaginationTheme(); ?>

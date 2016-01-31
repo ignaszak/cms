@@ -6,7 +6,9 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <h2>
-                                    <?php echo $post->getTitle(); ?>
+                                    <a href="<?php echo $post->getLink(); ?>">
+                                        <?php echo $post->getTitle(); ?>
+                                    </a>
                                 </h2>
                             </div>
                         </div>
@@ -39,9 +41,11 @@
                         </div>
                     </section>
 
+                    <hr class="delimiter" />
+
                     <?php endforeach; else: ?>
 
-                    <h1>No posts found</h1>
+                    <h2>No posts found</h2>
 
                     <?php endif; ?>
 
