@@ -15,6 +15,7 @@ $router->add('user', 'user/login/{userName}', 'Controller\User\UserViewControlle
 $router->add('user', 'user/{method}/{action:login}', 'Controller\User\UserLoginController');
 $router->add('user', 'user/{method}/{action:logout}', 'Controller\User\UserLogoutController');
 $router->add('user', 'user/{method}/{action:registration}', 'Controller\User\UserRegistrationController');
+$router->add('user', 'user/{method}/{action:remind}', 'Controller\User\UserRemindController');
 
 $router->add('search', 'search/{page}', 'Controller\SearchController');
 

@@ -52,6 +52,9 @@ class FormUser extends Form
             if (@$response['error']['formEmailDoubled']) {
                 $array[] = 'Email alredy exists.';
             }
+            if (@$response['error']['formEmailNotExists']) {
+                $array[] = 'Email not exists.';
+            }
             if (@$response['error']['incorrectPassword']) {
                 $array[] = 'Incorrect password.';
             }
