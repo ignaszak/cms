@@ -1,13 +1,17 @@
                     <div class="row well">
                         <div class="col-sm-6">
                             <?php $form = $this->createForm('user-login'); ?>
-                            <p class="bg-danger">
-                                <?php echo $form->getFormMessage(); ?>
-                            </p>
                             <form action="<?php echo $form->getFormActionAdress(); ?>"
                             id="login" method="post" class="form-horizontal">
                                 <fieldset>
                                     <legend>Login</legend>
+                                    <?php if ($form->getFormMessage()):
+                                    print("
+                                        <p class=\"bg-warning\">
+                                            {$form->getFormMessage()}
+                                        </p>
+                                    ");
+                                    endif; ?>
                                     <div class="form-group">
                                         <label for="inputLogin" class="col-sm-4 control-label">
                                             Login/Email
@@ -49,13 +53,17 @@
                         </div>
                         <div class="col-sm-6">
                             <?php $form = $this->createForm('user-registration'); ?>
-                            <p class="bg-danger">
-                                <?php echo $form->getFormMessage(); ?>
-                            </p>
                             <form action="<?php echo $form->getFormActionAdress(); ?>"
                             id="registration" method="post" class="form-horizontal">
                                 <fieldset>
                                     <legend>Registration</legend>
+                                    <?php if ($form->getFormMessage()):
+                                    print("
+                                        <p class=\"bg-warning\">
+                                            {$form->getFormMessage()}
+                                        </p>
+                                    ");
+                                    endif; ?>
                                     <div class="form-group">
                                         <label for="inputLogin" class="col-sm-4 control-label">
                                             Login
@@ -107,6 +115,13 @@
                             method="post" id="remind" class="form-horizontal">
                                 <fieldset>
                                     <legend>Remind password</legend>
+                                    <?php if ($form->getFormMessage()):
+                                    print("
+                                        <p class=\"bg-warning\">
+                                            {$form->getFormMessage()}
+                                        </p>
+                                    ");
+                                    endif; ?>
                                     <div class="form-group">
                                         <label for="inputLogin" class="col-sm-4 control-label">
                                             Email

@@ -30,12 +30,14 @@
                                                     User account
                                                 </a>
                                             </li>
+                                            <?php if ($this->getUserRole() != 'user'): ?>
                                             <li>
                                                 <a href="<?php echo $this->getSiteAdress(); ?>admin">
                                                     <i class="fa fa-cogs"></i>
                                                     Admin panel
                                                 </a>
                                             </li>
+                                            <?php endif; ?>
                                             <li role="separator" class="divider"></li>
                                             <li>
                                                 <a href="<?php echo $form->getFormActionAdress(); ?>">
