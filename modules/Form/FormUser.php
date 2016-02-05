@@ -14,6 +14,12 @@ class FormUser extends Form
 
     /**
      *
+     * @var \Entity\Users
+     */
+    private $_user;
+
+    /**
+     *
      * @var string
      */
     private $formAction;
@@ -25,6 +31,7 @@ class FormUser extends Form
     public function __construct(string $formAction)
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->_user = RegistryFactory::start()->get('user');
         $this->formAction = $formAction;
     }
 
@@ -81,7 +88,8 @@ class FormUser extends Form
     {
         return $this->generateInput('text', 'userLogin', array(
             'class' => 'form-control',
-            'id' => 'userLogin'
+            'id' => 'userLogin',
+            'minlength' => 2
         ), $customItem);
     }
 
@@ -108,7 +116,21 @@ class FormUser extends Form
         return $this->generateInput('password', 'userPassword', array(
             'class' => 'form-control',
             'id' => 'userPassword',
-            'minlength' => '8'
+            'minlength' => 8
+        ), $customItem);
+    }
+
+    /**
+     *
+     * @param array $customItem
+     * @return string
+     */
+    public function inputNewPassword(array $customItem = null): string
+    {
+        return $this->generateInput('password', 'userNewPassword', array(
+            'class' => 'form-control',
+            'id' => 'userNewPassword',
+            'minlength' => 8
         ), $customItem);
     }
 
@@ -121,16 +143,20 @@ class FormUser extends Form
         switch ($this->formAction) {
             case 'registration':
                 return 'registration';
-                break;
+            break;
             case 'login':
                 return 'login';
-                break;
+            break;
             case 'logout':
                 return 'logout';
-                break;
+            break;
             case 'remind':
                 return 'remind';
-                break;
+            break;
+            case 'accountData':
+            case 'accountPassword':
+                return 'account';
+            break;
         }
     }
 
@@ -142,12 +168,18 @@ class FormUser extends Form
      * @param array $customItem
      * @return string
      */
-    private function generateInput(string $type, string $name, array $item, array $customItem = null): string
-    {
+    private function generateInput(
+        string $type,
+        string $name,
+        array $item,
+        array $customItem = null
+    ): string {
+    
         FormGenerator::start($type);
         FormGenerator::addName($name);
         FormGenerator::addItem($item);
         $this->addResponseInputValue($name);
+        $this->addAccountValue($name);
         FormGenerator::addItem($customItem);
         FormGenerator::required();
         return FormGenerator::render();
@@ -161,15 +193,47 @@ class FormUser extends Form
     {
         if ($this->formAction == 'registration') {
             $response = $this->getFormResponseData();
-            if ($name == 'userLogin' && ! @$response['error']['incorrectLogin']) {
+            if ($name == 'userLogin' &&
+                ! @$response['error']['incorrectLogin']) {
                 FormGenerator::addItem(array(
                     'value' => @$response['data']['setLogin']
                 ));
-            } elseif ($name == 'userEmail' && ! @$response['error']['incorrectEmail']) {
+            } elseif ($name == 'userEmail' &&
+                ! @$response['error']['incorrectEmail']) {
                 FormGenerator::addItem(array(
                     'value' => @$response['data']['setEmail']
                 ));
             }
+        }
+    }
+
+    /**
+     *
+     * @param string $name
+     */
+    private function addAccountValue(string $name)
+    {
+        if ($this->formAction == 'accountData') {
+            $entityGetter = $this->getEntityGetter($name);
+            FormGenerator::addItem(array(
+                'value' => $this->_user->getUserSession()->$entityGetter()
+            ));
+        }
+    }
+
+    /**
+     *
+     * @param string $name
+     */
+    private function getEntityGetter(string $name): string
+    {
+        switch ($name) {
+            case 'userLogin':
+                return 'getLogin';
+            break;
+            case 'userEmail':
+                return 'getEmail';
+            break;
         }
     }
 }

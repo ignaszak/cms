@@ -32,6 +32,8 @@ class UserRemindController extends Controller
 
     public function run()
     {
+        Server::setReferData(['form' => 'remind']);
+
         $_user = RegistryFactory::start()->get('user');
         if ($_user->isUserLoggedIn()) {
             Server::headerLocationReferer();
@@ -59,9 +61,10 @@ class UserRemindController extends Controller
                 $this->sendMail($controller->entity()->getLogin());
             } else { // if not
                 Server::setReferData(['error' => ['formEmailNotExists' => 1]]);
+                Server::headerLocationReferer();
             }
 
-            Server::setReferData(['form' => 'remind']);
+            Server::setReferData(['remindSuccess' => 1]);
             Server::headerLocationReferer();
         }
     }

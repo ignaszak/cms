@@ -53,6 +53,17 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('user/post/remind', $adress);
     }
 
+    public function testGetFormActionAccountAdress()
+    {
+        $this->_formUser = new FormUser('accountData');
+        $adress = $this->_formUser->getFormActionAdress();
+        $this->assertEquals('user/post/account', $adress);
+
+        $this->_formUser = new FormUser('accountPassword');
+        $adress = $this->_formUser->getFormActionAdress();
+        $this->assertEquals('user/post/account', $adress);
+    }
+
     public function testGetFormMessage()
     {
         $referData = array();
@@ -64,7 +75,14 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
         $referData['error']['incorrectPassword'] = 1;
         $this->referData($referData);
         $message = $this->_formUser->getFormMessage();
-        $this->assertEquals('Incorrect login.<br>' . 'Login alredy exists.<br>' . 'Incorrect email.<br>' . 'Email alredy exists.<br>' . 'Incorrect password.', $message);
+        $this->assertEquals(
+            'Incorrect login.<br>' .
+            'Login alredy exists.<br>' .
+            'Incorrect email.<br>' .
+            'Email alredy exists.<br>' .
+            'Incorrect password.',
+            $message
+        );
     }
 
     public function testGetEmptyFormMessage()
@@ -74,7 +92,7 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetInputLogin()
     {
-        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" value="">', $this->_formUser->inputLogin());
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2" value="">', $this->_formUser->inputLogin());
     }
 
     public function testGetInputLoginWithReferLoginData()
@@ -85,7 +103,7 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
             )
         );
         $this->referData($refer);
-        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" value="AnyLogin">', $this->_formUser->inputLogin());
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2" value="AnyLogin">', $this->_formUser->inputLogin());
     }
 
     public function testGetInputLoginWithInccorectLogin()
@@ -99,7 +117,7 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
             )
         );
         $this->referData($refer);
-        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin">', $this->_formUser->inputLogin());
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2">', $this->_formUser->inputLogin());
     }
 
     public function testGetInputEmailWithReferEmailData()
@@ -125,6 +143,34 @@ class FormUserTest extends \PHPUnit_Framework_TestCase
         );
         $this->referData($refer);
         $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail">', $this->_formUser->inputEmail());
+    }
+
+    public function testAddAccountValue()
+    {
+        $stub = \Mockery::mock('ViewHelper\User');
+        $stub->shouldReceive('getUserSession')->andReturnSelf()->once();
+        $stub->shouldReceive('getLogin')->once();
+        $stub->shouldReceive('getEmail')->once();
+        $this->_formUser = new FormUser('accountData');
+        MockTest::inject($this->_formUser, '_user', $stub);
+        MockTest::callMockMethod($this->_formUser, 'addAccountValue', array('userLogin'));
+        MockTest::callMockMethod($this->_formUser, 'addAccountValue', array('userEmail'));
+    }
+
+    public function testGetLoginEntityGetter()
+    {
+        $this->assertEquals(
+            'getLogin',
+            MockTest::callMockMethod($this->_formUser, 'getEntityGetter', array('userLogin'))
+        );
+    }
+
+    public function testGetEmailEntityGetter()
+    {
+        $this->assertEquals(
+            'getEmail',
+            MockTest::callMockMethod($this->_formUser, 'getEntityGetter', array('userEmail'))
+        );
     }
 
     private function referData($data = '')

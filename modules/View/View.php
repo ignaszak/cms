@@ -75,7 +75,7 @@ class View
     public function loadFile(string $fileName)
     {
         $file = "{$this->_viewConf->getThemePath()}/{$fileName}";
-        
+
         if (file_exists($file) && is_file($file) && is_readable($file)) {
             include($file);
         }

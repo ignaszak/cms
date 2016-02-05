@@ -1,3 +1,9 @@
+                    <?php if ($this->getFormResponseData('remindSuccess')): ?>
+                    <p class="bg-success">
+                        A new password has been sent to your e-mail address.
+                    </p>
+                    <?php endif; ?>
+
                     <div class="row well">
                         <div class="col-sm-6">
                             <?php $form = $this->createForm('user-login'); ?>
@@ -18,8 +24,7 @@
                                         </label>
                                         <div class="col-sm-8">
                                             <?php echo $form->inputLogin([
-                                                'placeholder' => 'Login or Email',
-                                                'minlength' => '2'
+                                                'placeholder' => 'Login or Email'
                                             ]); ?>
                                         </div>
                                     </div>
@@ -29,8 +34,7 @@
                                         </label>
                                         <div class="col-sm-8">
                                             <?php echo $form->inputPassword([
-                                                'placeholder' => 'Password',
-                                                'minlength' => '8'
+                                                'placeholder' => 'Password'
                                             ]); ?>
                                         </div>
                                     </div>
@@ -70,8 +74,7 @@
                                         </label>
                                         <div class="col-sm-8">
                                             <?php echo $form->inputLogin([
-                                                'placeholder' => 'Login',
-                                                    'minlength' => '2'
+                                                'placeholder' => 'Login'
                                             ]); ?>
                                         </div>
                                     </div>
@@ -81,8 +84,7 @@
                                         </label>
                                         <div class="col-sm-8">
                                             <?php echo $form->inputPassword([
-                                                'placeholder' => 'Password',
-                                                'minlength' => '8'
+                                                'placeholder' => 'Password'
                                             ]); ?>
                                         </div>
                                     </div>

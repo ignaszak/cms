@@ -1,3 +1,89 @@
                     <h2>User account</h2>
 
                     <hr />
+
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <?php $form = $this->createForm('user-accountData'); ?>
+                                <form action="<?php echo $form->getFormActionAdress(); ?>"
+                                id="accountData" method="post" class="form-horizontal">
+                                    <fieldset>
+                                        <legend>Change data</legend>
+                                        <?php if ($form->getFormMessage()):
+                                        print("
+                                            <p class=\"bg-warning\">
+                                                {$form->getFormMessage()}
+                                            </p>
+                                        ");
+                                        endif; ?>
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="col-sm-4 control-label">
+                                                Email
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <?php echo $form->inputEmail([
+                                                'placeholder' => 'Email',
+                                                'minlength' => '2'
+                                            ]); ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-4 col-sm-8">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <?php $form = $this->createForm('user-accountPassword'); ?>
+                                <form action="<?php echo $form->getFormActionAdress(); ?>"
+                                id="accountPassword" method="post" class="form-horizontal">
+                                    <fieldset>
+                                        <legend>Change password</legend>
+                                        <?php if ($form->getFormMessage()):
+                                        print("
+                                            <p class=\"bg-warning\">
+                                                {$form->getFormMessage()}
+                                            </p>
+                                        ");
+                                        endif; ?>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-sm-4 control-label">
+                                                Old password
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <?php echo $form->inputPassword([
+                                                'placeholder' => 'Old password',
+                                                'minlength' => '8'
+                                            ]); ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-sm-4 control-label">
+                                                New password
+                                            </label>
+                                            <div class="col-sm-8">
+                                                <?php echo $form->inputPassword([
+                                                'placeholder' => 'New password',
+                                                'minlength' => '8'
+                                            ]); ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-4 col-sm-8">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
