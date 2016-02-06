@@ -2,11 +2,6 @@
 
                     <hr />
 
-                    <p>
-                        Welcome <?php echo $this->getUserLogin(); ?>.
-                        You last logged on <?php echo $this->getUserLoginDate(); ?>
-                    </p>
-
                     <?php if ($this->getFormResponseData('accountSuccess')): ?>
                     <p class="bg-success">
                         Your data has been successfully updated.
@@ -80,7 +75,7 @@
                                                 New password
                                             </label>
                                             <div class="col-sm-8">
-                                                <?php echo $form->inputPassword([
+                                                <?php echo $form->inputNewPassword([
                                                 'placeholder' => 'New password',
                                                 'minlength' => '8'
                                             ]); ?>
