@@ -8,6 +8,21 @@
                     </p>
                     <?php endif; ?>
 
+                    <div class="well" style="background: #FFF;">
+                        <span style="font-size: 22px">
+                            Hello <?php echo $this->getUserLogin(); ?>
+                        </span>
+                        <?php if ($this->getUserRole() != 'user'): ?>
+                        <hr>
+                        <a href="<?php echo $this->getSiteAdress(); ?>admin"
+                        class="btn btn-success">
+                            <i class="fa fa-cogs"></i>
+                            &nbsp;
+                            Admin panel
+                        </a>
+                        <?php endif; ?>
+                    </div>
+
                     <div class="well">
                         <div class="row">
                             <div class="col-xs-12">
