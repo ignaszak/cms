@@ -11,86 +11,71 @@ use Ignaszak\Registry\RegistryFactory;
 class UserSaveController extends Controller
 {
 
-    /**
-     *
-     * @var \Entity\Users
-     */
-    private $_userEntity;
-
-    private $_user;
-
     public function run()
     {
-        $this->checkIfUserIsLoggedAndSetUserSession();
+        $_user = RegistryFactory::start()->get('user');
+        $this->checkIfUserIsLogged($_user);
 
-        $this->login = $_POST['userLogin'];
-        $this->password = $_POST['userPassword'];
-        $this->remember = @$_POST['userRemember'];
+        $userId = $_user->getUserSession()->getId();
+        $controller = new Factory(new UserController());
+        $controller->find($userId);
 
-        $userId = $this->getUserId();
-
-        if ($userId === 0) {
-            Server::setReferData([
-                'form' => 'login',
-                'error' => ['incorrectLoginOrPassword' => 1]
-            ]);
-            Server::headerLocationReferer();
+        if (!empty($_POST['userPassword'])) {
+            Server::setReferData(['form' => 'accountPassword']);
+            $this->savePassword($controller);
         } else {
-            $controller = new Factory(new UserController());
-            $controller->find($userId)
-                ->setLogDate(new \DateTime('now'))
-                ->update();
-
-            $this->setSession();
-            Server::headerLocationReferer();
+            Server::setReferData(['form' => 'accountData']);
+            $this->saveData($controller);
         }
+
+        $this->reloadUserSession($controller->entity());
+
+        Server::setReferData(['accountSuccess' => 1]);
+        Server::headerLocationReferer();
     }
 
-    private function checkIfUserIsLoggedAndSetUserSession()
+    private function checkIfUserIsLogged(\UserAuth\User $_user)
     {
-        $_user = RegistryFactory::start()->get('user');
         if (! $_user->isUserLoggedIn()) {
             Server::headerLocationReferer();
         }
-        $this->_user = $_user->getUserSession();
     }
 
     /**
      *
-     * @return integer
+     * @param Factory $controller
      */
-    private function getUserId(): int
+    private function savePassword(Factory $controller)
     {
-        $this->query()
-            ->setContent('user')
-            ->findBy($this->isEmail($this->login) ? 'email' : 'login', $this->login)
-            ->force()
-            ->paginate(false);
-        $result = $this->query()->getContent();
-
-        if (count($result) === 1 && HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
-            $this->_userEntity = $result[0];
-            return $this->_userEntity->getId();
-        }
-        return 0;
-    }
-
-    /**
-     *
-     * @param string $value
-     * @return boolean
-     */
-    private function isEmail(string $value): bool
-    {
-        return filter_var($value, FILTER_VALIDATE_EMAIL);
-    }
-
-    private function setSession()
-    {
-        if ($this->remember) {
-            RegistryFactory::start('cookie')->set('userSession', $this->_userEntity);
+        $hash = $controller->entity()->getPassword();
+        if (! HashPass::verifyPassword($_POST['userPassword'], $hash)) {
+            Server::setReferData([
+                'error' => ['incorrectPassword' => 1]
+            ]);
+            Server::headerLocationReferer();
         } else {
-            RegistryFactory::start('session')->set('userSession', $this->_userEntity);
+            $controller->setPassword($_POST['userNewPassword'])->update();
+        }
+    }
+
+    /**
+     *
+     * @param Factory $controller
+     */
+    private function saveData(Factory $controller)
+    {
+        $controller->setEmail($_POST['userEmail'])
+            ->update([
+                'Email'
+            ]);
+    }
+
+    private function reloadUserSession(\Entity\Users $_userEntity)
+    {
+        if (RegistryFactory::start('session')->get('userSession')) {
+            RegistryFactory::start('session')->set('userSession', $_userEntity);
+        } else {
+            RegistryFactory::start('cookie')->set('userSession', $_userEntity);
         }
     }
 }

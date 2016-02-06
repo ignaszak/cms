@@ -2,6 +2,17 @@
 
                     <hr />
 
+                    <p>
+                        Welcome <?php echo $this->getUserLogin(); ?>.
+                        You last logged on <?php echo $this->getUserLoginDate(); ?>
+                    </p>
+
+                    <?php if ($this->getFormResponseData('accountSuccess')): ?>
+                    <p class="bg-success">
+                        Your data has been successfully updated.
+                    </p>
+                    <?php endif; ?>
+
                     <div class="well">
                         <div class="row">
                             <div class="col-xs-12">
