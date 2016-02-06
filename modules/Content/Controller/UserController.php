@@ -26,9 +26,9 @@ class UserController extends Controller
         $this->_em->flush();
     }
 
-    public function update()
+    public function update(array $array = [])
     {
-        $this->validAndAddToEntity(array());
+        $this->validAndAddToEntity($array);
         $this->_em->persist($this->_entity);
         $this->_em->flush();
     }

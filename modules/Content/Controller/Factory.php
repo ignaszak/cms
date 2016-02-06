@@ -107,9 +107,9 @@ class Factory
      *
      * @return Factory
      */
-    public function update(): Factory
+    public function update(array $array = []): Factory
     {
-        $this->_controller->update();
+        $this->_controller->update($array);
 
         return $this;
     }

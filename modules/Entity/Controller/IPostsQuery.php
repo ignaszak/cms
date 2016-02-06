@@ -70,10 +70,15 @@ abstract class IPostsQuery
      */
     public function getText($cut = 500)
     {
-        if (Router::getRoute('route1') == 'post' || ! $cut || $this->showAllText) {
+        if ($this->isPostOpen() || ! $cut || $this->showAllText) {
             return $this->getContent();
         } else {
-            return (new TextFormat())->truncateHtml($this->getContent(), $cut, "...") . $this->getMoreLink();
+            $textFormat = new TextFormat();
+            return $textFormat->truncateHtml(
+                $this->getContent(),
+                $cut,
+                "..."
+            ) . $this->getMoreLink();
         }
     }
 
@@ -89,5 +94,14 @@ abstract class IPostsQuery
     private function getMoreLink()
     {
         return "<a href=\"{$this->getLink()}\">Read more</a>";
+    }
+
+    /**
+     * @return boolean
+     */
+    private function isPostOpen()
+    {
+        return Router::getRoute('route1') == 'post' &&
+            ! empty(Router::getRoute('alias'));
     }
 }

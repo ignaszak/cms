@@ -4,6 +4,7 @@ namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use UserAuth\HashPass;
+use Ignaszak\Registry\RegistryFactory;
 
 /**
  * Users
@@ -179,9 +180,15 @@ class Users
      *
      * @return \DateTime
      */
-    public function getRegDate()
+    public function getRegDate($format = "")
     {
-        return $this->regDate;
+        if ($format == "DateTime") {
+            return $this->regDate;
+        } else {
+            $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
+                ->getDateFormat();
+            return $this->regDate->format((empty($format) ? $dateFormat : $format));
+        }
     }
 
     /**
@@ -203,9 +210,15 @@ class Users
      *
      * @return \DateTime
      */
-    public function getLogDate()
+    public function getLogDate($format = "")
     {
-        return $this->logDate;
+        if ($format == "DateTime") {
+            return $this->logDate;
+        } else {
+            $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
+                ->getDateFormat();
+            return $this->logDate->format((empty($format) ? $dateFormat : $format));
+        }
     }
 
     /**
