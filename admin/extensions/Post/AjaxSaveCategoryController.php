@@ -1,12 +1,12 @@
 <?php
 namespace AdminController\Post;
 
-use FrontController\Controller;
-use Content\Controller\Factory;
-use Content\Controller\CategoryController;
+use FrontController\Controller as FrontController;
+use Content\Controller\Controller;
+use Entity\Categories;
 use Ignaszak\Registry\RegistryFactory;
 
-class AjaxSaveCategoryController extends Controller
+class AjaxSaveCategoryController extends FrontController
 {
 
     private $categoryArray = [];
@@ -24,7 +24,7 @@ class AjaxSaveCategoryController extends Controller
         }
 
         // Initialize
-        $controller = new Factory(new CategoryController());
+        $controller = new Controller(new Categories());
         // Find entity by id to update
         $refresh = 'refresh';
 
@@ -47,7 +47,7 @@ class AjaxSaveCategoryController extends Controller
 
         } elseif ($_POST['action'] == 'delete') {
 
-            $controller = new Factory(new CategoryController());
+            $controller = new Controller(new Categories());
             $idArray = array_filter($this->getChildCategories($_POST['id']));
             $controller->findBy(['id' => $idArray])
                 ->remove();

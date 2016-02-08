@@ -1,9 +1,9 @@
 <?php
 namespace Controller;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 
-class ViewPostController extends Controller
+class ViewPostController extends FrontController
 {
 
     public function run()

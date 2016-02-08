@@ -1,11 +1,11 @@
 <?php
 namespace Controller;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
 use System\Server;
 
-class SearchController extends Controller
+class SearchController extends FrontController
 {
     /**
      *

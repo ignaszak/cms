@@ -1,10 +1,10 @@
 <?php
 namespace AdminController\Post;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
 
-class ViewPostController extends Controller
+class ViewPostController extends FrontController
 {
 
     public function run()

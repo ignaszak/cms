@@ -1,13 +1,13 @@
 <?php
 namespace AdminController\Page;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
-use Content\Controller\Factory;
-use Content\Controller\PageController;
+use Content\Controller\Controller;
+use Entity\Pages;
 use System\Server;
 
-class EditPageController extends Controller
+class EditPageController extends FrontController
 {
 
     /**
@@ -31,7 +31,7 @@ class EditPageController extends Controller
         $this->view()->addView('theme/page-edit.html');
 
         if ($this->action == 'delete' && $this->alias) {
-            $controller = new Factory(new PageController());
+            $controller = new Controller(new Pages());
             $controller->findOneBy([
                 'alias' => $this->alias
             ])->remove();
@@ -50,7 +50,7 @@ class EditPageController extends Controller
 
         private $returnData;
 
-        public function __construct(Controller $_controller)
+        public function __construct(FrontController $_controller)
         {
             parent::__construct($_controller);
             $this->returnData = $this->_controller->view()

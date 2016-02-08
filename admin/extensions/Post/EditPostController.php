@@ -1,13 +1,13 @@
 <?php
 namespace AdminController\Post;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Server;
 use FrontController\ViewHelperController;
-use Content\Controller\Factory;
-use Content\Controller\PostController;
+use Content\Controller\Controller;
+use Entity\Posts;
 
-class EditPostController extends Controller
+class EditPostController extends FrontController
 {
 
     /**
@@ -30,7 +30,7 @@ class EditPostController extends Controller
         $this->view()->addView('theme/post-edit.html');
 
         if ($this->action == 'delete' && $this->alias) {
-            $controller = new Factory(new PostController());
+            $controller = new Controller(new Posts());
             $controller->findOneBy([
                 'alias' => $this->alias
             ])->remove();
@@ -49,7 +49,7 @@ class EditPostController extends Controller
 
         private $returnData;
 
-        public function __construct(Controller $_controller)
+        public function __construct(FrontController $_controller)
         {
             parent::__construct($_controller);
             $this->returnData = $this->_controller->view()->getFormResponseData('data');

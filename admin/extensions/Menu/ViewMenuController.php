@@ -1,10 +1,10 @@
 <?php
 namespace AdminController\Menu;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
 
-class ViewMenuController extends Controller
+class ViewMenuController extends FrontController
 {
 
     public function run()

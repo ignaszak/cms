@@ -1,13 +1,13 @@
 <?php
 namespace AdminController\Menu;
 
-use FrontController\Controller;
-use Content\Controller\Factory;
-use Content\Controller\MenuController;
-use Content\Controller\MenuItemsController;
+use FrontController\Controller as FrontController;
+use Content\Controller\Controller;
+use Entity\Menus;
+use Entity\MenuItems;
 use System\Server;
 
-class SaveMenuController extends Controller
+class SaveMenuController extends FrontController
 {
 
     /**
@@ -49,7 +49,7 @@ class SaveMenuController extends Controller
 
     private function saveMenuEntityAndSetLastAddedId()
     {
-        $controller = new Factory(new MenuController());
+        $controller = new Controller(new Menus());
         if (! empty(@$_POST['id'])) {
             $controller->find($_POST['id']);
         }
@@ -64,7 +64,7 @@ class SaveMenuController extends Controller
         $idArray = @$_POST['menuId'];
         $countAdress = count($_POST['menuAdress']);
         for ($i = 0; $i < $countAdress; ++ $i) {
-            $controller = new Factory(new MenuItemsController());
+            $controller = new Controller(new MenuItems());
             if (! empty($idArray[$i])) {
                 $controller->find($idArray[$i]);
             }
@@ -81,14 +81,14 @@ class SaveMenuController extends Controller
         $removeIdArray = @$_POST['menuRemove'];
         $count = count($removeIdArray);
         for ($i = 0; $i < $count; ++ $i) {
-            $controller = new Factory(new MenuItemsController());
+            $controller = new Controller(new MenuItems());
             $controller->find($removeIdArray[$i])->remove();
         }
     }
 
     private function removeMenuWithMenuItems()
     {
-        $controller = new Factory(new MenuController());
+        $controller = new Controller(new Menus());
         $controller->find($this->id)->remove();
     }
 }

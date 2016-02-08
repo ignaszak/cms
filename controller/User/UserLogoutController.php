@@ -1,11 +1,11 @@
 <?php
 namespace Controller\User;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Server;
 use Ignaszak\Registry\RegistryFactory;
 
-class UserLogoutController extends Controller
+class UserLogoutController extends FrontController
 {
 
     public function run()

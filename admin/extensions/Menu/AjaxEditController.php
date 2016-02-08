@@ -1,11 +1,11 @@
 <?php
 namespace AdminController\Menu;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Router\Storage as Router;
 use Entity\MenuItems;
 
-class AjaxEditController extends Controller
+class AjaxEditController extends FrontController
 {
 
     public function run()

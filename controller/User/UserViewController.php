@@ -1,9 +1,9 @@
 <?php
 namespace Controller\User;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 
-class UserViewController extends Controller
+class UserViewController extends FrontController
 {
 
     public function run()

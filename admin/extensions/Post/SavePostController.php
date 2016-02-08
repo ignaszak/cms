@@ -1,18 +1,18 @@
 <?php
 namespace AdminController\Post;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Server;
-use Content\Controller\Factory;
-use Content\Controller\PostController;
+use Content\Controller\Controller;
+use Entity\Posts;
 
-class SavePostController extends Controller
+class SavePostController extends FrontController
 {
 
     public function run()
     {
         // Initialize
-        $controller = new Factory(new PostController());
+        $controller = new Controller(new Posts());
         $date = new \DateTime();
 
         // Find entity by id to update

@@ -1,14 +1,14 @@
 <?php
 namespace Controller\User;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Server;
 use UserAuth\HashPass;
-use Content\Controller\Factory;
-use Content\Controller\UserController;
+use Content\Controller\Controller;
+use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
 
-class UserSaveController extends Controller
+class UserSaveController extends FrontController
 {
 
     public function run()
@@ -17,7 +17,7 @@ class UserSaveController extends Controller
         $this->checkIfUserIsLogged($_user);
 
         $userId = $_user->getUserSession()->getId();
-        $controller = new Factory(new UserController());
+        $controller = new Controller(new Users());
         $controller->find($userId);
 
         if (!empty($_POST['userPassword'])) {
@@ -43,9 +43,9 @@ class UserSaveController extends Controller
 
     /**
      *
-     * @param Factory $controller
+     * @param Controller $controller
      */
-    private function savePassword(Factory $controller)
+    private function savePassword(Controller $controller)
     {
         $hash = $controller->entity()->getPassword();
         if (! HashPass::verifyPassword($_POST['userPassword'], $hash)) {
@@ -60,9 +60,9 @@ class UserSaveController extends Controller
 
     /**
      *
-     * @param Factory $controller
+     * @param Controller $controller
      */
-    private function saveData(Factory $controller)
+    private function saveData(Controller $controller)
     {
         $controller->setEmail($_POST['userEmail'])
             ->update([

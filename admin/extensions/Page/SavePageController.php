@@ -1,18 +1,18 @@
 <?php
 namespace AdminController\Page;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Server;
-use Content\Controller\Factory;
-use Content\Controller\PageController;
+use Content\Controller\Controller;
+use Entity\Pages;
 
-class SavePageController extends Controller
+class SavePageController extends FrontController
 {
 
     public function run()
     {
         // Initialize
-        $controller = new Factory(new PageController());
+        $controller = new Controller(new Pages());
         $date = new \DateTime();
 
         // Find entity by id to update

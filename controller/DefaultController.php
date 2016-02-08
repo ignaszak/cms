@@ -1,9 +1,9 @@
 <?php
 namespace Controller;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 
-class DefaultController extends Controller
+class DefaultController extends FrontController
 {
 
     public function run()

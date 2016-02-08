@@ -1,14 +1,14 @@
 <?php
 namespace Controller\User;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Server;
 use UserAuth\HashPass;
-use Content\Controller\Factory;
-use Content\Controller\UserController;
+use Content\Controller\Controller;
+use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
 
-class UserLoginController extends Controller
+class UserLoginController extends FrontController
 {
 
     /**
@@ -55,7 +55,7 @@ class UserLoginController extends Controller
             ]);
             Server::headerLocationReferer();
         } else {
-            $controller = new Factory(new UserController());
+            $controller = new Controller(new Users());
             $controller->find($userId)
                 ->setLogDate(new \DateTime('now'))
                 ->update();

@@ -1,10 +1,10 @@
 <?php
 namespace AdminController\Settings;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
 
-class ViewSettingsController extends Controller
+class ViewSettingsController extends FrontController
 {
 
     public function run()
@@ -31,7 +31,7 @@ class ViewSettingsController extends Controller
              *
              * @param Controller $_controller
              */
-        public function __construct(Controller $_controller)
+        public function __construct(FrontController $_controller)
         {
             parent::__construct($_controller);
             $this->_controller->query()->setContent('options');

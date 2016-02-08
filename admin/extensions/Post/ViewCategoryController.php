@@ -1,9 +1,9 @@
 <?php
 namespace AdminController\Post;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 
-class ViewCategoryController extends Controller
+class ViewCategoryController extends FrontController
 {
 
     public function run()

@@ -1,10 +1,10 @@
 <?php
 namespace AdminController\Post;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use Ignaszak\Registry\RegistryFactory;
 
-class AjaxViewCategoryController extends Controller
+class AjaxViewCategoryController extends FrontController
 {
 
     private $categoryArray = [];

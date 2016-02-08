@@ -1,10 +1,10 @@
 <?php
 namespace AdminController\Page;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
 
-class ViewPageController extends Controller
+class ViewPageController extends FrontController
 {
 
     public function run()

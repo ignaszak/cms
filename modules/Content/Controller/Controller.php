@@ -5,30 +5,30 @@ use Conf\DB\DBDoctrine;
 use CMSException\InvalidMethodException;
 use Ignaszak\Registry\RegistryFactory;
 
-abstract class Controller
+class Controller
 {
 
     /**
      *
-     * @var array
+     * @var string[]
      */
     public $entitySettersArray = [];
 
     /**
      *
-     * @var EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     protected $_em;
 
     /**
      *
-     * @var Entity
+     * @var \Entity
      */
     protected $_entity;
 
     /**
      *
-     * @var EntityController
+     * @var \Entity\Controller\EntityController
      */
     private $_entityController;
 
@@ -38,82 +38,141 @@ abstract class Controller
      */
     private $_settertsValidator;
 
-    public function __construct()
+    /**
+     *
+     * @param \Entity $_entity
+     */
+    public function __construct($_entity)
     {
         $this->_em = DBDoctrine::em();
         $this->_entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');
         $this->_settertsValidator = new SettersValidator($this);
-    }
-
-    /**
-     *
-     * @return Entity
-     */
-    public function getEntity()
-    {
-        return $this->_entity;
-    }
-
-    /**
-     *
-     * @param int $id
-     */
-    public function find(int $id)
-    {
-        $entityName = get_class($this->_entity);
-        $this->_entity = $this->_em->getReference($entityName, $id);
-    }
-
-    /**
-     *
-     * @param array $array
-     */
-    public function findOneBy(array $array)
-    {
-        $entityName = get_class($this->_entity);
-        $this->_entity = $this->_em->getRepository($entityName)->findOneBy($array);
-    }
-
-    /**
-     *
-     * @param array $array
-     */
-    public function findBy(array $array)
-    {
-        $entityName = get_class($this->_entity);
-        $this->_entity = $this->_em->getRepository($entityName)->findBy($array);
+        $this->_entity = $_entity;
     }
 
     /**
      *
      * @param string $name
      * @param array $arguments
-     * @throws InvalidMethodException
+     * @return Controller
      */
-    public function saveEntitySetter(string $name, array $arguments)
+    public function __call(string $name, array $arguments): Controller
     {
-        if (method_exists($this->_entity, $name)) {
-            $this->entitySettersArray[$name] = @$arguments[0];
-        } else {
-            throw new InvalidMethodException("Method '$name' does not exist");
-        }
+        $this->saveEntitySetter($name, $arguments);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param string $string
+     * @return string
+     */
+    public function getAlias(string $string): string
+    {
+        $_alias = new Alias($this->_entity);
+        return $_alias->getAlias($string);
+    }
+
+    /**
+     *
+     * @return \Entity
+     */
+    public function entity()
+    {
+        return $this->_entity;
     }
 
     /**
      *
      * @param string $entityName
      * @param int $by
+     * @return Controller
      */
-    public function setReference(string $entityName, int $by)
+    public function setReference(string $entityName, int $by): Controller
     {
         $entityClass = $this->_entityController->getEntity($entityName);
         $entityObject = $this->_em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
         $this->saveEntitySetter($name, [$entityObject]);
+
+        return $this;
     }
 
-    public function remove()
+    /**
+     *
+     * @param int $id
+     * @return Controller
+     */
+    public function find(int $id): Controller
+    {
+        $entityName = get_class($this->_entity);
+        $this->_entity = $this->_em->getReference($entityName, $id);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param array $array
+     * @return Controller
+     */
+    public function findOneBy(array $array): Controller
+    {
+        $entityName = get_class($this->_entity);
+        $this->_entity = $this->_em->getRepository($entityName)->findOneBy($array);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param array $array
+     * @return Controller
+     */
+    public function findBy(array $array): Controller
+    {
+        $entityName = get_class($this->_entity);
+        $this->_entity = $this->_em->getRepository($entityName)->findBy($array);
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param array $array
+     * @return Controller
+     */
+    public function insert(array $array = []): Controller
+    {
+        $this->_settertsValidator->valid($array);
+        $this->callEntitySettersFromArray();
+        $this->_em->persist($this->_entity);
+        $this->_em->flush();
+
+        return $this;
+    }
+
+    /**
+     *
+     * @param array $array
+     * @return Controller
+     */
+    public function update(array $array = []): Controller
+    {
+        $this->_settertsValidator->valid($array);
+        $this->callEntitySettersFromArray();
+        $this->_em->persist($this->_entity);
+        $this->_em->flush();
+
+        return $this;
+    }
+
+    /**
+     * @return Controller
+     */
+    public function remove(): Controller
     {
         if (is_array($this->_entity)) {
             foreach ($this->_entity as $entity) {
@@ -124,13 +183,23 @@ abstract class Controller
             $this->_em->remove($this->_entity);
             $this->_em->flush($this->_entity);
         }
+
+        return $this;
     }
 
-    abstract public function insert();
-
-    protected function validSetters(array $validPatternsArray)
+    /**
+     *
+     * @param string $name
+     * @param array $arguments
+     * @throws InvalidMethodException
+     */
+    protected function saveEntitySetter(string $name, array $arguments)
     {
-        $this->_settertsValidator->valid($validPatternsArray);
+        if (method_exists($this->_entity, $name)) {
+            $this->entitySettersArray[$name] = @$arguments[0];
+        } else {
+            throw new InvalidMethodException("Method '$name' does not exist");
+        }
     }
 
     protected function callEntitySettersFromArray()

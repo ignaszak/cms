@@ -1,15 +1,15 @@
 <?php
 namespace Controller\User;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use System\Server;
-use Content\Controller\Factory;
+use Content\Controller\Controller;
 use Content\Controller\UserController;
 use Ignaszak\Registry\RegistryFactory;
 use Mail\Mail;
 use Mail\MailTransport;
 
-class UserRegistrationController extends Controller
+class UserRegistrationController extends FrontController
 {
 
     /**
@@ -56,7 +56,7 @@ class UserRegistrationController extends Controller
             Server::setReferData(['error' => $referData]);
             Server::headerLocationReferer();
         } else {
-            $controller = new Factory(new UserController());
+            $controller = new Controller(new UserController());
             $controller->setLogin($this->login)
                 ->setEmail($this->email)
                 ->setPassword($this->password)

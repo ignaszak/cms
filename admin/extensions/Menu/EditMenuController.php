@@ -1,10 +1,10 @@
 <?php
 namespace AdminController\Menu;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
 
-class EditMenuController extends Controller
+class EditMenuController extends FrontController
 {
 
     public function run()
@@ -27,7 +27,7 @@ class EditMenuController extends Controller
              */
         private $id;
 
-        public function __construct(Controller $_controller)
+        public function __construct(FrontController $_controller)
         {
             parent::__construct($_controller);
             $this->id = $this->_controller->view()->getRoute('id');

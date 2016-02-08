@@ -1,9 +1,9 @@
 <?php
 namespace AdminController\Menu;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 
-class AjaxLoadController extends Controller
+class AjaxLoadController extends FrontController
 {
 
     public function run()

@@ -1,11 +1,11 @@
 <?php
 namespace Controller;
 
-use FrontController\Controller;
+use FrontController\Controller as FrontController;
 use Ignaszak\Registry\RegistryFactory;
 use System\Server;
 
-class SendMailController extends Controller
+class SendMailController extends FrontController
 {
 
     public function run()

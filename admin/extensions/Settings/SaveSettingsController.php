@@ -1,12 +1,12 @@
 <?php
 namespace AdminController\Settings;
 
-use FrontController\Controller;
-use Content\Controller\Factory;
-use Content\Controller\OptionController;
+use FrontController\Controller as FrontController;
+use Content\Controller\Decorator\ConfDecorator;
+use Entity\Options;
 use System\Server;
 
-class SaveSettingsController extends Controller
+class SaveSettingsController extends FrontController
 {
 
     public function run()
@@ -14,7 +14,7 @@ class SaveSettingsController extends Controller
         $this->query()->setContent('options');
         $_option = $this->query()->getContent()[0];
 
-        $controller = new Factory(new OptionController());
+        $controller = new ConfDecorator(new Options());
         $controller->find(1)
             ->setSiteTitle(@$_POST['title'] ?? $_option->getSiteTitle())
             ->setSiteDescription(@$_POST['description'] ?? $_option->getSiteDescription())
