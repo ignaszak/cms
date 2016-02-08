@@ -14,21 +14,23 @@ class UserController extends Controller
 
     public function insert()
     {
-        $this->validAndAddToEntity(array(
+        $this->validSetters([
             'Login',
             'Email',
             'Password',
             'RegDate',
             'LogDate',
             'Role'
-        ));
+        ]);
+        $this->callEntitySettersFromArray();
         $this->_em->persist($this->_entity);
         $this->_em->flush();
     }
 
     public function update(array $array = [])
     {
-        $this->validAndAddToEntity($array);
+        $this->validSetters($array);
+        $this->callEntitySettersFromArray();
         $this->_em->persist($this->_entity);
         $this->_em->flush();
     }

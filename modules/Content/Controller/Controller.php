@@ -1,14 +1,18 @@
 <?php
 namespace Content\Controller;
 
-use System\Server;
 use Conf\DB\DBDoctrine;
 use CMSException\InvalidMethodException;
-use Validation\ContentValidation;
 use Ignaszak\Registry\RegistryFactory;
 
 abstract class Controller
 {
+
+    /**
+     *
+     * @var array
+     */
+    public $entitySettersArray = [];
 
     /**
      *
@@ -24,39 +28,22 @@ abstract class Controller
 
     /**
      *
-     * @var ContentValidation
-     */
-    protected $_contentValidation;
-
-    /**
-     *
-     * @var array
-     */
-    protected $dataArray = array();
-
-    /**
-     *
-     * @var string[]
-     */
-    protected $validPatternsArray = array();
-
-    /**
-     *
      * @var EntityController
      */
     private $_entityController;
 
     /**
      *
-     * @var string[]
+     * @var SettersValidator
      */
-    private $errorArray = array();
+    private $_settertsValidator;
 
     public function __construct()
     {
         $this->_em = DBDoctrine::em();
-        $this->_contentValidation = new ContentValidation();
-        $this->_entityController = RegistryFactory::start()->register('Entity\Controller\EntityController');
+        $this->_entityController = RegistryFactory::start()
+            ->register('Entity\Controller\EntityController');
+        $this->_settertsValidator = new SettersValidator($this);
     }
 
     /**
@@ -104,10 +91,10 @@ abstract class Controller
      * @param array $arguments
      * @throws InvalidMethodException
      */
-    public function setToDataArray(string $name, array $arguments)
+    public function saveEntitySetter(string $name, array $arguments)
     {
         if (method_exists($this->_entity, $name)) {
-            $this->dataArray[$name] = @$arguments[0];
+            $this->entitySettersArray[$name] = @$arguments[0];
         } else {
             throw new InvalidMethodException("Method '$name' does not exist");
         }
@@ -123,7 +110,7 @@ abstract class Controller
         $entityClass = $this->_entityController->getEntity($entityName);
         $entityObject = $this->_em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
-        $this->setToDataArray($name, array(
+        $this->saveEntitySetter($name, array(
             $entityObject
         ));
     }
@@ -141,65 +128,17 @@ abstract class Controller
         }
     }
 
-    /**
-     *
-     * @param array $validPatternsArray
-     */
-    protected function validAndAddToEntity(array $validPatternsArray)
+    abstract public function insert();
+
+    protected function validSetters(array $validPatternsArray)
     {
-        $this->validPatternsArray = $validPatternsArray;
-        $this->validData();
-        $this->sendErrorsIfExists();
-        $this->callEntitySetters();
+        $this->_settertsValidator->valid($validPatternsArray);
     }
 
-    private function validData()
+    protected function callEntitySettersFromArray()
     {
-        foreach ($this->validPatternsArray as $pattern) {
-            
-            $this->errorArray["incorrect$pattern"] = 1;
-            $method = "valid$pattern";
-            
-            foreach ($this->dataArray as $name => $arguments) {
-                
-                if (strpos($name, $pattern) !== false) {
-                    
-                    if ($this->_contentValidation->$method($arguments)) {
-                        unset($this->errorArray["incorrect$pattern"]);
-                    }
-                }
-            }
-        }
-    }
-
-    private function sendErrorsIfExists()
-    {
-        if (count($this->errorArray) > 0) {
-            
-            foreach ($this->dataArray as $key => $data) {
-                if (is_object($data)) {
-                    if (method_exists($data, 'getId')) {
-                        $this->dataArray[$key] = $data->getId();
-                    } else {
-                        unset($this->dataArray[$key]);
-                    }
-                }
-            }
-            
-            Server::setReferData(array(
-                'data' => $this->dataArray,
-                'error' => $this->errorArray
-            ));
-            Server::headerLocationReferer();
-        }
-    }
-
-    private function callEntitySetters()
-    {
-        foreach ($this->dataArray as $name => $arguments) {
+        foreach ($this->entitySettersArray as $name => $arguments) {
             $this->_entity->$name($arguments);
         }
     }
-
-    abstract public function insert();
 }

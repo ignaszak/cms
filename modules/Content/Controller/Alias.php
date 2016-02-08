@@ -33,7 +33,10 @@ class Alias
     public function __construct($_entity)
     {
         if (! is_object($_entity)) {
-            throw new InvalidInstanceException('Second argument passed to ' . __CLASS__ . '::aliasNotExistsInDB() must be an Entity instance');
+            throw new InvalidInstanceException(
+                'Second argument passed to ' . __CLASS__ .
+                '::aliasNotExistsInDB() must be an Entity instance'
+            );
         } else {
             $this->_em = DBDoctrine::em();
             $this->_entity = $_entity;

@@ -14,7 +14,8 @@ class CategoryController extends Controller
 
     public function insert()
     {
-        $this->validAndAddToEntity(array());
+        $this->validSetters([]);
+        $this->callEntitySettersFromArray();
         $this->_em->persist($this->_entity);
         $this->_em->flush();
     }

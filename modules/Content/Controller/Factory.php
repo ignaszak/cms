@@ -25,11 +25,30 @@ class Factory
      * @param array $arguments
      * @return Factory
      */
-    public function __call($name, $arguments): Factory
+    public function __call(string $name, array $arguments): Factory
     {
-        $this->_controller->setToDataArray($name, $arguments);
+        $this->_controller->saveEntitySetter($name, $arguments);
 
         return $this;
+    }
+
+    /**
+     *
+     * @param string $string
+     * @return string
+     */
+    public function getAlias(string $string): string
+    {
+        $_alias = new Alias($this->_controller->getEntity());
+        return $_alias->getAlias($string);
+    }
+
+    /**
+     * @return \Entity
+     */
+    public function entity()
+    {
+        return $this->_controller->getEntity();
     }
 
     /**
@@ -112,33 +131,5 @@ class Factory
         $this->_controller->update($array);
 
         return $this;
-    }
-
-    /**
-     *
-     * @param string $string
-     * @return string
-     */
-    public function getAlias(string $string): string
-    {
-        $_alias = new Alias($this->_controller->getEntity());
-        return $_alias->getAlias($string);
-    }
-
-    /**
-     *
-     * @return integer
-     */
-    public function getId(): int
-    {
-        return $this->_controller->getEntity()->getId();
-    }
-
-    /**
-     * @return \Entity
-     */
-    public function entity()
-    {
-        return $this->_controller->getEntity();
     }
 }

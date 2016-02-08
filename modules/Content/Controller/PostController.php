@@ -14,14 +14,15 @@ class PostController extends Controller
 
     public function insert()
     {
-        $this->validAndAddToEntity(array(
+        $this->validSetters([
             'Category',
             'Author',
             'Date',
             'Title',
             'Alias',
             'Content'
-        ));
+        ]);
+        $this->callEntitySettersFromArray();
         $this->_em->persist($this->_entity);
         $this->_em->flush();
     }

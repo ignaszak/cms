@@ -33,9 +33,9 @@ class SaveMenuController extends Controller
     {
         $this->action = $this->view()->getRoute('action');
         $this->id = $this->view()->getRoute('id');
-        
+
         if ($this->action == 'save') {
-            
+
             $this->saveMenuEntityAndSetLastAddedId();
             $this->saveMenuItemsEntity();
             $this->removeMenuItemsEntity();
@@ -43,7 +43,7 @@ class SaveMenuController extends Controller
         } elseif ($this->action == 'delete' && $this->id) {
             $this->removeMenuWithMenuItems();
         }
-        
+
         Server::headerLocation("admin/menu/view/");
     }
 
@@ -56,7 +56,7 @@ class SaveMenuController extends Controller
         $controller->setName($_POST['name'])
             ->setPosition($_POST['position'])
             ->insert();
-        $this->lastId = $controller->getId();
+        $this->lastId = $controller->entity()->getId();
     }
 
     private function saveMenuItemsEntity()

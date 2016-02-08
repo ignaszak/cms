@@ -7,7 +7,7 @@ logs/
 conf/DB/DBSettings.php
 tests/Init/InitDoctrineSettings.php
 *.less
-!admin/*.less
+themes/Default/css/variables.less
 .htaccess
 .git
 .metadata

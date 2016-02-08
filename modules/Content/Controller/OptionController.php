@@ -15,12 +15,19 @@ class OptionController extends Controller
 
     public function insert()
     {
-        $this->validAndAddToEntity(array());
+        $this->validSetters([]);
+        $this->callEntitySettersFromArray();
         $this->_em->persist($this->_entity);
         $this->_em->flush();
         RegistryFactory::start('file')->remove('Conf\Conf');
     }
 
+    /**
+     * Disable remove
+     *
+     * {@inheritDoc}
+     * @see \Content\Controller\Controller::remove()
+     */
     public function remove()
     {
     }
