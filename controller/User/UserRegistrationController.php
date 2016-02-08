@@ -44,7 +44,7 @@ class UserRegistrationController extends Controller
         $this->email = $_POST['userEmail'];
         $this->password = $_POST['userPassword'];
 
-        $referData = array();
+        $referData = [];
         if (! $this->dataNotExistInDatabase('login', $this->login)) {
             $referData['formLoginDoubled'] = 1;
         }

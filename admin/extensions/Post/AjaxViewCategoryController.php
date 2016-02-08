@@ -7,7 +7,7 @@ use Ignaszak\Registry\RegistryFactory;
 class AjaxViewCategoryController extends Controller
 {
 
-    private $categoryArray = array();
+    private $categoryArray = [];
 
     public function __construct()
     {

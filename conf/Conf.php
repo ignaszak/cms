@@ -12,7 +12,7 @@ class Conf
      *
      * @var mixed[]
      */
-    private $optionsArray = array();
+    private $optionsArray = [];
 
     /**
      *
@@ -22,7 +22,7 @@ class Conf
     {
         $_options = DBDoctrine::em()->find($entity, 1);
         $optonsMethods = get_class_methods($entity);
-        
+
         foreach ($optonsMethods as $method) {
             if (! preg_match('/^(id|set)/', $method)) {
                 $this->optionsArray[$method] = $_options->$method();
@@ -37,12 +37,14 @@ class Conf
      * @throws ConfException
      * @return mixed
      */
-    public function __call($function, $args)
+    public function __call(string $function, array $args)
     {
         if (array_key_exists($function, $this->optionsArray)) {
             return $this->optionsArray[$function];
         } else {
-            throw new ConfException("Call to undefined method " . __CLASS__ . "::$function()");
+            throw new ConfException(
+                "Call to undefined method " . __CLASS__ . "::$function()"
+            );
         }
     }
 }

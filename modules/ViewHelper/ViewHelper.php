@@ -36,19 +36,17 @@ class ViewHelper
      * @throws InvalidClassException
      * @return mixed
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, array $arguments)
     {
-        $extensionInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName($name);
+        $extensionInstance = $this->_viewHelperExtension
+            ->getExtensionInstanceFromMethodName($name);
 
         if (method_exists($extensionInstance, $name)) {
-
-            return call_user_func_array(array(
-                $extensionInstance,
-                $name
-            ), $arguments);
+            return call_user_func_array([$extensionInstance, $name], $arguments);
         } else {
-
-            throw new InvalidClassException("No class correspond to <b>$name</b> method");
+            throw new InvalidClassException(
+                "No class correspond to <b>$name</b> method"
+            );
         }
         return null;
     }

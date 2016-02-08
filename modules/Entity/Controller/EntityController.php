@@ -10,7 +10,7 @@ class EntityController
      *
      * @var Entity[]
      */
-    private static $entityArray = array();
+    private static $entityArray = [];
 
     public function __construct()
     {

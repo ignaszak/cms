@@ -20,10 +20,11 @@ class User
 
     public function isUserLoggedIn()
     {
-        return isset($this->userSession) && DBDoctrine::em()->getRepository('Entity\Users')->findBy(array(
+        return isset($this->userSession) && DBDoctrine::em()
+            ->getRepository('Entity\Users')->findBy([
             'login' => $this->userSession->getLogin(),
             'password' => $this->userSession->getPassword()
-        ));
+            ]);
     }
 
     public function getUserSession()
@@ -35,7 +36,7 @@ class User
     {
         $session = RegistryFactory::start('session')->get('userSession');
         $cookie = RegistryFactory::start('cookie')->get('userSession');
-        
+
         if ($session instanceof \Entity\Users) {
             $this->userSession = $session;
         } elseif ($cookie instanceof \Entity\Users) {

@@ -96,9 +96,9 @@ class Alias
      */
     private function isAliasNotExistsInDB(string $alias): bool
     {
-        $query = $this->_em->getRepository($this->entityName)->findBy(array(
+        $query = $this->_em->getRepository($this->entityName)->findBy([
             'alias' => $alias
-        ));
+        ]);
         return count($query) ? false : true;
     }
 }

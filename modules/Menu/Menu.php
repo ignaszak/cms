@@ -22,7 +22,7 @@ class Menu
      *
      * @var \Entity\MenuItems[]
      */
-    private $menuItemsArray = array();
+    private $menuItemsArray = [];
 
     public function __construct()
     {

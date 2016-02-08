@@ -6,9 +6,9 @@ use Ignaszak\Registry\RegistryFactory;
 class Server
 {
 
-    private static $sendReferDataArray = array();
+    private static $sendReferDataArray = [];
 
-    private static $readReferDataArray = array();
+    private static $readReferDataArray = [];
 
     public static function getHttpReferer()
     {

@@ -46,10 +46,7 @@ class FormSearch extends Form
     {
         FormGenerator::start('text');
         FormGenerator::addName('search');
-        FormGenerator::addItem(array(
-            'class' => 'form-control',
-            'id' => 'search'
-        ));
+        FormGenerator::addItem(['class' => 'form-control', 'id' => 'search']);
         FormGenerator::addItem($customItem);
         FormGenerator::required();
         return FormGenerator::render();

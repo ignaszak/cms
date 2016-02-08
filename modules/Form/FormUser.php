@@ -43,7 +43,7 @@ class FormUser extends Form
     {
         $response = $this->getFormResponseData();
         if (@$response['form'] == $this->formAction) {
-            $array = array();
+            $array = [];
             if (@$response['error']['incorrectLoginOrPassword']) {
                 $array[] = 'Incorrect login or/and password.';
             }
@@ -86,11 +86,11 @@ class FormUser extends Form
      */
     public function inputLogin(array $customItem = null): string
     {
-        return $this->generateInput('text', 'userLogin', array(
+        return $this->generateInput('text', 'userLogin', [
             'class' => 'form-control',
             'id' => 'userLogin',
             'minlength' => 2
-        ), $customItem);
+        ], $customItem);
     }
 
     /**
@@ -100,10 +100,10 @@ class FormUser extends Form
      */
     public function inputEmail(array $customItem = null): string
     {
-        return $this->generateInput('email', 'userEmail', array(
+        return $this->generateInput('email', 'userEmail', [
             'class' => 'form-control',
             'id' => 'userEmail'
-        ), $customItem);
+        ], $customItem);
     }
 
     /**
@@ -113,11 +113,11 @@ class FormUser extends Form
      */
     public function inputPassword(array $customItem = null): string
     {
-        return $this->generateInput('password', 'userPassword', array(
+        return $this->generateInput('password', 'userPassword', [
             'class' => 'form-control',
             'id' => 'userPassword',
             'minlength' => 8
-        ), $customItem);
+        ], $customItem);
     }
 
     /**
@@ -127,11 +127,11 @@ class FormUser extends Form
      */
     public function inputNewPassword(array $customItem = null): string
     {
-        return $this->generateInput('password', 'userNewPassword', array(
+        return $this->generateInput('password', 'userNewPassword', [
             'class' => 'form-control',
             'id' => 'userNewPassword',
             'minlength' => 8
-        ), $customItem);
+        ], $customItem);
     }
 
     /**
@@ -174,7 +174,7 @@ class FormUser extends Form
         array $item,
         array $customItem = null
     ): string {
-    
+
         FormGenerator::start($type);
         FormGenerator::addName($name);
         FormGenerator::addItem($item);
@@ -195,14 +195,14 @@ class FormUser extends Form
             $response = $this->getFormResponseData();
             if ($name == 'userLogin' &&
                 ! @$response['error']['incorrectLogin']) {
-                FormGenerator::addItem(array(
+                FormGenerator::addItem([
                     'value' => @$response['data']['setLogin']
-                ));
+                ]);
             } elseif ($name == 'userEmail' &&
                 ! @$response['error']['incorrectEmail']) {
-                FormGenerator::addItem(array(
+                FormGenerator::addItem([
                     'value' => @$response['data']['setEmail']
-                ));
+                ]);
             }
         }
     }
@@ -215,9 +215,9 @@ class FormUser extends Form
     {
         if ($this->formAction == 'accountData') {
             $entityGetter = $this->getEntityGetter($name);
-            FormGenerator::addItem(array(
+            FormGenerator::addItem([
                 'value' => $this->_user->getUserSession()->$entityGetter()
-            ));
+            ]);
         }
     }
 

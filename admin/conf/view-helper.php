@@ -1,6 +1,6 @@
 <?php
 use ViewHelper\ViewHelperExtension;
 
-ViewHelperExtension::addExtensionClass(array(
+ViewHelperExtension::addExtensionClass([
     'Admin\\Extension\\ViewHelper\\Admin'
-));
+]);

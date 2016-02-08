@@ -9,7 +9,7 @@ use Ignaszak\Registry\RegistryFactory;
 class AjaxSaveCategoryController extends Controller
 {
 
-    private $categoryArray = array();
+    private $categoryArray = [];
 
     public function __construct()
     {

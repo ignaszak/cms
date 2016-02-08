@@ -22,7 +22,7 @@ class DBDoctrine
         if (empty(self::$_em)) {
             self::configure();
         }
-        
+
         return self::$_em;
     }
 
@@ -34,20 +34,18 @@ class DBDoctrine
 
     private static function setConnectionConfigurationAndEntityManager()
     {
-        $paths = array(
-            dirname(dirname(__DIR__)) . '/modules/Entity'
-        );
+        $paths = [dirname(dirname(__DIR__)) . '/modules/Entity'];
         $isDevMode = true;
-        
-        $dbParams = array(
+
+        $dbParams = [
             'driver' => 'pdo_mysql',
             'host' => DBSettings::DB_HOST,
             'user' => DBSettings::DB_USER,
             'password' => DBSettings::DB_PASSWORD,
             'dbname' => DBSettings::DB_NAME,
             'charset' => 'utf8'
-        );
-        
+        ];
+
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null, false);
         self::$_em = EntityManager::create($dbParams, $config);
     }

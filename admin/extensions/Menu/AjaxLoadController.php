@@ -10,16 +10,16 @@ class AjaxLoadController extends Controller
     {
         $alias = $this->view()->getRoute('alias');
         $page = $this->view()->getRoute('page');
-        
+
         if ($alias != 'category') {
             $content = $this->selectPostOrPage($alias);
         } else { // $page as categoryId
             $content = $this->selectCategory($page);
         }
-        
-        $array = array();
+
+        $array = [];
         foreach ($content as $row) {
-            $rowArray = array();
+            $rowArray = [];
             $rowArray['id'] = $row->getId();
             $rowArray['title'] = $row->getTitle();
             $rowArray['link'] = "{$alias}/{$row->getAlias()}";
@@ -29,7 +29,7 @@ class AjaxLoadController extends Controller
             }
             $array[] = $rowArray;
         }
-        
+
         header("Content-type: application/json; charset=utf-8");
         echo json_encode($array);
         exit();

@@ -17,19 +17,19 @@ class FormGenerator
 
     /**
      *
-     * @var array
+     * @var string[]
      */
-    private static $formElementsArray = array(
+    private static $formElementsArray = [
         'text' => 'input type="text"',
         'email' => 'input type="email"',
         'password' => 'input type="password"'
-    );
+    ];
 
     /**
      *
-     * @var array
+     * @var string[]
      */
-    private static $formItemsArray = array();
+    private static $formItemsArray = [];
 
     /**
      *
@@ -38,7 +38,7 @@ class FormGenerator
     public static function start(string $formElementName)
     {
         self::$formContent = '<' . @self::$formElementsArray[$formElementName];
-        self::$formItemsArray = array();
+        self::$formItemsArray = [];
     }
 
     /**
@@ -57,13 +57,13 @@ class FormGenerator
     public static function addItem(array $itemArray = null)
     {
         $formItemsArray = self::$formItemsArray;
-        
+
         if (! empty($itemArray)) {
             foreach ($itemArray as $key => $item) {
                 $formItemsArray[$key] = $item;
             }
         }
-        
+
         self::$formItemsArray = $formItemsArray;
     }
 
@@ -84,12 +84,12 @@ class FormGenerator
 
     private static function addItemsToElement()
     {
-        $itemArray = array();
-        
+        $itemArray = [];
+
         foreach (self::$formItemsArray as $key => $value) {
             $itemArray[] = $key . '="' . $value . '"';
         }
-        
+
         self::$formContent .= ' ' . implode(' ', $itemArray);
     }
 }

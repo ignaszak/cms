@@ -137,13 +137,13 @@ class PaginationGenerator
 
     private function createPaginationArray()
     {
-        $paginationArray = array();
+        $paginationArray = [];
 
         for ($i = 0; $i < $this->countPage; ++ $i) {
-            $paginationArray[$i] = array(
+            $paginationArray[$i] = [
                 'number' => ($i + 1),
                 'link' => $this->getLinkWhitoutPage() . ($i + 1)
-            );
+            ];
         }
 
         $currentPage = $this->getCurrentPage();

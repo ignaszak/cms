@@ -9,9 +9,9 @@ class ViewHelperExtension
     /**
      * List of defined extension classes
      *
-     * @var unknown
+     * @var unknownstring[]
      */
-    private static $extensionClassNameArray = array();
+    private static $extensionClassNameArray = [];
 
     /**
      *
@@ -21,7 +21,7 @@ class ViewHelperExtension
     public function getExtensionInstanceFromMethodName($name)
     {
         $extensionClassName = $this->returnExtensionClassNameFromMethodName($name);
-        
+
         return RegistryFactory::start()->register($extensionClassName);
     }
 
@@ -32,9 +32,10 @@ class ViewHelperExtension
      */
     public static function addExtensionClass($class)
     {
-        self::$extensionClassNameArray = array_merge(self::$extensionClassNameArray, (is_array($class) ? $class : array(
-            $class
-        )));
+        self::$extensionClassNameArray = array_merge(
+            self::$extensionClassNameArray,
+            (is_array($class) ? $class : [$class])
+        );
     }
 
     /**
@@ -46,14 +47,14 @@ class ViewHelperExtension
     {
         // From this class script will search for no matched methods
         $className = 'ViewHelper\Extension\System';
-        
+
         foreach (self::$extensionClassNameArray as $class) {
-            
+
             if (preg_match("/({$this->getClassNameWithoutNamespace($class)})/", $name)) {
                 $className = $class;
             }
         }
-        
+
         return $className;
     }
 

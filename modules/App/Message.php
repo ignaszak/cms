@@ -6,9 +6,9 @@ class Message
 
     /**
      *
-     * @var array
+     * @var string[]
      */
-    private $messageArray = array();
+    private $messageArray = [];
 
     /**
      *

@@ -23,9 +23,7 @@ class SendMailController extends Controller
         $mailer = \Swift_Mailer::newInstance($transport);
         $mailer->send($message);
 
-        Server::setReferData(array(
-            'send' => 1
-        ));
+        Server::setReferData(['send' => 1]);
         Server::headerLocationReferer();
     }
 }

@@ -33,7 +33,7 @@ class ContentQueryController extends IContentQueryController
      *
      * @var Entity[]
      */
-    private $entityContentArray = array();
+    private $entityContentArray = [];
 
     /**
      *

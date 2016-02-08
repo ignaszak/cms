@@ -1,8 +1,8 @@
 <?php
 /*
 * ClassName: PHP MySQL Importer v2.0.1
-* PHP class for importing big SQL files into a MySql server. 
-* Author: David Castillo - davcs86@gmail.com  
+* PHP class for importing big SQL files into a MySql server.
+* Author: David Castillo - davcs86@gmail.com
 * Hire me on: https://www.freelancer.com/u/DrAKkareS.html
 * Blog: http://blog.d-castillo.info/
 */
@@ -10,16 +10,16 @@
 class MySQLImporter
 {
     public $hadErrors = false;
-    public $errors = array();
+    public $errors = [];
     private $conn = null;
-     
+
     public function __construct($host, $user, $pass, $port = false)
     {
         if ($port==false) {
             $port = ini_get("mysqli.default_port");
         }
         $this->hadErrors = false;
-        $this->errors = array();
+        $this->errors = [];
         $this->conn = new mysqli($host, $user, $pass, "", $port);
         if ($this->conn->connect_error) {
             $this->addError("Connect Error (".$this->conn->connect_errno.") ".$this->conn->connect_error);

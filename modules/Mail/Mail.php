@@ -48,13 +48,7 @@ class Mail
      */
     public function __call(string $function, array $args)
     {
-        return call_user_func_array(
-            array(
-                $this->_swiftMessage,
-                $function
-            ),
-            $args
-        );
+        return call_user_func_array([$this->_swiftMessage, $function], $args);
     }
 
     /**

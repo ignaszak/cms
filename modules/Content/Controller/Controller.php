@@ -110,9 +110,7 @@ abstract class Controller
         $entityClass = $this->_entityController->getEntity($entityName);
         $entityObject = $this->_em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
-        $this->saveEntitySetter($name, array(
-            $entityObject
-        ));
+        $this->saveEntitySetter($name, [$entityObject]);
     }
 
     public function remove()

@@ -77,11 +77,11 @@ class BreadcrumbsGenerator
             if (array_key_exists(2, $arraySlice)) {
                 $link .= "-{$arraySlice[2]}";
             }
-            $array[] = array(
+            $array[] = [
                 'title' => $i == 2 ? date("F", mktime(0, 0, 0, $date, 1)) : $date,
                 'id' => '',
                 'link' => "{$this->_conf->getBaseUrl()}date/{$link}"
-            );
+            ];
             ++ $i;
         }
         return $array;
@@ -116,13 +116,13 @@ class BreadcrumbsGenerator
     {
         return array_merge(
             $this->getHome(),
-            array(
-                array(
+            [
+                [
                     'title' => 'Search',
                     'id' => '',
                     'link' => ''
-                )
-            )
+                ]
+            ]
         );
     }
 
@@ -142,14 +142,14 @@ class BreadcrumbsGenerator
      */
     private function generateBreadcrumbs(int $catId): array
     {
-        $array = array();
+        $array = [];
         foreach ($this->breadcrumbsArray as $cat) {
             if ($catId == $cat->getId()) {
-                $array[] = array(
+                $array[] = [
                     'title' => $cat->getTitle(),
                     'id' => $cat->getId(),
                     'link' => $this->_conf->getBaseUrl() . ($cat->getTitle() != 'Home' ? "category/{$cat->getAlias()}" : "")
-                );
+                ];
                 $array = array_merge($this->generateBreadcrumbs($cat->getParentId()), $array);
             }
         }
@@ -161,10 +161,12 @@ class BreadcrumbsGenerator
      */
     private function getHome(): array
     {
-        return array(array(
-            'title' => 'Home',
-            'id' => '',
-            'link' => $this->_conf->getBaseUrl()
-        ));
+        return [
+            [
+                'title' => 'Home',
+                'id' => '',
+                'link' => $this->_conf->getBaseUrl()
+            ]
+        ];
     }
 }

@@ -14,7 +14,7 @@ class Check
      *
      * @var array
      */
-    private $messageArray = array();
+    private $messageArray = [];
 
     /**
      *

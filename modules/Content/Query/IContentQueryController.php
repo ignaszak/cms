@@ -96,14 +96,14 @@ abstract class IContentQueryController
     public function __call(string $name, array $arguments)
     {
         if (method_exists($this->_contentQueryBuilder, $name)) {
-            
-            return call_user_func_array(array(
-                $this->_contentQueryBuilder,
-                $name
-            ), $arguments);
+            return call_user_func_array(
+                [$this->_contentQueryBuilder, $name],
+                $arguments
+            );
         } else {
-            
-            throw new InvalidClassException("No class correspond to <b>$name</b> method");
+            throw new InvalidClassException(
+                "No class correspond to <b>$name</b> method"
+            );
         }
     }
 

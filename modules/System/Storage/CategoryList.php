@@ -57,7 +57,7 @@ class CategoryList
      */
     public function child(string $alias = null, int $parentId = 0): array
     {
-        $array = array();
+        $array = [];
         $alias = $alias ?? Router::getRoute('alias');
         if (! empty($alias)) {
             $parentId = $this->getIdByAlias($alias);

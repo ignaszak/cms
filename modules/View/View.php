@@ -42,10 +42,7 @@ class View
      */
     public function __call(string $name, array $arguments)
     {
-        return call_user_func_array(array(
-            $this->_viewHelper,
-            $name
-        ), $arguments);
+        return call_user_func_array([$this->_viewHelper, $name], $arguments);
     }
 
     /**

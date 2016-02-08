@@ -1,5 +1,5 @@
 <?php
-ViewHelper\ViewHelperExtension::addExtensionClass(array(
+ViewHelper\ViewHelperExtension::addExtensionClass([
     'ViewHelper\\Extension\\User',
     'ViewHelper\\Extension\\Page',
     'ViewHelper\\Extension\\Post',
@@ -9,4 +9,4 @@ ViewHelper\ViewHelperExtension::addExtensionClass(array(
     'Breadcrumbs\\Breadcrumbs',
     'Module\\Module',
     'Menu\\Menu'
-));
+]);

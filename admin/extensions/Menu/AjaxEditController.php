@@ -11,19 +11,19 @@ class AjaxEditController extends Controller
     public function run()
     {
         $menuItems = $this->getMenuItemsArray();
-        $array = array();
-        
+        $array = [];
+
         foreach ($menuItems as $item) {
             $adressArray = explode('/', $item->getAdress());
             $alias = preg_match('/^(page|post|category)/', $adressArray[0]) ? $adressArray[0] : "link";
-            $arrayItem = array(
+            $arrayItem = [
                 'id' => $item->getId(),
                 'alias' => $alias,
                 'link' => $item->getAdress(),
                 'sequence' => $item->getSequence(),
                 'itemTitle' => $item->getTitle()
-            );
-            
+            ];
+
             if ($alias != 'link') {
                 $this->query()
                     ->setContent($alias)
@@ -33,15 +33,15 @@ class AjaxEditController extends Controller
                     ->force();
                 $content = $this->query()->getContent()[0];
                 $arrayItem['title'] = $content->getTitle();
-                
+
                 if ($alias == 'post') {
                     $arrayItem['category'] = $content->getCategory()->getTitle();
                 }
             }
-            
+
             $array[] = $arrayItem;
         }
-        
+
         header("Content-type: application/json; charset=utf-8");
         echo json_encode($array);
         exit();

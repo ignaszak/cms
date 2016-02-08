@@ -31,10 +31,10 @@ abstract class Controller
      */
     public function __call(string $name, array $arguments)
     {
-        return call_user_func_array(array(
-            self::$_controllerHelper,
-            $name
-        ), $arguments);
+        return call_user_func_array(
+            [self::$_controllerHelper, $name],
+            $arguments
+        );
     }
 
     /**

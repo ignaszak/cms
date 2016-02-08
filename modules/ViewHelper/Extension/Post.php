@@ -18,7 +18,7 @@ class Post
      *
      * @var \Entity\Posts[]
      */
-    private $_post = array();
+    private $_post = [];
 
     public function __construct()
     {
@@ -52,24 +52,24 @@ class Post
     private function selectPosts()
     {
         switch (Router::getRoute()) {
-            
+
             case 'post':
                 $this->_query->setContent('post');
                 break;
-            
+
             case 'category':
                 $this->_query->setContent('post')
                     ->categoryId(RegistryFactory::start()->register('System\Storage\CategoryList')
                     ->child())
                     ->force();
                 break;
-            
+
             case 'date':
                 $this->_query->setContent('post')
                     ->date(Router::getRoute('date'))
                     ->force();
                 break;
-            
+
             default:
                 $this->_query->setContent('post');
         }

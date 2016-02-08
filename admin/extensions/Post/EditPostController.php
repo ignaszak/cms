@@ -31,9 +31,9 @@ class EditPostController extends Controller
 
         if ($this->action == 'delete' && $this->alias) {
             $controller = new Factory(new PostController());
-            $controller->findOneBy(array(
+            $controller->findOneBy([
                 'alias' => $this->alias
-            ))->remove();
+            ])->remove();
 
             Server::headerLocation("admin/post/p/view/");
         }
@@ -57,7 +57,7 @@ class EditPostController extends Controller
 
         public function getAdminEditPost(string $key)
         {
-            $data = array();
+            $data = [];
 
             $data['id'] = null;
             $data['title'] = $this->returnData['setTitle'];
