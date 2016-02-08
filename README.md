@@ -7,7 +7,7 @@ Simple CMS
 Via Composer Create-Project:
 
 ```sh
-php composer.phar create-project ignaszak/cms {directory} dev-master
+composer create-project ignaszak/cms {directory} dev-master
 ```
 
 Via Download
@@ -15,7 +15,7 @@ Via Download
 Download [dev-master](https://github.com/ignaszak/cms/archive/master.zip) version of ignaszak/cms and extract its content into a directory on your server. Next install all dependencies via composer:
 
 ```sh
-php composer.phar install
+composer install
 ```
 
 ## Configuration
@@ -23,5 +23,5 @@ php composer.phar install
 Cms can be easily configured via phing. Just type phing command and follow instructions:
 
 ```sh
-php phing.phar
+php vendor/bin/phing
 ```

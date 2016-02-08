@@ -11,7 +11,7 @@
 		}
 	],
 	"require" : {
-        "php" : ">=7.0",
+		"php" : ">=7.0",
 		"doctrine/orm" : ">=2.5.1",
 		"phpunit/phpunit" : "*",
 		"ircmaxell/password-compat" : ">=1.0.4",
@@ -22,8 +22,8 @@
 		"mockery/mockery" : "*",
 		"swiftmailer/swiftmailer" : "*",
 		"respect/validation" : "*",
-		"gregwar/captcha" : "*",
-		"mikey179/vfsStream" : "*"
+		"mikey179/vfsStream" : "*",
+		"phing/phing" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {
