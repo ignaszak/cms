@@ -1,10 +1,10 @@
 <?php
-namespace Validation;
+namespace Content\Controller\Validator\Schema;
 
 use Ignaszak\Registry\RegistryFactory;
 use Respect\Validation\Validator as V;
 
-class ContentValidation
+class Validation
 {
 
     /**

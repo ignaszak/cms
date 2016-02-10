@@ -1,56 +1,38 @@
 <?php
-namespace Content\Controller;
+namespace Content\Controller\Validator;
 
 use System\Server;
-use Validation\ContentValidation;
+use Content\Controller\Controller;
 
-class SettersValidator
+class SettersValidator extends Validator
 {
-
-    /**
-     *
-     * @var Controller
-     */
-    private $_controller;
 
     /**
      *
      * @var ContentValidation
      */
-    private $_contentValidation;
+    private $_validation;
 
-    /**
-     *
-     * @var string[]
-     */
-    private $validPatternsArray = [];
-
-    /**
-     *
-     * @var string[]
-     */
-    private $errorArray = [];
-
-    public function __construct(Controller $_controller)
+    public function __construct(Controller $_controller, Schema\Validation $_schema)
     {
-        $this->_controller = $_controller;
-        $this->_contentValidation = new ContentValidation;
+        parent::__construct($_controller);
+        $this->_validation = $_schema;
     }
 
     /**
      *
-     * @param array $validPatternsArray
+     * @param array $command
      */
-    public function valid(array $validPatternsArray)
+    public function valid(array $command)
     {
-        $this->validPatternsArray = $validPatternsArray;
+        $this->commandArray = $command;
         $this->validData();
         $this->sendErrorsIfExists();
     }
 
     private function validData()
     {
-        foreach ($this->validPatternsArray as $pattern) {
+        foreach ($this->commandArray as $pattern) {
 
             $this->errorArray["incorrect$pattern"] = 1;
             $method = "valid$pattern";
@@ -59,7 +41,7 @@ class SettersValidator
 
                 if (strpos($name, $pattern) !== false) {
 
-                    if ($this->_contentValidation->$method($arguments)) {
+                    if ($this->_validation->$method($arguments)) {
                         unset($this->errorArray["incorrect$pattern"]);
                     }
                 }
@@ -69,7 +51,7 @@ class SettersValidator
 
     private function sendErrorsIfExists()
     {
-        if (count($this->errorArray) > 0) {
+        if (count($this->errorArray)) {
 
             foreach ($this->_controller->entitySettersArray as $key => $data) {
                 if (is_object($data)) {

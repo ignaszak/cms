@@ -42,12 +42,19 @@ class Controller
      *
      * @param \Entity $_entity
      */
-    public function __construct($_entity)
-    {
+    public function __construct(
+        $_entity,
+        Validator\Schema\Validation $_schema = null
+    ) {
+    
         $this->_em = DBDoctrine::em();
         $this->_entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');
-        $this->_settertsValidator = new SettersValidator($this);
+
+        if (is_null($_schema)) {
+            $_schema = new Validator\Schema\Validation();
+        }
+        $this->_settertsValidator = new Validator\SettersValidator($this, $_schema);
         $this->_entity = $_entity;
     }
 

@@ -1,16 +1,16 @@
 <?php
-namespace Test\Modules\Validation;
+namespace Test\Modules\Content\Controller\Validator\Schema;
 
-use Validation\ContentValidation;
+use Content\Controller\Validator\Schema\Validation;
 
-class ContentValidationTest extends \PHPUnit_Framework_TestCase
+class ValidationTest extends \PHPUnit_Framework_TestCase
 {
 
     private $_contentValidation;
 
     public function setUp()
     {
-        $this->_contentValidation = new ContentValidation();
+        $this->_contentValidation = new Validation();
     }
 
     public function testValidCategory()
