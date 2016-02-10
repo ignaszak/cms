@@ -59,8 +59,10 @@ class Post
 
             case 'category':
                 $this->_query->setContent('post')
-                    ->categoryId(RegistryFactory::start()->register('System\Storage\CategoryList')
-                    ->child())
+                    ->categoryId(
+                        RegistryFactory::start()->register('System\Storage\CategoryList')
+                            ->child()
+                    )
                     ->force();
                 break;
 
