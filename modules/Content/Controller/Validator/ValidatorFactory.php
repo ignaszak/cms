@@ -47,15 +47,9 @@ class ValidatorFactory
      */
     private function transformCommand(array $array): array
     {
-        $i = 0;
+        $command = [];
         foreach ($array as $setter => $commands) {
-
             if (is_array($commands)) {
-
-                if (! $i) {
-                    $command = [];
-                }
-
                 foreach ($commands as $operator => $value) {
                     $operator = is_int($operator) ? $value : $operator;
                     if (is_array($value)) {
@@ -64,11 +58,9 @@ class ValidatorFactory
                         $command[$operator][] = $setter;
                     }
                 }
-
-                ++ $i;
             }
         }
-        return $command ?? [];
+        return $command;
     }
 
     /**
