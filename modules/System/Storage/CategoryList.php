@@ -38,7 +38,8 @@ class CategoryList
         $this->_query->setContent('category')
             ->alias($alias)
             ->force();
-        return $this->_query->getContent()[0]->getId();
+        $content = $this->_query->getContent();
+        return $content ? $content[0]->getId() : 0;
     }
 
     /**

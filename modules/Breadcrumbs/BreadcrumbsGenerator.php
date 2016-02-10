@@ -100,10 +100,12 @@ class BreadcrumbsGenerator
                 ->limit(1)
                 ->alias($alias)
                 ->force();
-            $content = $this->_query->getContent()[0];
-            $categoryId = ($name == 'category') ? $content->getId() : $content->getCategory()->getId();
-            $this->breadcrumbsArray = $this->getCategoryList();
-            return $this->generateBreadcrumbs($categoryId);
+            $content = $this->_query->getContent();
+            if ($content) {
+                $categoryId = ($name == 'category') ? $content[0]->getId() : $content[0]->getCategory()->getId();
+                $this->breadcrumbsArray = $this->getCategoryList();
+                return $this->generateBreadcrumbs($categoryId);
+            }
         }
         return $this->getHome();
     }
