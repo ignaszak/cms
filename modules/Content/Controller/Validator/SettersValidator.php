@@ -32,19 +32,10 @@ class SettersValidator extends Validator
 
     private function validData()
     {
-        foreach ($this->commandArray as $pattern) {
-
-            $this->errorArray["incorrect$pattern"] = 1;
-            $method = "valid$pattern";
-
-            foreach ($this->_controller->entitySettersArray as $name => $arguments) {
-
-                if (strpos($name, $pattern) !== false) {
-
-                    if ($this->_validation->$method($arguments)) {
-                        unset($this->errorArray["incorrect$pattern"]);
-                    }
-                }
+        foreach ($this->commandArray as $column) {
+            $value = $this->getSetter($column);
+            if (! $this->_validation->$column($value)) {
+                $this->setError('valid' . ucfirst($column));
             }
         }
     }

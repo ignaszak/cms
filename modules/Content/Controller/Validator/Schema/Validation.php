@@ -12,7 +12,7 @@ class Validation
      * @param \Entity\Categories $_category
      * @return boolean
      */
-    public function validCategory($_category): bool
+    public function category($_category): bool
     {
         return $this->validEntityController($_category, 'category');
     }
@@ -22,7 +22,7 @@ class Validation
      * @param \Entity\Users $_author
      * @return boolean
      */
-    public function validAuthor($_author): bool
+    public function author($_author): bool
     {
         return $this->validEntityController($_author, 'author');
     }
@@ -32,7 +32,7 @@ class Validation
      * @param \DateTime $_date
      * @return boolean
      */
-    public function validDate($_date): bool
+    public function date($_date): bool
     {
         return V::instance('DateTime')->validate($_date);
     }
@@ -43,7 +43,7 @@ class Validation
      * @param string $title
      * @return boolean
      */
-    public function validTitle($title): bool
+    public function title($title): bool
     {
         return V::stringType()->length(5, null)->validate($title);
     }
@@ -54,7 +54,7 @@ class Validation
      * @param string $name
      * @return boolean
      */
-    public function validName($name): bool
+    public function name($name): bool
     {
         return V::stringType()->length(2, null)->validate($name);
     }
@@ -65,7 +65,7 @@ class Validation
      * @param string $position
      * @return boolean
      */
-    public function validPosition($position): bool
+    public function position($position): bool
     {
         return V::slug()->validate($position);
     }
@@ -75,7 +75,7 @@ class Validation
      * @param string $alias
      * @return boolean
      */
-    public function validAlias($alias): bool
+    public function alias($alias): bool
     {
         return V::slug()->validate($alias);
     }
@@ -85,7 +85,7 @@ class Validation
      * @param string $content
      * @return boolean
      */
-    public function validContent($content): bool
+    public function content($content): bool
     {
         return V::stringType()->length(5, null)->validate($content);
     }
@@ -95,7 +95,7 @@ class Validation
      * @param string $login
      * @return boolean
      */
-    public function validLogin($login): bool
+    public function login($login): bool
     {
         return V::alnum('_')->noWhitespace()
             ->length(2, null)
@@ -107,7 +107,7 @@ class Validation
      * @param string $email
      * @return boolean
      */
-    public function validEmail($email): bool
+    public function email($email): bool
     {
         return V::email()->validate($email);
     }
@@ -117,7 +117,7 @@ class Validation
      * @param string $password
      * @return boolean
      */
-    public function validPassword($password): bool
+    public function password($password): bool
     {
         return V::alnum()->noWhitespace()
             ->length(8, null)
@@ -129,7 +129,7 @@ class Validation
      * @param \DateTime $_regDate
      * @return boolean
      */
-    public function validRegDate($_regDate): bool
+    public function regDate($_regDate): bool
     {
         return V::instance('DateTime')->validate($_regDate);
     }
@@ -139,7 +139,7 @@ class Validation
      * @param \DateTime $_logDate
      * @return boolean
      */
-    public function validLogDate($_logDate): bool
+    public function logDate($_logDate): bool
     {
         return V::instance('DateTime')->validate($_logDate);
     }
@@ -149,7 +149,7 @@ class Validation
      * @param string $role
      * @return boolean
      */
-    public function validRole($role): bool
+    public function role($role): bool
     {
         return V::in([
             'admin',

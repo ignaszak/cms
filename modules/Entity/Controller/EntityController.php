@@ -44,14 +44,24 @@ class EntityController
      *
      * @param string $name
      * @throws DBException
-     * @return Entity
+     * @return string
      */
-    public function getEntity(string $name)
+    public function getEntity(string $key): string
     {
-        if (array_key_exists($name, self::$entityArray)) {
-            return self::$entityArray[$name];
+        if (array_key_exists($key, self::$entityArray)) {
+            return self::$entityArray[$key];
         } else {
             throw new DBException('Invalid entity name');
         }
+    }
+
+    /**
+     *
+     * @param string $name
+     * @return string
+     */
+    public function getEntityKey(string $name): string
+    {
+        return array_search($name, self::$entityArray) ?? '';
     }
 }

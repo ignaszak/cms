@@ -1,8 +1,19 @@
 <?php
 namespace Content\Controller\Validator;
 
+use Ignaszak\Registry\RegistryFactory;
+use Entity\Controller\EntityController;
+
 class UniqueValidator extends Validator
 {
+
+    /**
+     *
+     * @var \Content\Query\Content
+     */
+    private $_query;
+
+    private $entityKey;
 
     /**
      *
@@ -11,6 +22,46 @@ class UniqueValidator extends Validator
      */
     public function valid(array $command)
     {
-        // TODO: Auto-generated method stub
+        $this->commandArray = $command;
+        $this->setEntityKey();
+        $this->setQuery();
+        $this->unique();
+    }
+
+    private function setQuery()
+    {
+        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
+    }
+
+    private function setEntityKey()
+    {
+        $entityController = new EntityController();
+        $this->entityKey = $entityController->getEntityKey($this->entityName);
+    }
+
+    private function unique()
+    {
+        foreach ($this->commandArray as $column) {
+            $value = $this->getSetter($column);
+            if (! $this->dataNotExistInDatabase($column, $value)) {
+                $this->setError('unique' . ucfirst($column));
+            }
+        }
+    }
+
+    /**
+     *
+     * @param string $column
+     * @param mixed $value
+     * @return boolean
+     */
+    private function dataNotExistInDatabase(string $column, $value): bool
+    {
+        $this->_query->setContent($this->entityKey)
+            ->findBy($column, $value)
+            ->force()
+            ->paginate(false);
+        $result = $this->query()->getContent();
+        return count($result) === 0 ? true : false;
     }
 }

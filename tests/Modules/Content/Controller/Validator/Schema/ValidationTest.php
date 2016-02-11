@@ -6,49 +6,49 @@ use Content\Controller\Validator\Schema\Validation;
 class ValidationTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_contentValidation;
+    private $_validation;
 
     public function setUp()
     {
-        $this->_contentValidation = new Validation();
+        $this->_validation = new Validation();
     }
 
-    public function testValidCategory()
+    public function testCategory()
     {
-        $validCategory = $this->_contentValidation->validCategory(new \Entity\Categories());
+        $validCategory = $this->_validation->category(new \Entity\Categories());
         $this->assertTrue($validCategory);
     }
 
-    public function testValidAuthor()
+    public function testAuthor()
     {
-        $validAuthor = $this->_contentValidation->validAuthor(new \Entity\Users());
+        $validAuthor = $this->_validation->author(new \Entity\Users());
         $this->assertTrue($validAuthor);
     }
 
-    public function testValidDate()
+    public function testDate()
     {
-        $validDate = $this->_contentValidation->validDate(new \DateTime());
+        $validDate = $this->_validation->date(new \DateTime());
         $this->assertTrue($validDate);
     }
 
-    public function testValidTitle()
+    public function testTitle()
     {
         $title = "New Title";
-        $validTitle = $this->_contentValidation->validTitle($title);
+        $validTitle = $this->_validation->title($title);
         $this->assertTrue($validTitle);
     }
 
-    public function testValidAlias()
+    public function testAlias()
     {
         $alias = "new-title";
-        $validAlias = $this->_contentValidation->validAlias($alias);
+        $validAlias = $this->_validation->alias($alias);
         $this->assertTrue($validAlias);
     }
 
-    public function testValidContent()
+    public function testContent()
     {
         $content = "New Content";
-        $validContent = $this->_contentValidation->validContent($content);
+        $validContent = $this->_validation->content($content);
         $this->assertTrue($validContent);
     }
 }
