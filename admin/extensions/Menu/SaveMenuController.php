@@ -50,12 +50,17 @@ class SaveMenuController extends FrontController
     private function saveMenuEntityAndSetLastAddedId()
     {
         $controller = new Controller(new Menus());
+        $unique = ['unique'];
         if (! empty(@$_POST['id'])) {
             $controller->find($_POST['id']);
+            $unique = [];
         }
         $controller->setName($_POST['name'])
             ->setPosition($_POST['position'])
-            ->insert();
+            ->insert([
+                'name' => $unique,
+                'position' => []
+            ]);
         $this->lastId = $controller->entity()->getId();
     }
 
@@ -72,7 +77,9 @@ class SaveMenuController extends FrontController
                 ->setSequence($_POST['menuSequence'][$i])
                 ->setTitle($_POST['menuTitle'][$i])
                 ->setAdress($_POST['menuAdress'][$i])
-                ->insert();
+                ->insert([
+                    'title' => []
+                ]);
         }
     }
 

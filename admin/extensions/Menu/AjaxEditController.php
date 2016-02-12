@@ -3,7 +3,6 @@ namespace AdminController\Menu;
 
 use FrontController\Controller as FrontController;
 use System\Router\Storage as Router;
-use Entity\MenuItems;
 
 class AjaxEditController extends FrontController
 {

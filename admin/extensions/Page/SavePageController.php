@@ -24,14 +24,18 @@ class SavePageController extends FrontController
         $alias = $controller->getAlias($_POST['title']);
         $public = @$_POST['public'] == 1 ? 1 : 0;
 
-        $controller->setReference('author', $this->view()
-            ->getUserId())
+        $controller->setReference('author', $this->view()->getUserId())
             ->setDate($date)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
             ->setContent($_POST['content'])
             ->setPublic($public)
-            ->insert();
+            ->insert([
+                'date' => [],
+                'title' => [],
+                'alias' => [],
+                'content' => []
+            ]);
 
         Server::headerLocation("admin/page/edit/$alias");
     }

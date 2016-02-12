@@ -4,10 +4,10 @@ namespace Controller\User;
 use FrontController\Controller as FrontController;
 use System\Server;
 use Content\Controller\Controller;
-use Content\Controller\UserController;
 use Ignaszak\Registry\RegistryFactory;
 use Mail\Mail;
 use Mail\MailTransport;
+use Entity\Users;
 
 class UserRegistrationController extends FrontController
 {
@@ -44,48 +44,23 @@ class UserRegistrationController extends FrontController
         $this->email = $_POST['userEmail'];
         $this->password = $_POST['userPassword'];
 
-        $referData = [];
-        if (! $this->dataNotExistInDatabase('login', $this->login)) {
-            $referData['formLoginDoubled'] = 1;
-        }
-        if (! $this->dataNotExistInDatabase('email', $this->email)) {
-            $referData['formEmailDoubled'] = 1;
-        }
+        $controller = new Controller(new Users());
+        $controller->setLogin($this->login)
+            ->setEmail($this->email)
+            ->setPassword($this->password)
+            ->setRegDate(new \DateTime('now'))
+            ->setLogDate(new \DateTime('now'))
+            ->setRole('user')
+            ->insert([
+                'login' => ['unique'],
+                'email' => ['unique'],
+                'password' => []
+            ]);
 
-        if (count($referData) > 0) {
-            Server::setReferData(['error' => $referData]);
-            Server::headerLocationReferer();
-        } else {
-            $controller = new Controller(new UserController());
-            $controller->setLogin($this->login)
-                ->setEmail($this->email)
-                ->setPassword($this->password)
-                ->setRegDate(new \DateTime('now'))
-                ->setLogDate(new \DateTime('now'))
-                ->setRole('user')
-                ->insert();
+        $this->sendMail();
 
-            $this->sendMail();
-
-            Server::setReferData(['registrationSuccess' => 1]);
-            Server::headerLocationReferer();
-        }
-    }
-
-    /**
-     *
-     * @param string $column
-     * @param string $data
-     */
-    private function dataNotExistInDatabase(string $column, string $data): bool
-    {
-        $this->query()
-            ->setContent('user')
-            ->findBy($column, $data)
-            ->force()
-            ->paginate(false);
-        $result = $this->query()->getContent();
-        return count($result) === 0 ? true : false;
+        Server::setReferData(['registrationSuccess' => 1]);
+        Server::headerLocationReferer();
     }
 
     private function sendMail()

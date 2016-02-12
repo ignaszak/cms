@@ -41,7 +41,10 @@ class AjaxSaveCategoryController extends FrontController
             $controller->setParentId($parentId)
                 ->setTitle($_POST['title'])
                 ->setAlias($alias)
-                ->insert();
+                ->insert([
+                    'title' => [],
+                    'alias' => []
+                ]);
 
             echo $refresh;
 

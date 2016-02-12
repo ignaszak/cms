@@ -31,7 +31,12 @@ class SavePostController extends FrontController
             ->setAlias($alias)
             ->setContent($_POST['content'])
             ->setPublic($public)
-            ->insert();
+            ->insert([
+                'date' => [],
+                'title' => [],
+                'alias' => [],
+                'content' => []
+            ]);
 
         Server::headerLocation("admin/post/p/edit/$alias");
     }
