@@ -62,6 +62,11 @@ class EntityController
      */
     public function getEntityKey(string $name): string
     {
-        return array_search($name, self::$entityArray) ?? '';
+        foreach (self::$entityArray as $key => $entity) {
+            if (strpos($name, $entity) !== false) {
+                return $key;
+            }
+        }
+        return '';
     }
 }
