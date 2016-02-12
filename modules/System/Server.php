@@ -32,16 +32,20 @@ class Server
     public static function headerLocationReferer()
     {
         self::setRefererSession();
-        header('Location: ' . self::getHttpReferer());
-        exit();
+        if (! defined('TEST')) {
+            header('Location: ' . self::getHttpReferer());
+            exit();
+        }
     }
 
     public static function headerLocation(string $location)
     {
         self::setRefererSession();
-        header('Location: ' . RegistryFactory::start('file')
-            ->register('Conf\Conf')->getBaseUrl() . $location);
-        exit();
+        if (! defined('TEST')) {
+            header('Location: ' . RegistryFactory::start('file')
+                ->register('Conf\Conf')->getBaseUrl() . $location);
+            exit();
+        }
     }
 
     public static function setReferData(array $data)

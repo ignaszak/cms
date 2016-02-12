@@ -13,6 +13,10 @@ class UniqueValidator extends Validator
      */
     private $_query;
 
+    /**
+     *
+     * @var string
+     */
     private $entityKey;
 
     /**
@@ -61,7 +65,7 @@ class UniqueValidator extends Validator
             ->findBy($column, $value)
             ->force()
             ->paginate(false);
-        $result = $this->query()->getContent();
+        $result = $this->_query->getContent();
         return count($result) === 0 ? true : false;
     }
 }

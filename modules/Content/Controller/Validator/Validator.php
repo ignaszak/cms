@@ -44,7 +44,7 @@ abstract class Validator
 
     /**
      *
-     * @return \Content\Controller\Validator\string[]
+     * @return array
      */
     public function getErrors(): array
     {

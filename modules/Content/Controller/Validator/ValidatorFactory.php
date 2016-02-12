@@ -1,6 +1,7 @@
 <?php
 namespace Content\Controller\Validator;
 
+use System\Server;
 use Content\Controller\Controller;
 
 class ValidatorFactory
@@ -20,6 +21,12 @@ class ValidatorFactory
 
     /**
      *
+     * @var array
+     */
+    private $errorArray = [];
+
+    /**
+     *
      * @param Controller $_controller
      * @param Schema\Validation $_schema
      */
@@ -36,9 +43,10 @@ class ValidatorFactory
     public function valid(array $command)
     {
         $this->_settersValidator->valid($command);
-        $this->getValidator(
+        $this->runValidator(
             $this->transformCommand($command)
         );
+        $this->sendErrorsIfExists();
     }
 
     /**
@@ -67,12 +75,41 @@ class ValidatorFactory
      *
      * @param array $command
      */
-    private function getValidator(array $command)
+    private function runValidator(array $command)
     {
         foreach ($command as $class => $commandArray) {
-            $className = ucfirst($class) . 'Validator';
+            if (! defined('TEST')) {
+                $namespace = __NAMESPACE__ . '\\';
+            }
+            $className = @$namespace . ucfirst($class) . 'Validator';
             $validator = new $className($this->_controller);
             $validator->valid($commandArray);
+            $this->errorArray = array_merge(
+                $this->errorArray,
+                $validator->getErrors()
+            );
+        }
+    }
+
+    private function sendErrorsIfExists()
+    {
+        if (count($this->errorArray)) {
+            foreach ($this->_controller->entitySettersArray as $key => $data) {
+                // Repleca reference entities instances to its referenced id
+                if (is_object($data)) {
+                    if (method_exists($data, 'getId')) {
+                        $this->_controller->entitySettersArray[$key] = $data->getId();
+                    } else {
+                        unset($this->_controller->entitySettersArray[$key]);
+                    }
+                }
+            }
+
+            Server::setReferData(array(
+                'data' => $this->_controller->entitySettersArray,
+                'error' => $this->errorArray
+            ));
+            Server::headerLocationReferer();
         }
     }
 }

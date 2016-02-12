@@ -36,7 +36,13 @@ class Controller
      *
      * @var SettersValidator
      */
-    private $_settertsValidator;
+    private $_validatorFactory;
+
+    /**
+     *
+     * @var string
+     */
+    private $entityName;
 
     /**
      *
@@ -46,7 +52,8 @@ class Controller
         $_entity,
         Validator\Schema\Validation $_schema = null
     ) {
-    
+        $this->_entity = $_entity;
+        $this->entityName = get_class($this->_entity);
         $this->_em = DBDoctrine::em();
         $this->_entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');
@@ -54,8 +61,7 @@ class Controller
         if (is_null($_schema)) {
             $_schema = new Validator\Schema\Validation();
         }
-        $this->_settertsValidator = new Validator\SettersValidator($this, $_schema);
-        $this->_entity = $_entity;
+        $this->_validatorFactory = new Validator\ValidatorFactory($this, $_schema);
     }
 
     /**
@@ -114,8 +120,7 @@ class Controller
      */
     public function find(int $id): Controller
     {
-        $entityName = get_class($this->_entity);
-        $this->_entity = $this->_em->getReference($entityName, $id);
+        $this->_entity = $this->_em->getReference($this->entityName, $id);
 
         return $this;
     }
@@ -127,8 +132,8 @@ class Controller
      */
     public function findOneBy(array $array): Controller
     {
-        $entityName = get_class($this->_entity);
-        $this->_entity = $this->_em->getRepository($entityName)->findOneBy($array);
+        $this->_entity = $this->_em->getRepository($this->entityName)
+            ->findOneBy($array);
 
         return $this;
     }
@@ -140,8 +145,8 @@ class Controller
      */
     public function findBy(array $array): Controller
     {
-        $entityName = get_class($this->_entity);
-        $this->_entity = $this->_em->getRepository($entityName)->findBy($array);
+        $this->_entity = $this->_em->getRepository($this->entityName)
+            ->findBy($array);
 
         return $this;
     }
@@ -153,7 +158,7 @@ class Controller
      */
     public function insert(array $array = []): Controller
     {
-        $this->_settertsValidator->valid($array);
+        $this->_validatorFactory->valid($array);
         $this->callEntitySettersFromArray();
         $this->_em->persist($this->_entity);
         $this->_em->flush();
@@ -168,7 +173,7 @@ class Controller
      */
     public function update(array $array = []): Controller
     {
-        $this->_settertsValidator->valid($array);
+        $this->_validatorFactory->valid($array);
         $this->callEntitySettersFromArray();
         $this->_em->persist($this->_entity);
         $this->_em->flush();
