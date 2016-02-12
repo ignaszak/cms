@@ -48,27 +48,22 @@ class FormTest extends \PHPUnit_Framework_TestCase
     {
         // format group-action, group chooses class
         $instance = $this->_form->createForm('user-anyAction');
-        $this->assertInstanceOf('Form\FormUser', $instance);
+        $this->assertInstanceOf('Form\Group\User', $instance);
     }
 
     public function testGetFormGroup()
     {
-        $this->_form->createForm('anyGroup-anyAction');
+        $this->_form->createForm('user-action');
         $group = MockTest::callMockMethod($this->_form, 'getFormGroup');
-        $this->assertEquals('anyGroup', $group);
+        $this->assertEquals('user', $group);
     }
 
-    public function testGetFormAction()
+    /**
+     * @expectedException CMSException\InvalidClassException
+     */
+    public function testGetFormGroupWithNoExistingGroupForm()
     {
-        $this->_form->createForm('anyGroup-anyAction');
-        $action = MockTest::callMockMethod($this->_form, 'getFormAction');
-        $this->assertEquals('anyAction', $action);
-    }
-
-    public function testGetFormActionFromGroup()
-    {
-        $this->_form->createForm('anyGroupWithoutAction');
-        $action = MockTest::callMockMethod($this->_form, 'getFormAction');
-        $this->assertEquals('anyGroupWithoutAction', $action);
+        $this->_form->createForm('noExistingGroup-action');
+        MockTest::callMockMethod($this->_form, 'getFormGroup');
     }
 }

@@ -36,4 +36,39 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
             \PHPUnit_Framework_Assert::readAttribute($this->_uniqueValidator, 'entityKey')
         );
     }
+
+    public function testDataNotExistsInDatabase()
+    {
+        MockTest::inject($this->_uniqueValidator, '_query', $this->mockQuery([]));
+        $result = MockTest::callMockMethod(
+            $this->_uniqueValidator,
+            'dataNotExistInDatabase',
+            ['column', 'value']
+        );
+        $this->assertTrue($result);
+    }
+
+    public function testDataExistsInDatabase()
+    {
+        MockTest::inject($this->_uniqueValidator, '_query', $this->mockQuery(['value']));
+        $result = MockTest::callMockMethod(
+            $this->_uniqueValidator,
+            'dataNotExistInDatabase',
+            ['column', 'value']
+        );
+        $this->assertFalse($result);
+    }
+
+    private function mockQuery(array $return)
+    {
+        $stub = \Mockery::mock('Content');
+        $stub->shouldReceive([
+            'setContent' => $stub,
+            'findBy' => $stub,
+            'force' => $stub,
+            'paginate' => $stub,
+            'getContent' => $return
+        ]);
+        return $stub;
+    }
 }

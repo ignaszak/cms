@@ -19,7 +19,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         );
 
         $validator = $this->getMockBuilder('Content\Controller\Validator\Validator')
-            ->setConstructorArgs(array($controller))
+            ->setConstructorArgs([$controller])
             ->getMockForAbstractClass();
         $this->_validator = $validator;
     }
