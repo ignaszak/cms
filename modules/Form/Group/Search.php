@@ -1,36 +1,15 @@
 <?php
-namespace Form;
+namespace Form\Group;
 
-use Ignaszak\Registry\RegistryFactory;
+use Form\FormGenerator;
 
-class FormSearch extends Form
+class Search extends Group
 {
 
     /**
      *
-     * @var \Conf\Conf
-     */
-    private $_conf;
-
-    /**
-     *
-     * @var string
-     */
-    private $formAction;
-
-    /**
-     *
-     * @param string $formAction
-     */
-    public function __construct(string $formAction)
-    {
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->formAction = $formAction;
-    }
-
-    /**
-     *
-     * @return string
+     * {@inheritDoc}
+     * @see \Form\Group\Group::getFormActionAdress()
      */
     public function getFormActionAdress(): string
     {

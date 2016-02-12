@@ -1,20 +1,17 @@
 <?php
 namespace Form;
 
+use CMSException\InvalidClassException;
+use System\Server;
+
 class Form
 {
 
     /**
      *
-     * @var Form
-     */
-    private static $_formInstance;
-
-    /**
-     *
      * @var string
      */
-    private $formType;
+    private $formName;
 
     /**
      *
@@ -23,28 +20,39 @@ class Form
      */
     public function getFormResponseData(string $key = "")
     {
-        $responseArray = \System\Server::getReferData();
+        $responseArray = Server::getReferData();
         return (! empty($key) ? @$responseArray[$key] : @$responseArray);
     }
 
     /**
      *
      * @param string $formType
-     * @return \Form\Form
+     * @return \Form\Group\Group
+     * @throws InvalidClassException
      */
-    public function createForm(string $formType)
+    public function createForm(string $formName): Group\Group
     {
-        $this->formType = $formType;
-
-        switch ($this->getFormGroup()) {
-            case 'user':
-                $this->setFormInstance('Form\FormUser');
-                break;
-            case 'search':
-                $this->setFormInstance('Form\FormSearch');
-                break;
+        $this->formName = $formName;
+        $formClass = 'Form\\Group\\' . ucfirst($this->getFormGroup());
+        if (class_exists($formClass)) {
+            return new $formClass($this);
+        } else {
+            throw new InvalidClassException("Class {$formClass} not exists");
         }
-        return self::$_formInstance;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getFormName(): string
+    {
+        return $this->formName;
+    }
+
+    public function getFormMessage()
+    {
+        return print_r(@$this->getFormResponseData()['error'], true);
     }
 
     /**
@@ -62,17 +70,7 @@ class Form
      */
     private function getFormGroup(): string
     {
-        $formTypeArray = explode('-', $this->formType);
+        $formTypeArray = explode('-', $this->formName);
         return $formTypeArray[0];
-    }
-
-    /**
-     *
-     * @return string
-     */
-    private function getFormAction(): string
-    {
-        $formTypeArray = explode('-', $this->formType);
-        return @$formTypeArray[1] ?? $formTypeArray[0];
     }
 }

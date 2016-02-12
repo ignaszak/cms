@@ -1,16 +1,11 @@
 <?php
-namespace Form;
+namespace Form\Group;
 
 use Ignaszak\Registry\RegistryFactory;
+use Form\FormGenerator;
 
-class FormUser extends Form
+class User extends Group
 {
-
-    /**
-     *
-     * @var \Conf\Conf
-     */
-    private $_conf;
 
     /**
      *
@@ -20,59 +15,18 @@ class FormUser extends Form
 
     /**
      *
-     * @var string
+     * @param \Form\Form $_form
      */
-    private $formAction;
-
-    /**
-     *
-     * @param string $formAction
-     */
-    public function __construct(string $formAction)
+    public function __construct(\Form\Form $_form)
     {
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        parent::__construct($_form);
         $this->_user = RegistryFactory::start()->get('user');
-        $this->formAction = $formAction;
     }
 
     /**
      *
-     * @return string
-     */
-    public function getFormMessage(): string
-    {
-        $response = $this->getFormResponseData();
-        if (@$response['form'] == $this->formAction) {
-            $array = [];
-            if (@$response['error']['incorrectLoginOrPassword']) {
-                $array[] = 'Incorrect login or/and password.';
-            }
-            if (@$response['error']['incorrectLogin']) {
-                $array[] = 'Incorrect login.';
-            }
-            if (@$response['error']['formLoginDoubled']) {
-                $array[] = 'Login alredy exists.';
-            }
-            if (@$response['error']['incorrectEmail']) {
-                $array[] = 'Incorrect email.';
-            }
-            if (@$response['error']['formEmailDoubled']) {
-                $array[] = 'Email alredy exists.';
-            }
-            if (@$response['error']['formEmailNotExists']) {
-                $array[] = 'Email not exists.';
-            }
-            if (@$response['error']['incorrectPassword']) {
-                $array[] = 'Incorrect password.';
-            }
-            return count($array) ? implode('<br>', $array) : "";
-        }
-        return "";
-    }
-
-    /**
-     *
-     * @return string
+     * {@inheritDoc}
+     * @see \Form\Group\Group::getFormActionAdress()
      */
     public function getFormActionAdress(): string
     {
@@ -192,16 +146,12 @@ class FormUser extends Form
     private function addResponseInputValue(string $name)
     {
         if ($this->formAction == 'registration') {
-            $response = $this->getFormResponseData();
-            if ($name == 'userLogin' &&
-                ! @$response['error']['incorrectLogin']) {
+            $response = \System\Server::getReferData();
+            $field = str_replace('user', '', $name);
+            if (! @$response['error']['valid' . $field] &&
+                ! @$response['error']['unique' . $field]) {
                 FormGenerator::addItem([
-                    'value' => @$response['data']['setLogin']
-                ]);
-            } elseif ($name == 'userEmail' &&
-                ! @$response['error']['incorrectEmail']) {
-                FormGenerator::addItem([
-                    'value' => @$response['data']['setEmail']
+                    'value' => @$response['data']['set' . $field]
                 ]);
             }
         }
