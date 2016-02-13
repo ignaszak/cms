@@ -27,6 +27,12 @@ class UserLoginController extends FrontController
      *
      * @var string
      */
+    private $column;
+
+    /**
+     *
+     * @var string
+     */
     private $password;
 
     /**
@@ -43,6 +49,7 @@ class UserLoginController extends FrontController
         }
 
         $this->login = $_POST['userLogin'];
+        $this->column = $this->isEmail($this->login) ? 'email' : 'login';
         $this->password = $_POST['userPassword'];
         $this->remember = @$_POST['userRemember'];
 
@@ -51,7 +58,7 @@ class UserLoginController extends FrontController
         if ($userId === 0) {
             Server::setReferData([
                 'form' => 'login',
-                'error' => ['incorrectLoginOrPassword' => 1]
+                'error' => ['valid'.ucfirst($this->column).'_or_password' => 1]
             ]);
             Server::headerLocationReferer();
         } else {
@@ -73,12 +80,13 @@ class UserLoginController extends FrontController
     {
         $this->query()
             ->setContent('user')
-            ->findBy($this->isEmail($this->login) ? 'email' : 'login', $this->login)
+            ->findBy($this->column, $this->login)
             ->force()
             ->paginate(false);
         $result = $this->query()->getContent();
 
-        if (count($result) === 1 && HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
+        if (count($result) === 1 &&
+            HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
             $this->_userEntity = $result[0];
             return $this->_userEntity->getId();
         }

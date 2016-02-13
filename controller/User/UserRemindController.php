@@ -43,7 +43,7 @@ class UserRemindController extends FrontController
 
         if (! $this->isEmail($this->email)) {
 
-            Server::setReferData(['error' => ['incorrectEmail' => 1]]);
+            Server::setReferData(['error' => ['validEmail' => 1]]);
             Server::headerLocationReferer();
 
         } else {
@@ -60,7 +60,7 @@ class UserRemindController extends FrontController
                     ->update();
                 $this->sendMail($controller->entity()->getLogin());
             } else { // if not
-                Server::setReferData(['error' => ['formEmailNotExists' => 1]]);
+                Server::setReferData(['error' => ['findEmail' => 1]]);
                 Server::headerLocationReferer();
             }
 
