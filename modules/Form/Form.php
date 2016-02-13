@@ -9,9 +9,20 @@ class Form
 
     /**
      *
+     * @var \Form\Message
+     */
+    private $_message;
+
+    /**
+     *
      * @var string
      */
     private $formName;
+
+    public function __construct()
+    {
+        $this->_message = new Message($this);
+    }
 
     /**
      *
@@ -21,7 +32,11 @@ class Form
     public function getFormResponseData(string $key = "")
     {
         $responseArray = Server::getReferData();
-        return (! empty($key) ? @$responseArray[$key] : @$responseArray);
+        if ($key != "") {
+            return @$responseArray[$key] ?? null;
+        } else {
+            return $responseArray;
+        }
     }
 
     /**
@@ -50,18 +65,12 @@ class Form
         return $this->formName;
     }
 
-    public function getFormMessage()
-    {
-        return print_r(@$this->getFormResponseData()['error'], true);
-    }
-
     /**
-     *
-     * @param string $formClassName
+     * @return string
      */
-    private function setFormInstance(string $className)
+    public function getFormMessage(): string
     {
-        self::$_formInstance = new $className($this->getFormAction());
+        return $this->_message->getMessage();
     }
 
     /**

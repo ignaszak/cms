@@ -41,9 +41,8 @@ abstract class Group
      */
     public function getFormMessage(): string
     {
-        $response = $this->_form->getFormResponseData();
-        if (@$response['form'] == $this->formAction) {
-            return print_r($this->_form->getFormResponseData()['error'], true);
+        if (@$this->_form->getFormResponseData('form') == $this->formAction) {
+            return $this->_form->getFormMessage();
         }
         return "";
     }
