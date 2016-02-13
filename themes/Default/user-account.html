@@ -12,10 +12,17 @@
                         <span style="font-size: 22px">
                             Hello <?php echo $this->getUserLogin(); ?>
                         </span>
+                        <?php $form = $this->createForm('user-logout'); ?>
+                        <a href="<?php echo $form->getFormActionAdress(); ?>"
+                        class="btn btn-warning btn-xs" style="float:right;"
+                        data-toggle="tooltip" data-placement="bottom"
+                        title="Sign out">
+                            <i class="fa fa-sign-out"></i>
+                        </a>
                         <?php if ($this->getUserRole() != 'user'): ?>
                         <hr>
                         <a href="<?php echo $this->getSiteAdress(); ?>admin"
-                        class="btn btn-success">
+                        class="btn btn-success btn-sm">
                             <i class="fa fa-cogs"></i>
                             &nbsp;
                             Admin panel

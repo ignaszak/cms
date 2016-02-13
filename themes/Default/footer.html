@@ -23,6 +23,10 @@
 
         <script>
         $().ready(function() {
+            $(function () {
+                  $('[data-toggle="tooltip"]').tooltip()
+            })
+
             $("form#login").validate();
             $("form#registration").validate();
             $("form#accountData").validate();
