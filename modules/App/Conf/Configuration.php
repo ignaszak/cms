@@ -3,7 +3,9 @@ namespace App\Conf;
 
 use Conf\DB\DBSettings;
 
-include("php-mysqlimporter.php");
+$baseDir = dirname(dirname(dirname(__DIR__)));
+
+include("{$baseDir}/vendor/davcs86/php-mysqlimporter/php-mysqlimporter.php");
 
 class Configuration
 {

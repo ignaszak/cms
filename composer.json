@@ -23,7 +23,8 @@
 		"swiftmailer/swiftmailer" : "*",
 		"respect/validation" : "*",
 		"mikey179/vfsStream" : "*",
-		"phing/phing" : "*"
+		"phing/phing" : "*",
+		"davcs86/php-mysqlimporter" : "dev-master"
 	},
 	"autoload" : {
 		"psr-4" : {
