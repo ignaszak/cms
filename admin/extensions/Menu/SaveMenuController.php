@@ -59,7 +59,7 @@ class SaveMenuController extends FrontController
             ->setPosition($_POST['position'])
             ->insert([
                 'name' => $unique,
-                'position' => ['unique']
+                'position' => $unique
             ]);
         $this->lastId = $controller->entity()->getId();
     }
