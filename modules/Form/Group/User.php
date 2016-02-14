@@ -132,7 +132,9 @@ class User extends Group
         FormGenerator::start($type);
         FormGenerator::addName($name);
         FormGenerator::addItem($item);
-        $this->addResponseInputValue($name);
+        if ($type != 'password') {
+            $this->addResponseInputValue($name);
+        }
         $this->addAccountValue($name);
         FormGenerator::addItem($customItem);
         FormGenerator::required();

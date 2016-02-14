@@ -34,6 +34,10 @@ class UserSaveController extends FrontController
         Server::headerLocationReferer();
     }
 
+    /**
+     *
+     * @param \UserAuth\User $_user
+     */
     private function checkIfUserIsLogged(\UserAuth\User $_user)
     {
         if (! $_user->isUserLoggedIn()) {
@@ -50,11 +54,12 @@ class UserSaveController extends FrontController
         $hash = $controller->entity()->getPassword();
         if (! HashPass::verifyPassword($_POST['userPassword'], $hash)) {
             Server::setReferData([
-                'error' => ['incorrectPassword' => 1]
+                'error' => ['validPassword' => 1]
             ]);
             Server::headerLocationReferer();
         } else {
-            $controller->setPassword($_POST['userNewPassword'])->update();
+            $controller->setPassword($_POST['userNewPassword'])
+                ->update(['password' => []]);
         }
     }
 
@@ -66,10 +71,14 @@ class UserSaveController extends FrontController
     {
         $controller->setEmail($_POST['userEmail'])
             ->update([
-                'Email'
+                'email' => ['unique']
             ]);
     }
 
+    /**
+     *
+     * @param \Entity\Users $_userEntity
+     */
     private function reloadUserSession(\Entity\Users $_userEntity)
     {
         if (RegistryFactory::start('session')->get('userSession')) {
