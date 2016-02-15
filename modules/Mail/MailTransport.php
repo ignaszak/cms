@@ -49,7 +49,7 @@ class MailTransport
         int $port = null,
         string $ssl = ""
     ): \Swift_Transport {
-    
+
         if ($serverOrCommand === "" && $port === null && $ssl === "") {
             return $this->transportClassName::newInstance();
         } elseif (!empty($serverOrCommand) && $port === null && $ssl === "") {
