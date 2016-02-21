@@ -1,0 +1,15 @@
+                        <ol class="breadcrumb">
+                        <?php foreach($this->getBreadcrumbs() as $bc): ?>
+                            <li class="<?php echo $bc->active; ?>">
+                                <?php
+                                if ($bc->active):
+                                    echo $bc->title;
+                                else:
+                                ?>
+                                <a href="<?php echo $bc->link; ?>">
+                                    <?php echo $bc->title; ?>
+                                </a>
+                                <?php endif; ?>
+                            </li>
+                        <?php endforeach; ?>
+                        </ol>
