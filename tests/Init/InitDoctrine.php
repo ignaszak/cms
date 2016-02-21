@@ -40,7 +40,7 @@ class InitDoctrine
         $_em = EntityManager::create($dbParams, $config);
         $platform = $_em->getConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'string');
-        
+
         // Insert Entity Manager to DBDoctrine
         self::mock($_em);
     }
@@ -95,7 +95,7 @@ return array(
      */
     public static function queryBuilder(array $result)
     {
-        $queryBuilder = \Mockery::mock('QueryBuilder');
+        $queryBuilder = \Mockery::mock('InitQueryBuilder');
         $queryBuilder->shouldReceive(array(
             'select' => $queryBuilder,
             'from' => $queryBuilder,

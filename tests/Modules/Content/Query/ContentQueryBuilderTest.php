@@ -13,9 +13,11 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_contentQueryBuilder = new ContentQueryBuilder($this->getMockIContentQueryController(InitDoctrine::queryBuilder(array(
-            null
-        ))));
+        $this->_contentQueryBuilder = new ContentQueryBuilder(
+            $this->getMockIContentQueryController(
+                InitDoctrine::queryBuilder([null])
+            )
+        );
     }
 
     public function tearDown()
@@ -93,15 +95,16 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
         $stub->shouldReceive('setParameter')
             ->andReturnSelf()
             ->once();
-        $this->_contentQueryBuilder = new ContentQueryBuilder($this->getMockIContentQueryController($stub));
+        $this->_contentQueryBuilder = new ContentQueryBuilder(
+            $this->getMockIContentQueryController($stub)
+        );
     }
 
     private function getMockIContentQueryController($contentQuery = null): IContentQueryController
     {
-        $stub = \Mockery::mock('alias:\Content\Query\IContentQueryController');
-        $stub->contentQuery = $contentQuery;
-        $stub->shouldReceive('setContentQuery');
-        
+        $stub = $this->getMockBuilder('Content\Query\IContentQueryController')->getMock();
+        $stub->method('setContentQuery');
+        $stub->method('__get')->willReturn($contentQuery);
         return $stub;
     }
 }
