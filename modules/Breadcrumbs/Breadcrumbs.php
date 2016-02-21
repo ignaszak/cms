@@ -1,41 +1,62 @@
 <?php
 namespace Breadcrumbs;
 
-class Breadcrumbs
+use System\Router\Storage as Router;
+
+class Breadcrumbs extends IBreadcrumbs
 {
 
     /**
      *
-     * @var BreadcrumbsGenerator
+     * @var IBreadcrumbs
      */
-    private $_bg;
+    private $_breadcrumbs;
 
-    public function __construct()
+    /**
+     *
+     * @return array
+     */
+    public function getBreadcrumbs(): array
     {
-        $this->_bg = new BreadcrumbsGenerator();
-    }
-
-    public function getCustomBreadcrumbs(): array
-    {
-        return $this->_bg->getBreadcrumbs();
-    }
-
-    public function getBreadcrumbsTheme(string $theme = "bootstrap"): string
-    {
-        switch ($theme) {
-            case "bootstrap":
-                $breadcrumbsTheme = new Theme\Bootstrap($this->_bg);
+        switch (Router::getRouteName()) {
+            case 'post':
+            case 'category':
+                $this->_breadcrumbs = new CategoryBreadcrumbs();
                 break;
-            case "arrows":
-                $breadcrumbsTheme = new Theme\BreadcrumbsArrows($this->_bg);
+            case 'date':
+                $this->_breadcrumbs = new DateBreadcrumbs();
                 break;
-            case "primary":
-                $breadcrumbsTheme = new Theme\BreadcrumbsPrimary($this->_bg);
+            case 'search':
+                $this->_breadcrumbs = new SearchBreadcrumbs();
                 break;
             default:
-                $breadcrumbsTheme = new Theme\Bootstrap($this->_bg);
+                return $this->getHome();
         }
 
-        return $breadcrumbsTheme->getTheme();
+        $breadcrumbs = $this->_breadcrumbs->createBreadcrumbs();
+        return $this->addActiveClass($breadcrumbs);
+    }
+
+    /**
+     * {@inheritDoc}
+     * @see \Breadcrumbs\IBreadcrumbs::createBreadcrumbs()
+     */
+    public function createBreadcrumbs(): array
+    {
+        return [];
+    }
+
+    /**
+     *
+     * @param array $breadcrumbs
+     * @return array
+     */
+    private function addActiveClass(array $breadcrumbs): array
+    {
+        $count = count($breadcrumbs);
+        $last = $breadcrumbs[$count - 1];
+        $last->link = '';
+        $last->active = 'active';
+        return $breadcrumbs;
     }
 }
