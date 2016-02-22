@@ -14,18 +14,6 @@ class UserRemindController extends FrontController
 
     /**
      *
-     * @var \Entity\Users
-     */
-    private $_userEntity;
-
-    /**
-     *
-     * @var string
-     */
-    private $email;
-
-    /**
-     *
      * @var string
      */
     private $randomPassword;
@@ -39,34 +27,31 @@ class UserRemindController extends FrontController
             Server::headerLocationReferer();
         }
 
-        $this->email = $_POST['userEmail'];
+        $controller = new Controller(new Users());
+        $controller->findOneBy([
+            'email' => $_POST['userEmail']
+        ]);
 
-        if (! $this->isEmail($this->email)) {
-
-            Server::setReferData(['error' => ['validEmail' => 1]]);
+        if ($controller->entity() == null) { // If email not exists
+            Server::setReferData(['error' => ['findEmail' => 1]]);
             Server::headerLocationReferer();
-
         } else {
-
-            $this->generateRandomPasword();
-
-            $controller = new Controller(new Users());
-            $controller->findOneBy([
-                'email' => $this->email
-                ]);
-
-            if ($controller->entity() != null) { // If email exists
-                $controller->setPassword($this->randomPassword)
-                    ->update();
-                $this->sendMail($controller->entity()->getLogin());
-            } else { // if not
-                Server::setReferData(['error' => ['findEmail' => 1]]);
-                Server::headerLocationReferer();
-            }
-
+            $this->setRandomPasword();
+            $this->updatePassword($controller);
+            $this->sendMail($controller);
             Server::setReferData(['remindSuccess' => 1]);
             Server::headerLocationReferer();
         }
+    }
+
+    /**
+     *
+     * @param Controller $controller
+     */
+    private function updatePassword(Controller $controller)
+    {
+        $controller->setPassword($this->randomPassword)
+            ->update(['password' => []]);
     }
 
     /**
@@ -82,22 +67,23 @@ class UserRemindController extends FrontController
     /**
      * @return string
      */
-    private function generateRandomPasword()
+    private function setRandomPasword()
     {
         $this->randomPassword = substr(md5(rand(1000, 9999)), 0, 8);
     }
 
     /**
      *
-     * @param string $login
+     * @param Controller $controller
      */
-    private function sendMail(string $login)
+    private function sendMail(Controller $controller)
     {
+        $login = $controller->entity()->getLogin();
         $transport = new MailTransport('mail');
         $mail = new Mail($transport->conf());
         $mail->setSubject('Remind password')
             ->setFrom($mail->getAdminEmail())
-            ->setTo($this->email)
+            ->setTo($_POST['userEmail'])
             ->setBody(
                 "Dear {$login}\n" .
                 "Your new password is: {$this->randomPassword}\n" .
