@@ -14,7 +14,7 @@
                                 <?php $form = $this->createForm('user-login'); ?>
                                 <form action="<?php echo $form->getFormActionAdress(); ?>"
                                 id="login" method="post" class="form-horizontal">
-                                    <fieldset>
+                                    <fieldset class="top-offset">
                                         <legend>Login</legend>
                                         <?php if ($form->getFormMessage()):
                                         print("
@@ -64,7 +64,7 @@
                                 <?php $form = $this->createForm('user-registration'); ?>
                                 <form action="<?php echo $form->getFormActionAdress(); ?>"
                                 id="registration" method="post" class="form-horizontal">
-                                    <fieldset>
+                                    <fieldset class="top-offset">
                                         <legend>Registration</legend>
                                         <?php if ($form->getFormMessage()):
                                         print("
@@ -114,13 +114,13 @@
                                 </form>
                             </div>
                         </div>
-                        <hr>
+                        <hr class="hidden-xs">
                         <div class="row">
                             <div class="col-sm-offset-3 col-sm-6">
                                 <?php $form = $this->createForm('user-remind'); ?>
                                 <form action="<?php echo $form->getFormActionAdress(); ?>"
                                 method="post" id="remind" class="form-horizontal">
-                                    <fieldset>
+                                    <fieldset class="top-offset">
                                         <legend>Remind password</legend>
                                         <?php if ($form->getFormMessage()):
                                         print("
