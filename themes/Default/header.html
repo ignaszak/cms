@@ -27,7 +27,7 @@
         <div id="wrapper" class="toggled">
 
             <!-- Sidebar -->
-            <div id="sidebar-wrapper">
+            <div id="sidebar-wrapper" class="visible-sm visible-xs">
                 <?php echo $this->getCategoryListModule('class="sidebar-nav"'); ?>
             </div>
 
@@ -45,7 +45,8 @@
                                     <span class="icon-bar"></span>
                                     <span class="icon-bar"></span>
                                 </button>
-                                <a href="javascript:void(0);" class="navbar-brand visible-sm visible-xs" id="menu-toggle">
+                                <a href="javascript:void(0);" class="navbar-brand visible-sm visible-xs"
+                                id="menu-toggle">
                                     <i class="fa fa-chevron-right"></i>
                                 </a>
                                 <a href="<?php echo $this->getSiteAdress(); ?>" class="navbar-brand visible-xs">

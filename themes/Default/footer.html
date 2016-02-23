@@ -5,8 +5,8 @@
                     </div>
                 </footer>
 
-            </div>
-        </div>
+            </div><!-- end wrapper content -->
+        </div><!-- end wrapper -->
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
@@ -23,6 +23,20 @@
 
         <script>
         $().ready(function() {
+            $('#sidebar-wrapper').css({"overflow":"hidden"});
+            $('#menu-toggle').click(function() {
+                var iconToggle = $(this).children().attr('class');
+                if (iconToggle == 'fa fa-chevron-right') {
+                    $(this).children().removeClass('fa-chevron-right')
+                       .addClass('fa-chevron-left');
+                    $('#sidebar-wrapper').css({"overflow":"auto"});
+                } else {
+                    $(this).children().removeClass('fa-chevron-left')
+                        .addClass('fa-chevron-right');
+                    $('#sidebar-wrapper').css({"overflow":"hidden"});
+                }
+            });
+
             $(function () {
                   $('[data-toggle="tooltip"]').tooltip()
             })
