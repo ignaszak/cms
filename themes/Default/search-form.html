@@ -1,14 +1,16 @@
                     <?php $form = $this->createForm('search'); ?>
                     <form action="<?php echo $form->getFormActionAdress(); ?>"
-                    method="post" role="search" id="search">
+                    method="post" class="form-inline validateForm">
                         <div class="form-group">
                             <div class="input-group input-group-xs">
                                 <?php echo $form->inputSearch([
                                     'class' => 'form-control input-sm',
+                                    'style' => 'height: 30px;',
                                     'placeholder' => 'Search ...'
                                 ]); ?>
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default btn-sm">
+                                    <button class="btn btn-default btn-sm"
+                                    style="height: 30px;">
                                         <i class="fa fa-search"></i>
                                     </button>
                                 </span>

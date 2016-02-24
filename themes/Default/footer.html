@@ -46,7 +46,10 @@
             $("form#accountData").validate();
             $("form#accountPassword").validate();
             $("form#remind").validate();
-            $("form#search").validate();
+
+            $('form.validateForm').each(function(key, form) {
+                $(form).validate();
+            });
         });
         </script>
 
