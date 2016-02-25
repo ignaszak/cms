@@ -39,13 +39,16 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
                 'eq' => ['rePassword2', 'rePassword1']
             ],
             'email' => [
-                'unique',
+                'unique' => ['my@email.com'],
                 'eq' => ['reEmail2', 'reEmail1']
             ],
         ];
 
         $command = [
-            'unique' => ['login', 'email'],
+            'unique' => [
+                'login',
+                'email' => ['my@email.com']
+            ],
             'eq' => [
                 'password' => ['rePassword2', 'rePassword1'],
                 'email' => ['reEmail2', 'reEmail1']

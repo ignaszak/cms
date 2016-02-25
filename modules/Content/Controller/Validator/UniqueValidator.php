@@ -45,9 +45,16 @@ class UniqueValidator extends Validator
 
     private function unique()
     {
-        foreach ($this->commandArray as $column) {
+        foreach ($this->commandArray as $key => $val) {
+            if (is_int($key)) {
+                $column = $val;
+                $exception = [];
+            } else {
+                $column = $key;
+                $exception = $val;
+            }
             $value = $this->getSetter($column);
-            if (! $this->dataNotExistInDatabase($column, $value)) {
+            if (! $this->dataNotExistInDatabase($column, $value, $exception)) {
                 $this->setError('unique' . ucfirst($column));
             }
         }
@@ -59,12 +66,14 @@ class UniqueValidator extends Validator
      * @param mixed $value
      * @return boolean
      */
-    private function dataNotExistInDatabase(string $column, $value): bool
+    private function dataNotExistInDatabase(string $column, $value, array $exception): bool
     {
-        $this->_query->setContent($this->entityKey)
-            ->findBy($column, $value)
-            ->force()
-            ->paginate(false);
+        $query = $this->_query->setContent($this->entityKey);
+        if (! empty($exception)) {
+            $query->query("c.{$column} NOT IN(?0)", [$exception]);
+        }
+        $query->findBy($column, $value);
+        $query->force()->paginate(false);
         $result = $this->_query->getContent();
         return count($result) === 0 ? true : false;
     }

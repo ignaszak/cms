@@ -71,7 +71,9 @@ class UserSaveController extends FrontController
     {
         $controller->setEmail($_POST['userEmail'])
             ->update([
-                'email' => ['unique']
+                'email' => [
+                    'unique' => [$controller->entity()->getEmail()]
+                ]
             ]);
     }
 
