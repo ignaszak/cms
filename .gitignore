@@ -4,6 +4,7 @@ themes/CV/
 cache/
 vendor/
 logs/
+nbproject/
 conf/DB/DBSettings.php
 tests/Init/InitDoctrineSettings.php
 *.less
