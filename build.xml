@@ -2,8 +2,8 @@
 
 <project name="CMS configurator" default="main">
 
-    <property name="DBConfDir" value="${project.basedir}/conf/DB" />
-    <property name="AppConfDir" value="${project.basedir}/modules/App/Conf" />
+    <property name="DBConfDir" value="${project.basedir}/app/conf/DB" />
+    <property name="AppConfDir" value="${project.basedir}/app/model/App/Conf" />
     <property name="rewriteBase" value="/" override="true" />
     <property name="role" value="admin" override="true" />
 
@@ -80,9 +80,9 @@
     <!-- ============================================ -->
     <target name="create_folders" depends="create_db_conf_file">
         <mkdir dir="${project.basedir}/cache/registry" />
-        <exec command="chmod -R 777 ${project.basedir}/cache" />
-        <exec command="chmod -R 777 ${project.basedir}/cache/registry" />
-        <mkdir dir="${project.basedir}/cache/tmp" />
+        <exec command="chmod -R 777 ${project.basedir}/data/cache" />
+        <exec command="chmod -R 777 ${project.basedir}/data/cache/registry" />
+        <mkdir dir="${project.basedir}/data/cache/tmp" />
     </target>
 
     <!-- ============================================ -->
@@ -94,7 +94,6 @@
             <filterchain>
                 <replacetokens>
                     <token key="rewriteBase" value="${rewriteBase}" />
-                    <token key="baseDir" value="${project.basedir}" />
                 </replacetokens>
             </filterchain>
         </copy>
@@ -110,7 +109,7 @@
         <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');"
             returnProperty="regDate" />
         <copy file="${AppConfDir}/db.sql"
-        tofile="${project.basedir}/cache/tmp/tmp_db.sql" overwrite="true">
+        tofile="${project.basedir}/data/cache/tmp/tmp_db.sql" overwrite="true">
             <filterchain>
                 <replacetokens>
                     <token key="dbHost" value="${dbHost}" />
@@ -136,7 +135,7 @@
     <!-- Target: clear_cms_configurator_files -->
     <!-- ============================================ -->
     <target name="clear_tmp" depends="create_sql_query">
-        <delete file="${project.basedir}/cache/tmp/tmp_db.sql" />
+        <delete file="${project.basedir}/data/cache/tmp/tmp_db.sql" />
     </target>
 
     <!-- ============================================ -->

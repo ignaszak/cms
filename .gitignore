@@ -1,18 +1,24 @@
 $ cat .gitignore
-doc/
-themes/CV/
-cache/
-vendor/
-logs/
-nbproject/
-conf/DB/DBSettings.php
+
+# Conf
+app/conf/DB/DBSettings.php
 tests/Init/InitDoctrineSettings.php
+
+# Theme
+app/view/themes/CV/
 *.less
-themes/Default/css/variables.less
+
+# Tmp, composer and git
 .htaccess
+doc/
+data/
+vendor/
 .git
-.metadata
 composer.lock
+
+# IDE files
+nbproject/
+.metadata
 .project
 .settings
 .buildpath
