@@ -24,7 +24,7 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \CMSException\InvalidClassException
+     * @expectedException \RuntimeException
      */
     public function test__callException()
     {

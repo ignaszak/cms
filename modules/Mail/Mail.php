@@ -43,7 +43,6 @@ class Mail
      *
      * @param string $function
      * @param array $args
-     * @throws InvalidMethodException
      * @return mixed
      */
     public function __call(string $function, array $args)

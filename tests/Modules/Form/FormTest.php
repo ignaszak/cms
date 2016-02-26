@@ -59,7 +59,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException CMSException\InvalidClassException
+     * @expectedException \RuntimeException
      */
     public function testGetFormGroupWithNoExistingGroupForm()
     {

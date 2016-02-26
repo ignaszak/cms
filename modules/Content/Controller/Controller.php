@@ -2,7 +2,6 @@
 namespace Content\Controller;
 
 use Conf\DB\DBDoctrine;
-use CMSException\InvalidMethodException;
 use Ignaszak\Registry\RegistryFactory;
 
 class Controller
@@ -203,14 +202,14 @@ class Controller
      *
      * @param string $name
      * @param array $arguments
-     * @throws InvalidMethodException
+     * @throws \BadMethodCallException
      */
     protected function saveEntitySetter(string $name, array $arguments)
     {
         if (method_exists($this->_entity, $name)) {
             $this->entitySettersArray[$name] = @$arguments[0];
         } else {
-            throw new InvalidMethodException("Method '$name' does not exist");
+            throw new \BadMethodCallException("Method '$name' does not exist");
         }
     }
 

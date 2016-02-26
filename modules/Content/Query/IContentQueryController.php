@@ -1,8 +1,6 @@
 <?php
 namespace Content\Query;
 
-use CMSException\InvalidClassException;
-
 abstract class IContentQueryController
 {
 
@@ -90,7 +88,7 @@ abstract class IContentQueryController
      *
      * @param string $name
      * @param array $arguments
-     * @throws InvalidClassException
+     * @throws \RuntimeException
      * @return mixed
      */
     public function __call(string $name, array $arguments)
@@ -101,7 +99,7 @@ abstract class IContentQueryController
                 $arguments
             );
         } else {
-            throw new InvalidClassException(
+            throw new \RuntimeException(
                 "No class correspond to <b>$name</b> method"
             );
         }

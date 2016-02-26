@@ -3,7 +3,6 @@ namespace ViewHelper;
 
 use Conf\Conf;
 use System\Router\Storage as Router;
-use CMSException\InvalidClassException;
 use Ignaszak\Registry\RegistryFactory;
 
 class ViewHelper
@@ -33,7 +32,7 @@ class ViewHelper
      *
      * @param string $name
      * @param array $arguments
-     * @throws InvalidClassException
+     * @throws \RuntimeException
      * @return mixed
      */
     public function __call(string $name, array $arguments)
@@ -44,7 +43,7 @@ class ViewHelper
         if (method_exists($extensionInstance, $name)) {
             return call_user_func_array([$extensionInstance, $name], $arguments);
         } else {
-            throw new InvalidClassException(
+            throw new \RuntimeException(
                 "No class correspond to <b>$name</b> method"
             );
         }
@@ -56,7 +55,7 @@ class ViewHelper
      *
      * @return array
      */
-    public function display()
+    public function display(): array
     {
         $_contentInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName('Content');
 

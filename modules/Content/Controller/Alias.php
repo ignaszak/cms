@@ -2,7 +2,6 @@
 namespace Content\Controller;
 
 use Conf\DB\DBDoctrine;
-use CMSException\InvalidInstanceException;
 
 class Alias
 {
@@ -28,12 +27,12 @@ class Alias
     /**
      *
      * @param Entity $_entity
-     * @throws InvalidInstanceException
+     * @throws \DomainException
      */
     public function __construct($_entity)
     {
         if (! is_object($_entity)) {
-            throw new InvalidInstanceException(
+            throw new \DomainException(
                 'Second argument passed to ' . __CLASS__ .
                 '::aliasNotExistsInDB() must be an Entity instance'
             );

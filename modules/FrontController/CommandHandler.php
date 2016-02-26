@@ -2,7 +2,6 @@
 namespace FrontController;
 
 use System\Router\Route;
-use CMSException\InvalidControllerException;
 use Controller\DefaultController;
 
 class CommandHandler
@@ -28,10 +27,10 @@ class CommandHandler
     }
 
     /**
-     * Implements user controller class when is defined, exists and is child of Controller
+     * Implements user controller class when is defined,
+     * exists and is child of Controller
      *
      * @param Route $_route
-     * @throws InvalidControllerException
      * @return boolean
      */
     public function getCommand(Route $_route): bool
@@ -44,18 +43,27 @@ class CommandHandler
         }
     }
 
+    /**
+     *
+     * @param string $controllerClass
+     * @throws \RuntimeException
+     * @return boolean
+     */
     private function loadController(string $controllerClass): bool
     {
         if (class_exists($controllerClass)) {
             $reflectionControllerClass = new \ReflectionClass($controllerClass);
-            
+
             if ($reflectionControllerClass->isSubclassOf($this->_base)) {
                 $controller = $controllerClass::instance();
                 $controller->run();
                 $controller->runModules();
                 return true;
             } else {
-                throw new InvalidControllerException("$controllerClass must be a subclass of FrontController\Controller");
+                throw new \RuntimeException(
+                    "{$controllerClass} must be a subclass of" .
+                    "FrontController\Controller"
+                );
             }
         }
         return false;

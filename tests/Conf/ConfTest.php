@@ -14,7 +14,7 @@ class ConfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \CMSException\ConfException
+     * @expectedException \BadMethodCallException
      */
     public function testThrowExceptionWhenSettersIsCalled()
     {
@@ -22,7 +22,7 @@ class ConfTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \CMSException\ConfException
+     * @expectedException \BadMethodCallException
      */
     public function testThrowExceptionIdMethodIsCalled()
     {

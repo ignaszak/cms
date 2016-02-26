@@ -1,7 +1,6 @@
 <?php
 namespace Form;
 
-use CMSException\InvalidClassException;
 use System\Server;
 
 class Form
@@ -43,7 +42,7 @@ class Form
      *
      * @param string $formType
      * @return \Form\Group\Group
-     * @throws InvalidClassException
+     * @throws \RuntimeException
      */
     public function createForm(string $formName): Group\Group
     {
@@ -52,7 +51,7 @@ class Form
         if (class_exists($formClass)) {
             return new $formClass($this);
         } else {
-            throw new InvalidClassException("Class {$formClass} not exists");
+            throw new \RuntimeException("Class {$formClass} not exists");
         }
     }
 

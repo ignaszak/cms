@@ -2,7 +2,6 @@
 namespace View;
 
 use Ignaszak\Registry\RegistryFactory;
-use CMSException\InvalidFileException;
 use System\Router\Storage as Router;
 
 class View
@@ -81,6 +80,7 @@ class View
     /**
      *
      * @param string $fileName
+     * @throws \RuntimeException
      */
     public function loadExtensionFile(string $fileName)
     {
@@ -88,7 +88,7 @@ class View
         if (file_exists($file) && is_file($file) && is_readable($file)) {
             include($file);
         } else {
-            throw new InvalidFileException("File <b>$file</b> not found");
+            throw new \RuntimeException("File <b>$file</b> not found");
         }
     }
 

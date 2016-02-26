@@ -1,8 +1,6 @@
 <?php
 namespace Entity\Controller;
 
-use CMSException\DBException;
-
 class EntityController
 {
 
@@ -28,6 +26,7 @@ class EntityController
      *
      * @param string $name
      * @param string $entity
+     * @throws \RuntimeException
      */
     public function addEntity(string $name, string $entity)
     {
@@ -36,14 +35,14 @@ class EntityController
                 self::$entityArray[$name] = $entity;
             }
         } else {
-            throw new DBException('Entity not exists');
+            throw new \RuntimeException('Entity not exists');
         }
     }
 
     /**
      *
-     * @param string $name
-     * @throws DBException
+     * @param string $key
+     * @throws \InvalidArgumentException
      * @return string
      */
     public function getEntity(string $key): string
@@ -51,7 +50,7 @@ class EntityController
         if (array_key_exists($key, self::$entityArray)) {
             return self::$entityArray[$key];
         } else {
-            throw new DBException('Invalid entity name');
+            throw new \InvalidArgumentException('Invalid entity name');
         }
     }
 

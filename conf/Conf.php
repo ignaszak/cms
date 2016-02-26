@@ -2,7 +2,6 @@
 namespace Conf;
 
 use Conf\DB\DBDoctrine;
-use CMSException\ConfException;
 
 class Conf
 {
@@ -34,7 +33,7 @@ class Conf
      *
      * @param string $function
      * @param array $args
-     * @throws ConfException
+     * @throws \BadMethodCallException
      * @return mixed
      */
     public function __call(string $function, array $args)
@@ -42,7 +41,7 @@ class Conf
         if (array_key_exists($function, $this->optionsArray)) {
             return $this->optionsArray[$function];
         } else {
-            throw new ConfException(
+            throw new \BadMethodCallException(
                 "Call to undefined method " . __CLASS__ . "::$function()"
             );
         }
