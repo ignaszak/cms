@@ -31,7 +31,7 @@ class ValidTest extends \PHPUnit_Framework_TestCase
         $check = \PHPUnit_Framework_Assert::readAttribute(
             $this->_valid,
             '_check'
-            );
+        );
         $this->assertInstanceOf('App\Conf\Check', $check);
     }
 
