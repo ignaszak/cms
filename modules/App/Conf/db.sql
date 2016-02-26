@@ -28,7 +28,8 @@ CREATE TABLE `categories` (
   `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `alias` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `alias_UNIQUE` (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -102,7 +103,8 @@ CREATE TABLE `menus` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `position` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `position_UNIQUE` (`position`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -165,6 +167,7 @@ CREATE TABLE `pages` (
   `public` int(1) unsigned DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `alias_UNIQUE` (`alias`),
   KEY `FK_PAGE_USER` (`author_id`),
   CONSTRAINT `FK_PAGE_USER`
     FOREIGN KEY (`author_id`)
@@ -190,6 +193,7 @@ CREATE TABLE `posts` (
   `public` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `alias_UNIQUE` (`alias`),
   KEY `FK_POST_CAT` (`category_id`),
   KEY `FK_POST_USER` (`author_id`),
   CONSTRAINT `FK_POST_CAT`
@@ -223,7 +227,9 @@ CREATE TABLE `users` (
     COLLATE utf8_unicode_ci NOT NULL DEFAULT 'user'
     COMMENT 'admin|moderator|user',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `login_UNIQUE` (`login`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
