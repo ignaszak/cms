@@ -3,6 +3,7 @@ $ cat .gitignore
 # Conf
 app/conf/DB/DBSettings.php
 tests/Init/InitDoctrineSettings.php
+!app/.htaccess
 
 # Theme
 app/view/themes/CV/
