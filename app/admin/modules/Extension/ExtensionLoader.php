@@ -14,8 +14,7 @@ class ExtensionLoader extends ExtensionInstances
 
     private function setExtensionsPaths()
     {
-        $adminDIR = dirname(dirname(__DIR__));
-        parent::$extensionsDir = "$adminDIR/extensions";
+        parent::$extensionsDir = __ADMINDIR__ . "/extensions";
     }
 
     private function loadXmlExtensionConfigureFiles()

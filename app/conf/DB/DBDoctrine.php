@@ -34,7 +34,7 @@ class DBDoctrine
 
     private static function setConnectionConfigurationAndEntityManager()
     {
-        $paths = [dirname(dirname(__DIR__)) . '/modules/Entity'];
+        $paths = [dirname(dirname(__DIR__)) . '/model/Entity'];
         $isDevMode = true;
 
         $dbParams = [

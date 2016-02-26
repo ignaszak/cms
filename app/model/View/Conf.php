@@ -33,15 +33,13 @@ class Conf
 
     public function configureThemePath()
     {
-        $baseDir = dirname(dirname(__DIR__));
-
         if (Router::isRouteName('admin')) {
-            $adminFolder = defined('ADMIN_FOLDER') ? ADMIN_FOLDER : "admin";
-            $this->themeFolder = "{$adminFolder}/themes/Default";
-            $this->themePath = "{$baseDir}/{$this->themeFolder}";
+            $this->themeFolder = ADMIN_FOLDER . "/themes/Default";
+            $this->themePath = __ADMINDIR__ . "/themes/Default";
         } else {
-            $this->themeFolder = "themes/{$this->_conf->getTheme()}";
-            $this->themePath = "{$baseDir}/{$this->themeFolder}";
+            $themeName = $this->_conf->getTheme();
+            $this->themeFolder = "view/themes/{$themeName}";
+            $this->themePath = __VIEWDIR__ . "/themes/{$themeName}";
         }
     }
 

@@ -15,12 +15,6 @@ class Load
 
     /**
      *
-     * @var string
-     */
-    private $baseDir;
-
-    /**
-     *
      * @var \Ignaszak\Exception\Start
      */
     private $exception;
@@ -37,19 +31,14 @@ class Load
      */
     private $view;
 
-    public function __construct()
-    {
-        $this->baseDir = dirname(dirname(__DIR__));
-    }
-
     /**
      * Exception handler configuration file
-     * @link https://github.com/ignaszak/exception
+     * @link https://github.com/ignaszak/php-exception
      */
     public function loadExceptionHandler()
     {
         $exception = new \Ignaszak\Exception\Start;
-        require "{$this->baseDir}/conf/exception-handler.php";
+        require __CONFDIR__ . "/exception-handler.php";
         $exception->run();
         $this->exception = $exception;
     }
@@ -80,12 +69,12 @@ class Load
      */
     public function loadRegistryConf()
     {
-        RegistryConf::setTmpPath("{$this->baseDir}/cache/registry");
+        RegistryConf::setTmpPath(__BASEDIR__ . "/data/cache/registry");
     }
 
     /**
      * Configure registry
-     * @link https://github.com/ignaszak/registry
+     * @link https://github.com/ignaszak/php-registry
      */
     public function loadRegistry()
     {
@@ -97,7 +86,7 @@ class Load
 
     /**
      * Configures and loads router patterns
-     * @link https://github.com/ignaszak/router
+     * @link https://github.com/ignaszak/php-router
      */
     public function loadRouter()
     {
@@ -105,9 +94,9 @@ class Load
         $router->baseURL = RegistryFactory::start('file')
             ->register('Conf\Conf')->getBaseUrl();
         $router->defaultRoute = 'post';
-        $router->add('admin', 'admin/');
+        $router->add('admin', 'admin');
         new \Admin\Extension\ExtensionLoader;
-        require "{$this->baseDir}/conf/router.php";
+        require __CONFDIR__ . "/router.php";
         $router->run();
     }
 
@@ -128,7 +117,7 @@ class Load
                 Server::headerLocation(''); // Go to main page
             }
             // Admin view helper classes
-            require "{$this->baseDir}/" . ADMIN_FOLDER . "/conf/view-helper.php";
+            require __ADMINDIR__ . "/conf/view-helper.php";
         }
     }
 
@@ -137,7 +126,7 @@ class Load
      */
     public function loadViewHelper()
     {
-        require "{$this->baseDir}/conf/view-helper.php";
+        require __CONFDIR__ . "/view-helper.php";
     }
 
     /**

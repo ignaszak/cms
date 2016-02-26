@@ -63,8 +63,7 @@ class ViewSettingsController extends FrontController
              */
         public function getAdminSettingsThemesList(): array
         {
-            $baseDir = dirname(dirname(dirname(__DIR__)));
-            return glob($baseDir . "/themes/*", GLOB_ONLYDIR);
+            return glob(__VIEWDIR__ . "/themes/*", GLOB_ONLYDIR);
         }
         };
     }

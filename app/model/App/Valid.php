@@ -23,12 +23,6 @@ class Valid
 
     /**
      *
-     * @var string
-     */
-    private $baseDir;
-
-    /**
-     *
      * @var array
      */
     private $validArray = [];
@@ -41,21 +35,20 @@ class Valid
     {
         $this->_message = $_message;
         $this->_check = new Check;
-        $this->baseDir = dirname(dirname(__DIR__));
         $this->add();
     }
 
     private function add()
     {
         $this->validArray = [
-            ["{$this->baseDir}/conf/DB/DBSettings.php", "r"],
-            ["{$this->baseDir}/.htaccess", "r"],
-            ["{$this->baseDir}/cache", "r+"],
-            ["{$this->baseDir}/conf/exception-handler.php", "r"],
-            ["{$this->baseDir}/cache/registry", "r+"],
-            ["{$this->baseDir}/conf/router.php", "r"],
-            ["{$this->baseDir}/" . ADMIN_FOLDER . "/conf/view-helper.php", "r"],
-            ["{$this->baseDir}/conf/view-helper.php", "r"]
+            [__CONFDIR__ . "/DB/DBSettings.php", "r"],
+            [__CONFDIR__ . "/exception-handler.php", "r"],
+            [__CONFDIR__ . "/router.php", "r"],
+            [__CONFDIR__ . "/view-helper.php", "r"],
+            [__ADMINDIR__ . "/conf/view-helper.php", "r"],
+            [__BASEDIR__ . "/.htaccess", "r"],
+            [__BASEDIR__ . "/data/cache", "r+"],
+            [__BASEDIR__ . "/data/cache/registry", "r+"]
         ];
     }
 

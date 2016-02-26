@@ -12,11 +12,14 @@ class AppTest extends \PHPUnit_Framework_TestCase
     public static function setUpBeforeClass()
     {
         define('ADMIN_FOLDER', 'admin');
+        define('__ADMINDIR__', '/app/admin');
+        define('__CONFDIR__', '/app/conf');
+        define('__BASEDIR__', '/');
     }
 
     public function setUp()
     {
-        $this->_app = new App;
+        $this->_app = new App();
     }
 
     public function testConstructor()

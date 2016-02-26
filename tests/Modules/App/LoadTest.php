@@ -12,13 +12,4 @@ class LoadTest extends \PHPUnit_Framework_TestCase
     {
         $this->_load = new Load;
     }
-
-    public function testConstructor()
-    {
-        $baseDir = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_load,
-            'baseDir'
-        );
-        $this->assertTrue(is_dir($baseDir));
-    }
 }

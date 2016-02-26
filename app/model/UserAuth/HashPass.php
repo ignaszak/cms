@@ -1,9 +1,7 @@
 <?php
 namespace UserAuth;
 
-$baseDir = dirname(dirname(__DIR__));
-
-require_once $baseDir . '/vendor/ircmaxell/password-compat/lib/password.php';
+require_once __BASEDIR__ . '/vendor/ircmaxell/password-compat/lib/password.php';
 
 class HashPass
 {

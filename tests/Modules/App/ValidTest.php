@@ -9,6 +9,12 @@ class ValidTest extends \PHPUnit_Framework_TestCase
 
     private $_valid;
 
+    public static function setUpBeforeClass()
+    {
+        define('__CONFDIR__', '/app/conf');
+        define('__BASEDIR__', '/');
+    }
+
     public function setUp()
     {
         $this->_valid = new Valid($this->mockMessage());
@@ -22,11 +28,11 @@ class ValidTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertInstanceOf('App\Message', $message);
 
-        $baseDir = \PHPUnit_Framework_Assert::readAttribute(
+        $check = \PHPUnit_Framework_Assert::readAttribute(
             $this->_valid,
-            'baseDir'
-        );
-        $this->assertNotEmpty($baseDir);
+            '_check'
+            );
+        $this->assertInstanceOf('App\Conf\Check', $check);
     }
 
     public function testAdd()

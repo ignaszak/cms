@@ -1,8 +1,6 @@
 <?php
 namespace App;
 
-use App\Conf\Check;
-
 class App
 {
 
