@@ -28,12 +28,12 @@
 	},
 	"autoload" : {
 		"psr-4" : {
-			"" : "modules/",
-			"Admin\\" : "admin/modules",
-			"Conf\\" : "conf",
+			"" : "app/model",
+			"Admin\\" : "app/admin/modules",
+			"Conf\\" : "app/conf",
 			"Test\\" : "tests",
-			"Controller\\" : "controller",
-			"AdminController\\" : "admin/extensions"
+			"Controller\\" : "app/controller",
+			"AdminController\\" : "app/admin/extensions"
 		}
 	},
 	"name" : "ignaszak/cms"
