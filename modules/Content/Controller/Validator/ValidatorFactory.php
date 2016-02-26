@@ -1,7 +1,7 @@
 <?php
 namespace Content\Controller\Validator;
 
-use System\Server;
+use App\Resource\Server;
 use Content\Controller\Controller;
 
 class ValidatorFactory

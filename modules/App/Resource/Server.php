@@ -1,5 +1,5 @@
 <?php
-namespace System;
+namespace App\Resource;
 
 use Ignaszak\Registry\RegistryFactory;
 

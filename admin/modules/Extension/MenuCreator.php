@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Extension;
 
-use System\Server;
+use App\Resource\Server;
 use Ignaszak\Registry\RegistryFactory;
 
 class MenuCreator extends ExtensionInstances

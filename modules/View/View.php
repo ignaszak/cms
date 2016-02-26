@@ -2,7 +2,7 @@
 namespace View;
 
 use Ignaszak\Registry\RegistryFactory;
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 
 class View
 {

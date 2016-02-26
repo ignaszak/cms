@@ -1,8 +1,8 @@
 <?php
 namespace Pagination;
 
-use System\Server;
-use System\Router\Storage as Router;
+use App\Resource\Server;
+use App\Resource\RouterStatic as Router;
 use Content\Query\IContentQueryController as Content;
 use Ignaszak\Registry\RegistryFactory;
 

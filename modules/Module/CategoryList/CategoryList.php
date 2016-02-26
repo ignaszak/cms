@@ -14,7 +14,7 @@ class CategoryList
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->categoryList = RegistryFactory::start()
-            ->register('System\Storage\CategoryList')->get();
+            ->register('App\Resource\CategoryList')->get();
     }
 
     public function getCategoryList(string $arg, int $parentId = 1): string

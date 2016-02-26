@@ -2,7 +2,7 @@
 namespace Controller\User;
 
 use FrontController\Controller as FrontController;
-use System\Server;
+use App\Resource\Server;
 use Content\Controller\Controller;
 use Ignaszak\Registry\RegistryFactory;
 use Mail\Mail;

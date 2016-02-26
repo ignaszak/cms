@@ -1,7 +1,7 @@
 <?php
 namespace Entity\Controller;
 
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 use Format\TextFormat;
 

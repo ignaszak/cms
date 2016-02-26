@@ -5,7 +5,7 @@ use FrontController\Controller as FrontController;
 use Content\Controller\Controller;
 use Entity\Menus;
 use Entity\MenuItems;
-use System\Server;
+use App\Resource\Server;
 
 class SaveMenuController extends FrontController
 {

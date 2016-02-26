@@ -3,7 +3,7 @@ namespace ViewHelper\Extension;
 
 use Content\Query\IContentQueryController;
 use Ignaszak\Registry\RegistryFactory;
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 
 class Post
 {
@@ -60,7 +60,7 @@ class Post
             case 'category':
                 $this->_query->setContent('post')
                     ->categoryId(
-                        RegistryFactory::start()->register('System\Storage\CategoryList')
+                        RegistryFactory::start()->register('App\Resource\CategoryList')
                             ->child()
                     )
                     ->force();

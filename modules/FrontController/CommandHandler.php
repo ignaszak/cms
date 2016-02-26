@@ -1,8 +1,8 @@
 <?php
 namespace FrontController;
 
-use System\Router\Route;
 use Controller\DefaultController;
+use App\Resource\Route;
 
 class CommandHandler
 {

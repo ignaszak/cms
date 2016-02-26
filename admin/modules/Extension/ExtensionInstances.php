@@ -1,7 +1,7 @@
 <?php
 namespace Admin\Extension;
 
-use System\Server;
+use App\Resource\Server;
 
 abstract class ExtensionInstances
 {

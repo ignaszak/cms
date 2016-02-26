@@ -157,6 +157,6 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     private function referData(array $data = null)
     {
-        MockTest::injectStatic('System\Server', 'readReferDataArray', $data);
+        MockTest::injectStatic('App\Resource\Server', 'readReferDataArray', $data);
     }
 }

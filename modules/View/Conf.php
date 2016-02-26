@@ -1,7 +1,7 @@
 <?php
 namespace View;
 
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class Conf

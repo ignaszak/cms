@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-use System\Server;
+use App\Resource\Server;
 use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Registry\RegistryFactory;
 use View\View;

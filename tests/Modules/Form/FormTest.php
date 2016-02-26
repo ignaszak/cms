@@ -27,7 +27,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             4,
             5
         );
-        MockTest::injectStatic('System\Server', 'readReferDataArray', $referData);
+        MockTest::injectStatic('App\Resource\Server', 'readReferDataArray', $referData);
         $this->assertEquals($referData, $this->_form->getFormResponseData());
     }
 
@@ -40,7 +40,7 @@ class FormTest extends \PHPUnit_Framework_TestCase
             2,
             1
         );
-        MockTest::injectStatic('System\Server', 'readReferDataArray', $referData);
+        MockTest::injectStatic('App\Resource\Server', 'readReferDataArray', $referData);
         $this->assertEquals(4, $this->_form->getFormResponseData(1));
     }
 

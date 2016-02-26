@@ -2,7 +2,7 @@
 namespace ViewHelper;
 
 use Conf\Conf;
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class ViewHelper
@@ -67,7 +67,7 @@ class ViewHelper
 
             case 'category':
                 $_contentInstance->setContent('post')
-                    ->categoryId(RegistryFactory::start()->register('System\Storage\CategoryList')
+                    ->categoryId(RegistryFactory::start()->register('App\Resource\CategoryList')
                     ->child())
                     ->force();
                 break;

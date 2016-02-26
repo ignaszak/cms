@@ -1,7 +1,7 @@
 <?php
 namespace Breadcrumbs;
 
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class CategoryBreadcrumbs extends IBreadcrumbs
@@ -52,7 +52,7 @@ class CategoryBreadcrumbs extends IBreadcrumbs
     private function setBreadcrumbsArray()
     {
         $this->breadcrumbsArray = RegistryFactory::start()
-            ->register('System\Storage\CategoryList')->get();
+            ->register('App\Resource\CategoryList')->get();
     }
 
     /**

@@ -2,7 +2,6 @@
 namespace AdminController\Menu;
 
 use FrontController\Controller as FrontController;
-use System\Router\Storage as Router;
 
 class AjaxEditController extends FrontController
 {
@@ -54,7 +53,7 @@ class AjaxEditController extends FrontController
     {
         $this->query()
             ->setContent('menu')
-            ->id(Router::getRoute('id'))
+            ->id($this->router()->id)
             ->limit(1)
             ->paginate(false)
             ->force();

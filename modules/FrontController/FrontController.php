@@ -1,7 +1,7 @@
 <?php
 namespace FrontController;
 
-use System\Router\Route;
+use Ignaszak\Registry\RegistryFactory;
 
 class FrontController
 {
@@ -37,10 +37,10 @@ class FrontController
      *
      * @param CommandHandler $_commandHandler
      */
-    private function handle($_commandHandler)
+    private function handle(CommandHandler $_commandHandler = null)
     {
-        $_route = new Route();
-        $_commandHandler = ! empty($_commandHandler) ? $_commandHandler : new CommandHandler();
+        $_route = RegistryFactory::start()->register('App\Resource\Route');
+        $_commandHandler = $_commandHandler ?? new CommandHandler();
         $_commandHandler->getCommand($_route);
     }
 }

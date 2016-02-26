@@ -3,7 +3,7 @@ namespace Controller;
 
 use FrontController\Controller as FrontController;
 use Ignaszak\Registry\RegistryFactory;
-use System\Server;
+use App\Resource\Server;
 
 class SendMailController extends FrontController
 {

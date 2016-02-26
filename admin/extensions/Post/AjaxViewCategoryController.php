@@ -11,7 +11,7 @@ class AjaxViewCategoryController extends FrontController
 
     public function __construct()
     {
-        $this->categoryArray = RegistryFactory::start()->register('System\Storage\CategoryList')->get();
+        $this->categoryArray = RegistryFactory::start()->register('App\Resource\CategoryList')->get();
     }
 
     public function run()

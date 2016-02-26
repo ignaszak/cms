@@ -1,7 +1,7 @@
 <?php
 namespace Form;
 
-use System\Server;
+use App\Resource\Server;
 
 class Form
 {

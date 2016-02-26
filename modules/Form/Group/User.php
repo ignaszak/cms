@@ -3,6 +3,7 @@ namespace Form\Group;
 
 use Ignaszak\Registry\RegistryFactory;
 use Form\FormGenerator;
+use App\Resource\Server;
 
 class User extends Group
 {
@@ -148,7 +149,7 @@ class User extends Group
     private function addResponseInputValue(string $name)
     {
         if ($this->formAction == 'registration') {
-            $response = \System\Server::getReferData();
+            $response = Server::getReferData();
             $field = str_replace('user', '', $name);
             if (! @$response['error']['valid' . $field] &&
                 ! @$response['error']['unique' . $field]) {

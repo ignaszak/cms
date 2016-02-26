@@ -4,7 +4,7 @@ namespace AdminController\Settings;
 use FrontController\Controller as FrontController;
 use Content\Controller\Decorator\ConfDecorator;
 use Entity\Options;
-use System\Server;
+use App\Resource\Server;
 
 class SaveSettingsController extends FrontController
 {

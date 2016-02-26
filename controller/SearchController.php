@@ -3,7 +3,7 @@ namespace Controller;
 
 use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
-use System\Server;
+use App\Resource\Server;
 
 class SearchController extends FrontController
 {

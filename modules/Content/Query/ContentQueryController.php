@@ -3,7 +3,7 @@ namespace Content\Query;
 
 use Conf\Conf;
 use Conf\DB\DBDoctrine;
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class ContentQueryController extends IContentQueryController

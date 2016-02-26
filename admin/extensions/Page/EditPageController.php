@@ -5,7 +5,7 @@ use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
 use Content\Controller\Controller;
 use Entity\Pages;
-use System\Server;
+use App\Resource\Server;
 
 class EditPageController extends FrontController
 {

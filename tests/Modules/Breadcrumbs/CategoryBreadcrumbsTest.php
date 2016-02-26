@@ -130,6 +130,6 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
     {
         $stub = \Mockery::mock('CategoryList');
         $stub->shouldReceive('get')->andReturn($return);
-        RegistryFactory::start()->set('System\Storage\CategoryList', $stub);
+        RegistryFactory::start()->set('App\Resource\CategoryList', $stub);
     }
 }

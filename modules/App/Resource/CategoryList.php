@@ -1,8 +1,8 @@
 <?php
-namespace System\Storage;
+namespace App\Resource;
 
 use Content\Query\Content as Query;
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 
 class CategoryList
 {

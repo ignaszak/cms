@@ -2,7 +2,7 @@
 namespace AdminController\Post;
 
 use FrontController\Controller as FrontController;
-use System\Server;
+use App\Resource\Server;
 use FrontController\ViewHelperController;
 use Content\Controller\Controller;
 use Entity\Posts;

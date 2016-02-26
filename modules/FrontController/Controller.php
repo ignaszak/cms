@@ -63,5 +63,14 @@ abstract class Controller
         return RegistryFactory::start()->register('Content\Query\Content');
     }
 
+    /**
+     *
+     * @return \App\Resource\Route
+     */
+    public function router(): \App\Resource\Route
+    {
+        return RegistryFactory::start()->register('App\Resource\Route');
+    }
+
     abstract public function run();
 }

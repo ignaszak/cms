@@ -14,7 +14,7 @@ class AjaxSaveCategoryController extends FrontController
     public function __construct()
     {
         $this->categoryArray = RegistryFactory::start()
-            ->register('System\Storage\CategoryList')->get();
+            ->register('App\Resource\CategoryList')->get();
     }
 
     public function run()

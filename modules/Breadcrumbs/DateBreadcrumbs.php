@@ -1,7 +1,7 @@
 <?php
 namespace Breadcrumbs;
 
-use System\Router\Storage as Router;
+use App\Resource\RouterStatic as Router;
 
 class DateBreadcrumbs extends IBreadcrumbs
 {

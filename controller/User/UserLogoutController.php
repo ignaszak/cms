@@ -2,7 +2,7 @@
 namespace Controller\User;
 
 use FrontController\Controller as FrontController;
-use System\Server;
+use App\Resource\Server;
 use Ignaszak\Registry\RegistryFactory;
 
 class UserLogoutController extends FrontController
