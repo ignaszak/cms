@@ -20,7 +20,7 @@ composer install
 
 ## Configuration
 
-Cms can be easily configured via phing. Just type phing command and follow instructions:
+CMS can be easily configured via phing. Just type phing command and follow instructions:
 
 ```sh
 php vendor/bin/phing

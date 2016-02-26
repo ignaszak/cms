@@ -29,4 +29,16 @@ class InitConf
 
         MockTest::inject($_conf, 'optionsArray', $array);
     }
+
+    public static function setConstants()
+    {
+        if (!defined('__BASEDIR__')) {
+            define('__BASEDIR__', '');
+            define('__CONFDIR__', '/app/conf');
+            define('__VIEWDIR__', '/app/view');
+            define('ADMIN_FOLDER', 'admin');
+            define('__ADMINDIR__', '/app/' . ADMIN_FOLDER);
+            define('ADMIN_URL', 'admin');
+        }
+    }
 }

@@ -3,6 +3,7 @@ namespace Test\Modules\App;
 
 use App\Valid;
 use Test\Mock\MockTest;
+use Test\Init\InitConf;
 
 class ValidTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,8 +12,7 @@ class ValidTest extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        define('__CONFDIR__', '/app/conf');
-        define('__BASEDIR__', '/');
+        InitConf::setConstants();
     }
 
     public function setUp()

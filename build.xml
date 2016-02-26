@@ -6,6 +6,7 @@
     <property name="AppConfDir" value="${project.basedir}/app/model/App/Conf" />
     <property name="rewriteBase" value="/" override="true" />
     <property name="role" value="admin" override="true" />
+    <php expression="define('__BASEDIR__', '${project.basedir}');" />
 
     <!-- ============================================ -->
     <!-- Target: start -->
@@ -79,7 +80,7 @@
     <!-- Target: create_folders -->
     <!-- ============================================ -->
     <target name="create_folders" depends="create_db_conf_file">
-        <mkdir dir="${project.basedir}/cache/registry" />
+        <mkdir dir="${project.basedir}/data/cache/registry" />
         <exec command="chmod -R 777 ${project.basedir}/data/cache" />
         <exec command="chmod -R 777 ${project.basedir}/data/cache/registry" />
         <mkdir dir="${project.basedir}/data/cache/tmp" />
@@ -109,7 +110,7 @@
         <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');"
             returnProperty="regDate" />
         <copy file="${AppConfDir}/db.sql"
-        tofile="${project.basedir}/data/cache/tmp/tmp_db.sql" overwrite="true">
+            tofile="${project.basedir}/data/cache/tmp/tmp_db.sql" overwrite="true">
             <filterchain>
                 <replacetokens>
                     <token key="dbHost" value="${dbHost}" />

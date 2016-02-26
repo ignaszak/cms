@@ -3,9 +3,9 @@ namespace App\Conf;
 
 use Conf\DB\DBSettings;
 
-$basedir = dirname(dirname(dirname(dirname(__DIR__))));
+$baseDIR = dirname(dirname(dirname(dirname(__DIR__))));
 
-include "{$basedir}/vendor/davcs86/php-mysqlimporter/php-mysqlimporter.php";
+include "{$baseDIR}/vendor/davcs86/php-mysqlimporter/php-mysqlimporter.php";
 
 class Configuration
 {
@@ -62,9 +62,8 @@ class Configuration
             DBSettings::DB_USER,
             DBSettings::DB_PASSWORD
         );
-        $baseDir = dirname(dirname(dirname(__DIR__)));
         $mysqlImport->doImport(
-            "{$baseDir}/cache/tmp/tmp_db.sql",
+            __BASEDIR__ . "/data/cache/tmp/tmp_db.sql",
             DBSettings::DB_NAME
         );
     }

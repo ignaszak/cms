@@ -3,6 +3,7 @@ namespace Test\Modules\App;
 
 use App\App;
 use Test\Mock\MockTest;
+use Test\Init\InitConf;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,10 +12,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public static function setUpBeforeClass()
     {
-        define('ADMIN_FOLDER', 'admin');
-        define('__ADMINDIR__', '/app/admin');
-        define('__CONFDIR__', '/app/conf');
-        define('__BASEDIR__', '/');
+        InitConf::setConstants();
     }
 
     public function setUp()
