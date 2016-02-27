@@ -43,6 +43,7 @@ class ValidatorFactory
     public function valid(array $command)
     {
         $this->_settersValidator->valid($command);
+        $this->addErrors($this->_settersValidator->getErrors());
         $this->runValidator(
             $this->transformCommand($command)
         );
@@ -84,10 +85,7 @@ class ValidatorFactory
             $className = @$namespace . ucfirst($class) . 'Validator';
             $validator = new $className($this->_controller);
             $validator->valid($commandArray);
-            $this->errorArray = array_merge(
-                $this->errorArray,
-                $validator->getErrors()
-            );
+            $this->addErrors($validator->getErrors());
         }
     }
 
@@ -111,5 +109,17 @@ class ValidatorFactory
             ));
             Server::headerLocationReferer();
         }
+    }
+
+    /**
+     *
+     * @param array $errors
+     */
+    private function addErrors(array $errors)
+    {
+        $this->errorArray = array_merge(
+            $this->errorArray,
+            $errors
+        );
     }
 }

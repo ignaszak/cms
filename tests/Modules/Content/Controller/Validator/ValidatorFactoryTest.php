@@ -26,6 +26,7 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
     {
         $stub = \Mockery::mock('SettersValidator');
         $stub->shouldReceive('valid')->once();
+        $stub->shouldReceive('getErrors')->andReturn([])->once();
         MockTest::inject($this->_validatorFactory, '_settersValidator', $stub);
         $this->_validatorFactory->valid(['anyCommand']);
     }
@@ -112,6 +113,20 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             5,
             InitSystem::getReferData()['data']['reference']
+        );
+    }
+
+    public function testAddErrorsArray()
+    {
+        MockTest::inject($this->_validatorFactory, 'errorArray', ['anyKey' => 'initState']);
+        $errors = ['anyKey2' => 'anyErrors'];
+        MockTest::callMockMethod($this->_validatorFactory, 'addErrors', [$errors]);
+        $this->assertEquals(
+            \PHPUnit_Framework_Assert::readAttribute($this->_validatorFactory, 'errorArray'),
+            [
+                'anyKey' => 'initState',
+                'anyKey2' => 'anyErrors'
+            ]
         );
     }
 }
