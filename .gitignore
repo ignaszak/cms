@@ -2,7 +2,7 @@ $ cat .gitignore
 
 # Conf
 app/conf/DB/DBSettings.php
-tests/Init/InitDoctrineSettings.php
+tests/Mock/MockDoctrineSettings.php
 ! app/.htaccess
 
 # Theme
