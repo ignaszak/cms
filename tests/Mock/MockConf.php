@@ -36,8 +36,8 @@ class MockConf
             define('__BASEDIR__', '');
             define('__CONFDIR__', '/app/conf');
             define('__VIEWDIR__', '/app/view');
+            define('__ADMINDIR__', '/app/admin');
             define('ADMIN_FOLDER', 'admin');
-            define('__ADMINDIR__', '/app/' . ADMIN_FOLDER);
             define('ADMIN_URL', 'admin');
         }
     }
