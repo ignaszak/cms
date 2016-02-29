@@ -2,7 +2,7 @@
 namespace AdminController\Post;
 
 use FrontController\Controller as FrontController;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Categories;
 use Ignaszak\Registry\RegistryFactory;
 

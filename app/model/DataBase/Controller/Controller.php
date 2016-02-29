@@ -1,5 +1,5 @@
 <?php
-namespace Content\Controller;
+namespace DataBase\Controller;
 
 use Conf\DB\DBDoctrine;
 use Ignaszak\Registry\RegistryFactory;

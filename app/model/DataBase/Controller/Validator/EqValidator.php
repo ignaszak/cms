@@ -1,5 +1,5 @@
 <?php
-namespace Content\Controller\Validator;
+namespace DataBase\Controller\Validator;
 
 class EqValidator extends Validator
 {

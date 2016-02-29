@@ -3,7 +3,7 @@ namespace AdminController\Post;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Posts;
 
 class SavePostController extends FrontController
@@ -29,7 +29,7 @@ class SavePostController extends FrontController
             ->setDate($date)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
-            ->setContent($_POST['content'])
+            ->setQuery($_POST['content'])
             ->setPublic($public)
             ->insert([
                 'date' => [],
@@ -44,10 +44,9 @@ class SavePostController extends FrontController
     private function getCategoryId(): int
     {
         if (! is_numeric(@$_POST['categoryId'])) {
-            $this->query()
-                ->setContent('category')
+            $this->query()->setQuery('category')
                 ->limit(1);
-            $catArray = $this->query()->getContent();
+            $catArray = $this->query()->getQuery();
             return $catArray[0]->getId();
         } else {
             return $_POST['categoryId'];

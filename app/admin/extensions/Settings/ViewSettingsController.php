@@ -34,8 +34,8 @@ class ViewSettingsController extends FrontController
         public function __construct(FrontController $_controller)
         {
             parent::__construct($_controller);
-            $this->_controller->query()->setContent('options');
-            $this->_options = $this->_controller->query()->getContent()[0];
+            $this->_controller->query()->setQuery('options');
+            $this->_options = $this->_controller->query()->getQuery()[0];
         }
 
             /**
@@ -44,7 +44,8 @@ class ViewSettingsController extends FrontController
              */
         public function getAdminSettingsFormAction(): string
         {
-            return $this->_controller->view()->getAdminAdress() . "/settings/save";
+            return $this->_controller->view()->getAdminAdress() .
+                "/settings/save";
             ;
         }
 

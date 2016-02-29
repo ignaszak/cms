@@ -3,7 +3,7 @@ namespace AdminController\Page;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Pages;
 
 class SavePageController extends FrontController
@@ -28,7 +28,7 @@ class SavePageController extends FrontController
             ->setDate($date)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
-            ->setContent($_POST['content'])
+            ->setQuery($_POST['content'])
             ->setPublic($public)
             ->insert([
                 'date' => [],

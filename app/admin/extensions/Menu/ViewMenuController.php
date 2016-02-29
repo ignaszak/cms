@@ -23,10 +23,9 @@ class ViewMenuController extends FrontController
 
         public function getAdminViewMenu()
         {
-            $this->_controller->query()
-                ->setContent('menu')
+            $this->_controller->query()->setQuery('menu')
                 ->status('all');
-            return $this->_controller->query()->getContent();
+            return $this->_controller->query()->getQuery();
         }
 
         public function getAdminViewMenuLink()

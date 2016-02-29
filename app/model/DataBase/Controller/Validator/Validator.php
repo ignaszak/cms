@@ -1,7 +1,7 @@
 <?php
-namespace Content\Controller\Validator;
+namespace DataBase\Controller\Validator;
 
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 
 abstract class Validator
 {

@@ -3,8 +3,8 @@ namespace Pagination;
 
 use App\Resource\Server;
 use App\Resource\RouterStatic as Router;
-use Content\Query\IContentQueryController as Content;
 use Ignaszak\Registry\RegistryFactory;
+use DataBase\Query\IQueryController;
 
 class PaginationGenerator
 {
@@ -131,7 +131,7 @@ class PaginationGenerator
      */
     private function getSitesNumber(): int
     {
-        $sites = Content::getCountQuery() / $this->limit;
+        $sites = IQueryController::getCountQuery() / $this->limit;
         return ceil($sites);
     }
 

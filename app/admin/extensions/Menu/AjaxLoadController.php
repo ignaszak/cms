@@ -41,13 +41,10 @@ class AjaxLoadController extends FrontController
      */
     private function selectCategory(int $catId): array
     {
-        $this->query()
-            ->setContent('category')
+        $this->query()->setQuery('category')
             ->id($catId)
-            ->limit(1)
-            ->paginate(false)
-            ->force();
-        return $this->query()->getContent();
+            ->limit(1);
+        return $this->query()->getStaticQuery();
     }
 
     /**
@@ -57,16 +54,11 @@ class AjaxLoadController extends FrontController
     private function selectPostOrPage(string $alias): array
     {
         if (empty(@$_POST['search'])) {
-            $this->query()
-                ->setContent($alias)
-                ->force();
+            $this->query()->setQuery($alias);
         } else {
-            $this->query()
-                ->setContent($alias)
-                ->titleLike($_POST['search'])
-                ->paginate(false)
-                ->force();
+            $this->query()->setQuery($alias)
+                ->titleLike($_POST['search']);
         }
-        return $this->query()->getContent();
+        return $this->query()->getStaticQuery();
     }
 }

@@ -1,12 +1,13 @@
 <?php
 ViewHelper\ViewHelperExtension::addExtensionClass([
-    'ViewHelper\Extension\User',
-    'ViewHelper\Extension\Page',
-    'ViewHelper\Extension\Post',
-    'Form\Form',
-    'Pagination\Pagination',
     'App\Resource\Route',
     'Breadcrumbs\Breadcrumbs',
+    'DataBase\Query\Query',
+    'Form\Form',
+    'Menu\Menu',
     'Module\Module',
-    'Menu\Menu'
+    'Pagination\Pagination',
+    'ViewHelper\Extension\Page',
+    'ViewHelper\Extension\Post',
+    'ViewHelper\Extension\User'
 ]);

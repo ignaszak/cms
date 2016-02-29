@@ -2,7 +2,7 @@
 namespace AdminController\Settings;
 
 use FrontController\Controller as FrontController;
-use Content\Controller\Decorator\ConfDecorator;
+use DataBase\Controller\Decorator\ConfDecorator;
 use Entity\Options;
 use App\Resource\Server;
 
@@ -11,8 +11,8 @@ class SaveSettingsController extends FrontController
 
     public function run()
     {
-        $this->query()->setContent('options');
-        $_option = $this->query()->getContent()[0];
+        $this->query()->setQuery('options');
+        $_option = $this->query()->getQuery()[0];
 
         $controller = new ConfDecorator(new Options());
         $controller->find(1)
@@ -36,7 +36,8 @@ class SaveSettingsController extends FrontController
     private function getBaseUrl(): string
     {
         if (! empty(@$_POST['adress'])) {
-            return @$_POST['adress'] . (substr(@$_POST['adress'], - 1) == "/" ? "" : "/");
+            return @$_POST['adress'] . (substr(@$_POST['adress'], - 1) == "/" ?
+                "" : "/");
         }
         return "";
     }

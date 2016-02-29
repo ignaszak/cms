@@ -3,7 +3,7 @@ namespace Controller\User;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
 use Mail\Mail;

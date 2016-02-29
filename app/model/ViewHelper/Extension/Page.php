@@ -8,7 +8,7 @@ class Page
 
     /**
      *
-     * @var Query
+     * @var \DataBase\Query\Query
      */
     private $_query;
 
@@ -20,7 +20,7 @@ class Page
 
     public function __construct()
     {
-        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
+        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
     }
 
     /**
@@ -51,13 +51,13 @@ class Page
      */
     public function getPages(): array
     {
-        $this->_query->setContent('page')->force();
-        return $this->_query->getContent();
+        $this->_query->setQuery('page')->paginate(true);
+        return $this->_query->getStaticQuery();
     }
 
     private function setPageFromDB()
     {
-        $this->_query->setContent('page');
-        $this->_page = $this->_query->getContent();
+        $this->_query->setQuery('page');
+        $this->_page = $this->_query->getQuery();
     }
 }

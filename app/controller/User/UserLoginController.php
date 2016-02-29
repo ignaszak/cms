@@ -4,7 +4,7 @@ namespace Controller\User;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use UserAuth\HashPass;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
 
@@ -78,12 +78,9 @@ class UserLoginController extends FrontController
      */
     private function getUserId(): int
     {
-        $this->query()
-            ->setContent('user')
-            ->findBy($this->column, $this->login)
-            ->force()
-            ->paginate(false);
-        $result = $this->query()->getContent();
+        $this->query()->setQuery('user')
+            ->findBy($this->column, $this->login);
+        $result = $this->query()->getStaticQuery();
 
         if (count($result) === 1 &&
             HashPass::verifyPassword($this->password, $result[0]->getPassword())) {

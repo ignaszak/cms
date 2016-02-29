@@ -1,7 +1,7 @@
 <?php
 namespace Content\Controller\Decorator;
 
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Ignaszak\Registry\RegistryFactory;
 
 class ConfDecorator extends Controller

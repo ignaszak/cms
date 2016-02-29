@@ -56,11 +56,11 @@ abstract class Controller
 
     /**
      *
-     * @return \Content\Query\Content
+     * @return \DataBase\Query\Query
      */
-    public function query(): \Content\Query\Content
+    public function query(): \DataBase\Query\Query
     {
-        return RegistryFactory::start()->register('Content\Query\Content');
+        return RegistryFactory::start()->register('DataBase\Query\Query');
     }
 
     /**

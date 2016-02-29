@@ -38,14 +38,14 @@ class SearchController extends FrontController
         public function getSearchResult(): array
         {
             $this->_controller->query()
-                ->setContent('post')
-                ->force()
+                ->setQuery('post')
                 ->query(
                     "c.title LIKE :search OR
                             c.content LIKE :search",
                     [':search' => "%{$this->_controller->search}%"]
-                );
-            return $this->_controller->query()->getContent();
+                )
+                ->paginate(true);
+            return $this->_controller->query()->getStaticQuery();
         }
         };
     }

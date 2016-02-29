@@ -36,11 +36,10 @@ class CategoryBreadcrumbs extends IBreadcrumbs
         $name = Router::getRouteName();
         $alias = Router::getRoute('alias');
         if (! empty($alias)) {
-            $this->_query->setContent($name)
+            $this->_query->setQuery($name)
                 ->limit(1)
-                ->alias($alias)
-                ->force();
-            $content = $this->_query->getContent();
+                ->alias($alias);
+            $content = $this->_query->getStaticQuery();
             if ($content) {
                 return ($name == 'category') ?
                     $content[0]->getId() : $content[0]->getCategory()->getId();

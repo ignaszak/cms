@@ -1,5 +1,5 @@
 <?php
-namespace Content\Controller\Validator;
+namespace DataBase\Controller\Validator;
 
 use Ignaszak\Registry\RegistryFactory;
 use Entity\Controller\EntityController;
@@ -9,7 +9,7 @@ class UniqueValidator extends Validator
 
     /**
      *
-     * @var \Content\Query\Content
+     * @var \DataBase\Query\Query
      */
     private $_query;
 
@@ -22,7 +22,7 @@ class UniqueValidator extends Validator
     /**
      *
      * {@inheritDoc}
-     * @see \Content\Controller\Validator\Validator::valid()
+     * @see \DataBase\Controller\Validator\Validator::valid()
      */
     public function valid(array $command)
     {
@@ -34,7 +34,7 @@ class UniqueValidator extends Validator
 
     private function setQuery()
     {
-        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
+        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
     }
 
     private function setEntityKey()
@@ -68,13 +68,12 @@ class UniqueValidator extends Validator
      */
     private function dataNotExistInDatabase(string $column, $value, array $exception): bool
     {
-        $query = $this->_query->setContent($this->entityKey);
+        $query = $this->_query->setQuery($this->entityKey);
         if (! empty($exception)) {
             $query->query("c.{$column} NOT IN(?0)", [$exception]);
         }
         $query->findBy($column, $value);
-        $query->force()->paginate(false);
-        $result = $this->_query->getContent();
+        $result = $this->_query->getStaticQuery();
         return count($result) === 0 ? true : false;
     }
 }

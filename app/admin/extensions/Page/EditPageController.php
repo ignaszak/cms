@@ -3,7 +3,7 @@ namespace AdminController\Page;
 
 use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Pages;
 use App\Resource\Server;
 
@@ -63,26 +63,26 @@ class EditPageController extends FrontController
 
             $data['id'] = null;
             $data['title'] = $this->returnData['setTitle'];
-            $data['content'] = $this->returnData['setContent'];
+            $data['content'] = $this->returnData['setQuery'];
             $data['public'] = $this->returnData['setPublic'];
             $data['formTitle'] = 'Add new page';
-            $data['formLink'] = $this->_controller->view()->getAdminAdress() . "/page/save";
+            $data['formLink'] = $this->_controller->view()->getAdminAdress() .
+                "/page/save";
 
             if ($this->_controller->action == 'edit' && $this->_controller->alias) {
 
                 $data['formTitle'] = 'Edit page';
 
-                $this->_controller->query()
-                    ->setContent('page')
+                $this->_controller->query()->setQuery('page')
                     ->alias($this->_controller->alias);
 
-                foreach ($this->_controller->query()->getContent() as $post) {
+                foreach ($this->_controller->query()->getQuery() as $post) {
                     $data['id'] = $post->getId();
                     $data['title'] = $post->getTitle();
                     $data['content'] = $post->getContent();
                     $data['public'] = $post->getPublic();
                     $data['deleteLink'] = "{$this->_controller->view()
-                                ->getAdminAdress()}/page/delete{$post->getAlias()}";
+                        ->getAdminAdress()}/page/delete{$post->getAlias()}";
                 }
             }
 

@@ -188,7 +188,7 @@ class Pages extends IPagesQuery
      *
      * @return Pages
      */
-    public function setContent($content)
+    public function setQuery($content)
     {
         $this->content = $content;
 

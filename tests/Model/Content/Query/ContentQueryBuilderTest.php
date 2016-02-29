@@ -1,8 +1,8 @@
 <?php
 namespace Test\Model\Content\Query;
 
-use Content\Query\ContentQueryBuilder;
-use Content\Query\IContentQueryController;
+use Content\Query\QueryBuilder;
+use Content\Query\IQueryController;
 use Test\Mock\MockDoctrine;
 use Test\Mock\MockTest;
 
@@ -13,7 +13,7 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_contentQueryBuilder = new ContentQueryBuilder(
+        $this->_contentQueryBuilder = new QueryBuilder(
             $this->getMockIContentQueryController(
                 MockDoctrine::queryBuilder([null])
             )
@@ -67,7 +67,7 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
         $stub->shouldReceive('join')
             ->andReturnSelf()
             ->once();
-        $this->_contentQueryBuilder = new ContentQueryBuilder($this->getMockIContentQueryController($stub));
+        $this->_contentQueryBuilder = new QueryBuilder($this->getMockIContentQueryController($stub));
         MockTest::callMockMethod($this->_contentQueryBuilder, 'join', array(
             'column'
         ));
@@ -95,7 +95,7 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
         $stub->shouldReceive('setParameter')
             ->andReturnSelf()
             ->once();
-        $this->_contentQueryBuilder = new ContentQueryBuilder(
+        $this->_contentQueryBuilder = new QueryBuilder(
             $this->getMockIContentQueryController($stub)
         );
     }

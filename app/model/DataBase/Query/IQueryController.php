@@ -1,14 +1,14 @@
 <?php
-namespace Content\Query;
+namespace DataBase\Query;
 
-abstract class IContentQueryController
+abstract class IQueryController
 {
 
     /**
      *
-     * @var ContentQueryBuilder
+     * @var QueryBuilder
      */
-    protected $_contentQueryBuilder;
+    protected $_queryBuilder;
 
     /**
      * Contains query rows count
@@ -21,44 +21,44 @@ abstract class IContentQueryController
      *
      * @var \Conf\DB\DBDoctrine::em()->createQueryBuilder()
      */
-    protected $contentQuery;
+    protected $query;
 
     /**
      *
      * @return Entity[]
      */
-    abstract public function getContent(): array;
+    abstract public function getQuery(): array;
 
     /**
      * Defines if pagination is disabled
      *
      * @param bool $paginate
-     * @return \Content\Query\IContentQueryController
+     * @return \DataBase\Query\IQueryController
      */
-    abstract public function paginate(bool $paginate = true): IContentQueryController;
+    abstract public function paginate(bool $paginate = true): IQueryController;
 
     /**
      * Force controller to select rows independ of alias
      *
-     * @return \Content\Query\IContentQueryController
+     * @return \DataBase\Query\IQueryController
      */
-    abstract public function force(): IContentQueryController;
+    abstract public function force(): IQueryController;
 
     /**
      * Sets Limit of selected rows
      *
      * @param int $limit
-     * @return \Content\Query\IContentQueryController
+     * @return \DataBase\Query\IQueryController
      */
-    abstract public function limit(int $limit): IContentQueryController;
+    abstract public function limit(int $limit): IQueryController;
 
     /**
      * Selects 'public', 'edit' or 'all' rows
      *
      * @param unknown $value
-     * @return \Content\Query\IContentQueryController
+     * @return \DataBase\Query\IQueryController
      */
-    abstract public function status(string $value): IContentQueryController;
+    abstract public function status(string $value): IQueryController;
 
     /**
      *
@@ -67,15 +67,15 @@ abstract class IContentQueryController
      */
     abstract public function orderBy(string $column, string $order);
 
-    public function setContentQuery($value)
+    public function updateQuery($value)
     {
-        $this->contentQuery = $value;
+        $this->query = $value;
     }
 
     /**
      *
      * @param string $property
-     * @return mixed Property of IContentQueryController
+     * @return mixed Property of IQueryController
      */
     public function __get(string $property)
     {
@@ -93,9 +93,9 @@ abstract class IContentQueryController
      */
     public function __call(string $name, array $arguments)
     {
-        if (method_exists($this->_contentQueryBuilder, $name)) {
+        if (method_exists($this->_queryBuilder, $name)) {
             return call_user_func_array(
-                [$this->_contentQueryBuilder, $name],
+                [$this->_queryBuilder, $name],
                 $arguments
             );
         } else {

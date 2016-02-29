@@ -2,7 +2,7 @@
 namespace AdminController\Menu;
 
 use FrontController\Controller as FrontController;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Menus;
 use Entity\MenuItems;
 use App\Resource\Server;

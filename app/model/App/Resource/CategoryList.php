@@ -1,8 +1,9 @@
 <?php
 namespace App\Resource;
 
-use Content\Query\Content as Query;
 use App\Resource\RouterStatic as Router;
+use DataBase\Query\Query;
+use Ignaszak\Registry\RegistryFactory;
 
 class CategoryList
 {
@@ -21,11 +22,10 @@ class CategoryList
 
     public function __construct()
     {
-        $this->_query = new Query();
-        $this->_query->setContent('category')
-            ->paginate(false)
-            ->force();
-        $this->categoryArray = $this->_query->getContent();
+        $this->_query = RegistryFactory::start()
+            ->register('DataBase\Query\Query');
+        $this->_query->setQuery('category');
+        $this->categoryArray = $this->_query->getStaticQuery();
     }
 
     /**
@@ -35,10 +35,9 @@ class CategoryList
      */
     public function getIdByAlias(string $alias): int
     {
-        $this->_query->setContent('category')
-            ->alias($alias)
-            ->force();
-        $content = $this->_query->getContent();
+        $this->_query->setQuery('category')
+            ->alias($alias);
+        $content = $this->_query->getStaticQuery();
         return $content ? $content[0]->getId() : 0;
     }
 
@@ -47,7 +46,7 @@ class CategoryList
      * @return \Entity\Categories[]
      */
     public function get(): array
-    {
+    {var_dump($this->categoryArray);
         return $this->categoryArray;
     }
 

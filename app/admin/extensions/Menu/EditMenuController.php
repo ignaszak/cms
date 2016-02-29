@@ -45,13 +45,10 @@ class EditMenuController extends FrontController
 
         public function getAdminLoadMenuName(): string
         {
-            $this->_controller->query()
-                ->setContent('menu')
+            $this->_controller->query()->setQuery('menu')
                 ->id($this->id)
-                ->limit(1)
-                ->paginate(false)
-                ->force();
-            $content = $this->_controller->query()->getContent();
+                ->limit(1);
+            $content = $this->_controller->query()->getStaticQuery();
             return count($content) ? $content[0]->getName() : "";
         }
 

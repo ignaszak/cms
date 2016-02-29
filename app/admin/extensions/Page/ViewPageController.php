@@ -23,10 +23,9 @@ class ViewPageController extends FrontController
 
         public function getAdminViewPage()
         {
-            $this->_controller->query()
-                ->setContent('page')
+            $this->_controller->query()->setQuery('page')
                 ->status('all');
-            return $this->_controller->query()->getContent();
+            return $this->_controller->query()->getQuery();
         }
 
         public function getAdminViewPageLink()

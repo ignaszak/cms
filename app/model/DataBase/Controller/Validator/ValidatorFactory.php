@@ -1,8 +1,8 @@
 <?php
-namespace Content\Controller\Validator;
+namespace DataBase\Controller\Validator;
 
 use App\Resource\Server;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 
 class ValidatorFactory
 {

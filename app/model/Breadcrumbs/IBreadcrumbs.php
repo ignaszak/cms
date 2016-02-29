@@ -2,7 +2,6 @@
 namespace Breadcrumbs;
 
 use Ignaszak\Registry\RegistryFactory;
-use Content\Query\Content as Query;
 
 abstract class IBreadcrumbs
 {
@@ -15,7 +14,7 @@ abstract class IBreadcrumbs
 
     /**
      *
-     * @var Query
+     * @var \DataBase\Query\Query
      */
     protected $_query;
 
@@ -27,7 +26,8 @@ abstract class IBreadcrumbs
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->_query = new Query();
+        $this->_query = RegistryFactory::start('file')
+            ->register('DataBase\Query\Query');
     }
 
     /**

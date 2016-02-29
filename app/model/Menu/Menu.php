@@ -8,7 +8,7 @@ class Menu
 
     /**
      *
-     * @var \Content\Query\Content
+     * @var \DataBase\Query\Query
      */
     private $_query;
 
@@ -26,7 +26,7 @@ class Menu
 
     public function __construct()
     {
-        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
+        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
     }
 
@@ -47,12 +47,10 @@ class Menu
      */
     private function loadMenuItmsByPosition(string $position)
     {
-        $this->_query->setContent('menu')
+        $this->_query->setQuery('menu')
             ->findBy('position', $position)
-            ->limit(1)
-            ->paginate(false)
-            ->force();
-        $content = $this->_query->getContent();
+            ->limit(1);
+        $content = $this->_query->getStaticQuery();
 
         if (array_key_exists(0, $content)) {
             $this->menuItemsArray = $content[0]->getMenuItems();

@@ -3,7 +3,6 @@ namespace ViewHelper\Extension;
 
 use Conf\Conf;
 use Ignaszak\Registry\RegistryFactory;
-use Content\Query\IContentQueryController;
 
 class System
 {
@@ -16,18 +15,16 @@ class System
 
     /**
      *
-     * @var \Content\Query\Content
+     * @var \DataBase\Query\Query
      */
     private $_query;
-
-    private $_setQuery;
 
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')
             ->register('Conf\Conf');
         $this->_query = RegistryFactory::start()
-            ->register('Content\Query\Content');
+            ->register('DataBase\Query\Query');
     }
 
     /**
@@ -77,34 +74,11 @@ class System
     }
 
     /**
-     *
-     * @param string $table
-     * @return IContentQueryController
-     */
-    public function setQuery(string $table): IContentQueryController
-    {
-        $this->_setQuery = $this->_query->setContent($table)
-            ->force()
-            ->paginate(false);
-
-        return $this->_setQuery;
-    }
-
-    /**
-     *
+     * todo do something with paginate()
      * @return array
      */
     public function getResult(): array
     {
-        return $this->_setQuery->getContent();
-    }
-
-    /**
-     *
-     * @return Entity
-     */
-    public function getSingleResult()
-    {
-        return $this->_setQuery->getContent()[0];
+        return $this->_query->getQuery();
     }
 }

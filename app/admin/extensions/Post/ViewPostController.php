@@ -24,15 +24,15 @@ class ViewPostController extends FrontController
 
         public function getAdminViewPost()
         {
-            $this->_controller->query()
-                ->setContent('post')
+            $this->_controller->query()->setQuery('post')
                 ->status('all');
-            return $this->_controller->query()->getContent();
+            return $this->_controller->query()->getQuery();
         }
 
         public function getAdminViewPostLink()
         {
-            return $this->_controller->view()->getAdminAdress() . "/post/p/edit/";
+            return $this->_controller->view()->getAdminAdress() .
+                "/post/p/edit/";
         }
         };
     }

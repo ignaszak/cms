@@ -1,12 +1,12 @@
 <?php
-namespace Content\Query;
+namespace DataBase\Query;
 
 use Conf\Conf;
 use Conf\DB\DBDoctrine;
 use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
-class ContentQueryController extends IContentQueryController
+class QueryController extends IQueryController
 {
 
     /**
@@ -33,13 +33,13 @@ class ContentQueryController extends IContentQueryController
      *
      * @var Entity[]
      */
-    private $entityContentArray = [];
+    private $entityArray = [];
 
     /**
      *
      * @var boolean
      */
-    private $isPaginationEnabled = true;
+    private $isPaginationEnabled = false;
 
     /**
      *
@@ -54,7 +54,7 @@ class ContentQueryController extends IContentQueryController
     private $status;
 
     /**
-     * Used to disable ContentQueryController::orderHandler() when user
+     * Used to disable QueryController::orderHandler() when user
      * defines his own orderBy
      *
      * @var boolean
@@ -64,7 +64,7 @@ class ContentQueryController extends IContentQueryController
     public function __construct(string $entityName)
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->_contentQueryBuilder = new ContentQueryBuilder($this);
+        $this->_queryBuilder = new QueryBuilder($this);
         $this->entityName = $entityName;
         $this->createQuery();
     }
@@ -73,9 +73,9 @@ class ContentQueryController extends IContentQueryController
      *
      * {@inheritDoc}
      *
-     * @see \Content\Query\IContentQueryController::paginate($paginate)
+     * @see \DataBase\Query\IQueryController::paginate($paginate)
      */
-    public function paginate(bool $paginate = true): IContentQueryController
+    public function paginate(bool $paginate = true): IQueryController
     {
         $this->isPaginationEnabled = $paginate;
         return $this;
@@ -85,9 +85,9 @@ class ContentQueryController extends IContentQueryController
      *
      * {@inheritDoc}
      *
-     * @see \Content\Query\IContentQueryController::force()
+     * @see \DataBase\Query\IQueryController::force()
      */
-    public function force(): IContentQueryController
+    public function force(): IQueryController
     {
         $this->isResultForced = true;
         return $this;
@@ -97,9 +97,9 @@ class ContentQueryController extends IContentQueryController
      *
      * {@inheritDoc}
      *
-     * @see \Content\Query\IContentQueryController::limit($limit)
+     * @see \DataBase\Query\IQueryController::limit($limit)
      */
-    public function limit(int $limit): IContentQueryController
+    public function limit(int $limit): IQueryController
     {
         $this->limit = $limit;
         return $this;
@@ -109,9 +109,9 @@ class ContentQueryController extends IContentQueryController
      *
      * {@inheritDoc}
      *
-     * @see \Content\Query\IContentQueryController::status($value)
+     * @see \DataBase\Query\IQueryController::status($value)
      */
-    public function status(string $value): IContentQueryController
+    public function status(string $value): IQueryController
     {
         $this->status = $value;
         return $this;
@@ -121,21 +121,21 @@ class ContentQueryController extends IContentQueryController
      *
      * {@inheritDoc}
      *
-     * @see \Content\Query\IContentQueryController::orderBy($column, $order)
+     * @see \DataBase\Query\IQueryController::orderBy($column, $order)
      */
     public function orderBy(string $column, string $order)
     {
-        $query = $this->contentQuery->orderBy('c.' . $column, $order);
-        $this->contentQuery = $query;
+        $query = $this->query->orderBy('c.' . $column, $order);
+        $this->query = $query;
     }
 
     /**
      *
      * {@inheritDoc}
      *
-     * @see \Content\Query\IContentQueryController::getContent()
+     * @see \DataBase\Query\IQueryController::getQuery()
      */
-    public function getContent(): array
+    public function getQuery(): array
     {
         $this->statusHandler();
         $this->orderHandler();
@@ -147,7 +147,7 @@ class ContentQueryController extends IContentQueryController
 
         $this->countQuery();
 
-        return $this->entityContentArray;
+        return $this->entityArray;
     }
 
     /**
@@ -159,12 +159,12 @@ class ContentQueryController extends IContentQueryController
             ->select('c')
             ->from($this->entityName, 'c');
 
-        $this->contentQuery = $query;
+        $this->query = $query;
     }
 
     /**
      * In admin panel it is possible to select 'all', 'public' or 'edit' post
-     * by calling ContentQueryController::status(string $value) method
+     * by calling QueryController::status(string $value) method
      * In other cases handler select only 'public' posts
      */
     private function statusHandler()
@@ -183,8 +183,8 @@ class ContentQueryController extends IContentQueryController
             }
             // Create query based on $value
             if (is_int($value)) {
-                $query = $this->contentQuery->andwhere('c.public = ' . $value);
-                $this->contentQuery = $query;
+                $query = $this->query->andwhere('c.public = ' . $value);
+                $this->query = $query;
             }
         }
     }
@@ -239,12 +239,12 @@ class ContentQueryController extends IContentQueryController
         $limit = $this->_conf->getViewLimit();
         $offset = $limit * (($page ? $page : 1) - 1);
 
-        $query = $this->contentQuery->getQuery()
+        $query = $this->query->getQuery()
             ->setFirstResult($offset)
             ->setMaxResults($limit)
             ->getResult();
 
-        $this->entityContentArray = $query;
+        $this->entityArray = $query;
     }
 
     /**
@@ -255,8 +255,8 @@ class ContentQueryController extends IContentQueryController
     private function setLimit()
     {
         if (is_null($this->limit) === false) {
-            $query = $this->contentQuery->setMaxResults($this->limit);
-            $this->contentQuery = $query;
+            $query = $this->query->setMaxResults($this->limit);
+            $this->query = $query;
         }
     }
 
@@ -266,21 +266,21 @@ class ContentQueryController extends IContentQueryController
     private function setAliasIfResultIsNotForced()
     {
         if (! $this->isResultForced) {
-            $this->_contentQueryBuilder->alias(Router::getRoute('alias'));
+            $this->_queryBuilder->alias(Router::getRoute('alias'));
             $this->getQueryAndResult();
         }
     }
 
     private function getQueryAndResult()
     {
-        $query = $this->contentQuery->getQuery()->getResult();
+        $query = $this->query->getQuery()->getResult();
 
-        $this->entityContentArray = $query;
+        $this->entityArray = $query;
     }
 
     private function countQuery()
     {
-        $query = $this->contentQuery->select('COUNT(c)')
+        $query = $this->query->select('COUNT(c)')
             ->getQuery()
             ->getSingleScalarResult();
 

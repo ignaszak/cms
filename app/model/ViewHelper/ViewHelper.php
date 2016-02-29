@@ -57,31 +57,32 @@ class ViewHelper
      */
     public function display(): array
     {
-        $_contentInstance = $this->_viewHelperExtension->getExtensionInstanceFromMethodName('Content');
+        $_query = $this->_viewHelperExtension
+            ->getExtensionInstanceFromMethodName('Query');
 
         switch (Router::getRoute()) {
 
             case 'post':
-                $_contentInstance->setContent('post');
+                $_query->setQuery('post');
                 break;
 
             case 'category':
-                $_contentInstance->setContent('post')
-                    ->categoryId(RegistryFactory::start()->register('App\Resource\CategoryList')
-                    ->child())
+                $_query->setQuery('post')
+                    ->categoryId(RegistryFactory::start()
+                        ->register('App\Resource\CategoryList')->child())
                     ->force();
                 break;
 
             case 'date':
-                $_contentInstance->setContent('post')
+                $_query->setQuery('post')
                     ->date(Router::getRoute('date'))
                     ->force();
                 break;
 
             default:
-                $_contentInstance->setContent('post');
+                $_query->setQuery('post');
         }
 
-        return $_contentInstance->getContent();
+        return $_query->getQuery();
     }
 }

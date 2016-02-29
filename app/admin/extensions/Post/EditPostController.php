@@ -4,7 +4,7 @@ namespace AdminController\Post;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use FrontController\ViewHelperController;
-use Content\Controller\Controller;
+use DataBase\Controller\Controller;
 use Entity\Posts;
 
 class EditPostController extends FrontController
@@ -52,7 +52,8 @@ class EditPostController extends FrontController
         public function __construct(FrontController $_controller)
         {
             parent::__construct($_controller);
-            $this->returnData = $this->_controller->view()->getFormResponseData('data');
+            $this->returnData = $this->_controller->view()
+                ->getFormResponseData('data');
         }
 
         public function getAdminEditPost(string $key)
@@ -61,27 +62,28 @@ class EditPostController extends FrontController
 
             $data['id'] = null;
             $data['title'] = $this->returnData['setTitle'];
-            $data['content'] = $this->returnData['setContent'];
+            $data['content'] = $this->returnData['setQuery'];
             $data['catId'] = $this->returnData['setCategory'];
             $data['public'] = $this->returnData['setPublic'];
             $data['formTitle'] = 'Add new post';
-            $data['formLink'] = $this->_controller->view()->getAdminAdress() . "/post/p/form";
+            $data['formLink'] = $this->_controller->view()->getAdminAdress() .
+                "/post/p/form";
 
             if ($this->_controller->action == 'edit' && $this->_controller->alias) {
 
                 $data['formTitle'] = 'Edit post';
 
-                $this->_controller->query()
-                    ->setContent('post')
+                $this->_controller->query()->setQuery('post')
                     ->alias($this->_controller->alias);
 
-                foreach ($this->_controller->query()->getContent() as $post) {
+                foreach ($this->_controller->query()->getQuery() as $post) {
                     $data['id'] = $post->getId();
                     $data['catId'] = $post->getCategory()->getId();
                     $data['title'] = $post->getTitle();
                     $data['content'] = $post->getContent();
                     $data['public'] = $post->getPublic();
-                    $data['deleteLink'] = $this->_controller->view()->getAdminAdress() . "/post/p/delete/" . $post->getAlias();
+                    $data['deleteLink'] = $this->_controller->view()
+                        ->getAdminAdress() . "/post/p/delete/" . $post->getAlias();
                 }
             }
 

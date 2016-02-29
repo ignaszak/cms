@@ -1,7 +1,6 @@
 <?php
 namespace ViewHelper\Extension;
 
-use Content\Query\IContentQueryController;
 use Ignaszak\Registry\RegistryFactory;
 use App\Resource\RouterStatic as Router;
 
@@ -10,7 +9,7 @@ class Post
 
     /**
      *
-     * @var Query
+     * @var \DataBase\Query\Query
      */
     private $_query;
 
@@ -22,7 +21,7 @@ class Post
 
     public function __construct()
     {
-        $this->_query = RegistryFactory::start()->register('Content\Query\Content');
+        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
     }
 
     /**
@@ -54,11 +53,11 @@ class Post
         switch (Router::getRoute()) {
 
             case 'post':
-                $this->_query->setContent('post');
+                $this->_query->setQuery('post');
                 break;
 
             case 'category':
-                $this->_query->setContent('post')
+                $this->_query->setQuery('post')
                     ->categoryId(
                         RegistryFactory::start()->register('App\Resource\CategoryList')
                             ->child()
@@ -67,14 +66,14 @@ class Post
                 break;
 
             case 'date':
-                $this->_query->setContent('post')
+                $this->_query->setQuery('post')
                     ->date(Router::getRoute('date'))
                     ->force();
                 break;
 
             default:
-                $this->_query->setContent('post');
+                $this->_query->setQuery('post');
         }
-        $this->_post = $this->_query->getContent();
+        $this->_post = $this->_query->getQuery();
     }
 }
