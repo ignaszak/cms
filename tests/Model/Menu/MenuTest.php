@@ -37,7 +37,8 @@ class MenuTest extends \PHPUnit_Framework_TestCase
     public function testLoadMenuItemsArrayToProperty()
     {
         MockTest::callMockMethod(
-            self::$_menu, 'loadMenuItmsByPosition',
+            self::$_menu,
+            'loadMenuItmsByPosition',
             ['head']
         );
     }
@@ -46,7 +47,8 @@ class MenuTest extends \PHPUnit_Framework_TestCase
     {
         $anyAdressUrl = 'http://example.com';
         $adress = MockTest::callMockMethod(
-            self::$_menu, 'validAdress',
+            self::$_menu,
+            'validAdress',
             [$anyAdressUrl]
         );
         $this->assertEquals($anyAdressUrl, $adress);
@@ -56,7 +58,8 @@ class MenuTest extends \PHPUnit_Framework_TestCase
     {
         $anyRoute = 'post/alias';
         $adress = MockTest::callMockMethod(
-            self::$_menu, 'validAdress',
+            self::$_menu,
+            'validAdress',
             [$anyRoute]
         );
         $this->assertEquals($anyRoute, $adress);
