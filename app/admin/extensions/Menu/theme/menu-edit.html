@@ -1,11 +1,11 @@
 <script>
-var admin_adress = '<?php echo $this->getAdminAdress(); ?>';
+var admin_adress = '<?php echo $this->getAdminThemeUrl(); ?>';
 var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
 </script>
 <script
- src="<?php echo $this->getAdminAdress(); ?>/extensions/Menu/theme/js/choose-element.js"></script>
+ src="<?php echo $this->getAdminThemeUrl(); ?>/extensions/Menu/theme/js/choose-element.js"></script>
 <link rel="stylesheet"
- href="<?php echo $this->getAdminAdress(); ?>/extensions/Menu/theme/css/style.css">
+ href="<?php echo $this->getAdminThemeUrl(); ?>/extensions/Menu/theme/css/style.css">
 
 <div class="container-fluid">
 
@@ -18,7 +18,7 @@ var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
   <div class="panel-body">
 
    <form class="form-horizontal"
-    action="<?php echo $this->getAdminAdress(); ?>/menu/save"
+    action="<?php echo $this->getAdminThemeUrl(); ?>/menu/save"
     method="post">
 
     <input type="hidden" name="id"

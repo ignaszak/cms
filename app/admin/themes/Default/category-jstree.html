@@ -1,9 +1,9 @@
 <script>
 $(document).ready(function(){
     $('[data-toggle="jstree-confirm"]').confirmation({
-    	title : '<b>Are you sure?</b><br />' +
-    			'Every child category will be also removed. ' +
-    			'Posts with this category will receive master \'Home\' category.',
+        title : '<b>Are you sure?</b><br />' +
+                'Every child category will be also removed. ' +
+                'Posts with this category will receive master \'Home\' category.',
         onConfirm : function () {
             jstree_category_delete();
         },
@@ -11,18 +11,15 @@ $(document).ready(function(){
     });
 });
 </script>
-<link rel="stylesheet"
- href="<?php echo $this->getAdminAdress(); ?>/themes/Default/jstree/dist/themes/default/style.css" />
-<script
- src="<?php echo $this->getAdminAdress(); ?>/themes/Default/jstree/dist/jstree.min.js"></script>
+<link rel="stylesheet" href="<?php echo $this->getAdminThemeUrl(); ?>/themes/Default/jstree/dist/themes/default/style.css" />
+<script src="<?php echo $this->getAdminThemeUrl(); ?>/themes/Default/jstree/dist/jstree.min.js"></script>
 <script>
 var admin_adress = "<?php echo $this->getAdminAdress(); ?>";
 </script>
-<script
- src="<?php echo $this->getAdminAdress(); ?>/themes/Default/jstree/jstree.js"></script>
+<script src="<?php echo $this->getAdminThemeUrl(); ?>/themes/Default/jstree/jstree.js"></script>
 <style>
 #jstree-category {
- margin-top: 10px;
+    margin-top: 10px;
 }
 </style>
 

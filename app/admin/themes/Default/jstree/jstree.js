@@ -50,14 +50,13 @@ function jstree_ajax(obj, action)
 }
 
 $(function () {
-
-	/**
-	 * Sets default category id
-	 */
+    /**
+     * Sets default category id
+     */
     if (typeof category_id == 'undefined') category_id = 0;
 
     /**
-     * 
+     *
      */
     $('input[name="categoryId"]').val(category_id);
 
@@ -86,7 +85,7 @@ $(function () {
         jstree_ajax(obj, 'delete');
     })
     .on('loaded.jstree', function() {
-    	$('#jstree-category').jstree('open_all');
+        $('#jstree-category').jstree('open_all');
     })
     .on('select_node.jstree', function() {
         var id = $('#jstree-category').jstree(true).get_selected();

@@ -46,7 +46,7 @@ class CategoryList
      * @return \Entity\Categories[]
      */
     public function get(): array
-    {var_dump($this->categoryArray);
+    {
         return $this->categoryArray;
     }
 

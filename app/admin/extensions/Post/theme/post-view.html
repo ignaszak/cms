@@ -40,7 +40,7 @@
        <?php echo $i; ?>
       </th>
       <td><a
-       href="<?php echo $this->getAdminAdress() . '/post/p/edit/' . $post->getAlias(); ?>"><b>
+       href="<?php echo $this->getAdminThemeUrl() . '/post/p/edit/' . $post->getAlias(); ?>"><b>
          <?php echo $post->getTitle(); ?>
        </b></a>
        <p class="visible-xs">
@@ -63,10 +63,10 @@
        <?php echo $post->getDate(); ?>
       </td>
       <td><a class="btn btn-xs btn-default"
-       href="<?php echo $this->getAdminAdress(); ?>/post/p/edit/<?php echo $post->getAlias(); ?>">
+       href="<?php echo $this->getAdminThemeUrl(); ?>/post/p/edit/<?php echo $post->getAlias(); ?>">
         <i class="fa fa-pencil-square-o"></i>
       </a> <a class="btn btn-xs btn-danger" data-toggle="a-confirm"
-       href="<?php echo $this->getAdminAdress(); ?>/post/p/delete/<?php echo $post->getAlias(); ?>">
+       href="<?php echo $this->getAdminThemeUrl(); ?>/post/p/delete/<?php echo $post->getAlias(); ?>">
         <i class="fa fa-times"></i>
       </a></td>
      </tr>
