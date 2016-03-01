@@ -1,7 +1,7 @@
 <?php
-namespace Test\Model\Content\Controller\Validator\Schema;
+namespace Test\Model\DataBase\Controller\Validator\Schema;
 
-use Content\Controller\Validator\Schema\Validation;
+use DataBase\Controller\Validator\Schema\Validation;
 
 class ValidationTest extends \PHPUnit_Framework_TestCase
 {

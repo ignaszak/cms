@@ -72,50 +72,50 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetInputLoginWithReferLoginData()
     {
-        $refer = array(
-            'data' => array(
+        $refer = [
+            'data' => [
                 'setLogin' => 'AnyLogin'
-            )
-        );
+            ]
+        ];
         $this->referData($refer);
         $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2" value="AnyLogin">', $this->_user->inputLogin());
     }
 
     public function testGetInputLoginWithInccorectLogin()
     {
-        $refer = array(
-            'error' => array(
+        $refer = [
+            'error' => [
                 'validLogin' => 1
-            ),
-            'data' => array(
+            ],
+            'data' => [
                 'setLogin' => 'AnyLogin'
-            )
-        );
+            ]
+        ];
         $this->referData($refer);
         $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2">', $this->_user->inputLogin());
     }
 
     public function testGetInputEmailWithReferEmailData()
     {
-        $refer = array(
-            'data' => array(
+        $refer = [
+            'data' => [
                 'setEmail' => 'any@email.com'
-            )
-        );
+            ]
+        ];
         $this->referData($refer);
         $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail" value="any@email.com">', $this->_user->inputEmail());
     }
 
     public function testGetInputEmailWithInccorectEmail()
     {
-        $refer = array(
-            'error' => array(
+        $refer = [
+            'error' => [
                 'validEmail' => 1
-            ),
-            'data' => array(
+            ],
+            'data' => [
                 'setEmail' => 'any@email.com'
-            )
-        );
+            ]
+        ];
         $this->referData($refer);
         $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail">', $this->_user->inputEmail());
     }
@@ -128,15 +128,27 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $stub->shouldReceive('getEmail')->once();
         $this->_user = new User($this->mockForm('accountData'));
         MockTest::inject($this->_user, '_user', $stub);
-        MockTest::callMockMethod($this->_user, 'addAccountValue', array('userLogin'));
-        MockTest::callMockMethod($this->_user, 'addAccountValue', array('userEmail'));
+        MockTest::callMockMethod(
+            $this->_user,
+            'addAccountValue',
+            ['userLogin']
+        );
+        MockTest::callMockMethod(
+            $this->_user,
+            'addAccountValue',
+            ['userEmail']
+        );
     }
 
     public function testGetLoginEntityGetter()
     {
         $this->assertEquals(
             'getLogin',
-            MockTest::callMockMethod($this->_user, 'getEntityGetter', array('userLogin'))
+            MockTest::callMockMethod(
+                $this->_user,
+                'getEntityGetter',
+                ['userLogin']
+            )
         );
     }
 
@@ -144,7 +156,11 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertEquals(
             'getEmail',
-            MockTest::callMockMethod($this->_user, 'getEntityGetter', array('userEmail'))
+            MockTest::callMockMethod(
+                $this->_user,
+                'getEntityGetter',
+                ['userEmail']
+            )
         );
     }
 
@@ -157,6 +173,10 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
     private function referData(array $data = null)
     {
-        MockTest::injectStatic('App\Resource\Server', 'readReferDataArray', $data);
+        MockTest::injectStatic(
+            'App\Resource\Server',
+            'readReferDataArray',
+            $data
+        );
     }
 }

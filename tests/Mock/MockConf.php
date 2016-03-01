@@ -10,7 +10,7 @@ class MockConf
     public static function run(array $data = null)
     {
         $_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $array = array(
+        $array = [
             'getId' => null,
             'getSiteTitle' => '',
             'getAdminEmail' => '',
@@ -19,7 +19,7 @@ class MockConf
             'getBaseUrl' => '',
             'getRequestUri' => '',
             'getTheme' => ''
-        );
+        ];
 
         if (! is_null($data)) {
             foreach ($data as $key => $value) {

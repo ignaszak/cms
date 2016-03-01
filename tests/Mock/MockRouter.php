@@ -25,8 +25,11 @@ class MockRouter
         self::$_router->run();
     }
 
-    public static function add(string $name, string $pattern, string $controller = '')
-    {
+    public static function add(
+        string $name,
+        string $pattern,
+        string $controller = ''
+    ) {
         self::$_router->add($name, $pattern, $controller);
     }
 

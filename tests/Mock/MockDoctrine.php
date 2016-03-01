@@ -21,22 +21,32 @@ class MockDoctrine
      * @param string $charset
      *            default utf8
      */
-    public static function connect(string $host, string $user, string $password, string $db, string $driver = 'pdo_mysql', string $charset = 'utf8')
-    {
+    public static function connect(
+        string $host,
+        string $user,
+        string $password,
+        string $db,
+        string $driver = 'pdo_mysql',
+        string $charset = 'utf8'
+    ) {
         // Configure Doctrine Entity Manager
-        $paths = array(
-            dirname(dirname(__DIR__)) . '/modules/Entity'
-        );
+        $paths = [dirname(dirname(__DIR__)) . '/modules/Entity'];
         $isDevMode = true;
-        $dbParams = array(
+        $dbParams = [
             'driver' => $driver,
             'host' => $host,
             'user' => $user,
             'password' => $password,
             'dbname' => $db,
             'charset' => $charset
+        ];
+        $config = Setup::createAnnotationMetadataConfiguration(
+            $paths,
+            $isDevMode,
+            null,
+            null,
+            false
         );
-        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null, false);
         $_em = EntityManager::create($dbParams, $config);
         $platform = $_em->getConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'string');
@@ -54,18 +64,23 @@ class MockDoctrine
         $mockDoctrineSettings = __DIR__ . '/MockDoctrineSettings.php';
         if (file_exists($mockDoctrineSettings)) {
             $connection = include $mockDoctrineSettings;
-            self::connect($connection['host'], $connection['user'], $connection['password'], $connection['db']);
+            self::connect(
+                $connection['host'],
+                $connection['user'],
+                $connection['password'],
+                $connection['db']
+            );
         } else {
             throw new \Exception("File '{$mockDoctrineSettings}' not found.
 Please create 'MockDoctrineSettings.php' file in '" . __DIR__ . "' directory with content:
 <?php
 
-return array(
+return [
     'host'     => /* host adress */,
     'user'     => /* user name */,
     'password' => /* password */,
     'db'       => /* data base name */
-);
+];
 ");
         }
     }
@@ -95,8 +110,8 @@ return array(
      */
     public static function queryBuilder(array $result)
     {
-        $queryBuilder = \Mockery::mock('MockQueryBuilder');
-        $queryBuilder->shouldReceive(array(
+        $queryBuilder = \Mockery::mock('alias:\Doctrine\ORM\QueryBuilder');
+        $queryBuilder->shouldReceive([
             'select' => $queryBuilder,
             'from' => $queryBuilder,
             'andwhere' => $queryBuilder,
@@ -109,7 +124,7 @@ return array(
             'setContentQuery' => $queryBuilder,
             'findBy' => $queryBuilder,
             'getResult' => $result
-        ));
+        ]);
         return $queryBuilder;
     }
 
@@ -120,20 +135,20 @@ return array(
     public static function queryBuilderResult(array $result)
     {
         $em = \Mockery::mock('EntityManager');
-        $em->shouldReceive(array(
+        $em->shouldReceive([
             'createQueryBuilder' => self::queryBuilder($result),
             'find' => self::queryBuilder($result)
-        ));
+        ]);
         self::mock($em);
     }
 
     public static function repository(array $result)
     {
         $repository = \Mockery::mock('Repository');
-        $repository->shouldReceive(array(
+        $repository->shouldReceive([
             'find' => $result,
             'findBy' => $result
-        ));
+        ]);
         return $repository;
     }
 

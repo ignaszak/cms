@@ -1,15 +1,15 @@
 <?php
-namespace Test\Model\Content\Query;
+namespace Test\Model\DataBase\Query;
 
-use Content\Query\Content;
 use Test\Mock\MockDoctrine;
 use Test\Mock\MockEntityController;
 use Test\Mock\MockConf;
+use DataBase\Query\Query;
 
-class ContentTest extends \PHPUnit_Framework_TestCase
+class QueryTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_content;
+    private $_query;
 
     private $result;
 
@@ -17,10 +17,8 @@ class ContentTest extends \PHPUnit_Framework_TestCase
     {
         MockConf::run();
         $this->result = 'anyResult';
-        MockDoctrine::queryBuilderResult(array(
-            $this->result
-        ));
-        $this->_content = new Content();
+        MockDoctrine::queryBuilderResult([$this->result]);
+        $this->_query = new Query();
     }
 
     public function tearDown()
@@ -28,11 +26,14 @@ class ContentTest extends \PHPUnit_Framework_TestCase
         MockDoctrine::clear();
     }
 
-    public function testReturnResultFromContentQueryBuilder()
+    public function testReturnResultFromQueryBuilder()
     {
         $stub = \Mockery::mock('Entity\Posts');
         MockEntityController::mock('post', $stub);
-        $entityName = \PHPUnit_Framework_Assert::readAttribute($this->_content->setContent('post'), 'entityName');
+        $entityName = \PHPUnit_Framework_Assert::readAttribute(
+            $this->_query->setQuery('post'),
+            'entityName'
+        );
         $this->assertEquals('Entity\Posts', $entityName);
     }
 }

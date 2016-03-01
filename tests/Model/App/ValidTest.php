@@ -47,9 +47,9 @@ class ValidTest extends \PHPUnit_Framework_TestCase
 
     public function testValidNoExistingFileORFolder()
     {
-        $this->mockValidArray(array(
+        $this->mockValidArray([
             ['NoExistingFileOrFolderToCheck', "r"]
-        ));
+        ]);
         $stub = $this->getMockBuilder('App\Conf\Check')->getMock();
         $stub->method('add');
         $stub->expects($this->once())->method('exists')->willReturn(false);
@@ -61,9 +61,9 @@ class ValidTest extends \PHPUnit_Framework_TestCase
 
     public function testValidReadOnly()
     {
-        $this->mockValidArray(array(
+        $this->mockValidArray([
             ['AnyFileOrFolderToCheck', "r"]
-        ));
+        ]);
         $stub = $this->getMockBuilder('App\Conf\Check')->getMock();
         $stub->method('add');
         $stub->expects($this->once())->method('exists')->willReturn(true);
@@ -75,9 +75,9 @@ class ValidTest extends \PHPUnit_Framework_TestCase
 
     public function testValidReadAndWrite()
     {
-        $this->mockValidArray(array(
+        $this->mockValidArray([
             ['AnyFileOrFolderToCheck', "r+"]
-        ));
+        ]);
         $stub = $this->getMockBuilder('App\Conf\Check')->getMock();
         $stub->method('add');
         $stub->expects($this->once())->method('exists')->willReturn(true);

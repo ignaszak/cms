@@ -37,9 +37,7 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
         MockRouter::start('post', 'post');
         MockRouter::add('post', 'post');
         MockRouter::run();
-        MockDoctrine::queryBuilderResult(array(
-            'AnyResult'
-        ));
+        MockDoctrine::queryBuilderResult(['AnyResult']);
         $this->assertNotEmpty($this->_viewHelper->display());
     }
 }

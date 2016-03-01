@@ -26,9 +26,9 @@ class SearchTest extends \PHPUnit_Framework_TestCase
 
     public function testInputSearch()
     {
-        $customElemnts = array('anyElement' => 'anyValue');
+        $customElemnts = ['anyElement' => 'anyValue'];
         $this->assertEquals(
-            '<input type="text" name="search" required class="form-control" anyElement="anyValue">',
+'<input type="text" name="search" required class="form-control" anyElement="anyValue">',
             $this->_search->inputSearch($customElemnts)
         );
     }

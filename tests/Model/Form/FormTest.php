@@ -20,27 +20,23 @@ class FormTest extends \PHPUnit_Framework_TestCase
 
     public function testGetRefererDataArray()
     {
-        $referData = array(
-            1,
-            2,
-            3,
-            4,
-            5
+        $referData = [1, 2, 3, 4, 5];
+        MockTest::injectStatic(
+            'App\Resource\Server',
+            'readReferDataArray',
+            $referData
         );
-        MockTest::injectStatic('App\Resource\Server', 'readReferDataArray', $referData);
         $this->assertEquals($referData, $this->_form->getFormResponseData());
     }
 
     public function testGetSingleRefererDataByKey()
     {
-        $referData = array(
-            5,
-            4,
-            3,
-            2,
-            1
+        $referData = [5, 4, 3, 2, 1];
+        MockTest::injectStatic(
+            'App\Resource\Server',
+            'readReferDataArray',
+            $referData
         );
-        MockTest::injectStatic('App\Resource\Server', 'readReferDataArray', $referData);
         $this->assertEquals(4, $this->_form->getFormResponseData(1));
     }
 

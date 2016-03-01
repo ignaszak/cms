@@ -19,7 +19,7 @@ class IBreadcrumbsTest extends \PHPUnit_Framework_TestCase
         $_conf = \PHPUnit_Framework_Assert::readAttribute($this->_ibc, '_conf');
         $_query = \PHPUnit_Framework_Assert::readAttribute($this->_ibc, '_query');
         $this->assertInstanceOf('Conf\Conf', $_conf);
-        $this->assertInstanceOf('Content\Query\Content', $_query);
+        $this->assertInstanceOf('DataBase\Query\Query', $_query);
     }
 
     public function testGetHome()
@@ -35,7 +35,11 @@ class IBreadcrumbsTest extends \PHPUnit_Framework_TestCase
             'anyTitle',
             'AnyLink'
         ];
-        $addBreadcrumb = MockTest::callMockMethod($this->_ibc, 'addBreadcrumb', $arg);
+        $addBreadcrumb = MockTest::callMockMethod(
+            $this->_ibc,
+            'addBreadcrumb',
+            $arg
+        );
         $this->assertInstanceOf('stdClass', $addBreadcrumb);
         $this->assertEquals('anyTitle', $addBreadcrumb->title);
         $this->assertEquals('anyBaseUrl/AnyLink', $addBreadcrumb->link);

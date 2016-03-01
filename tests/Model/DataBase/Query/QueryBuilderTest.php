@@ -1,20 +1,20 @@
 <?php
-namespace Test\Model\Content\Query;
+namespace Test\Model\DataBase\Query;
 
-use Content\Query\QueryBuilder;
-use Content\Query\IQueryController;
 use Test\Mock\MockDoctrine;
 use Test\Mock\MockTest;
+use DataBase\Query\QueryBuilder;
+use DataBase\Query\IQueryController;
 
-class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
+class QueryBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_contentQueryBuilder;
+    private $_queryBuilder;
 
     public function setUp()
     {
-        $this->_contentQueryBuilder = new QueryBuilder(
-            $this->getMockIContentQueryController(
+        $this->_queryBuilder = new QueryBuilder(
+            $this->getMockIQueryController(
                 MockDoctrine::queryBuilder([null])
             )
         );
@@ -28,49 +28,55 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
     public function testSet()
     {
         $this->mockAndWhereAndSetParameterMethods();
-        MockTest::callMockMethod($this->_contentQueryBuilder, 'set', array(
+        MockTest::callMockMethod($this->_queryBuilder, 'set', [
             'column',
             'value'
-        ));
+        ]);
     }
 
     public function testGetReference()
     {
         $column = 'table.column';
-        $reference = MockTest::callMockMethod($this->_contentQueryBuilder, 'getReference', array(
-            $column
-        ));
+        $reference = MockTest::callMockMethod(
+            $this->_queryBuilder,
+            'getReference',
+            [$column]
+        );
         $this->assertEquals('table', $reference);
     }
 
     public function testGetEmptyReference()
     {
         $column = '';
-        $reference = MockTest::callMockMethod($this->_contentQueryBuilder, 'getReference', array(
-            $column
-        ));
+        $reference = MockTest::callMockMethod(
+            $this->_queryBuilder,
+            'getReference',
+            [$column]
+        );
         $this->assertEmpty($reference);
     }
 
     public function testLike()
     {
         $this->mockAndWhereAndSetParameterMethods();
-        MockTest::callMockMethod($this->_contentQueryBuilder, 'like', array(
+        MockTest::callMockMethod($this->_queryBuilder, 'like', [
             'column',
             'value'
-        ));
+        ]);
     }
 
     public function testJoin()
     {
-        $stub = \Mockery::mock('QuerBuilder');
+        $stub = \Mockery::mock('alias:\Doctrine\ORM\QueryBuilder');
         $stub->shouldReceive('join')
             ->andReturnSelf()
             ->once();
-        $this->_contentQueryBuilder = new QueryBuilder($this->getMockIContentQueryController($stub));
-        MockTest::callMockMethod($this->_contentQueryBuilder, 'join', array(
+        $this->_queryBuilder = new QueryBuilder(
+            $this->getMockIQueryController($stub)
+        );
+        MockTest::callMockMethod($this->_queryBuilder, 'join', [
             'column'
-        ));
+        ]);
     }
 
     public function testAddMysqlDateFormatExtension()
@@ -83,28 +89,29 @@ class ContentQueryBuilderTest extends \PHPUnit_Framework_TestCase
             ->andReturnSelf()
             ->once();
         MockDoctrine::mock($stub);
-        $this->_contentQueryBuilder->date('2016-01-19');
+        $this->_queryBuilder->date('2016-01-19');
     }
 
     private function mockAndWhereAndSetParameterMethods()
     {
-        $stub = \Mockery::mock('QuerBuilder');
+        $stub = \Mockery::mock('alias:\Doctrine\ORM\QueryBuilder');
         $stub->shouldReceive('andwhere')
             ->andReturnSelf()
             ->once();
         $stub->shouldReceive('setParameter')
             ->andReturnSelf()
             ->once();
-        $this->_contentQueryBuilder = new QueryBuilder(
-            $this->getMockIContentQueryController($stub)
+        $this->_queryBuilder = new QueryBuilder(
+            $this->getMockIQueryController($stub)
         );
     }
 
-    private function getMockIContentQueryController($contentQuery = null): IContentQueryController
+    private function getMockIQueryController($query = null): IQueryController
     {
-        $stub = $this->getMockBuilder('Content\Query\IContentQueryController')->getMock();
-        $stub->method('setContentQuery');
-        $stub->method('__get')->willReturn($contentQuery);
+        $stub = $this->getMockBuilder('DataBAse\Query\IQueryController')
+            ->getMock();
+        $stub->method('updateQuery');
+        $stub->method('__get')->willReturn($query);
         return $stub;
     }
 }

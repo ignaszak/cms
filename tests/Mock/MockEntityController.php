@@ -15,7 +15,8 @@ class MockEntityController
      */
     public static function mock(string $name, $stub)
     {
-        $entityController = RegistryFactory::start()->register('Entity\Controller\EntityController');
+        $entityController = RegistryFactory::start()
+            ->register('Entity\Controller\EntityController');
         if (is_object($stub)) {
             $stub = get_class($stub);
         }

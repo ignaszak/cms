@@ -1,16 +1,16 @@
 <?php
-namespace Test\Model\Content\Query;
+namespace Test\Model\DataBase\Query;
 
-use Content\Query\ContentQueryController;
 use Test\Mock\MockDoctrine;
 use Test\Mock\MockConf;
 use Test\Mock\MockRouter;
 use Test\Mock\MockTest;
+use DataBase\Query\QueryController;
 
-class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
+class QueryControllerTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_contentQueryController;
+    private $_queryController;
 
     public function setUp()
     {
@@ -18,12 +18,10 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         MockRouter::add('admin', '{alias:route}');
         MockRouter::run();
         MockConf::run();
-        MockDoctrine::queryBuilderResult(array(
-            null
-        )); // Symulate no result
+        MockDoctrine::queryBuilderResult([null]); // Symulate no result
         $entity = $this->getMockBuilder('Entity\Posts')->getMock();
         $entity->method('getPublic');
-        $this->_contentQueryController = new ContentQueryController(get_class($entity));
+        $this->_queryController = new QueryController(get_class($entity));
     }
 
     public function tearDown()
@@ -36,9 +34,9 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('createQueryBuilder');
         $em->shouldReceive('andwhere')->once();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
-        $this->_contentQueryController->status('public');
-        MockTest::callMockMethod($this->_contentQueryController, 'statusHandler');
+        MockTest::inject($this->_queryController, 'query', $em);
+        $this->_queryController->status('public');
+        MockTest::callMockMethod($this->_queryController, 'statusHandler');
     }
 
     public function testSelectEditPostsByStatusHandler()
@@ -46,9 +44,9 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('createQueryBuilder');
         $em->shouldReceive('andwhere')->once();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
-        $this->_contentQueryController->status('edit');
-        MockTest::callMockMethod($this->_contentQueryController, 'statusHandler');
+        MockTest::inject($this->_queryController, 'query', $em);
+        $this->_queryController->status('edit');
+        MockTest::callMockMethod($this->_queryController, 'statusHandler');
     }
 
     public function testSelectAllPostsByStatusHandler()
@@ -56,21 +54,27 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('createQueryBuilder');
         $em->shouldReceive('andwhere')->never();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
-        $this->_contentQueryController->status('all');
-        MockTest::callMockMethod($this->_contentQueryController, 'statusHandler');
+        MockTest::inject($this->_queryController, 'query', $em);
+        $this->_queryController->status('all');
+        MockTest::callMockMethod($this->_queryController, 'statusHandler');
     }
 
     public function testAliasNotEmptyAndResultIsNotForced()
     {
-        $method = MockTest::callMockMethod($this->_contentQueryController, 'isAliasEmptyOrIsResultForced');
+        $method = MockTest::callMockMethod(
+            $this->_queryController,
+            'isAliasEmptyOrIsResultForced'
+        );
         $this->assertFalse($method);
     }
 
     public function testAliasNotEmptyAndResultIsForced()
     {
-        $this->_contentQueryController->force();
-        $method = MockTest::callMockMethod($this->_contentQueryController, 'isAliasEmptyOrIsResultForced');
+        $this->_queryController->force();
+        $method = MockTest::callMockMethod(
+            $this->_queryController,
+            'isAliasEmptyOrIsResultForced'
+        );
         $this->assertTrue($method);
     }
 
@@ -78,17 +82,17 @@ class ContentQueryControllerTest extends \PHPUnit_Framework_TestCase
     {
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('setMaxResults')->never();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
-        MockTest::callMockMethod($this->_contentQueryController, 'setLimit');
+        MockTest::inject($this->_queryController, 'query', $em);
+        MockTest::callMockMethod($this->_queryController, 'setLimit');
     }
 
     public function testSetLimit()
     {
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('setMaxResults')->once();
-        MockTest::inject($this->_contentQueryController, 'contentQuery', $em);
+        MockTest::inject($this->_queryController, 'query', $em);
         $anyLimit = 1;
-        $this->_contentQueryController->limit($anyLimit);
-        MockTest::callMockMethod($this->_contentQueryController, 'setLimit');
+        $this->_queryController->limit($anyLimit);
+        MockTest::callMockMethod($this->_queryController, 'setLimit');
     }
 }

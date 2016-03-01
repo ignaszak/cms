@@ -1,9 +1,9 @@
 <?php
-namespace Test\Model\Content\Controller\Validator;
+namespace Test\Model\DataBase\Controller\Validator;
 
 use Test\Mock\MockTest;
 use Test\Mock\MockSystem;
-use Content\Controller\Validator\ValidatorFactory;
+use DataBase\Controller\Validator\ValidatorFactory;
 
 class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,12 +14,16 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_controller = $this->getMockBuilder('\Content\Controller\Controller')
-            ->disableOriginalConstructor()
-            ->getMock();
-        $schema = $this->getMockBuilder('\Content\Controller\Validator\Schema\Validation')
-            ->getMock();
-        $this->_validatorFactory = new ValidatorFactory($this->_controller, $schema);
+        $this->_controller = $this->getMockBuilder(
+            '\DataBase\Controller\Controller'
+        )->disableOriginalConstructor()->getMock();
+        $schema = $this->getMockBuilder(
+            '\DataBase\Controller\Validator\Schema\Validation'
+        )->getMock();
+        $this->_validatorFactory = new ValidatorFactory(
+            $this->_controller,
+            $schema
+        );
     }
 
     public function testValidSetters()
@@ -78,7 +82,7 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
             $this->_validatorFactory,
             'runValidator',
             [
-                ['Test\Model\Content\Controller\Validator\Test'
+                ['Test\Model\DataBase\Controller\Validator\Test'
                     => ['test command']]
             ]
         );

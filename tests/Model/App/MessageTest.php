@@ -15,14 +15,14 @@ class MessageTest extends \PHPUnit_Framework_TestCase
 
     public function testCatchWithEmptyMessage()
     {
-        $_check = $this->mockCheck(array());
+        $_check = $this->mockCheck([]);
         $this->_message->catch($_check);
         $this->assertEmpty($this->getMessageArray());
     }
 
     public function testCatchWithMessage()
     {
-        $_check = $this->mockCheck(array('Some Message'));
+        $_check = $this->mockCheck(['Some Message']);
         $this->_message->catch($_check);
         $this->assertNotEmpty($this->getMessageArray());
     }

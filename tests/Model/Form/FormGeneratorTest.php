@@ -25,13 +25,16 @@ class FormGeneratorTest extends \PHPUnit_Framework_TestCase
 
     public function testAddItem()
     {
-        $itemsArray = array(
+        $itemsArray = [
             'id' => 'AnyId',
             'class' => 'AnyClass',
             'AnyOtherElement' => 'AnyValue'
-        );
+        ];
         FormGenerator::addItem($itemsArray);
-        $this->assertEquals('< id="AnyId" class="AnyClass" AnyOtherElement="AnyValue">', FormGenerator::render());
+        $this->assertEquals(
+            '< id="AnyId" class="AnyClass" AnyOtherElement="AnyValue">',
+            FormGenerator::render()
+        );
     }
 
     public function testRequired()
@@ -44,11 +47,12 @@ class FormGeneratorTest extends \PHPUnit_Framework_TestCase
     {
         FormGenerator::start('text');
         FormGenerator::addName('AnyInputName');
-        $itemsArray = array(
-            'AnyElement' => 'AnyValue'
-        );
+        $itemsArray = ['AnyElement' => 'AnyValue'];
         FormGenerator::addItem($itemsArray);
         FormGenerator::required();
-        $this->assertEquals('<input type="text" name="AnyInputName" required AnyElement="AnyValue">', FormGenerator::render());
+        $this->assertEquals(
+            '<input type="text" name="AnyInputName" required AnyElement="AnyValue">',
+            FormGenerator::render()
+        );
     }
 }

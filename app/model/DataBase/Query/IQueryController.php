@@ -19,7 +19,7 @@ abstract class IQueryController
 
     /**
      *
-     * @var \Conf\DB\DBDoctrine::em()->createQueryBuilder()
+     * @var \Doctrine\ORM\QueryBuilder
      */
     protected $query;
 
@@ -67,7 +67,11 @@ abstract class IQueryController
      */
     abstract public function orderBy(string $column, string $order);
 
-    public function updateQuery($value)
+    /**
+     *
+     * @param \Doctrine\ORM\QueryBuilder $value
+     */
+    public function updateQuery(\Doctrine\ORM\QueryBuilder $value)
     {
         $this->query = $value;
     }
