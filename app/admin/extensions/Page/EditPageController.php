@@ -63,7 +63,7 @@ class EditPageController extends FrontController
 
             $data['id'] = null;
             $data['title'] = $this->returnData['setTitle'];
-            $data['content'] = $this->returnData['setQuery'];
+            $data['content'] = $this->returnData['setContent'];
             $data['public'] = $this->returnData['setPublic'];
             $data['formTitle'] = 'Add new page';
             $data['formLink'] = $this->_controller->view()->getAdminAdress() .

@@ -87,7 +87,7 @@ class Validation
      */
     public function content($content): bool
     {
-        return V::stringType()->length(5, null)->validate($content);
+        return V::stringType()->length(1, null)->validate($content);
     }
 
     /**

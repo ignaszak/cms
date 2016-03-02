@@ -28,7 +28,7 @@ class SavePageController extends FrontController
             ->setDate($date)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
-            ->setQuery($_POST['content'])
+            ->setContent($_POST['content'])
             ->setPublic($public)
             ->insert([
                 'date' => [],

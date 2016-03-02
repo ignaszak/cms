@@ -57,11 +57,10 @@ class Post
                 break;
 
             case 'category':
+                $catIdArray = RegistryFactory::start()
+                    ->register('App\Resource\CategoryList')->child();
                 $this->_query->setQuery('post')
-                    ->categoryId(
-                        RegistryFactory::start()->register('App\Resource\CategoryList')
-                            ->child()
-                    )
+                    ->categoryId($catIdArray)
                     ->force();
                 break;
 

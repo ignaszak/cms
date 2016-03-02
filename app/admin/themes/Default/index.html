@@ -64,6 +64,15 @@
     </nav>
 
     <div id="page-context">
+
+        <?php if ($this->getFormMessage()):
+        print("
+            <p class=\"bg-danger\">
+                {$this->getFormMessage()}
+            </p>
+        ");
+        endif; ?>
+
         <?php $this->loadView(); ?>
         <?php $this->loadAdminExtensionThemeFile(); ?>
     </div>

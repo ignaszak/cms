@@ -29,7 +29,7 @@ class SavePostController extends FrontController
             ->setDate($date)
             ->setTitle($_POST['title'])
             ->setAlias($alias)
-            ->setQuery($_POST['content'])
+            ->setContent($_POST['content'])
             ->setPublic($public)
             ->insert([
                 'date' => [],
@@ -38,7 +38,7 @@ class SavePostController extends FrontController
                 'content' => []
             ]);
 
-        Server::headerLocation("admin/post/p/edit/$alias");
+        Server::headerLocation("admin/post/p/edit/{$alias}");
     }
 
     private function getCategoryId(): int

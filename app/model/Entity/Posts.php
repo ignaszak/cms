@@ -196,7 +196,7 @@ class Posts extends IPostsQuery
      *
      * @return Posts
      */
-    public function setQuery($content)
+    public function setContent($content)
     {
         $this->content = $content;
 
