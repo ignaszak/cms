@@ -7,10 +7,6 @@ use Test\Mock\MockConf;
 class SearchTest extends \PHPUnit_Framework_TestCase
 {
 
-    /**
-     *
-     * @var \Form
-     */
     private $_search;
 
     public function setUp()
