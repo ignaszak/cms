@@ -45,7 +45,7 @@ class Validation
      */
     public function title($title): bool
     {
-        return V::stringType()->length(5, null)->validate($title);
+        return V::stringType()->length(1, null)->validate($title);
     }
 
     /**
