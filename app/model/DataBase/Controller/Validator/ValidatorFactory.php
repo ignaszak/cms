@@ -79,10 +79,8 @@ class ValidatorFactory
     private function runValidator(array $command)
     {
         foreach ($command as $class => $commandArray) {
-            if (! defined('TEST')) {
-                $namespace = __NAMESPACE__ . '\\';
-            }
-            $className = @$namespace . ucfirst($class) . 'Validator';
+            $namespace = !defined('TEST') ? __NAMESPACE__ . '\\' : '';
+            $className = $namespace . ucfirst($class) . 'Validator';
             $validator = new $className($this->_controller);
             $validator->valid($commandArray);
             $this->addErrors($validator->getErrors());
