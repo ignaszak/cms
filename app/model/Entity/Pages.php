@@ -80,30 +80,6 @@ class Pages extends IPagesQuery
     }
 
     /**
-     * Set authorId
-     *
-     * @param integer $authorId
-     *
-     * @return Pages
-     */
-    public function setAuthorId($authorId)
-    {
-        $this->authorId = $authorId;
-
-        return $this;
-    }
-
-    /**
-     * Get authorId
-     *
-     * @return integer
-     */
-    public function getAuthorId()
-    {
-        return $this->authorId;
-    }
-
-    /**
      * Set date
      *
      * @param \DateTime $date
