@@ -18,11 +18,6 @@ abstract class IBreadcrumbs
      */
     protected $_query;
 
-    /**
-     *
-     * @param Query $_query
-     * @param array $_categoryArray
-     */
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
