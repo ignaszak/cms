@@ -47,7 +47,6 @@ class ViewHelper
                 "No class correspond to <b>$name</b> method"
             );
         }
-        return null;
     }
 
     /**
