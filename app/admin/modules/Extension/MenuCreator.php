@@ -58,7 +58,7 @@ class MenuCreator extends ExtensionInstances
     /**
      *
      * @param string $link
-     * @param string $elemrnt
+     * @param string $element
      * @return string
      */
     private static function returnActiveMenuClass(string $link, string $element): string
