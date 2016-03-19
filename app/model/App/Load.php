@@ -91,7 +91,7 @@ class Load
     public function loadRouter()
     {
         $router = Router::instance();
-        $router->baseURI = RegistryFactory::start('file')
+        $router->baseURL = RegistryFactory::start('file')
             ->register('Conf\Conf')->getBaseUrl();
         $router->add('admin', 'admin');
         new \Admin\Extension\ExtensionLoader;
