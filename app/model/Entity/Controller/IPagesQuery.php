@@ -6,10 +6,6 @@ use Ignaszak\Registry\RegistryFactory;
 abstract class IPagesQuery
 {
 
-    abstract public function getId();
-
-    abstract public function getAuthorId();
-
     abstract public function getDate($format = "");
 
     abstract public function getTitle();
