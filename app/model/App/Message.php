@@ -6,7 +6,7 @@ class Message
 
     /**
      *
-     * @var string[]
+     * @var array
      */
     private $messageArray = [];
 
@@ -16,8 +16,10 @@ class Message
      */
     public function catch(Conf\Check $_check)
     {
-        $array2 = $_check->getMessage();
-        $this->messageArray = array_merge($this->messageArray, $array2);
+        $this->messageArray = array_merge(
+            $this->messageArray,
+            $_check->getMessage()
+        );
     }
 
     /**
