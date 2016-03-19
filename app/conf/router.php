@@ -1,10 +1,12 @@
 <?php
+$router->add('post', '{page}', 'Controller\ViewPostController');
 $router->add('post', 'post/{page}', 'Controller\ViewPostController');
 $router->add('post', 'post/{alias}', 'Controller\ViewPostController');
 $router->add('post', 'post/{alias}/{page}', 'Controller\ViewPostController');
 
 $router->add('category', 'category/{page}', 'Controller\ViewPostController');
 $router->add('category', 'category/{alias}', 'Controller\ViewPostController');
+$router->add('category', 'category/{alias}/{page}', 'Controller\ViewPostController');
 
 $router->add('date', 'date/{date}', 'Controller\ViewPostController');
 

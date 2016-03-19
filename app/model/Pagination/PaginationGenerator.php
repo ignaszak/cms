@@ -99,15 +99,13 @@ class PaginationGenerator
      */
     public function getLinkWhitoutPage(): string
     {
-        $requestWithoutFirstSlsh = preg_replace(
-            '/^\//',
-            '',
-            Server::getHttpRequest()
+        $link = $this->_conf->getBaseUrl() . Server::getHttpRequest();
+        $link = preg_replace(
+            ['/([0-9]*)$/', '/(\/\/)/', '/^http:\//', '/^https:\//'],
+            ['', '/', 'http://', 'https://'],
+            $link
         );
-        $request = empty($requestWithoutFirstSlsh) ?
-            Router::getDefaultRoute() . '/' : $requestWithoutFirstSlsh;
-        $link = $this->_conf->getBaseUrl() . $request;
-        return preg_replace('/([0-9]*)$/', '', $link);
+        return substr($link, -1) != '/' ? "{$link}/" : $link;
     }
 
     /**
