@@ -98,20 +98,15 @@ class User extends Group
         switch ($this->formAction) {
             case 'registration':
                 return 'registration';
-            break;
             case 'login':
                 return 'login';
-            break;
             case 'logout':
                 return 'logout';
-            break;
             case 'remind':
                 return 'remind';
-            break;
             case 'accountData':
             case 'accountPassword':
                 return 'account';
-            break;
         }
     }
 
@@ -183,10 +178,8 @@ class User extends Group
         switch ($name) {
             case 'userLogin':
                 return 'getLogin';
-            break;
             case 'userEmail':
                 return 'getEmail';
-            break;
         }
     }
 }
