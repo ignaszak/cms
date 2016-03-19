@@ -2,7 +2,6 @@
 namespace Admin\Extension\ViewHelper;
 
 use Ignaszak\Registry\RegistryFactory;
-use Ignaszak\Exception\Start as Exception;
 use Admin\Extension\MenuCreator;
 
 class Admin extends \Admin\Extension\ExtensionInstances
@@ -48,10 +47,5 @@ class Admin extends \Admin\Extension\ExtensionInstances
     {
         return parent::$extensionsDir . '/' .
             $this->getActiveExtensionFolderFromUrl();
-    }
-
-    public function getAdminlogFileArray()
-    {
-        return Exception::getLogFileArray();
     }
 }
