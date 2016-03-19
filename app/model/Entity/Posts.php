@@ -27,13 +27,6 @@ class Posts extends IPostsQuery
     /**
      * @var integer
      *
-     * @ORM\Column(name="category_id", type="integer", nullable=true)
-     */
-    private $categoryId;
-
-    /**
-     * @var integer
-     *
      * @ORM\Column(name="author_id", type="integer", nullable=false)
      */
     private $authorId;
@@ -271,8 +264,6 @@ class Posts extends IPostsQuery
     public function setCategory($category)
     {
         return $this->category = $category;
-
-        return $this;
     }
 
     /**
