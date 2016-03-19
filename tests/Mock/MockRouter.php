@@ -7,6 +7,16 @@ use Ignaszak\Router\Client;
 class MockRouter
 {
 
+    /**
+     *
+     * @var \Ignaszak\Router\Route
+     */
+    private static $_route;
+
+    /**
+     *
+     * @var \Ignaszak\Router\Router
+     */
     private static $_router;
 
     public static function start(string $requestURI, string $defaultRoute = '')
