@@ -40,7 +40,7 @@ class CategoryBreadcrumbs extends IBreadcrumbs
                 ->limit(1)
                 ->alias($alias);
             $content = $this->_query->getStaticQuery();
-            if ($content) {
+            if (! empty($content)) {
                 return ($name == 'category') ?
                     $content[0]->getId() : $content[0]->getCategory()->getId();
             }
