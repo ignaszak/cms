@@ -6,9 +6,9 @@ class Pagination
 
     /**
      *
-     * @var Theme\PaginationTheme
+     * @var Theme\Theme
      */
-    private $_paginationTheme;
+    private $_theme;
 
     /**
      *
@@ -39,16 +39,16 @@ class Pagination
     {
         switch ($theme) {
             case "pagination":
-                $this->_paginationTheme = new Theme\MultiPage($this->_pg);
+                $this->_theme = new Theme\MultiPage($this->_pg);
                 break;
             case "pager":
-                $this->_paginationTheme = new Theme\Pager($this->_pg);
+                $this->_theme = new Theme\Pager($this->_pg);
                 break;
             case "pager-align":
-                $this->_paginationTheme = new Theme\PagerAlign($this->_pg);
+                $this->_theme = new Theme\PagerAlign($this->_pg);
                 break;
         }
 
-        return $this->_paginationTheme->getTheme();
+        return $this->_theme->getTheme();
     }
 }

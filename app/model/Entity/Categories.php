@@ -80,7 +80,7 @@ class Categories
     /**
      * Set parentId
      *
-     * @param string $parentId
+     * @param integer $parentId
      *
      * @return Categories
      */

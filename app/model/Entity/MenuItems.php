@@ -65,7 +65,7 @@ class MenuItems
     /**
      * Set menuId
      *
-     * @param string $name
+     * @param string $menuId
      *
      * @return Menus
      */
@@ -161,7 +161,7 @@ class MenuItems
     /**
      * Set menu
      *
-     * @param Menus $adress
+     * @param Menus $menu
      *
      * @return MenuItems
      */

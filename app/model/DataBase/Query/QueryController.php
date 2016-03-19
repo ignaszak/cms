@@ -24,7 +24,7 @@ class QueryController extends IQueryController
 
     /**
      *
-     * @var string
+     * @var boolean
      */
     private $isResultForced = false;
 

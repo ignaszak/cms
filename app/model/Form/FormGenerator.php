@@ -17,7 +17,7 @@ class FormGenerator
 
     /**
      *
-     * @var string[]
+     * @var array
      */
     private static $formElementsArray = [
         'text' => 'input type="text"',

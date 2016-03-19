@@ -8,7 +8,7 @@ class FrontController
 
     /**
      *
-     * @var Controller
+     * @var FrontController
      */
     private static $_controller;
 

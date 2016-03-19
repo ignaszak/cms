@@ -8,7 +8,7 @@ class Query
 
     /**
      *
-     * @var ContentQueryController
+     * @var QueryController
      */
     private $_queryController;
 

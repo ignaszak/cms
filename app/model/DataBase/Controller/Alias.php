@@ -8,7 +8,7 @@ class Alias
 
     /**
      *
-     * @var EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     private $_em;
 

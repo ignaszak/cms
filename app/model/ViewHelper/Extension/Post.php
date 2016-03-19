@@ -15,7 +15,7 @@ class Post
 
     /**
      *
-     * @var \Entity\Posts[]
+     * @var \DataBase\Query\Entity[]
      */
     private $_post = [];
 

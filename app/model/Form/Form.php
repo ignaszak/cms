@@ -40,9 +40,9 @@ class Form
 
     /**
      *
-     * @param string $formType
-     * @return \Form\Group\Group
+     * @param string $formName
      * @throws \RuntimeException
+     * @return unknown
      */
     public function createForm(string $formName): Group\Group
     {

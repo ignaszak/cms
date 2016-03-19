@@ -8,12 +8,19 @@ class SettersValidator extends Validator
 
     /**
      *
-     * @var ContentValidation
+     * @var Schema\Validation
      */
     private $_validation;
 
-    public function __construct(Controller $_controller, Schema\Validation $_schema)
-    {
+    /**
+     *
+     * @param Controller $_controller
+     * @param Schema\Validation $_schema
+     */
+    public function __construct(
+        Controller $_controller,
+        Schema\Validation $_schema
+    ) {
         parent::__construct($_controller);
         $this->_validation = $_schema;
     }

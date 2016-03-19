@@ -10,7 +10,7 @@ class Mail
 
     /**
      *
-     * @var unknown
+     * @var \Swift_Transport
      */
     private $_transport;
 

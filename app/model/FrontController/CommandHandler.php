@@ -15,8 +15,9 @@ class CommandHandler
     private $_base;
 
     /**
+     * Default controller class
      *
-     * @var DefaultController
+     * @var string
      */
     private $_default;
 

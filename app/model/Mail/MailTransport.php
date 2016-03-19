@@ -13,7 +13,6 @@ class MailTransport
     /**
      *
      * @param string $transport
-     * @return (\Swift_MailTransport|this)
      */
     public function __construct(string $transport)
     {
@@ -39,10 +38,11 @@ class MailTransport
     /**
      * Configures and sets new instance
      *
-     * @param string $p1 SMTP server for 'smtp' or command for 'sendMail' or
+     * @param string $serverOrCommand SMTP server for 'smtp' or command for 'sendMail' or
      *                   NULL for 'mail'
-     * @param int    $p2 port for 'smtp' or NULL for 'sendMail' and 'mail'
-     * @param string $p3 ssl for 'smtp' or NULL for 'sendMail' and 'mail'
+     * @param int    $port port for 'smtp' or NULL for 'sendMail' and 'mail'
+     * @param string $ssl ssl for 'smtp' or NULL for 'sendMail' and 'mail'
+     * @return object swift mail transport
      */
     public function conf(
         string $serverOrCommand = "",

@@ -15,7 +15,7 @@ class ViewHelperExtension
 
     /**
      *
-     * @param string $extensionClassName
+     * @param string $name
      * @return object
      */
     public function getExtensionInstanceFromMethodName($name)
