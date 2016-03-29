@@ -17,6 +17,7 @@ class ConfTest extends \PHPUnit_Framework_TestCase
     public function testAdminThemePath()
     {
         MockRouter::start('admin');
+        MockRouter::group('admin');
         MockRouter::add('admin', 'admin');
         MockRouter::run();
         $this->_viewConf->configureThemePath();

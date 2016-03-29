@@ -1,7 +1,7 @@
 <?php
 namespace App\Resource;
 
-use Ignaszak\Router\Client;
+use Ignaszak\Router\ResponseStatic;
 
 class Route
 {
@@ -13,36 +13,56 @@ class Route
      */
     public function __get(string $name): string
     {
-        $routeArray = Client::getAllRoutes();
-        return $routeArray[$name] ?? '';
+        $response = ResponseStatic::getParams();
+        return $response[$name] ?? '';
     }
 
     /**
      * Return getRoute function from Router class
      *
-     * @param string $route
+     * @param string $token
      * @return string
      */
-    public function getRoute(string $route = ''): string
+    public function getParam(string $token = ''): string
     {
-        return Client::getRoute($route) ?? '';
+        return ResponseStatic::getParam($token);
     }
 
     /**
      *
      * @return string
      */
-    public function getRouteName(): string
+    public function getName(): string
     {
-        return Client::getRouteName() ?? '';
+        return ResponseStatic::getName();
     }
 
     /**
      *
      * @return string
      */
-    public function getDefaultRoute(): string
+    public function getGroup(): string
     {
-        return Client::getDefaultRoute() ?? '';
+        return ResponseStatic::getGroup();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getController(): string
+    {
+        return ResponseStatic::getController();
+    }
+
+    /**
+     *
+     * @param string $name
+     * @param array $replacement
+     * @return string
+     */
+    public function getLink(string $name, array $replacement): string
+    {
+        return ResponseStatic::getLink($name, $replacement);
     }
 }

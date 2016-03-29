@@ -18,7 +18,7 @@ class Breadcrumbs extends IBreadcrumbs
      */
     public function getBreadcrumbs(): array
     {
-        switch (Router::getRouteName()) {
+        switch (Router::getGroup()) {
             case 'post':
             case 'category':
                 $this->_breadcrumbs = new CategoryBreadcrumbs();

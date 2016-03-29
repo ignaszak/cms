@@ -61,8 +61,9 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
 
     public function testGetCategoryIdFromCategoryRoute()
     {
-        MockRouter::start('category/anyCategory');
-        MockRouter::add('category', 'category/{alias:anyCategory}');
+        MockRouter::start('/category/anyCategory');
+        MockRouter::group('category');
+        MockRouter::add('category', '/category/{alias}')->token('alias', 'anyCategory');
         MockRouter::run();
         $stub = new class {
         public function getId()
@@ -91,7 +92,8 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
     public function testGetCategoryIdFromPostRoute()
     {
         MockRouter::start('post/anyPost');
-        MockRouter::add('post', 'post/{alias:anyPost}');
+        MockRouter::group('post');
+        MockRouter::add('post', 'post/{alias}')->token('alias', 'anyPost');
         MockRouter::run();
         $stub = new class {
         public function getCategory()

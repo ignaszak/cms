@@ -33,15 +33,15 @@ class CategoryBreadcrumbs extends IBreadcrumbs
      */
     private function getCategoryId(): int
     {
-        $name = Router::getRouteName();
-        $alias = Router::getRoute('alias');
+        $group = Router::getGroup();
+        $alias = Router::getParam('alias');
         if (! empty($alias)) {
-            $this->_query->setQuery($name)
+            $this->_query->setQuery($group)
                 ->limit(1)
                 ->alias($alias);
             $content = $this->_query->getStaticQuery();
             if (! empty($content)) {
-                return ($name == 'category') ?
+                return ($group == 'category') ?
                     $content[0]->getId() : $content[0]->getCategory()->getId();
             }
         }
@@ -61,9 +61,14 @@ class CategoryBreadcrumbs extends IBreadcrumbs
      */
     private function generateBreadcrumbs(int $catId): array
     {
-        $array = [];
+        $array = [];$i = 0;
         foreach ($this->breadcrumbsArray as $cat) {
+            ++$i;
             if ($catId == $cat->getId()) {
+                echo $cat->getAlias().'<br>';
+                Router::getLink('cat-alias', [
+                    'alias' => 'dupa'
+                ]);
                 $array[] = $this->addBreadcrumb(
                     $cat->getTitle(),
                     ($cat->getTitle() != 'Home' ?
@@ -75,6 +80,7 @@ class CategoryBreadcrumbs extends IBreadcrumbs
                 );
             }
         }
+        echo $i;
         return $array;
     }
 }

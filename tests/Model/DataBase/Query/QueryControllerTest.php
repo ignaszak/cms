@@ -14,8 +14,9 @@ class QueryControllerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        MockRouter::start('route');
-        MockRouter::add('admin', '{alias:route}');
+        MockRouter::start('/route');
+        MockRouter::group('admin');
+        MockRouter::add('admin', '/{alias}')->token('alias', '(route)');
         MockRouter::run();
         MockConf::run();
         MockDoctrine::queryBuilderResult([null]); // Symulate no result

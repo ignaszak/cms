@@ -36,8 +36,8 @@ class CommandHandler
      */
     public function getCommand(Route $_route): bool
     {
-        if ($_route->controller) {
-            $controllerClass = $_route->controller;
+        if ($_route->getController()) {
+            $controllerClass = $_route->getController();
             return $this->loadController($controllerClass);
         } else {
             return $this->loadController($this->_default);

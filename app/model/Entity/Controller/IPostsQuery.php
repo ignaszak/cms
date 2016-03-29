@@ -2,7 +2,6 @@
 namespace Entity\Controller;
 
 use App\Resource\RouterStatic as Router;
-use Ignaszak\Registry\RegistryFactory;
 use Format\TextFormat;
 
 abstract class IPostsQuery
@@ -36,9 +35,9 @@ abstract class IPostsQuery
      */
     public function getLink()
     {
-        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
-        ;
-        return "{$_conf->getBaseUrl()}post/{$this->getAlias()}";
+        return Router::getLink('post-alias', [
+            'alias' => $this->getAlias()
+        ]);
     }
 
     /**
@@ -47,9 +46,9 @@ abstract class IPostsQuery
      */
     public function getCategoryLink()
     {
-        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
-        ;
-        return "{$_conf->getBaseUrl()}category/{$this->getCategory()->getAlias()}";
+        return Router::getLink('cat-alias', [
+            'alias' => $this->getCategory()->getAlias()
+        ]);
     }
 
     /**
@@ -58,9 +57,9 @@ abstract class IPostsQuery
      */
     public function getDateLink($format = 'Y-m-d')
     {
-        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
-        ;
-        return "{$_conf->getBaseUrl()}date/{$this->getDate($format)}";
+        return Router::getLink('date', [
+            'date' => $this->getDate($format)
+        ]);
     }
 
     /**
@@ -101,7 +100,6 @@ abstract class IPostsQuery
      */
     private function isPostOpen()
     {
-        return Router::getRoute('route1') == 'post' &&
-            ! empty(Router::getRoute('alias'));
+        return Router::getName() == 'post-view';
     }
 }

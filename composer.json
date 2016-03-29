@@ -15,7 +15,7 @@
 		"doctrine/orm" : ">=2.5.1",
 		"phpunit/phpunit" : "*",
 		"ircmaxell/password-compat" : ">=1.0.4",
-		"ignaszak/router" : "1.0.0",
+		"ignaszak/router" : "2.0.1",
 		"ignaszak/exception" : "1.1.2",
 		"ignaszak/registry" : "1.0.0",
 		"beberlei/DoctrineExtensions" : "*",

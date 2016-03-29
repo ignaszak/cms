@@ -6,9 +6,11 @@ use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Registry\RegistryFactory;
 use View\View;
 use UserAuth\User;
-use Ignaszak\Router\Start as Router;
-use Ignaszak\Router\Client as RouterClient;
 use FrontController\FrontController;
+use Ignaszak\Router\Route;
+use Ignaszak\Router\Router;
+use Ignaszak\Router\Conf\Host;
+use App\Resource\RouterStatic;
 
 class Load
 {
@@ -90,13 +92,18 @@ class Load
      */
     public function loadRouter()
     {
-        $router = Router::instance();
-        $router->baseURL = RegistryFactory::start('file')
-            ->register('Conf\Conf')->getBaseUrl();
-        $router->add('admin', 'admin');
-        new \Admin\Extension\ExtensionLoader;
+        $route = Route::start();
+        $router = new Router($route);
+        $route->get('default', '/@base');
+        $route->group('admin');
+        $route->get('admin', '/admin');
+        //new \Admin\Extension\ExtensionLoader;
+        $route->group();
         require __CONFDIR__ . "/router.php";
-        $router->run();
+        $router->run(new Host(
+            '/~tomek/Eclipse/PHP/cms'
+            //RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl()
+        ));
     }
 
     /**
@@ -105,7 +112,7 @@ class Load
      */
     public function loadAdmin()
     {
-        if (RouterClient::isRouteName('admin')) {
+        if (RouterStatic::getGroup() == 'admin') {
             // If not logged open login panel
             if (! $this->user->isUserLoggedIn()) {
                 $this->view->loadFile('../../extensions/Index/login.html');

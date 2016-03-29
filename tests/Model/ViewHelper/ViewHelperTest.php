@@ -34,8 +34,8 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
     public function testDisplay()
     {
         MockViewHelper::loadExtensions();
-        MockRouter::start('post', 'post');
-        MockRouter::add('post', 'post');
+        MockRouter::start('/post');
+        MockRouter::add('post', '/post');
         MockRouter::run();
         MockDoctrine::queryBuilderResult(['AnyResult']);
         $this->assertNotEmpty($this->_viewHelper->display());

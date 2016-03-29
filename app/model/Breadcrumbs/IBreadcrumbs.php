@@ -50,7 +50,7 @@ abstract class IBreadcrumbs
     {
         $array = new \stdClass();
         $array->title = $title;
-        $array->link = $this->_conf->getBaseUrl() . $link;
+        $array->link = $link;
         $array->active = '';
         return $array;
     }

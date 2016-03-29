@@ -1,8 +1,9 @@
 <?php
 namespace Test\Mock;
 
-use Ignaszak\Router\Start;
-use Ignaszak\Router\Client;
+use Ignaszak\Router\Router;
+use Ignaszak\Router\Route;
+use Ignaszak\Router\Interfaces\IRouteAdd;
 
 class MockRouter
 {
@@ -19,57 +20,96 @@ class MockRouter
      */
     private static $_router;
 
+    /**
+     *
+     * @var \Ignaszak\Router\Response
+     */
+    private static $response;
+
+    /**
+     *
+     * @var string
+     */
+    private static $requestURI;
+
+    /**
+     *
+     * @param string $requestURI
+     * @param string $defaultRoute
+     */
     public static function start(string $requestURI, string $defaultRoute = '')
     {
-        $_SERVER['REQUEST_URI'] = $requestURI;
-        $_SERVER['SERVER_NAME'] = '';
-        self::$_router = new Start();
-        self::$_router->baseURL = '';
-        self::$_router->defaultRoute = $defaultRoute;
+        self::$requestURI = $requestURI;
+        self::$_route = Route::start();
+        self::$_route->add($defaultRoute, '@base');
+        self::$_router = new Router(self::$_route);
     }
 
+    /**
+     *
+     * @param string $defaultRoute
+     */
     public static function defaultRoute(string $defaultRoute)
     {
-        self::$_router = new Start();
-        self::$_router->defaultRoute = $defaultRoute;
-        self::$_router->run();
+        self::$_route = Route::start();
+        self::$_route->add($defaultRoute, '@base');
+        self::$_router = new Router(self::$_route);
+        self::$_router->run(null, '/');
     }
 
+    /**
+     *
+     * @param string $name
+     * @param string $pattern
+     */
     public static function add(
         string $name,
         string $pattern,
-        string $controller = ''
-    ) {
-        self::$_router->add($name, $pattern, $controller);
+        string $method = ''
+    ): IRouteAdd {
+        return self::$_route->add($name, $pattern, $method);
     }
 
+    /**
+     *
+     * @param string $name
+     */
+    public static function group(string $name = '')
+    {
+        self::$_route->group($name);
+    }
+
+    /**
+     *
+     * @param string $name
+     * @param string $token
+     */
     public static function addToken(string $name, string $token)
     {
         self::$_router->addToken($name, $token);
     }
 
-    public static function addController(string $name, array $options)
-    {
-        self::$_router->addController($name, $options);
-    }
-
     public static function run()
     {
-        self::$_router->run();
+        self::$response = self::$_router->run(null, self::$requestURI);
     }
 
-    public static function getRouteName(): string
+    public static function getName(): string
     {
-        return Client::getRouteName();
+        return self::$response->getName();
     }
 
-    public static function getAllRoutes(): array
+    public static function getParams(): array
     {
-        return Client::getAllRoutes();
+        return self::$response->getParams();
     }
 
-    public static function getRoute(): string
+    /**
+     *
+     * @param string $token
+     */
+    public static function getParam(string $token): string
     {
-        return Client::getRoute();
+        return self::$response->getParam($token);
     }
 }

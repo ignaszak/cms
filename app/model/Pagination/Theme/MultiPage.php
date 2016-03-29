@@ -15,13 +15,12 @@ class MultiPage extends Theme
 
             $prevLink = $this->_pg->getPrevLink();
             $nextLink = $this->_pg->getNextLink();
-            $link = $this->_pg->getLinkWhitoutPage();
 
             $pagination = <<<EOT
 <nav>
     <ul class="pagination">
         <li class="{$this->_pg->getPrevDisabled()}">
-            <a href="$link$prevLink" aria-label="Previous">
+            <a href="{$prevLink}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
@@ -37,7 +36,7 @@ EOT;
 
             $pagination .= <<<EOT
         <li class="{$this->_pg->getNextDisabled()}">
-            <a href="$link$nextLink" aria-label="Next">
+            <a href="{$nextLink}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>

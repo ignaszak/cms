@@ -56,6 +56,7 @@ class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
     private function getBreadcrumbs(string $routeName, string $className)
     {
         MockRouter::start($routeName);
+        MockRouter::group($routeName);
         MockRouter::add($routeName, $routeName);
         MockRouter::run();
         $this->_bc->getBreadcrumbs();

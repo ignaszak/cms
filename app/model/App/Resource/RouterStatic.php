@@ -1,52 +1,63 @@
 <?php
 namespace App\Resource;
 
-use Ignaszak\Router\Client;
+use Ignaszak\Router\ResponseStatic;
 
 class RouterStatic
 {
 
     /**
      *
-     * @param string $route
+     * @param string $token
      * @return string
      */
-    public static function getRoute(string $route = ''): string
+    public static function getParam(string $token = ''): string
     {
-        return Client::getRoute($route) ?? '';
+        return ResponseStatic::getParam($token);
     }
 
     /**
      * @return array
      */
-    public static function getAllRoutes(): array
+    public static function getParams(): array
     {
-        return Client::getAllRoutes() ?? [];
+        return ResponseStatic::getParams();
+    }
+
+    /**
+     * @return string
+     */
+    public static function getName(): string
+    {
+        return ResponseStatic::getName();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public static function getGroup(): string
+    {
+        return ResponseStatic::getGroup();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public static function getController(): string
+    {
+        return ResponseStatic::getController();
     }
 
     /**
      *
      * @param string $name
-     * @return boolean
-     */
-    public static function isRouteName(string $name): bool
-    {
-        return Client::isRouteName($name);
-    }
-
-    /**
+     * @param array $replacement
      * @return string
      */
-    public static function getRouteName(): string
+    public static function getLink(string $name, array $replacement): string
     {
-        return Client::getRouteName() ?? '';
-    }
-
-    /**
-     * @return string
-     */
-    public static function getDefaultRoute(): string
-    {
-        return Client::getDefaultRoute() ?? '';
+        return ResponseStatic::getLink($name, $replacement);
     }
 }

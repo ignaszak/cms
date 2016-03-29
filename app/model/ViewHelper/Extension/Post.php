@@ -50,12 +50,10 @@ class Post
 
     private function selectPosts()
     {
-        switch (Router::getRoute()) {
-
+        switch (Router::getGroup()) {
             case 'post':
                 $this->_query->setQuery('post');
                 break;
-
             case 'category':
                 $catIdArray = RegistryFactory::start()
                     ->register('App\Resource\CategoryList')->child();
@@ -63,13 +61,11 @@ class Post
                     ->categoryId($catIdArray)
                     ->force();
                 break;
-
             case 'date':
                 $this->_query->setQuery('post')
-                    ->date(Router::getRoute('date'))
+                    ->date(Router::getParam('date'))
                     ->force();
                 break;
-
             default:
                 $this->_query->setQuery('post');
         }

@@ -59,25 +59,21 @@ class ViewHelper
         $_query = $this->_viewHelperExtension
             ->getExtensionInstanceFromMethodName('Query');
 
-        switch (Router::getRoute()) {
-
+        switch (Router::getGroup()) {
             case 'post':
                 $_query->setQuery('post');
                 break;
-
             case 'category':
                 $_query->setQuery('post')
                     ->categoryId(RegistryFactory::start()
                         ->register('App\Resource\CategoryList')->child())
                     ->force();
                 break;
-
             case 'date':
                 $_query->setQuery('post')
-                    ->date(Router::getRoute('date'))
+                    ->date(Router::getParam('date'))
                     ->force();
                 break;
-
             default:
                 $_query->setQuery('post');
         }

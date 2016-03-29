@@ -172,7 +172,7 @@ class QueryController extends IQueryController
         // For entities which have getPublic method
         if (method_exists($this->entityName, 'getPublic')) {
             $value = 1;
-            if (Router::getRouteName() == 'admin') { // Check if admin panel is avilable
+            if (Router::getName() == 'admin') { // Check if admin panel is avilable
                 if ($this->status == 'public') {
                     $value = 1;
                 } elseif ($this->status == 'edit') {
@@ -227,7 +227,7 @@ class QueryController extends IQueryController
      */
     private function isAliasEmptyOrIsResultForced(): bool
     {
-        return empty(Router::getRoute('alias')) || $this->isResultForced;
+        return empty(Router::getParam('alias')) || $this->isResultForced;
     }
 
     /**
@@ -235,7 +235,7 @@ class QueryController extends IQueryController
      */
     private function paginateQuery()
     {
-        $page = Router::getRoute('page');
+        $page = Router::getParam('page');
         $limit = $this->_conf->getViewLimit();
         $offset = $limit * (($page ? $page : 1) - 1);
 
@@ -266,7 +266,7 @@ class QueryController extends IQueryController
     private function setAliasIfResultIsNotForced()
     {
         if (! $this->isResultForced) {
-            $this->_queryBuilder->alias(Router::getRoute('alias'));
+            $this->_queryBuilder->alias(Router::getParam('alias'));
             $this->getQueryAndResult();
         }
     }

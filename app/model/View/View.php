@@ -56,7 +56,7 @@ class View
     public function loadView()
     {
         if (! empty($this->viewFileName)) {
-            if (Router::isRouteName('admin')) {
+            if (Router::getGroup() == 'admin') {
                 $this->loadAdminExtensionThemeFile($this->viewFileName);
             } else {
                 $this->loadFile($this->viewFileName);

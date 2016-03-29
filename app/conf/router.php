@@ -1,31 +1,96 @@
 <?php
-$router->add('post', '{page}', 'Controller\ViewPostController');
-$router->add('post', 'post/{page}', 'Controller\ViewPostController');
-$router->add('post', 'post/{alias}', 'Controller\ViewPostController');
-$router->add('post', 'post/{alias}/{page}', 'Controller\ViewPostController');
 
-$router->add('category', 'category/{page}', 'Controller\ViewPostController');
-$router->add('category', 'category/{alias}', 'Controller\ViewPostController');
-$router->add('category', 'category/{alias}/{page}', 'Controller\ViewPostController');
+/**
+ *
+ * POST
+ *
+ */
+$route->group('post');
+$controller = 'Controller\ViewPostController';
+$route->get('post-default',  '/{page}')             ->controller($controller);
+$route->get('post-list',     '/post/{page}')        ->controller($controller);
+$route->get('post-alias',    '/post/{alias}')       ->controller($controller);
+$route->get('post-com-list', '/post/{alias}/{page}')->controller($controller);
 
-$router->add('date', 'date/{date}', 'Controller\ViewPostController');
+/**
+ *
+ * CATEGORY
+ *
+ */
+$route->group('category');
+$route->get('cat-list',       '/category/{page}')        ->controller($controller);
+$route->get('cat-alias',      '/category/{alias}')       ->controller($controller);
+$route->get('cat-alias-page', '/category/{alias}/{page}')->controller($controller);
 
-$router->add('page', 'page/{alias}', 'Controller\ViewPageController');
+/**
+ *
+ * DATE
+ *
+ */
+$route->group('date');
+$route->get('date', '/date/{date}')->controller($controller);
+$route->get('dated', '/dated/{year}(-{month})?(-{day})?')->controller($controller);
 
-$router->add('user', 'user', 'Controller\User\UserViewController');
-$router->add('user', 'user/{method}/{action:login}', 'Controller\User\UserLoginController');
-$router->add('user', 'user/{method}/{action:logout}', 'Controller\User\UserLogoutController');
-$router->add('user', 'user/{method}/{action:registration}', 'Controller\User\UserRegistrationController');
-$router->add('user', 'user/{method}/{action:remind}', 'Controller\User\UserRemindController');
-$router->add('user', 'user/{method}/{action:account}', 'Controller\User\UserSaveController');
+/**
+ *
+ * PAGE
+ *
+ */
+$route->group('page');
+$route->get('page-alias', '/page/{alias}')->controller('Controller\ViewPageController');
 
-$router->add('search', 'search/{page}', 'Controller\SearchController');
+/**
+ *
+ * USER
+ *
+ */
+$route->group('user');
+$route->get('user-account', '/user')->controller('Controller\User\UserViewController');
 
-$router->add('mail', 'mail/send', 'Controller\SendMailController');
+$route->post('user-login', '/user/{method}/{action}')->token('action', '(login)')
+    ->controller('Controller\User\UserLoginController');
 
-$router->addToken('id', '([0-9]*)');
-$router->addToken('alias', '([a-z0-9_-]*)');
-$router->addToken('page', '([0-9]*)');
-$router->addToken('date', '([0-9-]*)');
-$router->addToken('method', '(post|ajax)');
-$router->addToken('userName', '([a-Z_-0-9]*)');
+$route->add('user-logout', '/user/{method}/{action}')->token('action', '(logout)')
+    ->controller('Controller\User\UserLogoutController');
+
+$route->post('user-registration', '/user/{method}/{action}')->token('action', '(registration)')
+    ->controller('Controller\User\UserRegistrationController');
+
+$route->post('user-remind', '/user/{method}/{action}')->token('action', '(remind)')
+    ->controller('Controller\User\UserRemindController');
+
+$route->post('user-save', '/user/{method}/{action}')->token('action', '(account)')
+    ->controller('Controller\User\UserSaveController');
+
+/**
+ *
+ * SEARCH
+ *
+ */
+$route->group('search');
+$route->get('search', '/search/{page}')->controller('Controller\SearchController');
+
+/**
+ *
+ * MAIL
+ *
+ */
+$route->group('mail');
+$route->get('mail', '/mail/send')->controller('Controller\SendMailController');
+
+/**
+ *
+ * GLOBAL TOKENS
+ *
+ */
+$router->addTokens([
+    'id'       => '@digit',
+    'alias'    => '@alnum',
+    'page'     => '@digit',
+    'date'     => '([0-9-]+)',
+    'method'   => '(post|ajax)',
+    'userName' => '@alnum',
+    'year'     => '(\d{4})',
+    'month'    => '(\d{2})',
+    'day'      => '(\d{2})'
+]);

@@ -33,7 +33,7 @@ class Conf
 
     public function configureThemePath()
     {
-        if (Router::isRouteName('admin')) {
+        if (Router::getGroup() == 'admin') {
             $this->themeFolder = ADMIN_FOLDER . "/themes/Default";
             $this->themePath = __ADMINDIR__ . "/themes/Default";
         } else {

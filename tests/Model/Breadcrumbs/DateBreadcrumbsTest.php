@@ -17,8 +17,8 @@ class DateBreadcrumbsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateBreadcrumbs()
     {
-        MockRouter::start('date/2016-02-21');
-        MockRouter::add('date', 'date/{date:([0-9-]*)}');
+        MockRouter::start('/date/2016-02-21');
+        MockRouter::add('date', '/date/{date}')->token('date', '([0-9-]+)');
         MockRouter::run();
         MockConf::run(['getBaseUrl' => 'anyBaseUrl/']);
         $array = $this->_dateBc->createBreadcrumbs();
