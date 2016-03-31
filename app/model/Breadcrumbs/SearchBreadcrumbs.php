@@ -12,7 +12,7 @@ class SearchBreadcrumbs extends IBreadcrumbs
         return array_merge(
             $this->getHome(),
             [
-                $this->addBreadcrumb('Search', '')
+                $this->addBreadcrumb('Search', $this->_conf->getBaseUrl())
             ]
         );
     }

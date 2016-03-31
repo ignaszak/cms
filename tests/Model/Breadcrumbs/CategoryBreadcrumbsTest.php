@@ -5,8 +5,8 @@ use Breadcrumbs\CategoryBreadcrumbs;
 use Test\Mock\MockDoctrine;
 use Test\Mock\MockTest;
 use Test\Mock\MockRouter;
-use Test\Mock\MockConf;
 use Ignaszak\Registry\RegistryFactory;
+use Ignaszak\Router\Link;
 
 class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
 {
@@ -53,10 +53,15 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
         };
         MockTest::inject($this->_categoryBc, 'breadcrumbsArray', [$stub]);
         $catId = 55;
-        MockConf::run(['getBaseUrl' => 'anyBaseUrl/']);
-        $array = MockTest::callMockMethod($this->_categoryBc, 'generateBreadcrumbs', [$catId]);
+        $stub = $this->getMockBuilder('Ignaszak\Router\Link')
+            ->disableOriginalConstructor()->getMock();
+        $stub->method('getLink')->willReturn('category/anyAlias');
+        MockTest::injectStatic(Link::instance(), 'link', $stub);
+        $array = MockTest::callMockMethod(
+            $this->_categoryBc, 'generateBreadcrumbs', [$catId]
+        );
         $this->assertEquals('anyTitle', $array[0]->title);
-        $this->assertEquals('anyBaseUrl/category/anyAlias', $array[0]->link);
+        $this->assertEquals('category/anyAlias', $array[0]->link);
     }
 
     public function testGetCategoryIdFromCategoryRoute()

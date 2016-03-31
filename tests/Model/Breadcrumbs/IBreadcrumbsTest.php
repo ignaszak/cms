@@ -42,7 +42,7 @@ class IBreadcrumbsTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertInstanceOf('stdClass', $addBreadcrumb);
         $this->assertEquals('anyTitle', $addBreadcrumb->title);
-        $this->assertEquals('anyBaseUrl/AnyLink', $addBreadcrumb->link);
+        $this->assertEquals('AnyLink', $addBreadcrumb->link);
         $this->assertEquals('', $addBreadcrumb->active);
     }
 }

@@ -28,8 +28,14 @@ $route->get('cat-alias-page', '/category/{alias}/{page}')->controller($controlle
  *
  */
 $route->group('date');
-$route->get('date', '/date/{date}')->controller($controller);
-$route->get('dated', '/dated/{year}(-{month})?(-{day})?')->controller($controller);
+$route->get('date', '/date/{year}{s1}{month}{s2}{day}')
+    ->tokens([
+        'year' => '(\d{4})?',
+        'month' => '(\d{2})?',
+        'day' => '(\d{2})?',
+        's1' => '(-)?',
+        's2' => '(-)?'
+    ])->controller($controller);
 
 /**
  *

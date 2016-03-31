@@ -55,10 +55,14 @@ abstract class IPostsQuery
      *
      * @return string
      */
-    public function getDateLink($format = 'Y-m-d')
+    public function getDateLink()
     {
         return Router::getLink('date', [
-            'date' => $this->getDate($format)
+            'year' => $this->getDate('Y'),
+            'month' => $this->getDate('m'),
+            'day' => $this->getDate('d'),
+            's1' => '-',
+            's2' => '-'
         ]);
     }
 

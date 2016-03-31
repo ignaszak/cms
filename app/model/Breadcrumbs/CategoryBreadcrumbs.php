@@ -9,7 +9,7 @@ class CategoryBreadcrumbs extends IBreadcrumbs
 
     /**
      *
-     * @var array
+     * @var \Entity\Categories[]
      */
     private $breadcrumbsArray = [];
 
@@ -40,7 +40,7 @@ class CategoryBreadcrumbs extends IBreadcrumbs
                 ->limit(1)
                 ->alias($alias);
             $content = $this->_query->getStaticQuery();
-            if (! empty($content)) {
+            if (count($content)) {
                 return ($group == 'category') ?
                     $content[0]->getId() : $content[0]->getCategory()->getId();
             }
@@ -52,6 +52,9 @@ class CategoryBreadcrumbs extends IBreadcrumbs
     {
         $this->breadcrumbsArray = RegistryFactory::start()
             ->register('App\Resource\CategoryList')->get();
+        usort($this->breadcrumbsArray, function ($a, $b) {
+            return $b->getParentId() <=> $a->getParentId();
+        });
     }
 
     /**
@@ -61,26 +64,16 @@ class CategoryBreadcrumbs extends IBreadcrumbs
      */
     private function generateBreadcrumbs(int $catId): array
     {
-        $array = [];$i = 0;
+        $result = [];
         foreach ($this->breadcrumbsArray as $cat) {
-            ++$i;
-            if ($catId == $cat->getId()) {
-                echo $cat->getAlias().'<br>';
-                Router::getLink('cat-alias', [
-                    'alias' => 'dupa'
-                ]);
-                $array[] = $this->addBreadcrumb(
+            if ($cat->getId() == $catId) {
+                $result[] = $this->addBreadcrumb(
                     $cat->getTitle(),
-                    ($cat->getTitle() != 'Home' ?
-                        "category/{$cat->getAlias()}" : "")
+                    Router::getLink('cat-alias', ['alias' => $cat->getAlias()])
                 );
-                $array = array_merge(
-                    $this->generateBreadcrumbs($cat->getParentId()),
-                    $array
-                );
+                $catId = $cat->getParentId();
             }
         }
-        echo $i;
-        return $array;
+        return array_reverse($result);
     }
 }

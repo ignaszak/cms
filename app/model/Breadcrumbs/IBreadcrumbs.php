@@ -21,7 +21,7 @@ abstract class IBreadcrumbs
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->_query = RegistryFactory::start('file')
+        $this->_query = RegistryFactory::start()
             ->register('DataBase\Query\Query');
     }
 
@@ -36,7 +36,7 @@ abstract class IBreadcrumbs
     protected function getHome(): array
     {
         return [
-            $this->addBreadcrumb('Home', '')
+            $this->addBreadcrumb('Home', $this->_conf->getBaseUrl())
         ];
     }
 

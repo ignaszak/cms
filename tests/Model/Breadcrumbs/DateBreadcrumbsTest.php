@@ -3,7 +3,6 @@ namespace Test\Model\Breadcrumbs;
 
 use Breadcrumbs\DateBreadcrumbs;
 use Test\Mock\MockRouter;
-use Test\Mock\MockConf;
 
 class DateBreadcrumbsTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,12 +17,17 @@ class DateBreadcrumbsTest extends \PHPUnit_Framework_TestCase
     public function testCreateBreadcrumbs()
     {
         MockRouter::start('/date/2016-02-21');
-        MockRouter::add('date', '/date/{date}')->token('date', '([0-9-]+)');
+        MockRouter::add('date', '/date/{year}{s1}{month}{s2}{day}')->tokens([
+            'year' => '(\d{4})?',
+            'month' => '(\d{2})?',
+            'day' => '(\d{2})?',
+            's1' => '(-)?',
+            's2' => '(-)?'
+        ]);
         MockRouter::run();
-        MockConf::run(['getBaseUrl' => 'anyBaseUrl/']);
         $array = $this->_dateBc->createBreadcrumbs();
-        $this->assertEquals('anyBaseUrl/date/2016', $array[1]->link);
-        $this->assertEquals('anyBaseUrl/date/2016-02', $array[2]->link);
-        $this->assertEquals('anyBaseUrl/date/2016-02-21', $array[3]->link);
+        $this->assertEquals('2016', $array[1]->title);
+        $this->assertEquals('02', $array[2]->title);
+        $this->assertEquals('21', $array[3]->title);
     }
 }
