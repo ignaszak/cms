@@ -8,13 +8,55 @@ class Configuration
      *
      * @var string
      */
-    private static $baseUrl;
+    public static $siteAdress;
 
     /**
      *
      * @var string
      */
-    private static $requestUrl;
+    public static $requestUrl;
+
+    /**
+     *
+     * @var string
+     */
+    public static $dbHost;
+
+    /**
+     *
+     * @var string
+     */
+    public static $dbUser;
+
+    /**
+     *
+     * @var string
+     */
+    public static $dbPassword;
+
+    /**
+     *
+     * @var string
+     */
+    public static $dbName;
+
+    /**
+     *
+     * @var string
+     */
+    public static $login;
+
+    /**
+     *
+     * @var string
+     */
+    public static $password;
+
+    /**
+     *
+     * @var string
+     */
+    public static $email;
 
     /**
      *
@@ -23,31 +65,13 @@ class Configuration
     public static function setAdress(string $siteAdress)
     {
         $siteAdress = substr($siteAdress, - 1) == "/" ?
-            substr($siteAdress, 0, - 1) : $siteAdress;
+            $siteAdress : "{$siteAdress}/";
+        self::$siteAdress = $siteAdress;
         $array = explode('/', $siteAdress);
-        self::$baseUrl = $array[0] . '//' . $array[2] . '/';
         unset($array[0]);
         unset($array[1]);
         unset($array[2]);
         self::$requestUrl = '/' . implode('/', $array);
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public static function getBaseUrl(): string
-    {
-        return self::$baseUrl;
-    }
-
-    /**
-     *
-     * @return string
-     */
-    public static function getRequestUrl(): string
-    {
-        return self::$requestUrl;
     }
 
     /**
@@ -60,16 +84,20 @@ class Configuration
      */
     public static function checkDatabase(
         string $host,
-        string $dbName,
+        string $name,
         string $user,
         string $password
     ): string {
         try {
             new \PDO(
-                "mysql:host={$host};dbname={$dbName}",
+                "mysql:host={$host};dbname={$name}",
                 $user,
                 $password
             );
+            self::$dbHost = $host;
+            self::$dbName = $name;
+            self::$dbUser = $user;
+            self::$dbPassword = $password;
             return 'true';
         } catch (\PDOException $e) {
             return 'false';
@@ -78,21 +106,33 @@ class Configuration
 
     /**
      *
-     * @param string $login
+     * @param string $adress
      * @return boolean
+     */
+    public static function checkAdress(string $adress): bool
+    {
+        return filter_var($adress, FILTER_VALIDATE_URL);
+    }
+
+    /**
+     *
+     * @param string $login
+     * @return string
      */
     public static function checkLogin(string $login): string
     {
+        self::$login = $login;
         return (ctype_alnum($login) && strlen($login) >= 2) ? '' : 'login';
     }
 
     /**
      *
      * @param string $password
-     * @return boolean
+     * @return string
      */
     public static function checkPassword(string $password): string
     {
+        self::$password = $password;
         return (ctype_alnum($password) && strlen($password) >= 8)
             ? '' : 'password';
     }
@@ -100,10 +140,11 @@ class Configuration
     /**
      *
      * @param string $email
-     * @return boolean
+     * @return string
      */
     public static function checkEmail(string $email): string
     {
+        self::$email = $email;
         return filter_var($email, FILTER_VALIDATE_EMAIL) ? '' : 'email';
     }
 
