@@ -104,6 +104,6 @@ abstract class IPostsQuery
      */
     private function isPostOpen()
     {
-        return Router::getName() == 'post-view';
+        return Router::getName() == 'post-alias';
     }
 }
