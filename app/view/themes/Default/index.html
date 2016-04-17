@@ -35,7 +35,8 @@
                             <h1>Recent posts</h1>
                             <?php
                             $this->setQuery('post')
-                                ->limit(3);
+                                ->limit(3)
+                                ->force();
                             foreach ($this->getResult() as $post):
                             ?>
                             <a href="<?php echo $post->getLink(); ?>">
