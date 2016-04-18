@@ -1,7 +1,6 @@
 <?php
 namespace ViewHelper\Extension;
 
-use Conf\Conf;
 use Ignaszak\Registry\RegistryFactory;
 
 class System
