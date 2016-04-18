@@ -1,8 +1,6 @@
 <?php
 namespace Breadcrumbs;
 
-use App\Resource\RouterStatic as Router;
-
 class DateBreadcrumbs extends IBreadcrumbs
 {
 
@@ -13,7 +11,7 @@ class DateBreadcrumbs extends IBreadcrumbs
      */
     public function createBreadcrumbs(): array
     {
-        $paramsArray = Router::getParams();
+        $paramsArray = $this->http->router->all();
         $result = $this->getHome();
         foreach ($paramsArray as $key => $date) {
             if (is_numeric($date)) {
@@ -29,7 +27,7 @@ class DateBreadcrumbs extends IBreadcrumbs
                 }
                 $result[] = $this->addBreadcrumb(
                     $date,
-                    Router::getLink('date', $params)
+                    $this->registry->get('url')->url('date', $params)
                 );
             }
         }

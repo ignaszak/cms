@@ -3,9 +3,9 @@ namespace Test\Model\DataBase\Query;
 
 use Test\Mock\MockDoctrine;
 use Test\Mock\MockConf;
-use Test\Mock\MockRouter;
 use Test\Mock\MockTest;
 use DataBase\Query\QueryController;
+use Test\Mock\MockHttp;
 
 class QueryControllerTest extends \PHPUnit_Framework_TestCase
 {
@@ -14,10 +14,9 @@ class QueryControllerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        MockRouter::start('/route');
-        MockRouter::group('admin');
-        MockRouter::add('admin', '/{alias}')->token('alias', '(route)');
-        MockRouter::run();
+        MockHttp::routeGroup('admin');
+        MockHttp::routeSet(['alias' => 'route']);
+        MockHttp::run();
         MockConf::run();
         MockDoctrine::queryBuilderResult([null]); // Symulate no result
         $entity = $this->getMockBuilder('Entity\Posts')->getMock();

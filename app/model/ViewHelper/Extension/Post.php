@@ -2,7 +2,6 @@
 namespace ViewHelper\Extension;
 
 use Ignaszak\Registry\RegistryFactory;
-use App\Resource\RouterStatic as Router;
 
 class Post
 {
@@ -11,7 +10,13 @@ class Post
      *
      * @var \DataBase\Query\Query
      */
-    private $_query;
+    private $_query = null;
+
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http = null;
 
     /**
      *
@@ -21,7 +26,9 @@ class Post
 
     public function __construct()
     {
-        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
+        $registry = RegistryFactory::start();
+        $this->_query = $registry->register('DataBase\Query\Query');
+        $this->http = $registry->get('http');
     }
 
     /**
@@ -50,7 +57,7 @@ class Post
 
     private function selectPosts()
     {
-        switch (Router::getGroup()) {
+        switch ($this->http->router->group()) {
             case 'post':
                 $this->_query->setQuery('post');
                 break;
@@ -63,12 +70,24 @@ class Post
                 break;
             case 'date':
                 $this->_query->setQuery('post')
-                    ->date(Router::getParam('date'))
+                    ->date($this->getDate())
                     ->force();
                 break;
             default:
                 $this->_query->setQuery('post');
         }
         $this->_post = $this->_query->getQuery();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    private function getDate(): string
+    {
+        $date = $this->http->router->all();
+        return implode('-', array_filter($date, function ($var) {
+            return !in_array($var, ['', '-']);
+        }));
     }
 }

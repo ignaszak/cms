@@ -1,8 +1,8 @@
 <?php
 namespace Entity\Controller;
 
-use App\Resource\RouterStatic as Router;
 use Format\TextFormat;
+use Ignaszak\Registry\RegistryFactory;
 
 abstract class IPostsQuery
 {
@@ -35,7 +35,7 @@ abstract class IPostsQuery
      */
     public function getLink()
     {
-        return Router::getLink('post-alias', [
+        return RegistryFactory::start()->get('url')->url('post-alias', [
             'alias' => $this->getAlias()
         ]);
     }
@@ -46,7 +46,7 @@ abstract class IPostsQuery
      */
     public function getCategoryLink()
     {
-        return Router::getLink('cat-alias', [
+        return RegistryFactory::start()->get('url')->url('cat-alias', [
             'alias' => $this->getCategory()->getAlias()
         ]);
     }
@@ -57,7 +57,7 @@ abstract class IPostsQuery
      */
     public function getDateLink()
     {
-        return Router::getLink('date', [
+        return RegistryFactory::start()->get('url')->url('date', [
             'year' => $this->getDate('Y'),
             'month' => $this->getDate('m'),
             'day' => $this->getDate('d'),
@@ -104,6 +104,7 @@ abstract class IPostsQuery
      */
     private function isPostOpen()
     {
-        return Router::getName() == 'post-alias';
+        return RegistryFactory::start()->get('http')
+            ->router->name() == 'post-alias';
     }
 }

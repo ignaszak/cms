@@ -1,8 +1,6 @@
 <?php
 namespace ViewHelper;
 
-use Conf\Conf;
-use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class ViewHelper
@@ -20,10 +18,17 @@ class ViewHelper
      */
     private $_conf;
 
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http = null;
+
     public function __construct()
     {
         $this->_viewHelperExtension = new ViewHelperExtension();
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->http = RegistryFactory::start()->get('http');
     }
 
     /**
@@ -59,7 +64,7 @@ class ViewHelper
         $_query = $this->_viewHelperExtension
             ->getExtensionInstanceFromMethodName('Query');
 
-        switch (Router::getGroup()) {
+        switch ($this->http->router->group()) {
             case 'post':
                 $_query->setQuery('post');
                 break;
@@ -71,7 +76,7 @@ class ViewHelper
                 break;
             case 'date':
                 $_query->setQuery('post')
-                    ->date(Router::getParam('date'))
+                    ->date($this->http->router->get('date'))
                     ->force();
                 break;
             default:

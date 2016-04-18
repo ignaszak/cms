@@ -2,6 +2,7 @@
 namespace DataBase\Controller\Validator;
 
 use DataBase\Controller\Controller;
+use Ignaszak\Registry\RegistryFactory;
 
 abstract class Validator
 {
@@ -10,7 +11,13 @@ abstract class Validator
      *
      * @var Controller
      */
-    protected $_controller;
+    protected $_controller = null;
+
+    /**
+     *
+     * @var Ignaszak\Registry\RegistryFactory::start()
+     */
+    protected $registry = null;
 
     /**
      *
@@ -33,6 +40,7 @@ abstract class Validator
     public function __construct(Controller $_controller)
     {
         $this->_controller = $_controller;
+        $this->registry = RegistryFactory::start();
         $this->entityName = get_class($this->_controller->entity());
     }
 

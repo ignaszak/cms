@@ -1,9 +1,6 @@
 <?php
 namespace Breadcrumbs;
 
-use App\Resource\RouterStatic as Router;
-use Ignaszak\Registry\RegistryFactory;
-
 class CategoryBreadcrumbs extends IBreadcrumbs
 {
 
@@ -33,8 +30,8 @@ class CategoryBreadcrumbs extends IBreadcrumbs
      */
     private function getCategoryId(): int
     {
-        $group = Router::getGroup();
-        $alias = Router::getParam('alias');
+        $group = $this->http->router->group();
+        $alias = $this->http->router->get('alias');
         if (! empty($alias)) {
             $this->_query->setQuery($group)
                 ->limit(1)
@@ -50,7 +47,7 @@ class CategoryBreadcrumbs extends IBreadcrumbs
 
     private function setBreadcrumbsArray()
     {
-        $this->breadcrumbsArray = RegistryFactory::start()
+        $this->breadcrumbsArray = $this->registry
             ->register('App\Resource\CategoryList')->get();
         usort($this->breadcrumbsArray, function ($a, $b) {
             return $b->getParentId() <=> $a->getParentId();
@@ -69,7 +66,9 @@ class CategoryBreadcrumbs extends IBreadcrumbs
             if ($cat->getId() == $catId) {
                 $result[] = $this->addBreadcrumb(
                     $cat->getTitle(),
-                    Router::getLink('cat-alias', ['alias' => $cat->getAlias()])
+                    $this->registry->get('url')->url('cat-alias', [
+                        'alias' => $cat->getAlias()
+                    ])
                 );
                 $catId = $cat->getParentId();
             }

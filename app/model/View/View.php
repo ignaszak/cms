@@ -2,7 +2,6 @@
 namespace View;
 
 use Ignaszak\Registry\RegistryFactory;
-use App\Resource\RouterStatic as Router;
 
 class View
 {
@@ -21,14 +20,22 @@ class View
 
     /**
      *
+     * @var \App\Resource\Http
+     */
+    private $http;
+
+    /**
+     *
      * @var string
      */
     private $viewFileName;
 
     public function __construct()
     {
+        $registry = RegistryFactory::start();
         $this->_viewConf = new Conf();
-        $this->_viewHelper = RegistryFactory::start()->register('ViewHelper\ViewHelper');
+        $this->_viewHelper = $registry->register('ViewHelper\ViewHelper');
+        $this->http = $registry->get('http');
         $this->configure();
     }
 
@@ -56,7 +63,7 @@ class View
     public function loadView()
     {
         if (! empty($this->viewFileName)) {
-            if (Router::getGroup() == 'admin') {
+            if ($this->http->router->group() == 'admin') {
                 $this->loadAdminExtensionThemeFile($this->viewFileName);
             } else {
                 $this->loadFile($this->viewFileName);

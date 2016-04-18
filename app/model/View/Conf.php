@@ -1,7 +1,6 @@
 <?php
 namespace View;
 
-use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class Conf
@@ -26,14 +25,21 @@ class Conf
      */
     private $_conf;
 
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http;
+
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->http = RegistryFactory::start()->get('http');
     }
 
     public function configureThemePath()
     {
-        if (Router::getGroup() == 'admin') {
+        if ($this->http->router->group() == 'admin') {
             $this->themeFolder = ADMIN_FOLDER . "/themes/Default";
             $this->themePath = __ADMINDIR__ . "/themes/Default";
         } else {

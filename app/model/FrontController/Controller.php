@@ -14,12 +14,26 @@ abstract class Controller
 
     /**
      *
+     * @var \Ignaszak\Registry\RegistryFactory
+     */
+    private static $registry;
+
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private static $http = null;
+
+    /**
+     *
      * @return Controller
      */
     public static function instance(): Controller
     {
         $_controller = new static();
         self::$_controllerHelper = new ControllerHelper($_controller);
+        self::$registry = RegistryFactory::start();
+        self::$http = self::$registry->get('http');
         return $_controller;
     }
 
@@ -35,6 +49,16 @@ abstract class Controller
             [self::$_controllerHelper, $name],
             $arguments
         );
+    }
+
+    /**
+     *
+     * @param string $property
+     * @return mixed
+     */
+    public function __get(string $property)
+    {
+        return self::$$poperty;
     }
 
     /**
@@ -67,9 +91,9 @@ abstract class Controller
      *
      * @return \App\Resource\Route
      */
-    public function router(): \App\Resource\Route
+    public function router()
     {
-        return RegistryFactory::start()->register('App\Resource\Route');
+        return self::$http->router;
     }
 
     abstract public function run();

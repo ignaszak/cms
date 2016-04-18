@@ -1,11 +1,11 @@
 <?php
 namespace Test\Model\ViewHelper;
 
-use Test\Mock\MockRouter;
 use Test\Mock\MockDoctrine;
 use Test\Mock\MockViewHelper;
 use Test\Mock\MockConf;
 use ViewHelper\ViewHelper;
+use Test\Mock\MockHttp;
 
 class ViewHelperTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,9 +34,9 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
     public function testDisplay()
     {
         MockViewHelper::loadExtensions();
-        MockRouter::start('/post');
-        MockRouter::add('post', '/post');
-        MockRouter::run();
+        MockHttp::routeGroup('post');
+        MockHttp::run();
+        $this->_viewHelper = new ViewHelper();
         MockDoctrine::queryBuilderResult(['AnyResult']);
         $this->assertNotEmpty($this->_viewHelper->display());
     }

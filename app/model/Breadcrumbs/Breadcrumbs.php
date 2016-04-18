@@ -1,8 +1,6 @@
 <?php
 namespace Breadcrumbs;
 
-use App\Resource\RouterStatic as Router;
-
 class Breadcrumbs extends IBreadcrumbs
 {
 
@@ -18,7 +16,7 @@ class Breadcrumbs extends IBreadcrumbs
      */
     public function getBreadcrumbs(): array
     {
-        switch (Router::getGroup()) {
+        switch ($this->http->router->group()) {
             case 'post':
             case 'category':
                 $this->_breadcrumbs = new CategoryBreadcrumbs();

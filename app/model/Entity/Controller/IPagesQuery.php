@@ -1,7 +1,7 @@
 <?php
 namespace Entity\Controller;
 
-use App\Resource\RouterStatic as Router;
+use Ignaszak\Registry\RegistryFactory;
 
 abstract class IPagesQuery
 {
@@ -24,7 +24,7 @@ abstract class IPagesQuery
      */
     public function getLink()
     {
-        return Router::getLink('page-alias', [
+        return RegistryFactory::start()->get('url')->url('page-alias', [
             'alias' => $this->getAlias()
         ]);
     }

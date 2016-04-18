@@ -1,7 +1,6 @@
 <?php
 namespace Pagination;
 
-use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 use DataBase\Query\IQueryController;
 
@@ -12,7 +11,19 @@ class PaginationGenerator
      *
      * @var \Conf\Conf
      */
-    private $_conf;
+    private $_conf = null;
+
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http = null;
+
+    /**
+     *
+     * @var \Ignaszak\Registry\RegistryFactory::start()
+     */
+    private $registry = null;
 
     /**
      * Posts limit
@@ -36,7 +47,9 @@ class PaginationGenerator
 
     public function __construct()
     {
+        $this->registry = RegistryFactory::start();
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->http = $this->registry->get('http');
         $this->setParams();
         $this->createPaginationArray();
     }
@@ -99,7 +112,7 @@ class PaginationGenerator
      */
     public function getCurrentPage(): int
     {
-        $currentPage = Router::getParam('page');
+        $currentPage = $this->http->router->get('page');
         return empty($currentPage) ? 1 : $currentPage;
     }
 
@@ -147,12 +160,14 @@ class PaginationGenerator
      */
     private function getLink(int $page): string
     {
-        $tokens = Router::getParams();
+        $tokens = $this->http->router->all();
         if (! empty($tokens['page'])) {
             unset($tokens['page']);
         }
-        $name = Router::getName() == 'default' ?
-            'post-default' : Router::getName();
-        return Router::getLink($name, array_merge($tokens, ['page' => $page]));
+        $name = $this->http->router->name() == 'default' ?
+            'post-default' : $this->http->router->name();
+        return $this->registry->get('url')->url($name, array_merge($tokens, [
+            'page' => $page
+        ]));
     }
 }
