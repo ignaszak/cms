@@ -2,9 +2,9 @@
 namespace FrontController;
 
 use Controller\DefaultController;
-use App\Resource\Route;
+use App\Resource\Http;
 
-class CommandHandler
+class FrontController
 {
 
     /**
@@ -12,39 +12,30 @@ class CommandHandler
      *
      * @var \ReflectionClass('\FrontController\Controller')
      */
-    private $_base;
+    private $_base = null;
 
     /**
      * Default controller class
      *
      * @var string
      */
-    private $_default;
+    private $_default = 'Controller\DefaultController';
 
-    public function __construct()
+    /**
+     *
+     * @param Http $http
+     */
+    public function __construct(Http $http)
     {
         $this->_base = new \ReflectionClass('\FrontController\Controller');
-        $this->_default = 'Controller\DefaultController';
+        $this->loadController(
+            empty($http->router->controller()) ?
+                $this->_default : $http->router->controller()
+        );
     }
 
     /**
-     * Implements user controller class when is defined,
-     * exists and is child of Controller
-     *
-     * @param Route $_route
-     * @return boolean
-     */
-    public function getCommand(Route $_route): bool
-    {
-        if ($_route->getController()) {
-            $controllerClass = $_route->getController();
-            return $this->loadController($controllerClass);
-        } else {
-            return $this->loadController($this->_default);
-        }
-    }
-
-    /**
+     * Implements user controller class
      *
      * @param string $controllerClass
      * @throws \RuntimeException
