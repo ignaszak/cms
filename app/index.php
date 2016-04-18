@@ -1,6 +1,5 @@
 <?php
 
-use App\Resource\RouterStatic;
 try {
 
     require __DIR__ . '/conf/constants.php';
@@ -9,22 +8,13 @@ try {
     $app->validConf();
     $app->run();
 
-
-    ?>
-
-    <div style="position: fixed; top: 50px;">
-    <pre>
-<b>Name:</b> <?php echo RouterStatic::getName(); ?>
-
-<b>Group:</b> <?php echo RouterStatic::getGroup(); ?>
-
-<b>Controller:</b> <?php echo RouterStatic::getController(); ?>
-
-<b>Params:</b> <?php print_r(RouterStatic::getParams()); ?>
-    </pre>
-    </div>
-
-    <?php
+    $router = Ignaszak\Registry\RegistryFactory::start()->get('http')->router;
+    echo "<div style=\"position:fixed; top:50px;\"><pre>";
+    echo $router->group() . '<br>';
+    echo $router->name() . '<br>';
+    echo $router->controller();
+    print_r($router->all());
+    echo "</pre></div>";
 
 } catch (Exception $e) {
     $app->catchException($e);
