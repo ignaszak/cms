@@ -43,7 +43,7 @@ class Valid
         $this->validArray = [
             [__CONFDIR__ . "/DB/DBSettings.php", "r"],
             [__CONFDIR__ . "/exception-handler.php", "r"],
-            [__CONFDIR__ . "/router.php", "r"],
+            [__CONFDIR__ . "/router.yml", "r"],
             [__CONFDIR__ . "/view-helper.php", "r"],
             [__ADMINDIR__ . "/conf/view-helper.php", "r"],
             [__BASEDIR__ . "/.htaccess", "r"],

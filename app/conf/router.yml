@@ -1,0 +1,127 @@
+routes:
+
+    post-default:
+        path: '/{page}'
+        method: GET
+        group: post
+        controller: Controller\ViewPostController
+    post-list:
+        path: '/post/{page}'
+        method: GET
+        group: post
+        controller: Controller\ViewPostController
+    post-alias:
+        path: '/post/{alias}'
+        method: GET
+        group: post
+        controller: Controller\ViewPostController
+    post-com-list:
+        path: '/post/{alias}/{page}'
+        method: GET
+        group: post
+        controller: Controller\ViewPostController
+
+    cat-list:
+        path: '/category/{page}'
+        method: GET
+        group: category
+        controller: Controller\ViewPostController
+    cat-alias:
+        path: '/category/{alias}'
+        method: GET
+        group: category
+        controller: Controller\ViewPostController
+    cat-alias-page:
+        path: '/category/{alias}/{page}'
+        method: GET
+        group: category
+        controller: Controller\ViewPostController
+
+    date:
+        path: '/date/{year}{s1}{month}{s2}{day}'
+        method: GET
+        group: date
+        controller: Controller\ViewPostController
+        tokens:
+            year: '(\d{4})?'
+            month: '(\d{2})?'
+            day: '(\d{2})?'
+            s1: '(-)?'
+            s2: '(-)?'
+
+    page-alias:
+        path: '/page/{alias}'
+        method: GET
+        group: page
+        controller: Controller\ViewPageController
+
+    user-account:
+        path: /user
+        method: GET
+        group: user
+        controller: Controller\User\UserViewController
+    user-login:
+        path: '/user/{method}/{action}'
+        method: POST
+        group: user
+        controller: Controller\User\UserLoginController
+        tokens:
+            action: '(login)'
+    user-logout:
+        path: '/user/{method}/{action}'
+        group: user
+        controller: Controller\User\UserLogoutController
+        tokens:
+            action: '(logout)'
+    user-registration:
+        path: '/user/{method}/{action}'
+        method: POST
+        group: user
+        controller: Controller\User\UserRegistrationController
+        tokens:
+            action: (registration)'
+    user-remind:
+        path: '/user/{method}/{action}'
+        method: POST
+        group: user
+        controller: Controller\User\UserRemindController
+        tokens:
+            action: '(remind)'
+    user-save:
+        path: '/user/{method}/{action}'
+        method: POST
+        group: user
+        controller: Controller\User\UserSaveController
+        tokens:
+            action: '(account)'
+
+    search:
+        path: '/search/{page}'
+        method: GET
+        group: search
+        controller: Controller\SearchController
+
+    mail:
+        path: '/mail/send'
+        method: GET
+        group: mail
+        controller: Controller\SendMailController
+
+    default:
+        path: /@base
+
+    admin:
+        path: /admin
+        method: GET
+        group: admin
+
+tokens:
+    id: '@digit'
+    alias: '@alnum'
+    page: '@digit'
+    date: '([0-9-]+)'
+    method: '(post|ajax)'
+    userName: '@alnum'
+    year: '(\d{4})'
+    month: '(\d{2})'
+    day: '(\d{2})'
