@@ -24,7 +24,8 @@
 		"respect/validation" : "*",
 		"mikey179/vfsStream" : "*",
 		"phing/phing" : "*",
-		"davcs86/php-mysqlimporter" : "dev-master"
+		"davcs86/php-mysqlimporter" : "dev-master",
+		"symfony/http-foundation" : "3.0.*"
 	},
 	"autoload" : {
 		"psr-4" : {
