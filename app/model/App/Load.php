@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App;
 
 use App\Resource\Server;
@@ -7,10 +9,14 @@ use Ignaszak\Registry\RegistryFactory;
 use View\View;
 use UserAuth\User;
 use FrontController\FrontController;
-use Ignaszak\Router\Route;
-use Ignaszak\Router\Router;
-use Ignaszak\Router\Conf\Host;
-use App\Resource\RouterStatic;
+use Ignaszak\Router\Collection\Yaml;
+use Ignaszak\Router\Matcher\Matcher;
+use Ignaszak\Router\Host;
+use Ignaszak\Router\Response;
+use App\Resource\Http;
+use Symfony\Component\HttpFoundation\Request;
+use Ignaszak\Router\UrlGenerator;
+use Ignaszak\Router\Collection\Cache;
 
 class Load
 {
@@ -19,19 +25,30 @@ class Load
      *
      * @var \Ignaszak\Exception\Start
      */
-    private $exception;
+    private $exception = null;
 
     /**
      *
      * @var \UserAuth\User
      */
-    private $user;
+    private $user = null;
 
     /**
      *
      * @var \View\View
      */
-    private $view;
+    private $view = null;
+
+    /**
+     *
+     * @var Resource\Http
+     */
+    private $http = null;
+
+    public function __construct()
+    {
+
+    }
 
     /**
      * Exception handler configuration file
@@ -92,18 +109,18 @@ class Load
      */
     public function loadRouter()
     {
-        $route = Route::start();
-        $router = new Router($route);
-        $route->get('default', '/@base');
-        $route->group('admin');
-        $route->get('admin', '/admin');
+        $yaml = new Yaml();
         //new \Admin\Extension\ExtensionLoader;
-        $route->group();
-        require __CONFDIR__ . "/router.php";
-        $router->run(new Host(
-            '/~tomek/Eclipse/PHP/cms'
-            //RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl()
-        ));
+        $yaml->add(__CONFDIR__ . '/router.yml');
+        $cache = new Cache($yaml);
+        $cache->tmpDir = __BASEDIR__ . "/data/cache/router";
+        $matcher = new Matcher($cache);
+        //RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl();
+        $host = new Host('/~tomek/Eclipse/PHP/cms');
+        $response = new Response($matcher->match($host));
+        RegistryFactory::start()->set('url', new UrlGenerator($cache, $host));
+        $this->http = new Http($response, Request::createFromGlobals());
+        RegistryFactory::start()->set('http', $this->http);
     }
 
     /**
@@ -112,7 +129,7 @@ class Load
      */
     public function loadAdmin()
     {
-        if (RouterStatic::getGroup() == 'admin') {
+        if ($this->http->router->group() == 'admin') {
             // If not logged open login panel
             if (! $this->user->isUserLoggedIn()) {
                 $this->view->loadFile('../../extensions/Index/login.html');
@@ -140,7 +157,7 @@ class Load
      */
     public function loadFrontController()
     {
-        FrontController::run();
+        new FrontController($this->http);
     }
 
     /**
