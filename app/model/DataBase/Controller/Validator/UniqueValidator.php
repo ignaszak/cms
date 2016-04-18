@@ -1,9 +1,6 @@
 <?php
 namespace DataBase\Controller\Validator;
 
-use Ignaszak\Registry\RegistryFactory;
-use Entity\Controller\EntityController;
-
 class UniqueValidator extends Validator
 {
 
@@ -11,7 +8,7 @@ class UniqueValidator extends Validator
      *
      * @var \DataBase\Query\Query
      */
-    private $_query;
+    private $_query = null;
 
     /**
      *
@@ -34,12 +31,13 @@ class UniqueValidator extends Validator
 
     private function setQuery()
     {
-        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
+        $this->_query = $this->registry->register('DataBase\Query\Query');
     }
 
     private function setEntityKey()
     {
-        $entityController = new EntityController();
+        $entityController = $this->registry
+            ->register('Entity\Controller\EntityController');
         $this->entityKey = $entityController->getEntityKey($this->entityName);
     }
 
