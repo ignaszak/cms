@@ -111,7 +111,7 @@ class Load
         $this->exceptionHandler->userLocation = $conf['location'] ?? '';
         $this->exceptionHandler->createLogFile = $conf['createLogFile'] ?? '';
         $this->exceptionHandler->logFileDir = $this->dir(
-            $conf['logFileDir'] ?? ''
+            $conf['logs'] ?? ''
         );
         $this->exceptionHandler->run();
     }

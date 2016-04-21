@@ -8,6 +8,6 @@ exceptionHandler:
     location: ''
     createLogFile: true
 tmp:
-    logFileDir: /data/logs
+    logs: /data/logs
     router: /data/cache/router
     registry: /data/cache/registry
