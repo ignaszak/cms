@@ -9,6 +9,12 @@ class MockTest
 
     /**
      *
+     * @var vfsStream
+     */
+    private static $vfsStreamRoot = null;
+
+    /**
+     *
      * @param object|string $object
      * @param string $method
      * @param array $args
@@ -38,9 +44,26 @@ class MockTest
         int $chmod = 0644,
         string $content = ""
     ): string {
-        $root = vfsStream::setup('mock');
-        vfsStream::newFile($file, $chmod)->at($root)->withContent($content);
+        if (empty(self::$vfsStreamRoot)) {
+            self::$vfsStreamRoot = vfsStream::setup('mock');
+        }
+        vfsStream::newFile($file, $chmod)
+            ->at(self::$vfsStreamRoot)->withContent($content);
         return vfsStream::url("mock/$file");
+    }
+
+    /**
+     *
+     * @param array $structure
+     * @return string
+     */
+    public static function mockFileSystem(array $structure): string
+    {
+        if (empty(self::$vfsStreamRoot)) {
+            self::$vfsStreamRoot = vfsStream::setup('mock');
+        }
+        vfsStream::create($structure, self::$vfsStreamRoot);
+        return vfsStream::url('mock');
     }
 
     /**
