@@ -42,14 +42,17 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     private function mockResponse()
     {
-        $stub = \Mockery::mock('alias:Ignaszak\Router\Response');
+        $stub = $this->getMockBuilder('Ignaszak\Router\Response')
+            ->disableOriginalConstructor()->getMock();
         return $stub;
     }
 
     private function mockRequest()
     {
-        $stub = \Mockery::mock('alias:Symfony\Component\HttpFoundation\Request');
-        $stub->request = \Mockery::mock('alias:Symfony\Component\HttpFoundation\ParameterBag');
+        $stub = $this->getMock('Symfony\Component\HttpFoundation\Request');
+        $stub->request = $this->getMock(
+            'Symfony\Component\HttpFoundation\ParameterBag'
+        );
         return $stub;
     }
 }
