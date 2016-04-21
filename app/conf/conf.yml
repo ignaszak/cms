@@ -1,0 +1,13 @@
+admin:
+    extensionDir: /app/admin/extensions
+exceptionHandler:
+    errorReporting: E_ALL
+    display: dev
+    userReporting: E_ALL & ~ E_NOTICE
+    message: Error occured.
+    location: ''
+    createLogFile: true
+tmp:
+    logFileDir: /data/logs
+    router: /data/cache/router
+    registry: /data/cache/registry
