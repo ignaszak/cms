@@ -8,25 +8,54 @@ class App
      *
      * @var Message
      */
-    private $_message;
+    private $_message = null;
 
     /**
      *
      * @var Valid
      */
-    private $_valid;
+    private $_valid = null;
 
     /**
      *
      * @var Load
      */
-    private $_load;
+    private $_load = null;
+
+    /**
+     *
+     * @var Yaml
+     */
+    private $_yaml = null;
+
+    /**
+     *
+     * @var string
+     */
+    private $conf = __CONFDIR__ . '/conf.yml';
+
+    /**
+     *
+     * @var string
+     */
+    private $viewHelper = __CONFDIR__ . '/view-helper.yml';
+
+    /**
+     *
+     * @var string
+     */
+    private $adminViewHelper = __CONFDIR__ . '/admin-view-helper.yml';
 
     public function __construct()
     {
-        $this->_message = new Message;
+        $this->_yaml = new Yaml();
+        $this->_message = new Message();
         $this->_valid = new Valid($this->_message);
-        $this->_load = new Load;
+        $this->_load = new Load([
+            'conf' => $this->_yaml->parse($this->conf),
+            'viewHelper' => $this->_yaml->parse($this->viewHelper),
+            'adminViewHelper' => $this->_yaml->parse($this->adminViewHelper)
+        ]);
     }
 
     /**
@@ -45,14 +74,15 @@ class App
     public function run()
     {
         $this->_load->loadExceptionHandler();
-        $this->_load->loadRegistryConf();
-        $this->_load->loadSession();
-        $this->_load->loadRouter();
-        $this->_load->loadViewHelper();
         $this->_load->loadRegistry();
+        $this->_load->loadSession();
+        $this->_load->loadHttp();
+        $this->_load->loadViewHelper();
+        $this->_load->loadView();
+        $this->_load->loadUser();
         $this->_load->loadAdmin();
         $this->_load->loadFrontController();
-        $this->_load->loadView();
+        $this->_load->loadTheme();
     }
 
     /**
@@ -63,6 +93,6 @@ class App
      */
     public function catchException($e, $type = E_ERROR)
     {
-        $this->_load->getException()->catchException($e, $type);
+        $this->_load->getExceptionHandler()->catchException($e, $type);
     }
 }

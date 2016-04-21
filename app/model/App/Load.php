@@ -3,20 +3,23 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Resource\Http;
 use App\Resource\Server;
+use FrontController\FrontController;
+use UserAuth\User;
+use View\View;
+use Ignaszak\Exception\Start as ExceptionHandler;
 use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Registry\RegistryFactory;
-use View\View;
-use UserAuth\User;
-use FrontController\FrontController;
-use Ignaszak\Router\Collection\Yaml;
+use Ignaszak\Router\Collection\Yaml as RouterYaml;
 use Ignaszak\Router\Matcher\Matcher;
 use Ignaszak\Router\Host;
 use Ignaszak\Router\Response;
-use App\Resource\Http;
-use Symfony\Component\HttpFoundation\Request;
 use Ignaszak\Router\UrlGenerator;
 use Ignaszak\Router\Collection\Cache;
+use Symfony\Component\HttpFoundation\Request;
+use ViewHelper\ViewHelperExtension;
+
 
 class Load
 {
@@ -45,9 +48,49 @@ class Load
      */
     private $http = null;
 
-    public function __construct()
-    {
+    /**
+     *
+     * @var AdminExtension
+     */
+    private $adminExtension = null;
 
+    /**
+     *
+     * @var ExceptionHandler
+     */
+    private $exceptionHandler = null;
+
+    /**
+     *
+     * @var \Ignaszak\Registry\Registry
+     */
+    private $registry = null;
+
+    /**
+     *
+     * @var array
+     */
+    private $conf = [];
+
+    /**
+     * Defines router conf file
+     *
+     * @var string
+     */
+    private $routerYaml = __CONFDIR__ . '/router.yml';
+
+    /**
+     *
+     * @param array $array
+     */
+    public function __construct(array $array)
+    {
+        $this->conf = $array;
+        $this->adminExtension = new AdminExtension(
+            $this->dir($this->conf['conf']['admin']['extensionDir'] ?? '')
+        );
+        $this->exceptionHandler = new ExceptionHandler();
+        $this->registry = RegistryFactory::start();
     }
 
     /**
@@ -56,19 +99,41 @@ class Load
      */
     public function loadExceptionHandler()
     {
-        $exception = new \Ignaszak\Exception\Start;
-        require __CONFDIR__ . "/exception-handler.php";
-        $exception->run();
-        $this->exception = $exception;
+        $conf = $this->conf['conf']['exceptionHandler'] ?? [];
+        $this->exceptionHandler->errorReporting = eval(
+            ($conf['errorReporting'] ?? '') . ";"
+        );
+        $this->exceptionHandler->userReporting = eval(
+            ($conf['userReporting'] ?? '') . ";"
+        );
+        $this->exceptionHandler->display = $conf['display'] ?? '';
+        $this->exceptionHandler->userMessage = $conf['message'] ?? '';
+        $this->exceptionHandler->userLocation = $conf['location'] ?? '';
+        $this->exceptionHandler->createLogFile = $conf['createLogFile'] ?? '';
+        $this->exceptionHandler->logFileDir = $this->dir(
+            $conf['logFileDir'] ?? ''
+        );
+        $this->exceptionHandler->run();
     }
 
     /**
      *
-     * @return \Ignaszak\Exception\Start
+     * @return ExceptionHandler
      */
-    public function getException(): \Ignaszak\Exception\Start
+    public function getExceptionHandler(): ExceptionHandler
     {
-        return $this->exception;
+        return $this->exceptionHandler;
+    }
+
+    /**
+     * Configures Registry tmp path
+     * @link https://github.com/ignaszak/php-registry
+     */
+    public function loadRegistry()
+    {
+        RegistryConf::setTmpPath(
+            $this->dir($this->conf['conf']['tmp']['registry'] ?? '')
+        );
     }
 
     /**
@@ -84,43 +149,49 @@ class Load
     }
 
     /**
-     * Configures Registry tmp path
-     */
-    public function loadRegistryConf()
-    {
-        RegistryConf::setTmpPath(__BASEDIR__ . "/data/cache/registry");
-    }
-
-    /**
-     * Configure registry
-     * @link https://github.com/ignaszak/php-registry
-     */
-    public function loadRegistry()
-    {
-        RegistryFactory::start()->set('view', new View);
-        $this->view = RegistryFactory::start()->get('view');
-        RegistryFactory::start()->set('user', new User);
-        $this->user = RegistryFactory::start()->get('user');
-    }
-
-    /**
-     * Configures and loads router patterns
+     * Configures and loads http
      * @link https://github.com/ignaszak/php-router
      */
-    public function loadRouter()
+    public function loadHttp()
     {
-        $yaml = new Yaml();
+        $yaml = new RouterYaml();
         //new \Admin\Extension\ExtensionLoader;
-        $yaml->add(__CONFDIR__ . '/router.yml');
+        $yaml->add($this->routerYaml);
         $cache = new Cache($yaml);
-        $cache->tmpDir = __BASEDIR__ . "/data/cache/router";
+        $cache->tmpDir = $this->dir($this->conf['conf']['tmp']['router'] ?? '');
         $matcher = new Matcher($cache);
         //RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl();
         $host = new Host('/~tomek/Eclipse/PHP/cms');
         $response = new Response($matcher->match($host));
-        RegistryFactory::start()->set('url', new UrlGenerator($cache, $host));
+        $this->registry->set('url', new UrlGenerator($cache, $host));
         $this->http = new Http($response, Request::createFromGlobals());
-        RegistryFactory::start()->set('http', $this->http);
+        $this->registry->set('http', $this->http);
+    }
+
+    /**
+     * View helper extensions
+     */
+    public function loadViewHelper()
+    {
+        ViewHelperExtension::addExtensionClass($this->conf['viewHelper'] ?? []);
+    }
+
+    /**
+     * Sets instance of View class
+     */
+    public function loadView()
+    {
+        $this->registry->set('view', new View());
+        $this->view = $this->registry->get('view');
+    }
+
+    /**
+     * Sets instance of User class
+     */
+    public function loadUser()
+    {
+        $this->registry->set('user', new User());
+        $this->user = $this->registry->get('user');
     }
 
     /**
@@ -140,16 +211,10 @@ class Load
                 Server::headerLocation(''); // Go to main page
             }
             // Admin view helper classes
-            require __ADMINDIR__ . "/conf/view-helper.php";
+            ViewHelperExtension::addExtensionClass(
+                $this->conf['adminViewHelper'] ?? []
+            );
         }
-    }
-
-    /**
-     * View helper extensions
-     */
-    public function loadViewHelper()
-    {
-        require __CONFDIR__ . "/view-helper.php";
     }
 
     /**
@@ -161,10 +226,20 @@ class Load
     }
 
     /**
-     * Load view index file
+     * Load theme index file
      */
-    public function loadView()
+    public function loadTheme()
     {
         $this->view->loadFile('index.html');
+    }
+
+    /**
+     *
+     * @param string $dir
+     * @return string
+     */
+    private function dir(string $dir): string
+    {
+        return empty($dir) ? '' : __BASEDIR__ . $dir;
     }
 }

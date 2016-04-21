@@ -42,10 +42,10 @@ class Valid
     {
         $this->validArray = [
             [__CONFDIR__ . "/DB/DBSettings.php", "r"],
-            [__CONFDIR__ . "/exception-handler.php", "r"],
+            [__CONFDIR__ . "/conf.yml", "r"],
             [__CONFDIR__ . "/router.yml", "r"],
-            [__CONFDIR__ . "/view-helper.php", "r"],
-            [__ADMINDIR__ . "/conf/view-helper.php", "r"],
+            [__CONFDIR__ . "/view-helper.yml", "r"],
+            [__CONFDIR__ . "/admin-view-helper.yml", "r"],
             [__BASEDIR__ . "/.htaccess", "r"],
             [__BASEDIR__ . "/data/cache", "r+"],
             [__BASEDIR__ . "/data/cache/registry", "r+"]

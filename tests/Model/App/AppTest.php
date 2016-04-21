@@ -17,7 +17,18 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_app = new App();
+        $reflection = new \ReflectionClass('App\App');
+        $this->_app = $reflection->newInstanceWithoutConstructor();
+        MockTest::inject($this->_app, 'conf', MockTest::mockFile('conf.yml'));
+        MockTest::inject(
+            $this->_app, 'viewHelper', MockTest::mockFile('view-helper.yml')
+        );
+        MockTest::inject(
+            $this->_app,
+            'adminViewHelper',
+            MockTest::mockFile('admin-view-helper.yml')
+        );
+        $this->_app->__construct();
     }
 
     public function testConstructor()
@@ -39,6 +50,12 @@ class AppTest extends \PHPUnit_Framework_TestCase
             '_load'
         );
         $this->assertInstanceOf('App\Load', $load);
+
+        $yaml = \PHPUnit_Framework_Assert::readAttribute(
+            $this->_app,
+            '_yaml'
+        );
+        $this->assertInstanceOf('App\Yaml', $yaml);
     }
 
     public function testValidConf()
@@ -57,14 +74,15 @@ class AppTest extends \PHPUnit_Framework_TestCase
     {
         $stub = \Mockery::mock('Load');
         $stub->shouldReceive('loadExceptionHandler')->once();
-        $stub->shouldReceive('loadRegistryConf')->once();
-        $stub->shouldReceive('loadSession')->once();
-        $stub->shouldReceive('loadRouter')->once();
-        $stub->shouldReceive('loadViewHelper')->once();
         $stub->shouldReceive('loadRegistry')->once();
+        $stub->shouldReceive('loadSession')->once();
+        $stub->shouldReceive('loadHttp')->once();
+        $stub->shouldReceive('loadViewHelper')->once();
+        $stub->shouldReceive('loadView')->once();
+        $stub->shouldReceive('loadUser')->once();
         $stub->shouldReceive('loadAdmin')->once();
         $stub->shouldReceive('loadFrontController')->once();
-        $stub->shouldReceive('loadView')->once();
+        $stub->shouldReceive('loadTheme')->once();
         MockTest::inject($this->_app, '_load', $stub);
         $this->_app->run();
     }
@@ -72,7 +90,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
     public function testCatchException()
     {
         $stub = \Mockery::mock('Load');
-        $stub->shouldReceive('getException')->once()->andReturnSelf();
+        $stub->shouldReceive('getExceptionHandler')->once()->andReturnSelf();
         $stub->shouldReceive('catchException')->once();
         MockTest::inject($this->_app, '_load', $stub);
         $this->_app->catchException(null);
