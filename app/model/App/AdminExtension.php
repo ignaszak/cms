@@ -14,11 +14,18 @@ class AdminExtension
      *
      * @var string
      */
-    private $extensionBaseDir = __ADMINDIR__ . '/extensions';
+    private $extensionDir = '';
 
-    public function __construct()
+    /**
+     *
+     * @param string $extensionDir
+     */
+    public function __construct(string $extensionDir)
     {
-        $this->loadExtensionArray($this->extensionBaseDir);
+        if (! empty($extensionDir)) {
+            $this->extensionDir = $extensionDir;
+            $this->loadExtensionArray($this->extensionDir);
+        }
     }
 
     /**
@@ -29,7 +36,7 @@ class AdminExtension
     {
         $result = [];
         foreach ($this->extensionsArray as $folder) {
-            $file = "{$this->extensionBaseDir}/{$folder}/router.yml";
+            $file = "{$this->extensionDir}/{$folder}/router.yml";
             if (file_exists($file)) {
                 $result[] = $file;
             }

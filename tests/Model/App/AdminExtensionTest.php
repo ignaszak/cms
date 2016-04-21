@@ -1,9 +1,9 @@
 <?php
 namespace Test\Model\App;
 
-use org\bovigo\vfs\vfsStream;
 use Test\Mock\MockTest;
 use Test\Mock\MockConf;
+use App\AdminExtension;
 
 class AdminExtensionTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,8 +17,7 @@ class AdminExtensionTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         MockConf::setConstants();
-        $this->_adminExtension = (new \ReflectionClass('App\AdminExtension'))
-            ->newInstanceWithoutConstructor();
+        $this->_adminExtension = new AdminExtension('');
     }
 
     public function testLoadExtensionConfFileArray()
@@ -40,7 +39,7 @@ class AdminExtensionTest extends \PHPUnit_Framework_TestCase
         MockTest::callMockMethod(
             $this->_adminExtension,
             'loadExtensionArray',
-            [$this->mockExtensions($structure)]
+            [MockTest::mockFileSystem($structure)]
         );
         $this->assertEquals(
             [
@@ -69,27 +68,18 @@ class AdminExtensionTest extends \PHPUnit_Framework_TestCase
                 'conf.yml' => ''
             ]
         ];
+        $this->_adminExtension = new AdminExtension(
+            MockTest::mockFileSystem($structure)
+        );
         MockTest::inject(
             $this->_adminExtension, 'extensionsArray', ['Menu', 'Page', 'Post']
         );
-        MockTest::inject(
-            $this->_adminExtension,
-            'extensionBaseDir',
-            $this->mockExtensions($structure)
-        );
         $this->assertEquals(
             [
-                'vfs://root/Menu/router.yml',
-                'vfs://root/Post/router.yml',
+                'vfs://mock/Menu/router.yml',
+                'vfs://mock/Post/router.yml',
             ],
             $this->_adminExtension->getAdminExtensionsRouteYaml()
         );
-    }
-
-    private function mockExtensions(array $structure): string
-    {
-        $vfs = vfsStream::setup('root');
-        vfsStream::create($structure, $vfs);
-        return vfsStream::url('root');
     }
 }
