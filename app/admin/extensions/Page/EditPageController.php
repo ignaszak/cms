@@ -36,7 +36,7 @@ class EditPageController extends FrontController
                 'alias' => $this->alias
             ])->remove();
 
-            Server::headerLocation("admin/page/view/");
+            Server::headerLocation("/admin/page/view/");
         }
     }
 

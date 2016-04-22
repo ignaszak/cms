@@ -39,12 +39,12 @@ class SaveMenuController extends FrontController
             $this->saveMenuEntityAndSetLastAddedId();
             $this->saveMenuItemsEntity();
             $this->removeMenuItemsEntity();
-            Server::headerLocation("admin/menu/edit/{$this->lastId}");
+            Server::headerLocation("/admin/menu/edit/{$this->lastId}");
         } elseif ($this->action == 'delete' && $this->id) {
             $this->removeMenuWithMenuItems();
         }
 
-        Server::headerLocation("admin/menu/view/");
+        Server::headerLocation("/admin/menu/view/");
     }
 
     private function saveMenuEntityAndSetLastAddedId()

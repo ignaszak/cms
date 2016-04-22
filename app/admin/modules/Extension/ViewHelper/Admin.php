@@ -26,12 +26,12 @@ class Admin extends \Admin\Extension\ExtensionInstances
 
     public function getAdminThemeUrl()
     {
-        return $this->_conf->getBaseUrl() . 'app/' . ADMIN_URL;
+        return $this->_conf->getBaseUrl() . '/app/' . ADMIN_URL;
     }
 
     public function getAdminAdress()
     {
-        return $this->_conf->getBaseUrl() . ADMIN_URL;
+        return $this->_conf->getBaseUrl() . '/' . ADMIN_URL;
     }
 
     public function loadAdminExtensionThemeFile(string $fileName = '')

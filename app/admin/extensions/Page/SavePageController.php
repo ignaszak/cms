@@ -37,6 +37,6 @@ class SavePageController extends FrontController
                 'content' => []
             ]);
 
-        Server::headerLocation("admin/page/edit/$alias");
+        Server::headerLocation("/admin/page/edit/$alias");
     }
 }

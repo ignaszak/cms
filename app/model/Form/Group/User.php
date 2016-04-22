@@ -31,7 +31,7 @@ class User extends Group
      */
     public function getFormActionAdress(): string
     {
-        return $this->_conf->getBaseUrl() . 'user/post/' . $this->selectAction();
+        return $this->_conf->getBaseUrl() . '/user/post/' . $this->selectAction();
     }
 
     /**

@@ -38,7 +38,7 @@ class SavePostController extends FrontController
                 'content' => []
             ]);
 
-        Server::headerLocation("admin/post/p/edit/{$alias}");
+        Server::headerLocation("/admin/post/p/edit/{$alias}");
     }
 
     private function getCategoryId(): int

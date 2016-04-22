@@ -31,7 +31,7 @@ class CategoryList
         foreach ($this->categoryList as $cat) {
             if ($parentId == $cat->getParentId()) {
                 $string .= "<li><a href=\"{$this->_conf->getBaseUrl()}" .
-                    "category/{$cat->getAlias()}\">";
+                    "/category/{$cat->getAlias()}\">";
                 $string .= "{$cat->getTitle()}</a>";
                 $string .= $this->getCategoryList($arg, $cat->getId());
                 $string .= "</li>";

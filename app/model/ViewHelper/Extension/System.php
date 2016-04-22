@@ -59,7 +59,7 @@ class System
      */
     public function getThemeUrl(): string
     {
-        return $this->_conf->getBaseUrl() . 'app/' .
+        return $this->_conf->getBaseUrl() . '/app/' .
             RegistryFactory::start()->get('view')->getThemeFolder();
     }
 

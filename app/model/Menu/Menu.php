@@ -78,7 +78,7 @@ class Menu
         if (! filter_var($adress, FILTER_VALIDATE_URL) === false) {
             return $adress;
         } else {
-            return $this->_conf->getBaseUrl() . $adress;
+            return $this->_conf->getBaseUrl() . "/{$adress}";
         }
     }
 }

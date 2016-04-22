@@ -25,39 +25,39 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $this->_user = new User($this->mockForm('registration'));
         $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('user/post/registration', $adress);
+        $this->assertEquals('/user/post/registration', $adress);
     }
 
     public function testGetFormActionLoginAdress()
     {
         $this->_user = new User($this->mockForm('login'));
         $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('user/post/login', $adress);
+        $this->assertEquals('/user/post/login', $adress);
     }
 
     public function testGetFormActionLogoutAdress()
     {
         $this->_user = new User($this->mockForm('logout'));
         $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('user/post/logout', $adress);
+        $this->assertEquals('/user/post/logout', $adress);
     }
 
     public function testGetFormActionRemindAdress()
     {
         $this->_user = new User($this->mockForm('remind'));
         $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('user/post/remind', $adress);
+        $this->assertEquals('/user/post/remind', $adress);
     }
 
     public function testGetFormActionAccountAdress()
     {
         $this->_user = new User($this->mockForm('accountData'));
         $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('user/post/account', $adress);
+        $this->assertEquals('/user/post/account', $adress);
 
         $this->_user = new User($this->mockForm('accountPassword'));
         $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('user/post/account', $adress);
+        $this->assertEquals('/user/post/account', $adress);
     }
 
     public function testGetEmptyFormMessage()

@@ -1,6 +1,6 @@
                                     <?php if (!$this->isUserLoggedIn()): ?>
                                     <li>
-                                        <a href="<?php echo $this->getSiteAdress(); ?>user">
+                                        <a href="<?php echo $this->getSiteAdress(); ?>/user">
                                             <i class="fa fa-sign-in"></i>
                                             Sign in/up
                                         </a>
@@ -25,14 +25,14 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             <li>
-                                                <a href="<?php echo $this->getSiteAdress(); ?>user">
+                                                <a href="<?php echo $this->getSiteAdress(); ?>/user">
                                                     <i class="fa fa-user"></i>
                                                     User account
                                                 </a>
                                             </li>
                                             <?php if ($this->getUserRole() != 'user'): ?>
                                             <li>
-                                                <a href="<?php echo $this->getSiteAdress(); ?>admin">
+                                                <a href="<?php echo $this->getSiteAdress(); ?>/admin">
                                                     <i class="fa fa-cogs"></i>
                                                     Admin panel
                                                 </a>

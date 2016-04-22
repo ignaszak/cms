@@ -35,7 +35,7 @@ class EditPostController extends FrontController
                 'alias' => $this->alias
             ])->remove();
 
-            Server::headerLocation("admin/post/p/view/");
+            Server::headerLocation("/admin/post/p/view/");
         }
     }
 

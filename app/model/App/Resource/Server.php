@@ -38,7 +38,7 @@ class Server
         }
     }
 
-    public static function headerLocation(string $location)
+    public static function headerLocation(string $location = '/')
     {
         self::setRefererSession();
         if (! defined('TEST')) {
