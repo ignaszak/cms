@@ -83,7 +83,7 @@
         <mkdir dir="${project.basedir}/data/cache/registry" />
         <exec command="chmod -R 777 ${project.basedir}/data/cache" />
         <exec command="chmod -R 777 ${project.basedir}/data/cache/registry" />
-        <mkdir dir="${project.basedir}/data/cache/tmp" />
+        <mkdir dir="${project.basedir}/data/cache" />
     </target>
 
     <!-- ============================================ -->
@@ -110,7 +110,7 @@
         <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');"
             returnProperty="regDate" />
         <copy file="${AppConfDir}/db.sql"
-            tofile="${project.basedir}/data/cache/tmp/tmp_db.sql" overwrite="true">
+            tofile="${project.basedir}/data/cache/tmp_db.sql" overwrite="true">
             <filterchain>
                 <replacetokens>
                     <token key="dbHost" value="${dbHost}" />
@@ -136,7 +136,7 @@
     <!-- Target: clear_cms_configurator_files -->
     <!-- ============================================ -->
     <target name="clear_tmp" depends="create_sql_query">
-        <delete file="${project.basedir}/data/cache/tmp/tmp_db.sql" />
+        <delete file="${project.basedir}/data/cache/tmp_db.sql" />
     </target>
 
     <!-- ============================================ -->

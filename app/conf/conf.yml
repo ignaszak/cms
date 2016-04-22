@@ -9,5 +9,5 @@ exceptionHandler:
     createLogFile: true
 tmp:
     logs: /data/logs
-    router: /data/cache/router
+    router: /data/cache
     registry: /data/cache/registry
