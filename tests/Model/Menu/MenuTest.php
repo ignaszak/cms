@@ -56,13 +56,12 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
     public function testIfAdressIsCMSRoute()
     {
-        $anyRoute = 'post/alias';
         $adress = MockTest::callMockMethod(
             self::$_menu,
             'validAdress',
-            [$anyRoute]
+            ['anyRoute']
         );
-        $this->assertEquals($anyRoute, $adress);
+        $this->assertEquals('/anyRoute', $adress);
     }
 
     public function testCreateMenuFromMenuItemsArray()
