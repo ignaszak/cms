@@ -36,8 +36,8 @@ class SaveSettingsController extends FrontController
     private function getBaseUrl(): string
     {
         if (! empty(@$_POST['adress'])) {
-            return @$_POST['adress'] . (substr(@$_POST['adress'], - 1) == "/" ?
-                "" : "/");
+            return (substr(@$_POST['adress'], - 1) == "/" ?
+                substr(@$_POST['adress'], 0, 1) : $_POST['adress']);
         }
         return "";
     }
