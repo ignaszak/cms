@@ -8,6 +8,7 @@ use App\Resource\Server;
 use FrontController\FrontController;
 use UserAuth\User;
 use View\View;
+use ViewHelper\ViewHelperExtension;
 use Ignaszak\Exception\Start as ExceptionHandler;
 use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Registry\RegistryFactory;
@@ -18,8 +19,6 @@ use Ignaszak\Router\Response;
 use Ignaszak\Router\UrlGenerator;
 use Ignaszak\Router\Collection\Cache;
 use Symfony\Component\HttpFoundation\Request;
-use ViewHelper\ViewHelperExtension;
-
 
 class Load
 {
@@ -155,13 +154,18 @@ class Load
     public function loadHttp()
     {
         $yaml = new RouterYaml();
-        //new \Admin\Extension\ExtensionLoader;
         $yaml->add($this->routerYaml);
+        $adminYaml = $this->adminExtension->getAdminExtensionsRouteYaml();
+        foreach ($adminYaml as $file) {
+            $yaml->add($file);
+        }
         $cache = new Cache($yaml);
         $cache->tmpDir = $this->dir($this->conf['conf']['tmp']['router'] ?? '');
         $matcher = new Matcher($cache);
-        //RegistryFactory::start('file')->register('Conf\Conf')->getBaseUrl();
-        $host = new Host('/~tomek/Eclipse/PHP/cms');
+        $host = new Host(
+            RegistryFactory::start('file')->register('Conf\Conf')
+                ->getRequestUri()
+        );
         $response = new Response($matcher->match($host));
         $this->registry->set('url', new UrlGenerator($cache, $host));
         $this->http = new Http($response, Request::createFromGlobals());
@@ -208,7 +212,7 @@ class Load
             }
             // Check permissions
             if ($this->user->getUserSession()->getRole() != 'admin') {
-                Server::headerLocation(''); // Go to main page
+                Server::headerLocation(); // Go to main page
             }
             // Admin view helper classes
             ViewHelperExtension::addExtensionClass(
