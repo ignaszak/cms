@@ -1,0 +1,14 @@
+routes:
+
+    admin-settings-list:
+        path: '/admin/settings/{setting}'
+        method: GET
+        controller: AdminController\Settings\ViewSettingsController
+        tokens:
+            setting: general
+
+    admin-settings-save:
+        path: '/admin/settings/save'
+        method: POST
+        controller: AdminController\Settings\SaveSettingsController
+
