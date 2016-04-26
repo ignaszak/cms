@@ -10,52 +10,11 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     private $_app;
 
-    public static function setUpBeforeClass()
-    {
-        MockConf::setConstants();
-    }
-
     public function setUp()
     {
-        $reflection = new \ReflectionClass('App\App');
-        $this->_app = $reflection->newInstanceWithoutConstructor();
-        MockTest::inject($this->_app, 'conf', MockTest::mockFile('conf.yml'));
-        MockTest::inject(
-            $this->_app, 'viewHelper', MockTest::mockFile('view-helper.yml')
-        );
-        MockTest::inject(
-            $this->_app,
-            'adminViewHelper',
-            MockTest::mockFile('admin-view-helper.yml')
-        );
-        $this->_app->__construct();
-    }
-
-    public function testConstructor()
-    {
-        $message = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_app,
-            '_message'
-        );
-        $this->assertInstanceOf('App\Message', $message);
-
-        $valid = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_app,
-            '_valid'
-        );
-        $this->assertInstanceOf('App\Valid', $valid);
-
-        $load = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_app,
-            '_load'
-        );
-        $this->assertInstanceOf('App\Load', $load);
-
-        $yaml = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_app,
-            '_yaml'
-        );
-        $this->assertInstanceOf('App\Yaml', $yaml);
+        MockConf::setConstants();
+        $this->_app = (new \ReflectionClass('App\App'))
+            ->newInstanceWithoutConstructor();
     }
 
     public function testValidConf()

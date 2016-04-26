@@ -22,40 +22,11 @@ class App
      */
     private $_load = null;
 
-    /**
-     *
-     * @var Yaml
-     */
-    private $_yaml = null;
-
-    /**
-     *
-     * @var string
-     */
-    private $conf = __CONFDIR__ . '/conf.yml';
-
-    /**
-     *
-     * @var string
-     */
-    private $viewHelper = __CONFDIR__ . '/view-helper.yml';
-
-    /**
-     *
-     * @var string
-     */
-    private $adminViewHelper = __CONFDIR__ . '/admin-view-helper.yml';
-
     public function __construct()
     {
-        $this->_yaml = new Yaml();
         $this->_message = new Message();
         $this->_valid = new Valid($this->_message);
-        $this->_load = new Load([
-            'conf' => $this->_yaml->parse($this->conf),
-            'viewHelper' => $this->_yaml->parse($this->viewHelper),
-            'adminViewHelper' => $this->_yaml->parse($this->adminViewHelper)
-        ]);
+        $this->_load = new Load();
     }
 
     /**
