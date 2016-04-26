@@ -4,6 +4,7 @@ routes:
         path: '/admin/settings/{setting}'
         method: GET
         controller: AdminController\Settings\ViewSettingsController
+        group: Settings
         tokens:
             setting: general
 
@@ -11,4 +12,5 @@ routes:
         path: '/admin/settings/save'
         method: POST
         controller: AdminController\Settings\SaveSettingsController
+        group: Settings
 
