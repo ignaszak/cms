@@ -1,6 +1,15 @@
 <?php
-namespace App;
+declare(strict_types=1);
 
+namespace App\Admin;
+
+/**
+ *
+ * @author Tomasz Ignaszak
+ *
+ * @property-read string[] $extensionsArray
+ * @property-read string $extensionDir
+ */
 class AdminExtension
 {
 
@@ -26,6 +35,16 @@ class AdminExtension
             $this->extensionDir = $extensionDir;
             $this->loadExtensionArray($this->extensionDir);
         }
+    }
+
+    /**
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function __get(string $name)
+    {
+        return $this->$name;
     }
 
     /**

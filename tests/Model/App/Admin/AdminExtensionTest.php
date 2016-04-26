@@ -1,9 +1,9 @@
 <?php
-namespace Test\Model\App;
+namespace Test\Model\App\Admin;
 
 use Test\Mock\MockTest;
 use Test\Mock\MockConf;
-use App\AdminExtension;
+use App\Admin\AdminExtension;
 
 class AdminExtensionTest extends \PHPUnit_Framework_TestCase
 {
