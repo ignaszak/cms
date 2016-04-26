@@ -3,6 +3,7 @@ namespace Test\Model\App;
 
 use App\Load;
 use Test\Mock\MockTest;
+use Test\Mock\MockConf;
 
 class LoadTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,19 +16,36 @@ class LoadTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_load = new Load([
-            'conf' => [],
-            'view-helper' => []
-        ]);
+        MockConf::setConstants();
+        $reflection = new \ReflectionClass('App\Load');
+        $this->_load = $reflection->newInstanceWithoutConstructor();
+        MockTest::inject($this->_load, 'confYaml', MockTest::mockFile('conf.yml'));
+        MockTest::inject(
+            $this->_load, 'viewHelperYaml', MockTest::mockFile('view-helper.yml')
+            );
+        MockTest::inject(
+            $this->_load,
+            'adminViewHelperYaml',
+            MockTest::mockFile('admin-view-helper.yml')
+            );
+        $this->_load->__construct();
     }
 
     public function testConstructor()
     {
         $this->assertInstanceOf(
-            'App\AdminExtension',
+            'App\Admin\AdminExtension',
             \PHPUnit_Framework_Assert::readAttribute(
                 $this->_load,
                 'adminExtension'
+            )
+        );
+
+        $this->assertInstanceOf(
+            'App\Admin\AdminMenu',
+            \PHPUnit_Framework_Assert::readAttribute(
+                $this->_load,
+                'adminMenu'
             )
         );
 
@@ -41,6 +59,14 @@ class LoadTest extends \PHPUnit_Framework_TestCase
             \PHPUnit_Framework_Assert::readAttribute(
                 $this->_load,
                 'registry'
+            )
+        );
+
+        $this->assertInstanceOf(
+            'App\Yaml',
+            \PHPUnit_Framework_Assert::readAttribute(
+                $this->_load,
+                'yaml'
             )
         );
     }
@@ -63,9 +89,13 @@ class LoadTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadHttp()
     {
-        $this->_load = new Load([
-           'conf' => ['tmp' => ['router' => MockTest::mockFileSystem([''])]]
-        ]);
+        MockTest::inject(
+            $this->_load,
+            'conf',
+            [
+                'conf' => ['tmp' => ['router' => MockTest::mockFileSystem([''])]]
+            ]
+        );
         MockTest::inject(
             $this->_load,
             'routerYaml',

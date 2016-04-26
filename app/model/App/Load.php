@@ -19,6 +19,8 @@ use Ignaszak\Router\Response;
 use Ignaszak\Router\UrlGenerator;
 use Ignaszak\Router\Collection\Cache;
 use Symfony\Component\HttpFoundation\Request;
+use App\Admin\AdminExtension;
+use App\Admin\AdminMenu;
 
 class Load
 {
@@ -55,6 +57,12 @@ class Load
 
     /**
      *
+     * @var AdminMenu
+     */
+    private $adminMenu = null;
+
+    /**
+     *
      * @var ExceptionHandler
      */
     private $exceptionHandler = null;
@@ -64,6 +72,12 @@ class Load
      * @var \Ignaszak\Registry\Registry
      */
     private $registry = null;
+
+    /**
+     *
+     * @var Yaml
+     */
+    private $yaml = null;
 
     /**
      *
@@ -80,14 +94,38 @@ class Load
 
     /**
      *
+     * @var string
+     */
+    private $confYaml = __CONFDIR__ . '/conf.yml';
+
+    /**
+     *
+     * @var string
+     */
+    private $viewHelperYaml = __CONFDIR__ . '/view-helper.yml';
+
+    /**
+     *
+     * @var string
+     */
+    private $adminViewHelperYaml = __CONFDIR__ . '/admin-view-helper.yml';
+
+    /**
+     *
      * @param array $array
      */
-    public function __construct(array $array)
+    public function __construct()
     {
-        $this->conf = $array;
+        $this->yaml = new Yaml();
+        $this->conf = [
+            'conf' => $this->yaml->parse($this->confYaml),
+            'viewHelper' => $this->yaml->parse($this->viewHelperYaml),
+            'adminViewHelper' => $this->yaml->parse($this->adminViewHelperYaml)
+        ];
         $this->adminExtension = new AdminExtension(
             $this->dir($this->conf['conf']['admin']['extensionDir'] ?? '')
         );
+        $this->adminMenu = new AdminMenu($this->adminExtension, $this->yaml);
         $this->exceptionHandler = new ExceptionHandler();
         $this->registry = RegistryFactory::start();
     }
@@ -214,10 +252,12 @@ class Load
             if ($this->user->getUserSession()->getRole() != 'admin') {
                 Server::headerLocation(); // Go to main page
             }
+
             // Admin view helper classes
             ViewHelperExtension::addExtensionClass(
                 $this->conf['adminViewHelper'] ?? []
             );
+            $this->registry->set('App\Admin\AdminMenu', $this->adminMenu);
         }
     }
 
