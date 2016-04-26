@@ -64,7 +64,7 @@ class View
     {
         if (! empty($this->viewFileName)) {
             if ($this->http->router->group() == 'admin') {
-                $this->loadAdminExtensionThemeFile($this->viewFileName);
+                //$this->loadAdminExtensionThemeFile($this->viewFileName);
             } else {
                 $this->loadFile($this->viewFileName);
             }
