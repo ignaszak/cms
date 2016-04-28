@@ -71,7 +71,7 @@ class AdminExtension
     {
         $this->extensionsArray = array_diff(
             scandir($extensionBaseDir),
-            ['.', '..']
+            ['.', '..', 'Index']
         );
     }
 }

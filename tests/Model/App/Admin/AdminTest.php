@@ -1,12 +1,12 @@
 <?php
 namespace Test\Model\App\Admin;
 
-use App\Admin\AdminMenu;
+use App\Admin\Admin;
 use Test\Mock\MockTest;
 use App\Yaml;
 use Ignaszak\Registry\RegistryFactory;
 
-class AdminMenuTest extends \PHPUnit_Framework_TestCase
+class AdminTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
@@ -18,7 +18,7 @@ class AdminMenuTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         RegistryFactory::start()->set('http', $this->mockHttp());
-        $this->_adminMenu = new AdminMenu(
+        $this->_adminMenu = new Admin(
             $this->mockAdminExtension(),
             $this->mockYaml()
         );
@@ -63,7 +63,7 @@ menu:
 EOT
             ]
         ];
-        $this->_adminMenu = new AdminMenu(
+        $this->_adminMenu = new Admin(
             $this->mockAdminExtension(
                 MockTest::mockFileSystem($structure),
                 ['Post']
@@ -113,7 +113,7 @@ menu:
 EOT
             ]
         ];
-        $this->_adminMenu = new AdminMenu(
+        $this->_adminMenu = new Admin(
             $this->mockAdminExtension(
                 MockTest::mockFileSystem($structure),
                 ['Post', 'Page']

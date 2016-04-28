@@ -6,7 +6,7 @@ namespace App\Admin;
 use App\Yaml;
 use Ignaszak\Registry\RegistryFactory;
 
-class AdminMenu
+class Admin
 {
 
     /**
@@ -29,6 +29,18 @@ class AdminMenu
 
     /**
      *
+     * @var \App\Resource\Http
+     */
+    private $http = null;
+
+    /**
+     *
+     * @var \Conf\Conf
+     */
+    private $_conf = null;
+
+    /**
+     *
      * @param AdminExtension $_adminExtension
      * @param Yaml $_yaml
      */
@@ -39,6 +51,8 @@ class AdminMenu
         $this->_adminExtension = $_adminExtension;
         $this->_yaml = $_yaml;
         $this->_registry = RegistryFactory::start();
+        $this->http = $this->_registry->get('http');
+        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
     }
 
     /**
@@ -68,5 +82,23 @@ class AdminMenu
             $menus[] = $conf;
         }
         return $menus;
+    }
+
+    public function getAdminThemeUrl()
+    {
+        return $this->_conf->getBaseUrl() . '/app/' . ADMIN_URL;
+    }
+
+    public function getAdminAdress()
+    {
+        return $this->_conf->getBaseUrl() . '/' . ADMIN_URL;
+    }
+
+    public function loadAdminExtensionThemeFile(string $fileName = '')
+    {
+        $extension = ucfirst($this->_registry->get('http')->router->group());
+        $this->_registry->get('view')->loadFile(
+            "../../admin/extensions/{$extension}/{$fileName}"
+        );
     }
 }
