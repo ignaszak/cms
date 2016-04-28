@@ -10,8 +10,9 @@ routes:
 
     admin-menu-add:
         path: '/admin/menu/{action}'
-        method: POST
+        method: POST|GET
         controller: AdminController\Menu\EditMenuController
+        group: Menu
         tokens:
             action: add
 

@@ -9,7 +9,7 @@ $(function () {
     $('button#page, button#post').click(function () {
         load_elements(this);
     });
-    
+
     $('input[name="search"]').bind('input', function () {
         load_elements(this);
     }).change();
@@ -29,7 +29,7 @@ $(function () {
             }
         );
     });
-    
+
     $('button.add-link').click(function () {
         var data = {
             title : $('input[name="linkTitle"]').val(),
@@ -47,7 +47,7 @@ $(function () {
         }
         order();
     });
-    
+
     if (edit_adress != '') {
         $.post(
             edit_adress,
@@ -55,7 +55,7 @@ $(function () {
                 for (i = 0; i < data.length; ++i) {
                     element_schema(data[i]);
                 }
-                
+
             }
         );
     }
@@ -81,7 +81,7 @@ function load_elements(obj)
             for (var i = 0; i < count; ++ i) {
 
                 data[i].number = i;
-    
+
                 element.append(
                     '<li><a href="javascript:void(0)" id="' + i + '">' +
                     get_category(data[i].category) + data[i].title +
@@ -107,14 +107,14 @@ function load_elements(obj)
 
 function add_element(data)
 {
-    
+
         var alias = $('input[name="dataAlias"]').val();
         var number = $('input[name="dataNumber"]').val();
 
     if (alias == data.alias && data.number == number) {
-            
+
         var title = $('input[name="' + alias + 'Title"]').val();
-            
+
         if (title == '') {
             alert('Please insert item title.');
         } else {
@@ -123,7 +123,7 @@ function add_element(data)
             element_schema(data);
         }
     }
-    
+
 }
 
 function element_schema_title(obj)

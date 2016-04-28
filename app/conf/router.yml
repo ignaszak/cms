@@ -109,6 +109,9 @@ routes:
 
     default:
         path: /@base
+    error:
+        path: /@notfound
+        controller: Controller\NotFoundController
 
     admin:
         path: /admin

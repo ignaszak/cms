@@ -10,7 +10,7 @@ routes:
 
     admin-page-add:
         path: '/admin/page/{action}'
-        method: POST
+        method: GET
         controller: AdminController\Page\EditPageController
         group: Page
         tokens:

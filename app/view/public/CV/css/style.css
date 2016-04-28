@@ -1,0 +1,100 @@
+body, html {
+ height: 100%;
+ margin: 0px;
+ padding: 0px;
+}
+
+#content {
+ background-color: #FFF;
+ padding-top: 20px;
+ padding-bottom: 20px;
+}
+
+.message {
+ padding: 15px;
+ border-radius: 5px;
+}
+
+section hr {
+ margin-top: 10px;
+ margin-bottom: 0px;
+}
+
+section h1 {
+ font-weight: bold;
+ font-size: 25px;
+ margin-top: 50px;
+ margin-left: 20px;
+}
+
+section h2 {
+ font-weight: bold;
+ font-size: 20px;
+ margin-top: 0px;
+ margin-bottom: 0px;
+}
+
+section h3 {
+ font-weight: bold;
+ color: #7c7c7c;
+ font-size: 14px;
+ margin-left: 10px;
+ margin-top: 0px;
+ margin-bottom: 0px;
+}
+
+section .date {
+ font-size: 16px;
+ margin-top: 20px;
+ margin-bottom: 0px;
+}
+
+section .content {
+ margin-left: 10px;
+}
+
+section p {
+ color: #000;
+ font-size: 16px;
+}
+
+@media only screen and (min-width: 769px) {
+ body, html {
+  background: url('../img/bg.jpg') no-repeat;
+  background-size: 100% 600px;
+  background-position: top center;
+  background-attachment: fixed;
+  background-color: #000;
+ }
+ #fade {
+  min-height: 600px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  background: rgba(0, 0, 0, 0.7)
+   url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAMAAAACCAYAAACddGYaAAAAD0lEQVQIW2NkQABjRmQOAAM+AGkQsDBSAAAAAElFTkSuQmCC)
+   repeat;
+ }
+ #content {
+  margin-top: 100px;
+  margin-bottom: 100px;
+  border-radius: 15px;
+ }
+ section {
+  padding-left: 50px;
+  padding-right: 50px;
+ }
+ section .date {
+  text-align: right;
+ }
+ section h2 {
+  margin-top: 20px;
+ }
+}
+
+@media ( min-width : 1200px) {
+ .container {
+  width: 1000px;
+ }
+}
