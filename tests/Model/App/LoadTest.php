@@ -42,14 +42,6 @@ class LoadTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'App\Admin\AdminMenu',
-            \PHPUnit_Framework_Assert::readAttribute(
-                $this->_load,
-                'adminMenu'
-            )
-        );
-
-        $this->assertInstanceOf(
             'Ignaszak\Exception\Start',
             $this->_load->getExceptionHandler()
         );

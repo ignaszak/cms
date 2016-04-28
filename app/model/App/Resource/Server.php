@@ -42,8 +42,11 @@ class Server
     {
         self::setRefererSession();
         if (! defined('TEST')) {
-            header('Location: ' . RegistryFactory::start('file')
-                ->register('Conf\Conf')->getBaseUrl() . $location);
+            if (strpos($location, 'http') === false) {
+                $location = RegistryFactory::start('file')
+                    ->register('Conf\Conf')->getBaseUrl() . $location;
+            }
+            header('Location: ' . $location);
             exit();
         }
     }

@@ -20,7 +20,7 @@ use Ignaszak\Router\UrlGenerator;
 use Ignaszak\Router\Collection\Cache;
 use Symfony\Component\HttpFoundation\Request;
 use App\Admin\AdminExtension;
-use App\Admin\AdminMenu;
+use App\Admin\Admin;
 
 class Load
 {
@@ -54,12 +54,6 @@ class Load
      * @var AdminExtension
      */
     private $adminExtension = null;
-
-    /**
-     *
-     * @var AdminMenu
-     */
-    private $adminMenu = null;
 
     /**
      *
@@ -125,7 +119,6 @@ class Load
         $this->adminExtension = new AdminExtension(
             $this->dir($this->conf['conf']['admin']['extensionDir'] ?? '')
         );
-        $this->adminMenu = new AdminMenu($this->adminExtension, $this->yaml);
         $this->exceptionHandler = new ExceptionHandler();
         $this->registry = RegistryFactory::start();
     }
@@ -148,7 +141,7 @@ class Load
         $this->exceptionHandler->userLocation = $conf['location'] ?? '';
         $this->exceptionHandler->createLogFile = $conf['createLogFile'] ?? '';
         $this->exceptionHandler->logFileDir = $this->dir(
-            $conf['logs'] ?? ''
+            $this->conf['conf']['tmp']['logs'] ?? ''
         );
         $this->exceptionHandler->run();
     }
@@ -242,10 +235,10 @@ class Load
      */
     public function loadAdmin()
     {
-        if ($this->http->router->group() == 'admin') {
+        if (preg_match('/^admin[a-zA-Z0-9_-]*/', $this->http->router->name())) {
             // If not logged open login panel
             if (! $this->user->isUserLoggedIn()) {
-                $this->view->loadFile('../../extensions/Index/login.html');
+                //$this->view->loadFile('../../extensions/Index/login.html');
                 exit;
             }
             // Check permissions
@@ -257,7 +250,10 @@ class Load
             ViewHelperExtension::addExtensionClass(
                 $this->conf['adminViewHelper'] ?? []
             );
-            $this->registry->set('App\Admin\AdminMenu', $this->adminMenu);
+            $this->registry->set(
+                'App\Admin\Admin',
+                new Admin($this->adminExtension, $this->yaml)
+            );
         }
     }
 
