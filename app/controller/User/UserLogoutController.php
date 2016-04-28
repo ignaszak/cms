@@ -10,8 +10,7 @@ class UserLogoutController extends FrontController
 
     public function run()
     {
-        $_user = RegistryFactory::start()->get('user');
-        if ($_user->isUserLoggedIn()) {
+        if ($this->registry->get('user')->isUserLoggedIn()) {
             RegistryFactory::start('cookie')->remove('userSession');
             RegistryFactory::start('session')->remove('userSession');
         }

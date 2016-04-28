@@ -9,7 +9,7 @@ class ViewSettingsController extends FrontController
 
     public function run()
     {
-        $this->view()->addView('theme/settings-view.html');
+        $this->view->addView('theme/settings-view.html');
         $this->setViewHelperName('AdminSettings');
     }
 
@@ -19,53 +19,52 @@ class ViewSettingsController extends FrontController
      */
     public function setViewHelper()
     {
-        return new class($this) extends ViewHelperController {
+        return new class($this) extends ViewHelperController
+        {
 
             /**
              *
              * @var \Entity\Options
              */
-        private $_options;
+            private $_options;
 
             /**
              *
              * @param Controller $_controller
              */
-        public function __construct(FrontController $_controller)
-        {
-            parent::__construct($_controller);
-            $this->_controller->query()->setQuery('options');
-            $this->_options = $this->_controller->query()->getQuery()[0];
-        }
+            public function __construct(FrontController $_controller)
+            {
+                parent::__construct($_controller);
+                $this->_controller->query->setQuery('options');
+                $this->_options = $this->_controller->query->getQuery()[0];
+            }
 
             /**
              *
              * @return string
              */
-        public function getAdminSettingsFormAction(): string
-        {
-            return $this->_controller->view()->getAdminAdress() .
-                "/settings/save";
-            ;
-        }
+            public function getAdminSettingsFormAction(): string
+            {
+                return $this->_controller->url('admin-settings-save', []);
+            }
 
             /**
              *
              * @return \Entity\Options
              */
-        public function getAdminSettings(): \Entity\Options
-        {
-            return $this->_options;
-        }
+            public function getAdminSettings(): \Entity\Options
+            {
+                return $this->_options;
+            }
 
             /**
              *
              * @return array
              */
-        public function getAdminSettingsThemesList(): array
-        {
-            return glob(__VIEWDIR__ . "/themes/*", GLOB_ONLYDIR);
-        }
+            public function getAdminSettingsThemesList(): array
+            {
+                return glob(__VIEWDIR__ . "/public/*", GLOB_ONLYDIR);
+            }
         };
     }
 }

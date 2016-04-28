@@ -18,7 +18,7 @@ class SearchController extends FrontController
         $this->setSearch();
         $this->setSearchToReferData();
         $this->setViewHelperName('Search');
-        $this->view()->addView('search.html');
+        $this->view->addView('search.html');
     }
 
     /**
@@ -37,7 +37,7 @@ class SearchController extends FrontController
 
         public function getSearchResult(): array
         {
-            $this->_controller->query()
+            $this->_controller->query
                 ->setQuery('post')
                 ->query(
                     "c.title LIKE :search OR
@@ -45,15 +45,16 @@ class SearchController extends FrontController
                     [':search' => "%{$this->_controller->search}%"]
                 )
                 ->paginate(true);
-            return $this->_controller->query()->getStaticQuery();
+            return $this->_controller->query->getStaticQuery();
         }
         };
     }
 
     private function setSearch()
     {
-        if (!empty($_POST['search'])) {
-            $this->search = $_POST['search'];
+        $search = $this->http->request->get('search');
+        if (!empty($search)) {
+            $this->search = $search;
         } else {
             $this->search = Server::getReferData()['search'];
         }

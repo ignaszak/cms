@@ -9,8 +9,8 @@ class ViewPageController extends FrontController
 
     public function run()
     {
-        $this->setViewHelperName('AdminViewPage');
-        $this->view()->addView('theme/page-view.html');
+        $this->setViewHelperName('AdminPage');
+        $this->view->addView('theme/page-view.html');
     }
 
     /**
@@ -19,19 +19,33 @@ class ViewPageController extends FrontController
      */
     public function setViewHelper()
     {
-        return new class($this) extends ViewHelperController {
-
-        public function getAdminViewPage()
+        return new class($this) extends ViewHelperController
         {
-            $this->_controller->query()->setQuery('page')
-                ->status('all');
-            return $this->_controller->query()->getQuery();
-        }
 
-        public function getAdminViewPageLink()
-        {
-            return $this->_controller->view()->getAdminAdress() . "/page/";
-        }
+            /**
+             *
+             * @return array
+             */
+            public function getAdminPage(): array
+            {
+                $this->_controller->query->setQuery('page')->status('all');
+                return $this->_controller->query->getQuery();
+            }
+
+            /**
+             *
+             * @param string $action
+             * @param string $alias
+             * @return string
+             */
+            public function getAdminPageLink(
+                string $action,
+                string $alias
+            ): string {
+                return $this->_controller->url('admin-page-edit', [
+                    'action' => $action, 'alias' => $alias
+                ]);
+            }
         };
     }
 }

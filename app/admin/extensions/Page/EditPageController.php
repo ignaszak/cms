@@ -24,11 +24,11 @@ class EditPageController extends FrontController
 
     public function run()
     {
-        $this->action = $this->view()->getRoute('action');
-        $this->alias = $this->view()->getRoute('alias');
+        $this->action = $this->http->router->get('action');
+        $this->alias = $this->http->router->get('alias');
 
-        $this->setViewHelperName('AdminEditPage');
-        $this->view()->addView('theme/page-edit.html');
+        $this->setViewHelperName('AdminPage');
+        $this->view->addView('theme/page-edit.html');
 
         if ($this->action == 'delete' && $this->alias) {
             $controller = new Controller(new Pages());
@@ -36,7 +36,11 @@ class EditPageController extends FrontController
                 'alias' => $this->alias
             ])->remove();
 
-            Server::headerLocation("/admin/page/view/");
+            Server::headerLocation(
+                $this->url('admin-page-list', [
+                    'action' => 'view', 'page' => 1
+                ])
+            );
         }
     }
 
@@ -46,48 +50,75 @@ class EditPageController extends FrontController
      */
     public function setViewHelper()
     {
-        return new class($this) extends ViewHelperController {
-
-        private $returnData;
-
-        public function __construct(FrontController $_controller)
+        return new class($this) extends ViewHelperController
         {
-            parent::__construct($_controller);
-            $this->returnData = $this->_controller->view()
-                ->getFormResponseData('data');
-        }
 
-        public function getAdminEditPage(string $key)
-        {
-            $data = [];
+            /**
+             *
+             * @var array
+             */
+            private $returnData = [];
 
-            $data['id'] = null;
-            $data['title'] = $this->returnData['setTitle'];
-            $data['content'] = $this->returnData['setContent'];
-            $data['public'] = $this->returnData['setPublic'];
-            $data['formTitle'] = 'Add new page';
-            $data['formLink'] = $this->_controller->view()->getAdminAdress() .
-                "/page/save";
+            /**
+             *
+             * @var array
+             */
+            private $data = [];
 
-            if ($this->_controller->action == 'edit' && $this->_controller->alias) {
-
-                $data['formTitle'] = 'Edit page';
-
-                $this->_controller->query()->setQuery('page')
-                    ->alias($this->_controller->alias);
-
-                foreach ($this->_controller->query()->getQuery() as $post) {
-                    $data['id'] = $post->getId();
-                    $data['title'] = $post->getTitle();
-                    $data['content'] = $post->getContent();
-                    $data['public'] = $post->getPublic();
-                    $data['deleteLink'] = "{$this->_controller->view()
-                        ->getAdminAdress()}/page/delete{$post->getAlias()}";
-                }
+            /**
+             *
+             * @param FrontController $_controller
+             */
+            public function __construct(FrontController $_controller)
+            {
+                parent::__construct($_controller);
+                $this->returnData = $this->_controller->view
+                    ->getFormResponseData('data');
+                $this->setData();
             }
 
-            return @$data[$key];
-        }
+            /**
+             *
+             * @param string $key
+             * @return mixed
+             */
+            public function getAdminPage(string $key)
+            {
+                return $this->data[$key] ?? null;
+            }
+
+            private function setData()
+            {
+                $data = [];
+                $data['id'] = null;
+                $data['title'] = $this->returnData['setTitle'];
+                $data['content'] = $this->returnData['setContent'];
+                $data['public'] = $this->returnData['setPublic'];
+                $data['formTitle'] = 'Add new page';
+                $data['formLink'] = $this->_controller->url('admin-page-save', [
+                    'action' => 'save'
+                ]);
+
+                if ($this->_controller->action == 'edit' && $this->_controller->alias) {
+
+                    $data['formTitle'] = 'Edit page';
+
+                    $this->_controller->query->setQuery('page')
+                    ->alias($this->_controller->alias);
+
+                    foreach ($this->_controller->query->getQuery() as $page) {
+                        $data['id'] = $page->getId();
+                        $data['title'] = $page->getTitle();
+                        $data['content'] = $page->getContent();
+                        $data['public'] = $page->getPublic();
+                        $data['deleteLink'] = $this->_controller->url(
+                            'admin-page-edit',
+                            ['action' => 'delete', 'alias' => $page->getAlias()]
+                            );
+                    }
+                }
+                $this->data = $data;
+            }
         };
     }
 }

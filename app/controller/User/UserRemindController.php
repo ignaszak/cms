@@ -5,7 +5,6 @@ use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use DataBase\Controller\Controller;
 use Entity\Users;
-use Ignaszak\Registry\RegistryFactory;
 use Mail\Mail;
 use Mail\MailTransport;
 
@@ -22,14 +21,13 @@ class UserRemindController extends FrontController
     {
         Server::setReferData(['form' => 'remind']);
 
-        $_user = RegistryFactory::start()->get('user');
-        if ($_user->isUserLoggedIn()) {
+        if ($this->registry->get('user')->isUserLoggedIn()) {
             Server::headerLocationReferer();
         }
 
         $controller = new Controller(new Users());
         $controller->findOneBy([
-            'email' => $_POST['userEmail']
+            'email' => $this->http->request->get('userEmail')
         ]);
 
         if ($controller->entity() == null) { // If email not exists

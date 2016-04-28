@@ -8,8 +8,8 @@ class AjaxLoadController extends FrontController
 
     public function run()
     {
-        $alias = $this->view()->getRoute('alias');
-        $page = $this->view()->getRoute('page');
+        $alias = $this->http->router->get('alias');
+        $page = $this->http->router->get('page');
 
         if ($alias != 'category') {
             $content = $this->selectPostOrPage($alias);
@@ -37,28 +37,30 @@ class AjaxLoadController extends FrontController
 
     /**
      *
+     * @param int $catId
      * @return array
      */
     private function selectCategory(int $catId): array
     {
-        $this->query()->setQuery('category')
+        $this->query->setQuery('category')
             ->id($catId)
             ->limit(1);
-        return $this->query()->getStaticQuery();
+        return $this->query->getStaticQuery();
     }
 
     /**
      *
+     * @param string $alias
      * @return array
      */
     private function selectPostOrPage(string $alias): array
     {
-        if (empty(@$_POST['search'])) {
-            $this->query()->setQuery($alias);
+        $search = $this->http->request->get('search');
+        if (empty($search)) {
+            $this->query->setQuery($alias);
         } else {
-            $this->query()->setQuery($alias)
-                ->titleLike($_POST['search']);
+            $this->query->setQuery($alias)->titleLike($search);
         }
-        return $this->query()->getStaticQuery();
+        return $this->query->getStaticQuery();
     }
 }

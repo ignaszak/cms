@@ -23,10 +23,10 @@ class AjaxEditController extends FrontController
             ];
 
             if ($alias != 'link') {
-                $this->query()->setQuery($alias)
+                $this->query->setQuery($alias)
                     ->alias($adressArray[1])
                     ->limit(1);
-                $content = $this->query()->getStaticQuery()[0];
+                $content = $this->query->getStaticQuery()[0];
                 $arrayItem['title'] = $content->getTitle();
 
                 if ($alias == 'post') {
@@ -48,10 +48,10 @@ class AjaxEditController extends FrontController
      */
     private function getMenuItemsArray()
     {
-        $this->query()->setQuery('menu')
-            ->id($this->router()->id)
+        $this->query->setQuery('menu')
+            ->id($this->http->router->get('id'))
             ->limit(1);
-        $menu = $this->query()->getStaticQuery();
+        $menu = $this->query->getStaticQuery();
         return $menu[0]->getMenuItems();
     }
 }

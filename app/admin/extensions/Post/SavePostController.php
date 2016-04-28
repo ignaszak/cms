@@ -9,27 +9,35 @@ use Entity\Posts;
 class SavePostController extends FrontController
 {
 
+    /**
+     *
+     * @var array
+     */
+    private $request = [];
+
     public function run()
     {
+        $this->request = $this->http->request->all();
+
         // Initialize
         $controller = new Controller(new Posts());
         $date = new \DateTime();
 
         // Find entity by id to update
-        if ($_POST['id']) {
-            $controller->find($_POST['id']);
+        if ($this->request['id']) {
+            $controller->find($this->request['id']);
             $date = $controller->entity()->getDate('DateTime');
         }
 
-        $alias = $controller->getAlias($_POST['title']);
-        $public = @$_POST['public'] == 1 ? 1 : 0;
+        $alias = $controller->getAlias($this->request['title']);
+        $public = @$this->request['public'] == 1 ? 1 : 0;
 
         $controller->setReference('category', $this->getCategoryId())
-            ->setReference('author', $this->view()->getUserId())
+            ->setReference('author', $this->view->getUserId())
             ->setDate($date)
-            ->setTitle($_POST['title'])
+            ->setTitle($this->request['title'])
             ->setAlias($alias)
-            ->setContent($_POST['content'])
+            ->setContent($this->request['content'])
             ->setPublic($public)
             ->insert([
                 'date' => [],
@@ -38,18 +46,22 @@ class SavePostController extends FrontController
                 'content' => []
             ]);
 
-        Server::headerLocation("/admin/post/p/edit/{$alias}");
+        Server::headerLocation(
+            $this->url('admin-post-edit', [
+                'action' => 'edit', 'alias' => $alias
+            ])
+        );
     }
 
     private function getCategoryId(): int
     {
-        if (! is_numeric(@$_POST['categoryId'])) {
-            $this->query()->setQuery('category')
+        if (! is_numeric(@$this->request['categoryId'])) {
+            $this->query->setQuery('category')
                 ->limit(1);
-            $catArray = $this->query()->getQuery();
+            $catArray = $this->query->getQuery();
             return $catArray[0]->getId();
         } else {
-            return $_POST['categoryId'];
+            return $this->request['categoryId'];
         }
     }
 }

@@ -9,8 +9,8 @@ class ViewMenuController extends FrontController
 
     public function run()
     {
-        $this->view()->addView('theme/menu-view.html');
-        $this->setViewHelperName('AdminViewMenu');
+        $this->view->addView('theme/menu-view.html');
+        $this->setViewHelperName('AdminMenu');
     }
 
     /**
@@ -19,19 +19,29 @@ class ViewMenuController extends FrontController
      */
     public function setViewHelper()
     {
-        return new class($this) extends ViewHelperController {
-
-        public function getAdminViewMenu()
+        return new class($this) extends ViewHelperController
         {
-            $this->_controller->query()->setQuery('menu')
-                ->status('all');
-            return $this->_controller->query()->getQuery();
-        }
 
-        public function getAdminViewMenuLink()
-        {
-            return $this->_controller->view()->getAdminAdress() . "/menu/";
-        }
+            /**
+             *
+             * @return array
+             */
+            public function getAdminMenuList(): array
+            {
+                $this->_controller->query->setQuery('menu')->status('all');
+                return $this->_controller->query->getQuery();
+            }
+
+            /**
+             *
+             * @return string
+             */
+            public function getAdminMenuLink(string $action, int $id): string
+            {
+                return $this->_controller->url("admin-menu-{$action}", [
+                    'action' => $action, 'id' => $id
+                ]);
+            }
         };
     }
 }

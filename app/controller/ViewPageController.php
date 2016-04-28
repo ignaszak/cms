@@ -8,6 +8,6 @@ class ViewPageController extends FrontController
 
     public function run()
     {
-        $this->view()->addView('page.html');
+        $this->view->addView('page.html');
     }
 }

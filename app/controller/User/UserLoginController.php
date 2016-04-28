@@ -43,15 +43,14 @@ class UserLoginController extends FrontController
 
     public function run()
     {
-        $_user = RegistryFactory::start()->get('user');
-        if ($_user->isUserLoggedIn()) {
+        if ($this->registry->get('user')->isUserLoggedIn()) {
             Server::headerLocationReferer();
         }
 
-        $this->login = $_POST['userLogin'];
+        $this->login = $this->http->request->get('userLogin');
         $this->column = $this->isEmail($this->login) ? 'email' : 'login';
-        $this->password = $_POST['userPassword'];
-        $this->remember = @$_POST['userRemember'];
+        $this->password = $this->http->request->get('userPassword');
+        $this->remember = $this->http->request->get('userRemember', null);
 
         $userId = $this->getUserId();
 
@@ -78,9 +77,9 @@ class UserLoginController extends FrontController
      */
     private function getUserId(): int
     {
-        $this->query()->setQuery('user')
+        $this->query->setQuery('user')
             ->findBy($this->column, $this->login);
-        $result = $this->query()->getStaticQuery();
+        $result = $this->query->getStaticQuery();
 
         if (count($result) === 1 &&
             HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
