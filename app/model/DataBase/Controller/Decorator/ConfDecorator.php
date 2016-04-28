@@ -1,5 +1,5 @@
 <?php
-namespace Content\Controller\Decorator;
+namespace DataBase\Controller\Decorator;
 
 use DataBase\Controller\Controller;
 use Ignaszak\Registry\RegistryFactory;
