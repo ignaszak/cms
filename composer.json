@@ -17,7 +17,7 @@
 		"ircmaxell/password-compat" : ">=1.0.4",
 		"ignaszak/router" : "dev-master",
 		"ignaszak/exception" : "1.1.2",
-		"ignaszak/registry" : "1.0.0",
+		"ignaszak/registry" : "1.1.0",
 		"beberlei/DoctrineExtensions" : "*",
 		"mockery/mockery" : "*",
 		"swiftmailer/swiftmailer" : "*",

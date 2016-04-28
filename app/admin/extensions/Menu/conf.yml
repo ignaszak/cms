@@ -1,6 +1,5 @@
-title: Post
-icon: fa fa-thumb-tack
+title: Menu
+icon: fa fa-bars
 menu:
-    - {title: Add new post, url: admin-post-add, tokens: {action: add}}
-    - {title: View posts, url: admin-post-list, tokens: {action: view, page: 1}}
-    - {title: View categories, url: admin-cat-list, tokens: {action: view, page: 1}}
+    - {title: Create new menu, url: admin-menu-add, tokens: {action: add}}
+    - {title: View menus, url: admin-menu-list, tokens: {action: view, page: 1}}

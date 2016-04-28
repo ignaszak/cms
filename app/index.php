@@ -9,7 +9,7 @@ try {
     $app->run();
 
     $router = Ignaszak\Registry\RegistryFactory::start()->get('http')->router;
-    echo "<div style=\"position:fixed; top:50px;\"><pre>";
+    echo "<div style=\"position:fixed; top:50px; right:0px;\"><pre>";
     echo $router->group() . '<br>';
     echo $router->name() . '<br>';
     echo $router->controller();

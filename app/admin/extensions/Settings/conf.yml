@@ -1,6 +1,4 @@
-title: Post
-icon: fa fa-thumb-tack
+title: Settings
+icon: fa fa-cog
 menu:
-    - {title: Add new post, url: admin-post-add, tokens: {action: add}}
-    - {title: View posts, url: admin-post-list, tokens: {action: view, page: 1}}
-    - {title: View categories, url: admin-cat-list, tokens: {action: view, page: 1}}
+    - {title: General, url: admin-settings-list, tokens: {setting: general}}
