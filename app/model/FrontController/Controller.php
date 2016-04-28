@@ -1,28 +1,36 @@
 <?php
+declare(strict_types=1);
+
 namespace FrontController;
 
 use Ignaszak\Registry\RegistryFactory;
+use ViewHelper\ViewHelperExtension;
 
+/**
+ *
+ * @author Tomasz Ignaszak
+ *
+ * @property-read \Ignaszak\Registry\Registry $registry
+ * @property-read \App\Resource\Http $http
+ * @property-read \View\View $view
+ * @property-read \DataBase\Query\Query $query
+ */
 abstract class Controller
 {
 
     /**
      *
-     * @var ControllerHelper
+     * @var mixed[]
      */
-    private static $_controllerHelper;
+    private static $instances = [];
 
     /**
      *
-     * @var \Ignaszak\Registry\RegistryFactory
+     * @var string
      */
-    private static $registry;
+    private $viewHelperName;
 
-    /**
-     *
-     * @var \App\Resource\Http
-     */
-    private static $http = null;
+    abstract public function run();
 
     /**
      *
@@ -30,25 +38,14 @@ abstract class Controller
      */
     public static function instance(): Controller
     {
-        $_controller = new static();
-        self::$_controllerHelper = new ControllerHelper($_controller);
-        self::$registry = RegistryFactory::start();
-        self::$http = self::$registry->get('http');
-        return $_controller;
-    }
-
-    /**
-     *
-     * @param string $name
-     * @param array $arguments
-     * @return mixed
-     */
-    public function __call(string $name, array $arguments)
-    {
-        return call_user_func_array(
-            [self::$_controllerHelper, $name],
-            $arguments
-        );
+        $registry = RegistryFactory::start();
+        self::$instances = [
+            'registry' => $registry,
+            'http' => $registry->get('http'),
+            'view' => $registry->get('view'),
+            'query' => $registry->register('DataBase\Query\Query')
+        ];
+        return new static();
     }
 
     /**
@@ -58,7 +55,7 @@ abstract class Controller
      */
     public function __get(string $property)
     {
-        return self::$$poperty;
+        return self::$instances[$property] ?? null;
     }
 
     /**
@@ -71,30 +68,35 @@ abstract class Controller
 
     /**
      *
-     * @return \View\View
+     * @param string $name
      */
-    public function view(): \View\View
+    public function setViewHelperName(string $name)
     {
-        return RegistryFactory::start()->get('view');
+        $this->viewHelperName = $name;
     }
 
     /**
      *
-     * @return \DataBase\Query\Query
+     * @param string $name
+     * @param string[] $tokens
+     * @return string
      */
-    public function query(): \DataBase\Query\Query
+    public function url(string $name, array $tokens): string
     {
-        return RegistryFactory::start()->register('DataBase\Query\Query');
+        return self::$instances['registry']->get('url')->url($name, $tokens);
     }
 
     /**
      *
-     * @return \App\Resource\Route
+     * @return boolean
      */
-    public function router()
+    private function loadViewHelperSetter(): bool
     {
-        return self::$http->router;
+        if (method_exists($this, 'setViewHelper')) {
+            self::$instances['registry']->set($this->viewHelperName, $this->setViewHelper());
+            ViewHelperExtension::addExtensionClass($this->viewHelperName);
+            return true;
+        }
+        return false;
     }
-
-    abstract public function run();
 }

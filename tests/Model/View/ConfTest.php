@@ -20,7 +20,7 @@ class ConfTest extends \PHPUnit_Framework_TestCase
         MockHttp::run();
         $this->_viewConf = new Conf();
         $this->_viewConf->configureThemePath();
-        $this->assertContains('admin', $this->_viewConf->getThemePath());
+        $this->assertContains('/app/view/public/', $this->_viewConf->getThemePath());
     }
 
     public function UserThemePath()

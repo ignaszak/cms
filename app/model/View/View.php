@@ -63,8 +63,8 @@ class View
     public function loadView()
     {
         if (! empty($this->viewFileName)) {
-            if ($this->http->router->group() == 'admin') {
-                //$this->loadAdminExtensionThemeFile($this->viewFileName);
+            if (preg_match('/^admin[a-zA-Z0-9_-]*/', $this->http->router->name())) {
+                $this->loadAdminExtensionThemeFile($this->viewFileName);
             } else {
                 $this->loadFile($this->viewFileName);
             }
@@ -78,24 +78,8 @@ class View
     public function loadFile(string $fileName)
     {
         $file = "{$this->_viewConf->getThemePath()}/{$fileName}";
-
         if (file_exists($file) && is_file($file) && is_readable($file)) {
             include($file);
-        }
-    }
-
-    /**
-     *
-     * @param string $fileName
-     * @throws \RuntimeException
-     */
-    public function loadExtensionFile(string $fileName)
-    {
-        $file = "{$this->getAdminExtensionDir()}/{$fileName}";
-        if (file_exists($file) && is_file($file) && is_readable($file)) {
-            include($file);
-        } else {
-            throw new \RuntimeException("File <b>$file</b> not found");
         }
     }
 
