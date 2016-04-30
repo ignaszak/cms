@@ -103,7 +103,7 @@ class EditPostController extends FrontController
                     $data['formTitle'] = 'Edit post';
 
                     $this->_controller->query->setQuery('post')
-                    ->alias($this->_controller->alias);
+                        ->alias($this->_controller->alias);
 
                     foreach ($this->_controller->query->getQuery() as $post) {
                         $data['id'] = $post->getId();
@@ -114,7 +114,7 @@ class EditPostController extends FrontController
                         $data['deleteLink'] = $this->_controller->url(
                             'admin-post-edit',
                             ['action' => 'delete', 'alias' => $post->getAlias()]
-                            );
+                        );
                     }
                 }
                 $this->data = $data;

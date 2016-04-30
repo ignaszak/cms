@@ -102,7 +102,7 @@ class EditPageController extends FrontController
                     $data['formTitle'] = 'Edit page';
 
                     $this->_controller->query->setQuery('page')
-                    ->alias($this->_controller->alias);
+                        ->alias($this->_controller->alias);
 
                     foreach ($this->_controller->query->getQuery() as $page) {
                         $data['id'] = $page->getId();
@@ -112,7 +112,7 @@ class EditPageController extends FrontController
                         $data['deleteLink'] = $this->_controller->url(
                             'admin-page-edit',
                             ['action' => 'delete', 'alias' => $page->getAlias()]
-                            );
+                        );
                     }
                 }
                 $this->data = $data;
