@@ -10,7 +10,6 @@ class EditMenuController extends FrontController
     public function run()
     {
         $this->view->addView('theme/menu-edit.html');
-        $this->setViewHelperName('AdminLoadMenu');
     }
 
     /**

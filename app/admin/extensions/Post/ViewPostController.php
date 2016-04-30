@@ -9,7 +9,6 @@ class ViewPostController extends FrontController
 
     public function run()
     {
-        $this->setViewHelperName('AdminPost');
         $this->view->addView('theme/post-view.html');
     }
 

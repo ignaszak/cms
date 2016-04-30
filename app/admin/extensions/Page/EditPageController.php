@@ -26,8 +26,6 @@ class EditPageController extends FrontController
     {
         $this->action = $this->http->router->get('action');
         $this->alias = $this->http->router->get('alias');
-
-        $this->setViewHelperName('AdminPage');
         $this->view->addView('theme/page-edit.html');
 
         if ($this->action == 'delete' && $this->alias) {

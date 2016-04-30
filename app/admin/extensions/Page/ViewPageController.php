@@ -9,7 +9,6 @@ class ViewPageController extends FrontController
 
     public function run()
     {
-        $this->setViewHelperName('AdminPage');
         $this->view->addView('theme/page-view.html');
     }
 

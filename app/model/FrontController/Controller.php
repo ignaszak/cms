@@ -68,15 +68,6 @@ abstract class Controller
     /**
      *
      * @param string $name
-     */
-    public function setViewHelperName(string $name)
-    {
-        $this->viewHelperName = $name;
-    }
-
-    /**
-     *
-     * @param string $name
      * @param string[] $tokens
      * @return string
      */

@@ -26,7 +26,6 @@ class EditPostController extends FrontController
     {
         $this->action = $this->http->router->get('action');
         $this->alias = $this->http->router->get('alias');
-        $this->setViewHelperName('AdminPost');
         $this->view->addView('theme/post-edit.html');
 
         if ($this->action == 'delete' && $this->alias) {

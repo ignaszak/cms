@@ -17,7 +17,6 @@ class SearchController extends FrontController
     {
         $this->setSearch();
         $this->setSearchToReferData();
-        $this->setViewHelperName('Search');
         $this->view->addView('search.html');
     }
 

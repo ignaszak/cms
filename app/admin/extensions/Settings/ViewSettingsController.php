@@ -10,7 +10,6 @@ class ViewSettingsController extends FrontController
     public function run()
     {
         $this->view->addView('theme/settings-view.html');
-        $this->setViewHelperName('AdminSettings');
     }
 
     /**
