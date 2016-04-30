@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace View;
 
 use Ignaszak\Registry\RegistryFactory;
@@ -10,19 +12,25 @@ class View
      *
      * @var Conf
      */
-    private $_viewConf;
+    private $conf = null;
 
     /**
      *
      * @var ViewHelper
      */
-    private $_viewHelper;
+    private $viewHelper = null;
 
     /**
      *
      * @var \App\Resource\Http
      */
-    private $http;
+    private $http = null;
+
+    /**
+     *
+     * @var \Ignaszak\Registry\Registry
+     */
+    private $registry = null;
 
     /**
      *
@@ -30,25 +38,36 @@ class View
      */
     private $viewFileName;
 
-    public function __construct()
+    /**
+     *
+     * @param ViewHelper $viewHelper
+     */
+    public function __construct(ViewHelper $viewHelper)
     {
-        $registry = RegistryFactory::start();
-        $this->_viewConf = new Conf();
-        $this->_viewHelper = $registry->register('ViewHelper\ViewHelper');
-        $this->http = $registry->get('http');
-        $this->configure();
+        $this->registry = RegistryFactory::start();
+        $this->viewHelper = $viewHelper;
+        $this->http = $this->registry->get('http');
+        $this->conf = new Conf();
+        $this->conf->configureThemePath();
     }
 
     /**
-     * Call methods from ViewHelper
      *
-     * @param string $name
+     * @param string $method
      * @param array $arguments
-     * @return mixed FiewHelper methods
+     * @throws \RuntimeException
+     * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call(string $method, array $arguments)
     {
-        return call_user_func_array([$this->_viewHelper, $name], $arguments);
+        $methods = $this->viewHelper->getMethods();
+        $class = $methods[$method] ?? null;
+        if (is_null($class)) {
+            throw new \RuntimeException("Method '{$method}' does not exists");
+        } else {
+            $instance = $this->registry->register($class);
+            return call_user_func_array([$instance, $method], $arguments);
+        }
     }
 
     /**
@@ -77,7 +96,7 @@ class View
      */
     public function loadFile(string $fileName)
     {
-        $file = "{$this->_viewConf->getThemePath()}/{$fileName}";
+        $file = "{$this->conf->getThemePath()}/{$fileName}";
         if (file_exists($file) && is_file($file) && is_readable($file)) {
             include($file);
         }
@@ -89,11 +108,6 @@ class View
      */
     public function getThemeFolder(): string
     {
-        return $this->_viewConf->getThemeFolder();
-    }
-
-    private function configure()
-    {
-        $this->_viewConf->configureThemePath();
+        return $this->conf->getThemeFolder();
     }
 }

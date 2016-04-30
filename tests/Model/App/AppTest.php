@@ -36,7 +36,6 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $stub->shouldReceive('loadRegistry')->once();
         $stub->shouldReceive('loadSession')->once();
         $stub->shouldReceive('loadHttp')->once();
-        $stub->shouldReceive('loadViewHelper')->once();
         $stub->shouldReceive('loadView')->once();
         $stub->shouldReceive('loadUser')->once();
         $stub->shouldReceive('loadAdmin')->once();

@@ -1,5 +1,5 @@
 <?php
-namespace ViewHelper\Extension;
+namespace View\Extension;
 
 use Ignaszak\Registry\RegistryFactory;
 

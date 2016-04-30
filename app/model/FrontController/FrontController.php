@@ -3,6 +3,7 @@ namespace FrontController;
 
 use Controller\DefaultController;
 use App\Resource\Http;
+use View\ViewHelper;
 
 class FrontController
 {

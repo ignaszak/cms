@@ -21,6 +21,7 @@ use Ignaszak\Router\Collection\Cache;
 use Symfony\Component\HttpFoundation\Request;
 use App\Admin\AdminExtension;
 use App\Admin\Admin;
+use View\ViewHelper;
 
 class Load
 {
@@ -75,6 +76,12 @@ class Load
 
     /**
      *
+     * @var ViewHelper
+     */
+    private $viewHelper = null;
+
+    /**
+     *
      * @var array
      */
     private $conf = [];
@@ -121,6 +128,7 @@ class Load
         );
         $this->exceptionHandler = new ExceptionHandler();
         $this->registry = RegistryFactory::start();
+        $this->viewHelper = new ViewHelper();
     }
 
     /**
@@ -204,19 +212,13 @@ class Load
     }
 
     /**
-     * View helper extensions
-     */
-    public function loadViewHelper()
-    {
-        ViewHelperExtension::addExtensionClass($this->conf['viewHelper'] ?? []);
-    }
-
-    /**
      * Sets instance of View class
      */
     public function loadView()
     {
-        $this->registry->set('view', new View());
+        $this->viewHelper->add($this->conf['viewHelper'] ?? []);
+        $this->registry->set('viewHelper', $this->viewHelper);
+        $this->registry->set('view', new View($this->viewHelper));
         $this->view = $this->registry->get('view');
     }
 
@@ -245,11 +247,8 @@ class Load
             if ($this->user->getUserSession()->getRole() != 'admin') {
                 Server::headerLocation(); // Go to main page
             }
-
             // Admin view helper classes
-            ViewHelperExtension::addExtensionClass(
-                $this->conf['adminViewHelper'] ?? []
-            );
+            $this->viewHelper->add($this->conf['adminViewHelper'] ?? []);
             $this->registry->set(
                 'App\Admin\Admin',
                 new Admin($this->adminExtension, $this->yaml)

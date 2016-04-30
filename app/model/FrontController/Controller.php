@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace FrontController;
 
 use Ignaszak\Registry\RegistryFactory;
-use ViewHelper\ViewHelperExtension;
 
 /**
  *
@@ -93,8 +92,10 @@ abstract class Controller
     private function loadViewHelperSetter(): bool
     {
         if (method_exists($this, 'setViewHelper')) {
-            self::$instances['registry']->set($this->viewHelperName, $this->setViewHelper());
-            ViewHelperExtension::addExtensionClass($this->viewHelperName);
+            $instance = $this->setViewHelper();
+            $class = get_class($instance);
+            self::$instances['registry']->set($class, $instance);
+            self::$instances['registry']->get('viewHelper')->add([$class]);
             return true;
         }
         return false;

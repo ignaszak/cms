@@ -5,6 +5,7 @@
 - Menu\Menu
 - Module\Module
 - Pagination\Pagination
-- ViewHelper\Extension\Page
-- ViewHelper\Extension\Post
-- ViewHelper\Extension\User
+- View\Extension\Page
+- View\Extension\Post
+- View\Extension\User
+- View\Extension\System

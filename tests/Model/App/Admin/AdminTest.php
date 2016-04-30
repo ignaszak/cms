@@ -119,7 +119,7 @@ EOT
                 ['Post', 'Page']
             ),
             new Yaml()
-        );print_r($this->_adminMenu->getAdminMenu());
+        );
         $this->assertEquals(
             [
                 0 => [

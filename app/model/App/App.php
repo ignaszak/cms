@@ -48,7 +48,6 @@ class App
         $this->_load->loadRegistry();
         $this->_load->loadSession();
         $this->_load->loadHttp();
-        $this->_load->loadViewHelper();
         $this->_load->loadView();
         $this->_load->loadUser();
         $this->_load->loadAdmin();
