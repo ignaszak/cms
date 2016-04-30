@@ -66,38 +66,39 @@ routes:
         group: user
         controller: Controller\User\UserLoginController
         tokens:
-            action: '(login)'
+            action: login
     user-logout:
         path: '/user/{method}/{action}'
+        method: POST|GET
         group: user
         controller: Controller\User\UserLogoutController
         tokens:
-            action: '(logout)'
+            action: logout
     user-registration:
         path: '/user/{method}/{action}'
         method: POST
         group: user
         controller: Controller\User\UserRegistrationController
         tokens:
-            action: (registration)'
+            action: registration
     user-remind:
         path: '/user/{method}/{action}'
         method: POST
         group: user
         controller: Controller\User\UserRemindController
         tokens:
-            action: '(remind)'
+            action: remind
     user-save:
         path: '/user/{method}/{action}'
         method: POST
         group: user
         controller: Controller\User\UserSaveController
         tokens:
-            action: '(account)'
+            action: save
 
     search:
         path: '/search/{page}'
-        method: GET
+        method: POST|GET
         group: search
         controller: Controller\SearchController
 
