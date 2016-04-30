@@ -21,43 +21,12 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->referData();
     }
 
-    public function testGetFormActionRegistrationAdress()
+    public function testGetFormActionAdress()
     {
-        $this->_user = new User($this->mockForm('registration'));
-        $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('/user/post/registration', $adress);
-    }
-
-    public function testGetFormActionLoginAdress()
-    {
-        $this->_user = new User($this->mockForm('login'));
-        $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('/user/post/login', $adress);
-    }
-
-    public function testGetFormActionLogoutAdress()
-    {
-        $this->_user = new User($this->mockForm('logout'));
-        $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('/user/post/logout', $adress);
-    }
-
-    public function testGetFormActionRemindAdress()
-    {
-        $this->_user = new User($this->mockForm('remind'));
-        $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('/user/post/remind', $adress);
-    }
-
-    public function testGetFormActionAccountAdress()
-    {
-        $this->_user = new User($this->mockForm('accountData'));
-        $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('/user/post/account', $adress);
-
-        $this->_user = new User($this->mockForm('accountPassword'));
-        $adress = $this->_user->getFormActionAdress();
-        $this->assertEquals('/user/post/account', $adress);
+        $stub = \Mockery::mock('UrlGenerator');
+        $stub->shouldReceive('url')->andReturn('')->once();
+        MockTest::inject($this->_user, 'url', $stub);
+        $this->_user->getFormActionAdress();
     }
 
     public function testGetEmptyFormMessage()

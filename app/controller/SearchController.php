@@ -29,23 +29,23 @@ class SearchController extends FrontController
         return new class($this) extends ViewHelperController
         {
 
-        public function getSearchFor()
-        {
-            return $this->_controller->search;
-        }
+            public function getSearchFor()
+            {
+                return $this->_controller->search;
+            }
 
-        public function getSearchResult(): array
-        {
-            $this->_controller->query
-                ->setQuery('post')
-                ->query(
-                    "c.title LIKE :search OR
-                            c.content LIKE :search",
-                    [':search' => "%{$this->_controller->search}%"]
-                )
-                ->paginate(true);
-            return $this->_controller->query->getStaticQuery();
-        }
+            public function getSearchResult(): array
+            {
+                $this->_controller->query
+                    ->setQuery('post')
+                    ->query(
+                        "c.title LIKE :search OR
+                                c.content LIKE :search",
+                        [':search' => "%{$this->_controller->search}%"]
+                    )
+                    ->paginate(true);
+                return $this->_controller->query->getStaticQuery();
+            }
         };
     }
 

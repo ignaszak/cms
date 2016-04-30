@@ -10,13 +10,19 @@ class System
      *
      * @var \Conf\Conf
      */
-    private $_conf;
+    private $_conf = null;
 
     /**
      *
      * @var \DataBase\Query\Query
      */
-    private $_query;
+    private $_query = null;
+
+    /**
+     *
+     * @var Ignaszak\Registry\Registry
+     */
+    private $registry = null;
 
     public function __construct()
     {
@@ -24,6 +30,7 @@ class System
             ->register('Conf\Conf');
         $this->_query = RegistryFactory::start()
             ->register('DataBase\Query\Query');
+        $this->registry = RegistryFactory::start();
     }
 
     /**
@@ -60,7 +67,7 @@ class System
     public function getThemeUrl(): string
     {
         return $this->_conf->getBaseUrl() . '/app/' .
-            RegistryFactory::start()->get('view')->getThemeFolder();
+            $this->registry->get('view')->getThemeFolder();
     }
 
     /**
@@ -79,5 +86,23 @@ class System
     public function getResult(): array
     {
         return $this->_query->getQuery();
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getUserAccountLink(): string
+    {
+        return $this->registry->get('url')->url('user-account', []);
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function getAdminLink(): string
+    {
+        return $this->registry->get('url')->url('admin', []);
     }
 }
