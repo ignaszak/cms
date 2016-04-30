@@ -72,16 +72,13 @@ function load_elements(obj)
         admin_adress + '/menu/ajax/' + alias + '/' + page + '/load.json',
         {search: $(obj).val()},
         function ( data ) {
-
             dataObject = data;
             var element = $('ul#' + alias);
             element.html('');
 
             var count = data.length;
             for (var i = 0; i < count; ++ i) {
-
                 data[i].number = i;
-
                 element.append(
                     '<li><a href="javascript:void(0)" id="' + i + '">' +
                     get_category(data[i].category) + data[i].title +
@@ -95,7 +92,6 @@ function load_elements(obj)
                 id = $(this).attr('id');
                 $('input[name="dataAlias"]').val(alias);
                 $('input[name="dataNumber"]').val(id);
-
                 $('div.add-elemnt-buttons button#add').click(function () {
                     data[id].id = '';
                     add_element(data[id]);
@@ -107,14 +103,10 @@ function load_elements(obj)
 
 function add_element(data)
 {
-
-        var alias = $('input[name="dataAlias"]').val();
-        var number = $('input[name="dataNumber"]').val();
-
+    var alias = $('input[name="dataAlias"]').val();
+    var number = $('input[name="dataNumber"]').val();
     if (alias == data.alias && data.number == number) {
-
         var title = $('input[name="' + alias + 'Title"]').val();
-
         if (title == '') {
             alert('Please insert item title.');
         } else {
@@ -123,7 +115,6 @@ function add_element(data)
             element_schema(data);
         }
     }
-
 }
 
 function element_schema_title(obj)

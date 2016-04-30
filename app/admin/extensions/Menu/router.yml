@@ -42,7 +42,7 @@ routes:
 
     admin-menu-ajax-list:
         path: '/admin/menu/ajax/{alias}/{page}/load.json'
-        method: GET
+        method: POST
         controller: AdminController\Menu\AjaxLoadController
         group: Menu
         tokens:
