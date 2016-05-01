@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="CMS Configurator" default="end">
+
+    <!-- ============================================ -->
+    <!-- Target: init                                 -->
+    <!-- ============================================ -->
+    <target name="init">
+        <property name="DBConfDir" value="${project.basedir}/app/conf/DB" />
+        <property name="AppConfDir" value="${project.basedir}/app/model/App/Conf" />
+        <property name="rewriteBase" value="/" override="true" />
+        <property name="role" value="admin" override="true" />
+        <php expression="define('__BASEDIR__', '${project.basedir}');
+require('${project.basedir}/vendor/davcs86/php-mysqlimporter/php-mysqlimporter.php');
+require('${project.basedir}/app/model/DataBase/Controller/Validator/Schema/Validation.php');
+require('${project.basedir}/app/model/App/Conf/Configuration.php');
+" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: start                                -->
+    <!-- ============================================ -->
+    <target name="start" depends="init">
+        <echo>Welcom to ${phing.project.name}. Please follow these steps to finish configuration.</echo>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: site_name                            -->
+    <!-- ============================================ -->
+    <target name="site_name" depends="start">
+        <input message="Please insert your site name" propertyname="siteName" promptChar=":" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: site_adress                          -->
+    <!-- ============================================ -->
+    <target name="site_adress" depends="site_name">
+        <phingcall target="site_adress_input" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: site_adress_test                     -->
+    <!-- ============================================ -->
+    <target name="site_adress_test">
+        <php expression="\App\Conf\Configuration::checkAdress('${siteAdress}');" returnProperty="adressCheck" />
+        <if>
+            <equals arg1="${adressCheck}" arg2="false" />
+            <then>
+                <phingcall target="site_adress_input">
+                    <property name="inf" value="Invalid site adress." />
+                </phingcall>
+            </then>
+        </if>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: site_adress_input                    -->
+    <!-- ============================================ -->
+    <target name="site_adress_input">
+        <if>
+            <isset property="inf" />
+            <then>
+                <echo level="error">${inf}</echo>
+            </then>
+        </if>
+        <input message="Please insert your site adress (example: http://www.example.com)" propertyname="siteAdress" promptChar=":" />
+        <phingcall target="site_adress_test" />
+        <phingcall target="site_url" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: site_url                             -->
+    <!-- ============================================ -->
+    <target name="site_url">
+        <php expression="\App\Conf\Configuration::setAdress('${siteAdress}');" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: database                             -->
+    <!-- ============================================ -->
+    <target name="database" depends="site_adress">
+        <phingcall target="database_input" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: database_test                        -->
+    <!-- ============================================ -->
+    <target name="database_test">
+        <echo>Test database connection.</echo>
+        <php expression="\App\Conf\Configuration::checkDatabase('${dbHost}', '${dbName}', '${dbUser}', '${dbPassword}');" returnProperty="databaseCheck" />
+        <if>
+            <equals arg1="${databaseCheck}" arg2="false" />
+            <then>
+                <phingcall target="database_input">
+                    <property name="inf" value="Invalid connection data." />
+                </phingcall>
+            </then>
+        </if>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: database_input                       -->
+    <!-- ============================================ -->
+    <target name="database_input">
+        <if>
+            <isset property="inf" />
+            <then>
+                <echo level="error">${inf}</echo>
+            </then>
+        </if>
+        <input message="Please insert your database host" propertyName="dbHost" promptChar=":" />
+        <input message="Please insert your database user" propertyName="dbUser" promptChar=":" />
+        <input message="Please insert your database password" propertyName="dbPassword" promptChar=":" />
+        <input message="Please insert your database name" propertyName="dbName" promptChar=":" />
+        <phingcall target="database_test" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: admin                                -->
+    <!-- ============================================ -->
+    <target name="admin" depends="database">
+        <phingcall target="admin_input" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: admin_test                           -->
+    <!-- ============================================ -->
+    <target name="admin_test">
+        <echo>Valid data.</echo>
+        <php expression="\App\Conf\Configuration::checkLogin('${login}');" returnProperty="loginCheck" />
+        <php expression="\App\Conf\Configuration::checkPassword('${password}');" returnProperty="passwordCheck" />
+        <php expression="\App\Conf\Configuration::checkEmail('${email}');" returnProperty="emailCheck" />
+        <if>
+            <or>
+                <equals arg1="${loginCheck}" arg2="login" />
+                <equals arg1="${passwordCheck}" arg2="password" />
+                <equals arg1="${emailCheck}" arg2="email" />
+            </or>
+            <then>
+                <phingcall target="admin_input">
+                    <property name="inf" value="Invalid: ${loginCheck} ${passwordCheck} ${emailCheck}." />
+                </phingcall>
+            </then>
+        </if>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: admin_input                          -->
+    <!-- ============================================ -->
+    <target name="admin_input">
+        <if>
+            <isset property="inf" />
+            <then>
+                <echo level="error">${inf}</echo>
+            </then>
+        </if>
+        <echo>Create admin account. Login and password cannot include non-alphanumeric characters.</echo>
+        <input message="Please insert your login (min 2 characters)" propertyName="login" promptChar=":" />
+        <input message="Please insert your password (min 8 characters)" propertyName="password" promptChar=":" />
+        <input message="Please insert your email" propertyName="email" promptChar=":" />
+        <phingcall target="admin_test" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: set_property                         -->
+    <!-- ============================================ -->
+    <target name="set_property" depends="admin">
+        <php expression="\App\Conf\Configuration::$siteAdress;" returnProperty="siteAdress" />
+        <php expression="\App\Conf\Configuration::$requestUrl;" returnProperty="rewriteBase" />
+        <php expression="\App\Conf\Configuration::$dbHost;" returnProperty="dbHost" />
+        <php expression="\App\Conf\Configuration::$dbUser;" returnProperty="dbUser" />
+        <php expression="\App\Conf\Configuration::$dbPassword;" returnProperty="dbPassword" />
+        <php expression="\App\Conf\Configuration::$dbName;" returnProperty="dbName" />
+        <php expression="\App\Conf\Configuration::$login;" returnProperty="login" />
+        <php expression="\App\Conf\Configuration::$password;" returnProperty="password" />
+        <php expression="\App\Conf\Configuration::$email;" returnProperty="email" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: create_db_conf_file                  -->
+    <!-- ============================================ -->
+    <target name="create_db_conf_file" depends="set_property">
+        <copy file="${AppConfDir}/DBSettings.php" tofile="${DBConfDir}/DBSettings.php" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="dbHost" value="${dbHost}" />
+                    <token key="dbUser" value="${dbUser}" />
+                    <token key="dbPassword" value="${dbPassword}" />
+                    <token key="dbName" value="${dbName}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: create_folders                       -->
+    <!-- ============================================ -->
+    <target name="create_folders" depends="create_db_conf_file">
+        <mkdir dir="${project.basedir}/data/cache/registry" />
+        <exec command="chmod -R 777 ${project.basedir}/data/cache" />
+        <exec command="chmod -R 777 ${project.basedir}/data/cache/registry" />
+        <mkdir dir="${project.basedir}/data/cache/tmp" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: create_htaccess_file                 -->
+    <!-- ============================================ -->
+    <target name="create_htaccess_file" depends="create_folders">
+        <copy file="${AppConfDir}/htaccess" tofile="${project.basedir}/.htaccess" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="rewriteBase" value="${rewriteBase}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: create_sql_query                     -->
+    <!-- ============================================ -->
+    <target name="create_sql_query" depends="create_htaccess_file">
+        <php expression="require('${project.basedir}/app/conf/DB/DBSettings.php');
+require('${project.basedir}/app/model/UserAuth/HashPass.php');" />
+        <php expression="\UserAuth\HashPass::hash(${password});" returnProperty="hashPassword" />
+        <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');" returnProperty="regDate" />
+        <copy file="${AppConfDir}/db.sql" tofile="${project.basedir}/data/cache/tmp/tmp_db.sql" overwrite="true">
+            <filterchain>
+                <replacetokens>
+                    <token key="dbHost" value="${dbHost}" />
+                    <token key="dbUser" value="${dbUser}" />
+                    <token key="dbName" value="${dbName}" />
+                    <token key="login" value="${login}" />
+                    <token key="email" value="${email}" />
+                    <token key="hashPassword" value="${hashPassword}" />
+                    <token key="regDate" value="${regDate}" />
+                    <token key="logDate" value="${regDate}" />
+                    <token key="role" value="${role}" />
+                    <token key="siteName" value="${siteName}" />
+                    <token key="email" value="${email}" />
+                    <token key="siteAdress" value="${siteAdress}" />
+                    <token key="rewriteBase" value="${rewriteBase}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+        <php expression="\App\Conf\Configuration::createDataBase();" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: clear_cms_configurator_files         -->
+    <!-- ============================================ -->
+    <target name="clear_tmp" depends="create_sql_query">
+        <delete file="${project.basedir}/data/cache/tmp/tmp_db.sql" />
+    </target>
+
+    <!-- ============================================ -->
+    <!-- Target: end                                  -->
+    <!-- ============================================ -->
+    <target name="end" depends="clear_tmp">
+        <echo>Configuration completed.</echo>
+    </target>
+
+</project>
