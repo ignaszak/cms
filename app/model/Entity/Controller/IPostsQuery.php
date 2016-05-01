@@ -36,7 +36,12 @@ abstract class IPostsQuery
     public function getLink()
     {
         return RegistryFactory::start()->get('url')->url('post-alias', [
-            'alias' => $this->getAlias()
+            'alias' => $this->getAlias(),
+            'year' => $this->getDate('Y'),
+            'month' => $this->getDate('m'),
+            'day' => $this->getDate('d'),
+            's1' => '/',
+            's2' => '/'
         ]);
     }
 
@@ -46,8 +51,8 @@ abstract class IPostsQuery
      */
     public function getCategoryLink()
     {
-        return RegistryFactory::start()->get('url')->url('cat-alias', [
-            'alias' => $this->getCategory()->getAlias()
+        return RegistryFactory::start()->get('url')->url('category-alias', [
+            'alias' => $this->getCategory()->getAlias(), 'page' => 1
         ]);
     }
 
@@ -61,8 +66,9 @@ abstract class IPostsQuery
             'year' => $this->getDate('Y'),
             'month' => $this->getDate('m'),
             'day' => $this->getDate('d'),
-            's1' => '-',
-            's2' => '-'
+            's1' => '/',
+            's2' => '/',
+            'page' => 1
         ]);
     }
 

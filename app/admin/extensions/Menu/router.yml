@@ -42,7 +42,7 @@ routes:
 
     admin-menu-ajax-list:
         path: '/admin/menu/ajax/{alias}/{page}/load.json'
-        method: POST
+        method: POST|GET
         controller: AdminController\Menu\AjaxLoadController
         group: Menu
         tokens:
@@ -50,6 +50,6 @@ routes:
 
     admin-menu-ajax-edit:
         path: '/admin/menu/ajax/{id}/edit.json'
-        method: POST
+        method: GET
         controller: AdminController\Menu\AjaxEditController
         group: Menu

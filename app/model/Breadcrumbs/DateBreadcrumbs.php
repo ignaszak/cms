@@ -11,7 +11,11 @@ class DateBreadcrumbs extends IBreadcrumbs
      */
     public function createBreadcrumbs(): array
     {
-        $paramsArray = $this->http->router->all();
+        $paramsArray = [
+            $this->http->router->get('year'),
+            $this->http->router->get('month'),
+            $this->http->router->get('day'),
+        ];
         $result = $this->getHome();
         foreach ($paramsArray as $key => $date) {
             if (is_numeric($date)) {

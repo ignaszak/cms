@@ -14,42 +14,38 @@ $(function () {
         load_elements(this);
     }).change();
 
+    data = null;
     $('#jstree-category').on('click.jstree', function (e, data) {
-        var catId = $('input[name="categoryId"]').val();
-        $('input[name="dataAlias"]').val('category');
-        $('input[name="dataNumber"]').val(catId);
-        $.post(
+        catId = $('input[name="categoryId"]').val();
+        $.get(
             admin_adress + '/menu/ajax/category/' + catId + '/load.json',
-            function ( data ) {
-                data[0].number = catId;
-                $('div.add-elemnt-buttons button#add').click(function () {
-                    data[0].id = '';
-                    add_element(data[0]);
-                });
+            function ( result ) {
+                window.data = result;
             }
         );
+
+    });
+    $('div#addCategory button#add').click(function () {
+        data[0].id = '';
+        add_element(data[0], 'category');
     });
 
     $('button.add-link').click(function () {
         var data = {
             title : $('input[name="linkTitle"]').val(),
             link : $('input[name="linkAdress"]').val(),
-            alias : 'link',
-            number : 1,
+            alias : 'link'
         }
-        $('input[name="dataAlias"]').val(data.alias);
-        $('input[name="dataNumber"]').val(1);
         if (data.title == '' || !isUrl(data.link)) {
             alert('Invalid title or/and link');
         } else {
             data.id = ''
-            add_element(data);
+            add_element(data, 'link');
         }
-        order();
     });
 
     if (edit_adress != '') {
-        $.post(
+        $.get(
             edit_adress,
             function ( data ) {
                 for (i = 0; i < data.length; ++i) {
@@ -67,7 +63,7 @@ function load_elements(obj)
     var alias = $(obj).attr('id');
     var data = null;
     var page = 1;
-
+    var parent = obj.getAttribute('data-target');
     $.post(
         admin_adress + '/menu/ajax/' + alias + '/' + page + '/load.json',
         {search: $(obj).val()},
@@ -78,7 +74,6 @@ function load_elements(obj)
 
             var count = data.length;
             for (var i = 0; i < count; ++ i) {
-                data[i].number = i;
                 element.append(
                     '<li><a href="javascript:void(0)" id="' + i + '">' +
                     get_category(data[i].category) + data[i].title +
@@ -90,30 +85,28 @@ function load_elements(obj)
                 $('.add-elemnt-buttons ul a').removeClass('active');
                 $(this).addClass('active');
                 id = $(this).attr('id');
-                $('input[name="dataAlias"]').val(alias);
-                $('input[name="dataNumber"]').val(id);
-                $('div.add-elemnt-buttons button#add').click(function () {
-                    data[id].id = '';
-                    add_element(data[id]);
+                check = new Array();
+                $('div' + parent + ' button#add').click(function () {
+                    check.push(id);
+                    if (check.length == 1) {
+                        data[id].id = '';
+                        add_element(data[id], alias);
+                    }
                 });
             });
         }
     );
 }
 
-function add_element(data)
+function add_element(data, alias)
 {
-    var alias = $('input[name="dataAlias"]').val();
-    var number = $('input[name="dataNumber"]').val();
-    if (alias == data.alias && data.number == number) {
-        var title = $('input[name="' + alias + 'Title"]').val();
-        if (title == '') {
-            alert('Please insert item title.');
-        } else {
-            data.itemTitle = title;
-            data.sequence = $('div#menu a').length + 1;
-            element_schema(data);
-        }
+    var title = $('input[name="' + alias + 'Title"]').val();
+    if (title == '') {
+        alert('Please insert item title.');
+    } else {
+        data.itemTitle = title;
+        data.sequence = $('div#menu a').length + 1;
+        element_schema(data);
     }
 }
 
@@ -199,4 +192,12 @@ function get_category(cat)
     return (cat !== undefined ?
         '<span><i class="fa fa-folder-o"></i> ' +
         cat + ' <i class="fa fa-angle-double-right"></i></span> ' : "");
+}
+
+function decode_adress(data)
+{
+    json = data.link.replace(/\|/g, '"');
+    console.log(json);
+    obj = jQuery.parseJSON(json);
+    return obj.tokens.alias;
 }

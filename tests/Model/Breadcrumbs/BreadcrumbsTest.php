@@ -4,6 +4,7 @@ namespace Test\Model\Breadcrumbs;
 use Breadcrumbs\Breadcrumbs;
 use Test\Mock\MockTest;
 use Test\Mock\MockHttp;
+use Ignaszak\Registry\RegistryFactory;
 
 class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,6 +13,9 @@ class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $stub = \Mockery::mock('UrlGenerator');
+        $stub->shouldReceive(['url' => '']);
+        RegistryFactory::start()->set('url', $stub);
         $this->_bc = new Breadcrumbs();
     }
 

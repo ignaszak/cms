@@ -66,8 +66,8 @@ class CategoryBreadcrumbs extends IBreadcrumbs
             if ($cat->getId() == $catId) {
                 $result[] = $this->addBreadcrumb(
                     $cat->getTitle(),
-                    $this->registry->get('url')->url('cat-alias', [
-                        'alias' => $cat->getAlias()
+                    $this->registry->get('url')->url('category-alias', [
+                        'alias' => $cat->getAlias(), 'page' => 1
                     ])
                 );
                 $catId = $cat->getParentId();

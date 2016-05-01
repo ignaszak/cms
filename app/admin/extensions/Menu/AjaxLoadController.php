@@ -22,7 +22,18 @@ class AjaxLoadController extends FrontController
             $rowArray = [];
             $rowArray['id'] = $row->getId();
             $rowArray['title'] = $row->getTitle();
-            $rowArray['link'] = "{$alias}/{$row->getAlias()}";
+            $rowArray['link'] = str_replace('"', '|', json_encode([
+                'route' => "{$alias}-alias",
+                'alias' => $alias,
+                'tokens' => [
+                    'alias' => $row->getAlias(),
+                    's1' => '/',
+                    's2' => '/',
+                    'year' => $row->getDate('Y'),
+                    'month' => $row->getDate('m'),
+                    'day' => $row->getDate('d')
+                ]
+            ]));
             $rowArray['alias'] = $alias;
             if ($alias == 'post') {
                 $rowArray['category'] = $row->getCategory()->getTitle();

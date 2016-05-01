@@ -26,7 +26,6 @@ class IBreadcrumbsTest extends \PHPUnit_Framework_TestCase
     {
         $getHome = MockTest::callMockMethod($this->_ibc, 'getHome');
         $this->assertEquals('Home', $getHome[0]->title);
-        $this->assertEquals('anyBaseUrl/', $getHome[0]->link);
     }
 
     public function testAddBreadcrumb()

@@ -93,26 +93,23 @@ class QueryBuilder implements IQueryBuilder
      */
     public function date(string $value): IQueryController
     {
-        $date = explode('-', $value);
-
+        $date = explode('/', $value);
         $emConfig = DBDoctrine::em()->getConfiguration();
         $emConfig->addCustomDatetimeFunction(
             'DATE_FORMAT',
             'DoctrineExtensions\Query\Mysql\DateFormat'
         );
-
         $format = "";
         if (array_key_exists(0, $date)) {
             $format = "%Y";
         }
         if (array_key_exists(1, $date)) {
-            $format .= "-%m";
+            $format .= "/%m";
         }
         if (array_key_exists(2, $date)) {
-            $format .= "-%d";
+            $format .= "/%d";
         }
-
-        $this->set('DATE_FORMAT(c.date, \'' . $format . '\')', $value);
+        $this->set("DATE_FORMAT(c.date, '{$format}')", $value);
 
         return $this->_queryController;
     }

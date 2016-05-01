@@ -1,95 +1,91 @@
 routes:
 
     post-default:
-        path: '/{page}'
-        method: GET
-        group: post
-        controller: Controller\ViewPostController
-    post-list:
-        path: '/post/{page}'
+        path: '/{page}/'
         method: GET
         group: post
         controller: Controller\ViewPostController
     post-alias:
-        path: '/post/{alias}'
+        path: '/{year}{s1}{month}{s2}{day}/{alias}.html'
         method: GET
         group: post
         controller: Controller\ViewPostController
+        tokens:
+            year: '@year?'
+            month: '@month?'
+            day: '@day?'
     post-com-list:
-        path: '/post/{alias}/{page}'
+        path: '/{year}{s1}{month}{s2}{day}/{alias}/{page}/'
         method: GET
         group: post
         controller: Controller\ViewPostController
+        tokens:
+            year: '@year?'
+            month: '@month?'
+            day: '@day?'
 
-    cat-list:
-        path: '/category/{page}'
+    category-list:
+        path: '/category/{page}/'
         method: GET
         group: category
         controller: Controller\ViewPostController
-    cat-alias:
-        path: '/category/{alias}'
-        method: GET
-        group: category
-        controller: Controller\ViewPostController
-    cat-alias-page:
-        path: '/category/{alias}/{page}'
+    category-alias:
+        path: '/category/{alias}/{page}/'
         method: GET
         group: category
         controller: Controller\ViewPostController
 
     date:
-        path: '/date/{year}{s1}{month}{s2}{day}'
+        path: '/{year}{s1}{month}{s2}{day}/{page}/'
         method: GET
         group: date
         controller: Controller\ViewPostController
         tokens:
-            year: '(\d{4})?'
-            month: '(\d{2})?'
-            day: '(\d{2})?'
-            s1: '(-)?'
-            s2: '(-)?'
+            year: '@year?'
+            month: '@month?'
+            day: '@day?'
 
     page-alias:
-        path: '/page/{alias}'
+        path: '/page/{alias}.html'
         method: GET
         group: page
         controller: Controller\ViewPageController
 
     user-account:
-        path: /user
+        path: /user/
         method: GET
         group: user
         controller: Controller\User\UserViewController
     user-login:
-        path: '/user/{method}/{action}'
+        path: '/user/{method}/{action}/'
         method: POST
         group: user
         controller: Controller\User\UserLoginController
         tokens:
             action: login
     user-logout:
-        path: '/user/{method}/{action}'
+        path: '/user/{method}/{action}/'
         method: POST|GET
         group: user
         controller: Controller\User\UserLogoutController
         tokens:
             action: logout
     user-registration:
-        path: '/user/{method}/{action}'
+        path: '/user/{method}/{action}/'
         method: POST
         group: user
         controller: Controller\User\UserRegistrationController
         tokens:
             action: registration
     user-remind:
-        path: '/user/{method}/{action}'
+        path: '/user/{method}/{action}/'
         method: POST
         group: user
         controller: Controller\User\UserRemindController
         tokens:
             action: remind
     user-save:
-        path: '/user/{method}/{action}'
+        path: '/user/{method}/{action}/'
         method: POST
         group: user
         controller: Controller\User\UserSaveController
@@ -97,35 +93,44 @@ routes:
             action: save
 
     search:
-        path: '/search/{page}'
+        path: '/search/{page}/'
         method: POST|GET
         group: search
         controller: Controller\SearchController
 
     mail:
-        path: '/mail/send'
+        path: '/mail/send/'
         method: GET
         group: mail
         controller: Controller\SendMailController
 
     default:
-        path: /@base
+        path: '/{base}'
+        tokens:
+            base : '@base'
     error:
         path: /@notfound
         controller: Controller\NotFoundController
 
     admin:
-        path: /admin
+        path: /admin/
         method: GET
         group: admin
 
 tokens:
     id: '@digit'
-    alias: '@alnum'
+    alias: '([a-z]@alnum)'
     page: '@digit'
     date: '([0-9-]+)'
     method: '(post|ajax)'
     userName: '@alnum'
+    year: '@year'
+    month: '@month'
+    day: '@day'
+    s1: '(/)?'
+    s2: '(/)?'
+
+patterns:
     year: '(\d{4})'
     month: '(\d{2})'
     day: '(\d{2})'

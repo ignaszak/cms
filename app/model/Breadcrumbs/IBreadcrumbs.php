@@ -49,7 +49,10 @@ abstract class IBreadcrumbs
     protected function getHome(): array
     {
         return [
-            $this->addBreadcrumb('Home', $this->_conf->getBaseUrl())
+            $this->addBreadcrumb(
+                'Home',
+                $this->registry->get('url')->url('default', ['base' => ''])
+            )
         ];
     }
 

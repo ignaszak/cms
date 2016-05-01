@@ -85,9 +85,13 @@ class Post
      */
     private function getDate(): string
     {
-        $date = $this->http->router->all();
-        return implode('-', array_filter($date, function ($var) {
-            return !in_array($var, ['', '-']);
+        $date = [
+            $this->http->router->get('year'),
+            $this->http->router->get('month'),
+            $this->http->router->get('day'),
+        ];
+        return  implode('/', array_filter($date, function ($var) {
+            return !in_array($var, ['', '/']);
         }));
     }
 }

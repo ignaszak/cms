@@ -32,7 +32,7 @@ routes:
         tokens:
             action: (edit|delete)
 
-    admin-cat-list:
+    admin-category-list:
         path: '/admin/post/c/{action}/{page}'
         method: GET
         controller: AdminController\Post\ViewCategoryController
