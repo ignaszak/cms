@@ -1,7 +1,8 @@
-function hideSidebarMenu() {
+function hideSidebarMenu()
+{
     if (isScreenSize('xs')) {
         $('#sidebar-menu').hide();
-        $('button.navbar-toggle').click(function(){
+        $('button.navbar-toggle').click(function () {
             $('#sidebar-menu').show();
         });
     } else {
@@ -9,7 +10,8 @@ function hideSidebarMenu() {
     }
 }
 
-function responsivePanel() {
+function responsivePanel()
+{
     navTopPosition = $('nav div.container-fluid').offset().top;
     navTopHeight = $('nav div.container-fluid').outerHeight();
     navBorder = 1;
@@ -36,7 +38,7 @@ $(document).ready(function () {
     responsivePanel();
 });
 
-$(window).on('resize', function(){
+$(window).on('resize', function () {
     hideSidebarMenu();
     responsivePanel();
 });

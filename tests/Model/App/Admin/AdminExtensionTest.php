@@ -48,7 +48,8 @@ class AdminExtensionTest extends \PHPUnit_Framework_TestCase
                 4 => 'Post'
             ],
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_adminExtension, 'extensionsArray'
+                $this->_adminExtension,
+                'extensionsArray'
             )
         );
     }
@@ -72,7 +73,9 @@ class AdminExtensionTest extends \PHPUnit_Framework_TestCase
             MockTest::mockFileSystem($structure)
         );
         MockTest::inject(
-            $this->_adminExtension, 'extensionsArray', ['Menu', 'Page', 'Post']
+            $this->_adminExtension,
+            'extensionsArray',
+            ['Menu', 'Page', 'Post']
         );
         $this->assertEquals(
             [

@@ -27,7 +27,8 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
         $this->mockCategoryList(['anyCategory']);
         MockTest::callMockMethod($this->_categoryBc, 'setBreadcrumbsArray');
         $breadcrumbsArray = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_categoryBc, 'breadcrumbsArray'
+            $this->_categoryBc,
+            'breadcrumbsArray'
         );
         $this->assertEquals(['anyCategory'], $breadcrumbsArray);
     }
@@ -72,10 +73,10 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
         MockHttp::run();
         $this->_categoryBc = new CategoryBreadcrumbs();
         $stub = new class {
-        public function getId()
-        {
-            return 1;
-        }
+            public function getId()
+            {
+                return 1;
+            }
         };
         MockDoctrine::queryBuilderResult([$stub]);
         $catId = MockTest::callMockMethod($this->_categoryBc, 'getCategoryId');
@@ -86,10 +87,10 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
     {
         $this->mockCategoryList([]);
         $stub = new class {
-        public function getId()
-        {
-            return 1;
-        }
+            public function getId()
+            {
+                return 1;
+            }
         };
         MockDoctrine::queryBuilderResult([$stub]);
         $this->assertEmpty($this->_categoryBc->createBreadcrumbs());
@@ -102,15 +103,15 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
         MockHttp::run();
         $this->_categoryBc = new CategoryBreadcrumbs();
         $stub = new class {
-        public function getCategory()
-        {
-            return new class {
-            public function getId()
+            public function getCategory()
             {
-                return 1;
+                return new class {
+                    public function getId()
+                    {
+                        return 1;
+                    }
+                };
             }
-            };
-        }
         };
         MockDoctrine::queryBuilderResult([$stub]);
         $catId = MockTest::callMockMethod($this->_categoryBc, 'getCategoryId');
@@ -143,6 +144,9 @@ class CategoryBreadcrumbsTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateBreadcrumbsWithNoActiveCategory()
     {
+        $stub = \Mockery::mock('UrlGenerator');
+        $stub->shouldReceive('url')->andReturn('')->once();
+        RegistryFactory::start()->set('url', $stub);
         $stub = new class {
             public function getCategory()
             {

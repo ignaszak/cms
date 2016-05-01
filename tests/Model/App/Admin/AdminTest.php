@@ -30,19 +30,22 @@ class AdminTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             'App\Admin\AdminExtension',
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_adminMenu, '_adminExtension'
+                $this->_adminMenu,
+                '_adminExtension'
             )
         );
         $this->assertInstanceOf(
             'App\Yaml',
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_adminMenu, '_yaml'
+                $this->_adminMenu,
+                '_yaml'
             )
         );
         $this->assertInstanceOf(
             'Ignaszak\Registry\Registry',
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_adminMenu, '_registry'
+                $this->_adminMenu,
+                '_registry'
             )
         );
     }

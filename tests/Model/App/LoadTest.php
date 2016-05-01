@@ -21,13 +21,15 @@ class LoadTest extends \PHPUnit_Framework_TestCase
         $this->_load = $reflection->newInstanceWithoutConstructor();
         MockTest::inject($this->_load, 'confYaml', MockTest::mockFile('conf.yml'));
         MockTest::inject(
-            $this->_load, 'viewHelperYaml', MockTest::mockFile('view-helper.yml')
-            );
+            $this->_load,
+            'viewHelperYaml',
+            MockTest::mockFile('view-helper.yml')
+        );
         MockTest::inject(
             $this->_load,
             'adminViewHelperYaml',
             MockTest::mockFile('admin-view-helper.yml')
-            );
+        );
         $this->_load->__construct();
     }
 
@@ -68,7 +70,7 @@ class LoadTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             '/anyDir',
             MockTest::callMockMethod($this->_load, 'dir', ['/anyDir'])
-            );
+        );
     }
 
     public function testLoadExceptionHandler()

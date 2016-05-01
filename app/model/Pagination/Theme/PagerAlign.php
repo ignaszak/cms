@@ -12,7 +12,6 @@ class PagerAlign extends Theme
     public function getTheme(): string
     {
         if ($this->_pg->getCountPage() > 1) {
-
             return <<<EOT
 <nav>
     <ul class="pager">

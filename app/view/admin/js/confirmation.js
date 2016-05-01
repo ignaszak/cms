@@ -1,4 +1,4 @@
-$(document).ready(function(){
+$(document).ready(function () {
     $('[data-toggle="a-confirm"]').confirmation({
         onConfirm : function () {
             window.location = $(this).attr('href');

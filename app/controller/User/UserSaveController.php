@@ -53,7 +53,9 @@ class UserSaveController extends FrontController
     {
         $hash = $controller->entity()->getPassword();
         if (! HashPass::verifyPassword(
-            $this->http->request->get('userPassword'), $hash)
+            $this->http->request->get('userPassword'),
+            $hash
+        )
         ) {
             Server::setReferData([
                 'error' => ['validPassword' => 1]

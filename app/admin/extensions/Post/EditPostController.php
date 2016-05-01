@@ -99,7 +99,6 @@ class EditPostController extends FrontController
                 ]);
 
                 if ($this->_controller->action == 'edit' && $this->_controller->alias) {
-
                     $data['formTitle'] = 'Edit post';
 
                     $this->_controller->query->setQuery('post')

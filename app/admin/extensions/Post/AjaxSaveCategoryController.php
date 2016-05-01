@@ -44,7 +44,6 @@ class AjaxSaveCategoryController extends FrontController
         }
 
         if ($this->request['action'] == 'edit') {
-
             $alias = $controller->getAlias($this->request['title']);
             $parentId = is_numeric($this->request['parentId']) ?
                 $this->request['parentId'] : 0;
@@ -58,16 +57,13 @@ class AjaxSaveCategoryController extends FrontController
                 ]);
 
             echo $refresh;
-
         } elseif ($this->request['action'] == 'delete') {
-
             $controller = new Controller(new Categories());
             $idArray = array_filter(
                 $this->getChildCategories($this->request['id'])
             );
             $controller->findBy(['id' => $idArray])
                 ->remove();
-
         }
 
         exit;

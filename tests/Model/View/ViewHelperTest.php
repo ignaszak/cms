@@ -24,7 +24,6 @@ class ViewHelperTest extends \PHPUnit_Framework_TestCase
                 'loadFile' => 'View\View',
                 'getThemeFolder' => 'View\View'
             ]
-
         );
     }
 

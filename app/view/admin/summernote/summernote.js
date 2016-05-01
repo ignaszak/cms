@@ -1,6 +1,6 @@
-$(document).ready(function() {
+$(document).ready(function () {
     $('#summernote').summernote({
-    	fontsize : 15,
+        fontsize : 15,
         height : 300,
         focus : true,
         fontNames : [

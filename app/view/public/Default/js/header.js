@@ -1,29 +1,30 @@
 var onScrollMarginBotom = 30;
 
-function footerLocation() {
+function footerLocation()
+{
 
     var footer = {
         sidebar : $('.sidebar-affix'),
-        get sidebarBottom () {
+        get sidebarBottom() {
             var sidebarLeft = this.sidebar.eq(0).offset().top +
                 this.sidebar.eq(0).outerHeight(true);
             var sidebarRight = this.sidebar.eq(1).offset().top +
                 this.sidebar.eq(1).outerHeight(true);
             return sidebarLeft >= sidebarRight ?
-                sidebarLeft : sidebarRight;
+            sidebarLeft : sidebarRight;
         },
-        get containerBottom () {
+        get containerBottom() {
             var container = this.sidebar.eq(1).parent().parent();
             return container.offset().top + container.outerHeight(true);
         },
-        get footerTop () {
+        get footerTop() {
             var contentBottom = this.sidebarBottom >= this.containerBottom ?
                 this.sidebarBottom : this.containerBottom;
             var windowBottom = $(window).height() -
                 $('footer').outerHeight(true) -
                 $('nav .container').outerHeight(true);
             return windowBottom >= contentBottom ?
-                windowBottom : contentBottom;
+            windowBottom : contentBottom;
         }
     }
     console.log(footer.footerTop);
@@ -32,7 +33,8 @@ function footerLocation() {
     });
 }
 
-function initView() {
+function initView()
+{
 
     $('body').css({'padding-top':$('nav .container').outerHeight(true)});
 
@@ -43,7 +45,7 @@ function initView() {
          */
         var sidebar_category = $('#sidebar-wrapper').html();
         $('.sidebar-category').html(
-                '<h1>Categories</h1>' +
+            '<h1>Categories</h1>' +
                 '<div class="sidebar-overflow">' +
                 sidebar_category +
                 '</div>'
@@ -73,7 +75,7 @@ function initView() {
         /**
          * Sidebar affix and move top button efect
          */
-        $(window).on('scroll', function() {
+        $(window).on('scroll', function () {
 
             var bodyTop = $('.body-top').position().top - onScrollMarginBotom;
 
@@ -94,11 +96,10 @@ function initView() {
                 });
             }
         });
-
     } // END DESKTOP
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
     initView();
     footerLocation();
 
@@ -106,14 +107,14 @@ $(document).ready(function() {
      * Hide and show scrollbar effect
      */
     //$('.sidebar-overflow').css({"overflow":"hidden"});
-    $('.sidebar-overflow').css({"overflow":"hidden"}).mouseover(function(){
+    $('.sidebar-overflow').css({"overflow":"hidden"}).mouseover(function () {
         $(this).css({"overflow":"auto"});
-    }).mouseout(function(){
+    }).mouseout(function () {
         $(this).css({"overflow":"hidden"});
     });
 
 });
 
-$(window).resize(function(){
+$(window).resize(function () {
     initView();
 });

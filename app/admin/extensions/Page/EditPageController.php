@@ -98,7 +98,6 @@ class EditPageController extends FrontController
                 ]);
 
                 if ($this->_controller->action == 'edit' && $this->_controller->alias) {
-
                     $data['formTitle'] = 'Edit page';
 
                     $this->_controller->query->setQuery('page')

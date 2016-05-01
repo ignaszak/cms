@@ -2,6 +2,7 @@
 namespace Test\Mock;
 
 use Ignaszak\Registry\RegistryFactory;
+
 class MockHttp
 {
 
@@ -70,17 +71,21 @@ class MockHttp
         $router->shouldReceive('get')->andReturnUsing(
             function (string $token, $default = null) {
                 return self::$routerResponse['params'][$token] ?? $default;
-            });
+            }
+        );
         $router->shouldReceive('has')->andReturnUsing(
             function (string $token) {
                 return array_key_exists(
-                    $token, self::$routerResponse['params']
-                    );
-            });
+                    $token,
+                    self::$routerResponse['params']
+                );
+            }
+        );
         $router->shouldReceive([
             'name' => self::$routerResponse['name'] ?? '',
             'controller' => self::$routerResponse['controller'] ?? '',
-            'attachment' => self::$routerResponse['attachment'] ?? function () {},
+            'attachment' => self::$routerResponse['attachment'] ?? function () {
+            },
             'all' => self::$routerResponse['params'] ?? [],
             'group' => self::$routerResponse['group'] ?? '',
             'tokens' => array_keys(self::$routerResponse['params'] ?? [])

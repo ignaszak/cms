@@ -260,7 +260,7 @@ class QueryController extends IQueryController
      */
     private function setLimit()
     {
-       if (is_null($this->limit) === false) {
+        if (is_null($this->limit) === false) {
             $query = $this->query->setMaxResults($this->limit);
             $this->query = $query;
         }

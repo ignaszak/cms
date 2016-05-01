@@ -12,7 +12,6 @@ class MultiPage extends Theme
     public function getTheme(): string
     {
         if ($this->_pg->getCountPage() > 1) {
-
             $prevLink = $this->_pg->getPrevLink();
             $nextLink = $this->_pg->getNextLink();
 
