@@ -16,9 +16,9 @@ class SendMailController extends FrontController
         $transport = \Swift_MailTransport::newInstance();
 
         $message = \Swift_Message::newInstance()->setSubject('Message from CMS')
-            ->setFrom($_POST['from'])
+            ->setFrom($this->http->request->get('from'))
             ->setTo($adminMail)
-            ->setBody($_POST['body']);
+            ->setBody($this->http->request->get('body'));
 
         $mailer = \Swift_Mailer::newInstance($transport);
         $mailer->send($message);

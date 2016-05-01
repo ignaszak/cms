@@ -24,10 +24,9 @@ class EditPostController extends FrontController
 
     public function run()
     {
-        $this->action = $this->view()->getRoute('action');
-        $this->alias = $this->view()->getRoute('alias');
-        $this->setViewHelperName('AdminEditPost');
-        $this->view()->addView('theme/post-edit.html');
+        $this->action = $this->http->router->get('action');
+        $this->alias = $this->http->router->get('alias');
+        $this->view->addView('theme/post-edit.html');
 
         if ($this->action == 'delete' && $this->alias) {
             $controller = new Controller(new Posts());
@@ -35,7 +34,11 @@ class EditPostController extends FrontController
                 'alias' => $this->alias
             ])->remove();
 
-            Server::headerLocation("admin/post/p/view/");
+            Server::headerLocation(
+                $this->url('admin-post-list', [
+                    'action' => 'view', 'page' => 1
+                ])
+            );
         }
     }
 
@@ -45,50 +48,76 @@ class EditPostController extends FrontController
      */
     public function setViewHelper()
     {
-        return new class($this) extends ViewHelperController {
-
-        private $returnData;
-
-        public function __construct(FrontController $_controller)
+        return new class($this) extends ViewHelperController
         {
-            parent::__construct($_controller);
-            $this->returnData = $this->_controller->view()
-                ->getFormResponseData('data');
-        }
 
-        public function getAdminEditPost(string $key)
-        {
-            $data = [];
+            /**
+             *
+             * @var array
+             */
+            private $returnData = [];
 
-            $data['id'] = null;
-            $data['title'] = $this->returnData['setTitle'];
-            $data['content'] = $this->returnData['setContent'];
-            $data['catId'] = $this->returnData['setCategory'];
-            $data['public'] = $this->returnData['setPublic'];
-            $data['formTitle'] = 'Add new post';
-            $data['formLink'] = $this->_controller->view()->getAdminAdress() .
-                "/post/p/form";
+            /**
+             *
+             * @var array
+             */
+            private $data = [];
 
-            if ($this->_controller->action == 'edit' && $this->_controller->alias) {
-
-                $data['formTitle'] = 'Edit post';
-
-                $this->_controller->query()->setQuery('post')
-                    ->alias($this->_controller->alias);
-
-                foreach ($this->_controller->query()->getQuery() as $post) {
-                    $data['id'] = $post->getId();
-                    $data['catId'] = $post->getCategory()->getId();
-                    $data['title'] = $post->getTitle();
-                    $data['content'] = $post->getContent();
-                    $data['public'] = $post->getPublic();
-                    $data['deleteLink'] = $this->_controller->view()
-                        ->getAdminAdress() . "/post/p/delete/" . $post->getAlias();
-                }
+            /**
+             *
+             * @param FrontController $_controller
+             */
+            public function __construct(FrontController $_controller)
+            {
+                parent::__construct($_controller);
+                $this->returnData = $this->_controller->view
+                    ->getFormResponseData('data');
+                $this->setData();
             }
 
-            return @$data[$key];
-        }
+            /**
+             *
+             * @param string $key
+             * @return mixed
+             */
+            public function getAdminPost(string $key)
+            {
+                return $this->data[$key] ?? null;
+            }
+
+            private function setData()
+            {
+                $data = [];
+                $data['id'] = null;
+                $data['title'] = $this->returnData['setTitle'];
+                $data['content'] = $this->returnData['setContent'];
+                $data['catId'] = $this->returnData['setCategory'];
+                $data['public'] = $this->returnData['setPublic'];
+                $data['formTitle'] = 'Add new post';
+                $data['formLink'] = $this->_controller->url('admin-post-save', [
+                    'action' => 'form'
+                ]);
+
+                if ($this->_controller->action == 'edit' && $this->_controller->alias) {
+                    $data['formTitle'] = 'Edit post';
+
+                    $this->_controller->query->setQuery('post')
+                        ->alias($this->_controller->alias);
+
+                    foreach ($this->_controller->query->getQuery() as $post) {
+                        $data['id'] = $post->getId();
+                        $data['catId'] = $post->getCategory()->getId();
+                        $data['title'] = $post->getTitle();
+                        $data['content'] = $post->getContent();
+                        $data['public'] = $post->getPublic();
+                        $data['deleteLink'] = $this->_controller->url(
+                            'admin-post-edit',
+                            ['action' => 'delete', 'alias' => $post->getAlias()]
+                        );
+                    }
+                }
+                $this->data = $data;
+            }
         };
     }
 }

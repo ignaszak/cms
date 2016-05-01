@@ -1,46 +1,64 @@
 <?php
 namespace FrontController;
 
-use Ignaszak\Registry\RegistryFactory;
+use Controller\DefaultController;
+use App\Resource\Http;
+use View\ViewHelper;
 
 class FrontController
 {
 
     /**
+     * Used to check inheritance with user defined controller class
      *
-     * @var FrontController
+     * @var \ReflectionClass('\FrontController\Controller')
      */
-    private static $_controller;
+    private $_base = null;
 
-    private function __construct()
-    {
-    }
+    /**
+     * Default controller class
+     *
+     * @var string
+     */
+    private $_default = 'Controller\DefaultController';
 
     /**
      *
-     * @param CommandHandler $_commandHandler
+     * @param Http $http
      */
-    public static function run(CommandHandler $_commandHandler = null)
+    public function __construct(Http $http)
     {
-        self::instance();
-        self::$_controller->handle($_commandHandler);
+        $this->_base = new \ReflectionClass('\FrontController\Controller');
+        $this->loadController(
+            empty($http->router->controller()) ?
+                $this->_default : $http->router->controller()
+        );
     }
 
-    private static function instance()
+    /**
+     * Implements user controller class
+     *
+     * @param string $controllerClass
+     * @throws \RuntimeException
+     * @return boolean
+     */
+    private function loadController(string $controllerClass): bool
     {
-        if (empty(self::$_controller)) {
-            self::$_controller = new FrontController();
+        if (class_exists($controllerClass)) {
+            $reflectionControllerClass = new \ReflectionClass($controllerClass);
+
+            if ($reflectionControllerClass->isSubclassOf($this->_base)) {
+                $controller = $controllerClass::instance();
+                $controller->run();
+                $controller->runModules();
+                return true;
+            } else {
+                throw new \RuntimeException(
+                    "{$controllerClass} must be a subclass of" .
+                    "FrontController\Controller"
+                );
+            }
         }
-    }
-
-    /**
-     *
-     * @param CommandHandler $_commandHandler
-     */
-    private function handle(CommandHandler $_commandHandler = null)
-    {
-        $_route = RegistryFactory::start()->register('App\Resource\Route');
-        $_commandHandler = $_commandHandler ?? new CommandHandler();
-        $_commandHandler->getCommand($_route);
+        return false;
     }
 }

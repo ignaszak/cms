@@ -1,0 +1,117 @@
+                    <h2>User account</h2>
+
+                    <hr />
+
+                    <?php if ($this->getFormResponseData('accountSuccess')): ?>
+                    <p class="bg-success">
+                        Your data has been successfully updated.
+                    </p>
+                    <?php endif; ?>
+
+                    <div class="well well-white">
+                        <span style="font-size: 22px">
+                            Hello <?php echo $this->getUserLogin(); ?>
+                        </span>
+                        <?php $form = $this->createForm('user-logout'); ?>
+                        <a href="<?php echo $form->getFormActionAdress(); ?>"
+                        class="btn btn-warning btn-xs" style="float:right;"
+                        data-toggle="tooltip" data-placement="bottom"
+                        title="Sign out">
+                            <i class="fa fa-sign-out"></i>
+                        </a>
+                        <?php if ($this->getUserRole() != 'user'): ?>
+                        <hr>
+                        <a href="<?php echo $this->getSiteAdress(); ?>/admin"
+                        class="btn btn-success btn-sm">
+                            <i class="fa fa-cogs"></i>
+                            &nbsp;
+                            Admin panel
+                        </a>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <?php $form = $this->createForm('user-accountData'); ?>
+                                <form action="<?php echo $form->getFormActionAdress(); ?>"
+                                id="accountData" method="post" class="form-horizontal">
+                                    <fieldset>
+                                        <legend>Change data</legend>
+                                        <?php if ($form->getFormMessage()):
+                                        print("
+                                            <p class=\"bg-warning\">
+                                                {$form->getFormMessage()}
+                                            </p>
+                                        ");
+                                        endif; ?>
+                                        <div class="form-group">
+                                            <label for="inputEmail" class="col-sm-3 control-label">
+                                                Email
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <?php echo $form->inputEmail([
+                                                'placeholder' => 'Email',
+                                                'minlength' => '2'
+                                            ]); ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <?php $form = $this->createForm('user-accountPassword'); ?>
+                                <form action="<?php echo $form->getFormActionAdress(); ?>"
+                                id="accountPassword" method="post" class="form-horizontal">
+                                    <fieldset>
+                                        <legend>Change password</legend>
+                                        <?php if ($form->getFormMessage()):
+                                        print("
+                                            <p class=\"bg-warning\">
+                                                {$form->getFormMessage()}
+                                            </p>
+                                        ");
+                                        endif; ?>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-sm-3 control-label">
+                                                Old password
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <?php echo $form->inputPassword([
+                                                'placeholder' => 'Old password',
+                                                'minlength' => '8'
+                                            ]); ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="inputPassword" class="col-sm-3 control-label">
+                                                New password
+                                            </label>
+                                            <div class="col-sm-9">
+                                                <?php echo $form->inputNewPassword([
+                                                'placeholder' => 'New password',
+                                                'minlength' => '8'
+                                            ]); ?>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-3 col-sm-9">
+                                                <button type="submit" class="btn btn-primary">
+                                                    Save
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>

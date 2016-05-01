@@ -9,21 +9,29 @@ use App\Resource\Server;
 class SaveSettingsController extends FrontController
 {
 
+    /**
+     *
+     * @var array
+     */
+    private $request = [];
+
     public function run()
     {
-        $this->query()->setQuery('options');
-        $_option = $this->query()->getQuery()[0];
+        $this->request = $this->http->request->all();
+
+        $this->query->setQuery('options');
+        $_option = $this->query->getQuery()[0];
 
         $controller = new ConfDecorator(new Options());
         $controller->find(1)
-            ->setSiteTitle(@$_POST['title'] ?? $_option->getSiteTitle())
-            ->setSiteDescription(@$_POST['description'] ?? $_option->getSiteDescription())
-            ->setAdminEmail(@$_POST['email'] ?? $_option->getAdminEmail())
-            ->setViewLimit(@$_POST['viewLimit'] ?? $_option->getViewLimit())
-            ->setDateFormat(@$_POST['dateFormat'] ?? $_option->getDateFormat())
+            ->setSiteTitle($this->request['title'] ?? $_option->getSiteTitle())
+            ->setSiteDescription($this->request['description'] ?? $_option->getSiteDescription())
+            ->setAdminEmail($this->request['email'] ?? $_option->getAdminEmail())
+            ->setViewLimit($this->request['viewLimit'] ?? $_option->getViewLimit())
+            ->setDateFormat($this->request['dateFormat'] ?? $_option->getDateFormat())
             ->setBaseUrl($this->getBaseUrl() ?? $_option->getBaseUrl())
-            ->setRequestUri(@$_POST['requestURI'] ?? $_option->getRequestUri())
-            ->setTheme(@$_POST['theme'] ?? $_option->getTheme())
+            ->setRequestUri($this->request['requestURI'] ?? $_option->getRequestUri())
+            ->setTheme($this->request['theme'] ?? $_option->getTheme())
             ->insert();
 
         Server::headerLocationReferer();
@@ -35,10 +43,14 @@ class SaveSettingsController extends FrontController
      */
     private function getBaseUrl(): string
     {
-        if (! empty(@$_POST['adress'])) {
-            return @$_POST['adress'] . (substr(@$_POST['adress'], - 1) == "/" ?
-                "" : "/");
+        if (! empty(@$this->request['adress'])) {
+            return (substr($this->request['adress'], - 1) == "/" ?
+                substr(
+                    $this->request['adress'],
+                    0,
+                    strlen($this->request['adress']) - 1
+                ) : $this->request['adress']);
         }
-        return "";
+        return '';
     }
 }

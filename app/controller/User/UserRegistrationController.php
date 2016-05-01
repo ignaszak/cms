@@ -4,7 +4,6 @@ namespace Controller\User;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use DataBase\Controller\Controller;
-use Ignaszak\Registry\RegistryFactory;
 use Mail\Mail;
 use Mail\MailTransport;
 use Entity\Users;
@@ -33,16 +32,15 @@ class UserRegistrationController extends FrontController
     public function run()
     {
         Server::setReferData(['form' => 'registration']);
-        $_user = RegistryFactory::start()->get('user');
 
-        if ($_user->isUserLoggedIn()) {
+        if ($this->registry->get('user')->isUserLoggedIn()) {
             Server::setReferData(['error' => ['userMustBeLogout' => 1]]);
             Server::headerLocationReferer();
         }
 
-        $this->login = $_POST['userLogin'];
-        $this->email = $_POST['userEmail'];
-        $this->password = $_POST['userPassword'];
+        $this->login = $this->http->request->get('userLogin');
+        $this->email = $this->http->request->get('userEmail');
+        $this->password = $this->http->request->get('userPassword');
 
         $controller = new Controller(new Users());
         $controller->setLogin($this->login)
@@ -71,7 +69,7 @@ class UserRegistrationController extends FrontController
             ->setFrom($mail->getAdminEmail())
             ->setTo($this->email)
             ->setBody(
-                "Welcome {$this->login} on {$this->view()->getSiteTitle()}.\n" .
+                "Welcome {$this->login} on {$this->view->getSiteTitle()}.\n" .
                 "Thank you for registering at our site. You can find your credentials below:\n" .
                 "Login: {$this->login}\nPassword: {$this->password}\nEmail: {$this->email}"
             );

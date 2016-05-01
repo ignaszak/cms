@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
+
 namespace View;
 
 use Ignaszak\Registry\RegistryFactory;
-use App\Resource\RouterStatic as Router;
 
 class View
 {
@@ -11,13 +12,25 @@ class View
      *
      * @var Conf
      */
-    private $_viewConf;
+    private $conf = null;
 
     /**
      *
      * @var ViewHelper
      */
-    private $_viewHelper;
+    private $viewHelper = null;
+
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http = null;
+
+    /**
+     *
+     * @var \Ignaszak\Registry\Registry
+     */
+    private $registry = null;
 
     /**
      *
@@ -25,23 +38,36 @@ class View
      */
     private $viewFileName;
 
-    public function __construct()
+    /**
+     *
+     * @param ViewHelper $viewHelper
+     */
+    public function __construct(ViewHelper $viewHelper)
     {
-        $this->_viewConf = new Conf();
-        $this->_viewHelper = RegistryFactory::start()->register('ViewHelper\ViewHelper');
-        $this->configure();
+        $this->registry = RegistryFactory::start();
+        $this->viewHelper = $viewHelper;
+        $this->http = $this->registry->get('http');
+        $this->conf = new Conf();
+        $this->conf->configureThemePath();
     }
 
     /**
-     * Call methods from ViewHelper
      *
-     * @param string $name
+     * @param string $method
      * @param array $arguments
-     * @return mixed FiewHelper methods
+     * @throws \RuntimeException
+     * @return mixed
      */
-    public function __call(string $name, array $arguments)
+    public function __call(string $method, array $arguments)
     {
-        return call_user_func_array([$this->_viewHelper, $name], $arguments);
+        $methods = $this->viewHelper->getMethods();
+        $class = $methods[$method] ?? null;
+        if (is_null($class)) {
+            throw new \RuntimeException("Method '{$method}' does not exists");
+        } else {
+            $instance = $this->registry->register($class);
+            return call_user_func_array([$instance, $method], $arguments);
+        }
     }
 
     /**
@@ -56,7 +82,7 @@ class View
     public function loadView()
     {
         if (! empty($this->viewFileName)) {
-            if (Router::isRouteName('admin')) {
+            if (preg_match('/^admin[a-zA-Z0-9_-]*/', $this->http->router->name())) {
                 $this->loadAdminExtensionThemeFile($this->viewFileName);
             } else {
                 $this->loadFile($this->viewFileName);
@@ -70,25 +96,9 @@ class View
      */
     public function loadFile(string $fileName)
     {
-        $file = "{$this->_viewConf->getThemePath()}/{$fileName}";
-
+        $file = "{$this->conf->getThemePath()}/{$fileName}";
         if (file_exists($file) && is_file($file) && is_readable($file)) {
             include($file);
-        }
-    }
-
-    /**
-     *
-     * @param string $fileName
-     * @throws \RuntimeException
-     */
-    public function loadExtensionFile(string $fileName)
-    {
-        $file = "{$this->getAdminExtensionDir()}/{$fileName}";
-        if (file_exists($file) && is_file($file) && is_readable($file)) {
-            include($file);
-        } else {
-            throw new \RuntimeException("File <b>$file</b> not found");
         }
     }
 
@@ -98,11 +108,6 @@ class View
      */
     public function getThemeFolder(): string
     {
-        return $this->_viewConf->getThemeFolder();
-    }
-
-    private function configure()
-    {
-        $this->_viewConf->configureThemePath();
+        return $this->conf->getThemeFolder();
     }
 }

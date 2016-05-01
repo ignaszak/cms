@@ -1,0 +1,4 @@
+title: Settings
+icon: fa fa-cog
+menu:
+    - {title: General, url: admin-settings-list, tokens: {setting: general}}

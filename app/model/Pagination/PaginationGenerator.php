@@ -1,8 +1,6 @@
 <?php
 namespace Pagination;
 
-use App\Resource\Server;
-use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 use DataBase\Query\IQueryController;
 
@@ -13,7 +11,19 @@ class PaginationGenerator
      *
      * @var \Conf\Conf
      */
-    private $_conf;
+    private $_conf = null;
+
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http = null;
+
+    /**
+     *
+     * @var \Ignaszak\Registry\RegistryFactory::start()
+     */
+    private $registry = null;
 
     /**
      * Posts limit
@@ -37,7 +47,9 @@ class PaginationGenerator
 
     public function __construct()
     {
+        $this->registry = RegistryFactory::start();
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->http = $this->registry->get('http');
         $this->setParams();
         $this->createPaginationArray();
     }
@@ -54,7 +66,7 @@ class PaginationGenerator
      *
      * @return integer
      */
-    public function getPrevLink(): int
+    public function getPrevLink(): string
     {
         return $this->paginationArray['prevLink'];
     }
@@ -63,7 +75,7 @@ class PaginationGenerator
      *
      * @return integer
      */
-    public function getNextLink(): int
+    public function getNextLink(): string
     {
         return $this->paginationArray['nextLink'];
     }
@@ -95,27 +107,13 @@ class PaginationGenerator
     }
 
     /**
-     * @return string
-     */
-    public function getLinkWhitoutPage(): string
-    {
-        $link = $this->_conf->getBaseUrl() . Server::getHttpRequest();
-        $link = preg_replace(
-            ['/([0-9]*)$/', '/(\/\/)/', '/^http:\//', '/^https:\//'],
-            ['', '/', 'http://', 'https://'],
-            $link
-        );
-        return substr($link, -1) != '/' ? "{$link}/" : $link;
-    }
-
-    /**
      *
      * @return integer
      */
     public function getCurrentPage(): int
     {
-        $currentPage = Router::getRoute('page');
-        return (empty($currentPage) ? 1 : $currentPage);
+        $currentPage = $this->http->router->get('page');
+        return empty($currentPage) ? 1 : $currentPage;
     }
 
     private function setParams()
@@ -136,22 +134,40 @@ class PaginationGenerator
     private function createPaginationArray()
     {
         $paginationArray = [];
-
         for ($i = 0; $i < $this->countPage; ++ $i) {
             $paginationArray[$i] = [
                 'number' => ($i + 1),
-                'link' => $this->getLinkWhitoutPage() . ($i + 1)
+                'link' => $this->getLink($i + 1)
             ];
         }
-
         $currentPage = $this->getCurrentPage();
-        $prevLink = ($currentPage == 1 ? 1 : $currentPage - 1);
-        $nextLink = ($currentPage == $this->countPage ? $currentPage : ($currentPage + 1));
-
         $this->paginationArray = [
             'array' => $paginationArray,
-            'prevLink' => $prevLink,
-            'nextLink' => $nextLink
+            'prevLink' => $this->getLink(
+                $currentPage == 1 ? 1 : $currentPage - 1
+            ),
+            'nextLink' => $this->getLink(
+                $currentPage == $this->countPage ?
+                    $currentPage : ($currentPage + 1)
+            )
         ];
+    }
+
+    /**
+     *
+     * @param int $page
+     * @return string
+     */
+    private function getLink(int $page): string
+    {
+        $tokens = $this->http->router->all();
+        if (! empty($tokens['page'])) {
+            unset($tokens['page']);
+        }
+        $name = $this->http->router->name() == 'default' ?
+            'post-default' : $this->http->router->name();
+        return $this->registry->get('url')->url($name, array_merge($tokens, [
+            'page' => $page
+        ]));
     }
 }

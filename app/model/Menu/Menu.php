@@ -20,14 +20,22 @@ class Menu
 
     /**
      *
+     * @var \Ignaszak\Router\UrlGenerator
+     */
+    private $url;
+
+    /**
+     *
      * @var \Entity\MenuItems[]
      */
     private $menuItemsArray = [];
 
     public function __construct()
     {
-        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $registry = RegistryFactory::start();
+        $this->_query = $registry->register('DataBase\Query\Query');
+        $this->url = $registry->get('url');
     }
 
     /**
@@ -61,24 +69,15 @@ class Menu
     {
         $string = "<ul {$class}>";
         foreach ($this->menuItemsArray as $item) {
-            $string .= "<li><a href=\"{$this->validAdress($item->getAdress())}\">";
+            $adress = json_decode(str_replace('|', '"', $item->getAdress()), true);
+            $url = $this->url->url(
+                $adress['route'],
+                $adress['tokens']
+            );
+            $string .= "<li><a href=\"{$url}\">";
             $string .= "{$item->getTitle()}</a></li>";
         }
         $string .= "</ul>";
         return count($this->menuItemsArray) ? $string : "";
-    }
-
-    /**
-     *
-     * @param string $adress
-     * @return string
-     */
-    private function validAdress(string $adress): string
-    {
-        if (! filter_var($adress, FILTER_VALIDATE_URL) === false) {
-            return $adress;
-        } else {
-            return $this->_conf->getBaseUrl() . $adress;
-        }
     }
 }

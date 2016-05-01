@@ -11,52 +11,64 @@ class SaveMenuController extends FrontController
 {
 
     /**
-     * Last Added Id into \Entity\Menu
-     *
-     * @var int
-     */
-    private $lastId;
-
-    /**
      *
      * @var string
      */
-    public $action;
+    public $action = '';
 
     /**
      *
      * @var integer
      */
-    public $id;
+    public $id = 0;
+
+    /**
+     * Last Added Id into \Entity\Menu
+     *
+     * @var int
+     */
+    private $lastId = 0;
+
+    /**
+     *
+     * @var array
+     */
+    private $request = [];
 
     public function run()
     {
-        $this->action = $this->view()->getRoute('action');
-        $this->id = $this->view()->getRoute('id');
+        $this->action = $this->http->router->get('action');
+        $this->id = $this->http->router->get('id');
+        $this->request = $this->http->request->all();
 
         if ($this->action == 'save') {
-
             $this->saveMenuEntityAndSetLastAddedId();
             $this->saveMenuItemsEntity();
             $this->removeMenuItemsEntity();
-            Server::headerLocation("admin/menu/edit/{$this->lastId}");
+            Server::headerLocation(
+                $this->url('admin-menu-edit', [
+                    'action' => 'edit', 'id' => $this->lastId
+                ])
+            );
         } elseif ($this->action == 'delete' && $this->id) {
             $this->removeMenuWithMenuItems();
         }
 
-        Server::headerLocation("admin/menu/view/");
+        Server::headerLocation(
+            $this->url('admin-menu-list', ['action' => 'view', 'page' => 1])
+        );
     }
 
     private function saveMenuEntityAndSetLastAddedId()
     {
         $controller = new Controller(new Menus());
         $unique = ['unique'];
-        if (! empty(@$_POST['id'])) {
-            $controller->find($_POST['id']);
+        if (! empty($this->request['id'])) {
+            $controller->find($this->request['id']);
             $unique = [];
         }
-        $controller->setName($_POST['name'])
-            ->setPosition($_POST['position'])
+        $controller->setName($this->request['name'])
+            ->setPosition($this->request['position'])
             ->insert([
                 'name' => $unique,
                 'position' => $unique
@@ -66,17 +78,17 @@ class SaveMenuController extends FrontController
 
     private function saveMenuItemsEntity()
     {
-        $idArray = @$_POST['menuId'];
-        $countAdress = count($_POST['menuAdress']);
+        $idArray = $this->request['menuId'] ?? [];
+        $countAdress = count($this->request['menuAdress']);
         for ($i = 0; $i < $countAdress; ++ $i) {
             $controller = new Controller(new MenuItems());
             if (! empty($idArray[$i])) {
                 $controller->find($idArray[$i]);
             }
             $controller->setReference('menu', $this->lastId)
-                ->setSequence($_POST['menuSequence'][$i])
-                ->setTitle($_POST['menuTitle'][$i])
-                ->setAdress($_POST['menuAdress'][$i])
+                ->setSequence($this->request['menuSequence'][$i])
+                ->setTitle($this->request['menuTitle'][$i])
+                ->setAdress($this->request['menuAdress'][$i])
                 ->insert([
                     'title' => []
                 ]);
@@ -85,7 +97,7 @@ class SaveMenuController extends FrontController
 
     private function removeMenuItemsEntity()
     {
-        $removeIdArray = @$_POST['menuRemove'];
+        $removeIdArray = $this->request['menuRemove'] ?? [];
         $count = count($removeIdArray);
         for ($i = 0; $i < $count; ++ $i) {
             $controller = new Controller(new MenuItems());

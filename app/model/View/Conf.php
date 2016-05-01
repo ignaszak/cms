@@ -1,7 +1,6 @@
 <?php
 namespace View;
 
-use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class Conf
@@ -26,20 +25,27 @@ class Conf
      */
     private $_conf;
 
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http;
+
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->http = RegistryFactory::start()->get('http');
     }
 
     public function configureThemePath()
     {
-        if (Router::isRouteName('admin')) {
-            $this->themeFolder = ADMIN_FOLDER . "/themes/Default";
-            $this->themePath = __ADMINDIR__ . "/themes/Default";
+        if (preg_match('/^admin[a-zA-Z0-9_-]*/', $this->http->router->name())) {
+            $this->themeFolder = "view/admin";
+            $this->themePath = __VIEWDIR__ . "/admin";
         } else {
             $themeName = $this->_conf->getTheme();
-            $this->themeFolder = "view/themes/{$themeName}";
-            $this->themePath = __VIEWDIR__ . "/themes/{$themeName}";
+            $this->themeFolder = "view/public/{$themeName}";
+            $this->themePath = __VIEWDIR__ . "/public/{$themeName}";
         }
     }
 

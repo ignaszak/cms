@@ -31,7 +31,11 @@ class User extends Group
      */
     public function getFormActionAdress(): string
     {
-        return $this->_conf->getBaseUrl() . 'user/post/' . $this->selectAction();
+        $action = $this->selectAction();
+        return $this->url->url("user-{$action}", [
+            'method' => 'post',
+            'action' => $action
+        ]);
     }
 
     /**
@@ -106,7 +110,7 @@ class User extends Group
                 return 'remind';
             case 'accountData':
             case 'accountPassword':
-                return 'account';
+                return 'save';
         }
     }
 

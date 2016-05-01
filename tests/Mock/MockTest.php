@@ -1,10 +1,17 @@
 <?php
 namespace Test\Mock;
 
-use org\bovigo\vfs\vfsStream as Vsf;
+use org\bovigo\vfs\vfsStream;
+use org\bovigo\vfs\vfsStreamWrapper;
 
 class MockTest
 {
+
+    /**
+     *
+     * @var vfsStream
+     */
+    private static $vfsStreamRoot = null;
 
     /**
      *
@@ -37,9 +44,38 @@ class MockTest
         int $chmod = 0644,
         string $content = ""
     ): string {
-        $root = Vsf::setup('mock');
-        Vsf::newFile($file, $chmod)->at($root)->withContent($content);
-        return Vsf::url("mock/$file");
+        if (empty(self::$vfsStreamRoot)) {
+            self::$vfsStreamRoot = vfsStream::setup('mock');
+        }
+        vfsStream::newFile($file, $chmod)
+            ->at(self::$vfsStreamRoot)->withContent($content);
+        return vfsStream::url("mock/$file");
+    }
+
+    /**
+     *
+     * @param array $structure
+     * @return string
+     */
+    public static function mockFileSystem(array $structure): string
+    {
+        if (empty(self::$vfsStreamRoot)) {
+            self::$vfsStreamRoot = vfsStream::setup('mock');
+        }
+        vfsStream::create($structure, self::$vfsStreamRoot);
+        return vfsStream::url('mock');
+    }
+
+    /**
+     *
+     * @param string $dir
+     * @return string
+     */
+    public static function mockDir(string $dir): string
+    {
+        $root = vfsStream::newDirectory($dir);
+        vfsStreamWrapper::setRoot($root);
+        return vfsStream::url($dir);
     }
 
     /**

@@ -1,15 +1,12 @@
 <?php
 namespace Breadcrumbs;
 
-use App\Resource\RouterStatic as Router;
-use Ignaszak\Registry\RegistryFactory;
-
 class CategoryBreadcrumbs extends IBreadcrumbs
 {
 
     /**
      *
-     * @var array
+     * @var \Entity\Categories[]
      */
     private $breadcrumbsArray = [];
 
@@ -33,15 +30,15 @@ class CategoryBreadcrumbs extends IBreadcrumbs
      */
     private function getCategoryId(): int
     {
-        $name = Router::getRouteName();
-        $alias = Router::getRoute('alias');
+        $group = $this->http->router->group();
+        $alias = $this->http->router->get('alias');
         if (! empty($alias)) {
-            $this->_query->setQuery($name)
+            $this->_query->setQuery($group)
                 ->limit(1)
                 ->alias($alias);
             $content = $this->_query->getStaticQuery();
-            if (! empty($content)) {
-                return ($name == 'category') ?
+            if (count($content)) {
+                return ($group == 'category') ?
                     $content[0]->getId() : $content[0]->getCategory()->getId();
             }
         }
@@ -50,8 +47,11 @@ class CategoryBreadcrumbs extends IBreadcrumbs
 
     private function setBreadcrumbsArray()
     {
-        $this->breadcrumbsArray = RegistryFactory::start()
+        $this->breadcrumbsArray = $this->registry
             ->register('App\Resource\CategoryList')->get();
+        usort($this->breadcrumbsArray, function ($a, $b) {
+            return $b->getParentId() <=> $a->getParentId();
+        });
     }
 
     /**
@@ -61,20 +61,18 @@ class CategoryBreadcrumbs extends IBreadcrumbs
      */
     private function generateBreadcrumbs(int $catId): array
     {
-        $array = [];
+        $result = [];
         foreach ($this->breadcrumbsArray as $cat) {
-            if ($catId == $cat->getId()) {
-                $array[] = $this->addBreadcrumb(
+            if ($cat->getId() == $catId) {
+                $result[] = $this->addBreadcrumb(
                     $cat->getTitle(),
-                    ($cat->getTitle() != 'Home' ?
-                        "category/{$cat->getAlias()}" : "")
+                    $this->registry->get('url')->url('category-alias', [
+                        'alias' => $cat->getAlias(), 'page' => 1
+                    ])
                 );
-                $array = array_merge(
-                    $this->generateBreadcrumbs($cat->getParentId()),
-                    $array
-                );
+                $catId = $cat->getParentId();
             }
         }
-        return $array;
+        return array_reverse($result);
     }
 }

@@ -2,16 +2,19 @@
 namespace AdminController\Post;
 
 use FrontController\Controller as FrontController;
-use Ignaszak\Registry\RegistryFactory;
 
 class AjaxViewCategoryController extends FrontController
 {
 
+    /**
+     *
+     * @var array
+     */
     private $categoryArray = [];
 
     public function __construct()
     {
-        $this->categoryArray = RegistryFactory::start()
+        $this->categoryArray = $this->registry
             ->register('App\Resource\CategoryList')->get();
     }
 
@@ -24,6 +27,7 @@ class AjaxViewCategoryController extends FrontController
 
     /**
      *
+     * @param int $parentId
      * @return string
      */
     public function getAdminViewCategoryTreeview(int $parentId = 0): string
@@ -35,7 +39,7 @@ class AjaxViewCategoryController extends FrontController
                 $string .= $i > 0 ? ", " : "";
                 $string .= "{\n    \"id\" : {$cat->getId()},";
                 $string .= "\n    \"text\" : \"{$cat->getTitle()}\"";
-                $selected = ($this->view()->getRoute('id') == $cat->getId()) ?
+                $selected = ($this->http->router->get('id') == $cat->getId()) ?
                     ",\n    \"state\" : { \"selected\" : true }" : "";
                 $string .= $selected;
                 $children = $this->getAdminViewCategoryTreeview($cat->getId());

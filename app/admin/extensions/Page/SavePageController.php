@@ -9,26 +9,34 @@ use Entity\Pages;
 class SavePageController extends FrontController
 {
 
+    /**
+     *
+     * @var array
+     */
+    private $request = [];
+
     public function run()
     {
+        $this->request = $this->http->request->all();
+
         // Initialize
         $controller = new Controller(new Pages());
         $date = new \DateTime();
 
         // Find entity by id to update
-        if ($_POST['id']) {
-            $controller->find($_POST['id']);
+        if ($this->request['id']) {
+            $controller->find($this->request['id']);
             $date = $controller->entity()->getDate('DateTime');
         }
 
-        $alias = $controller->getAlias($_POST['title']);
-        $public = @$_POST['public'] == 1 ? 1 : 0;
+        $alias = $controller->getAlias($this->request['title']);
+        $public = @$this->request['public'] == 1 ? 1 : 0;
 
-        $controller->setReference('author', $this->view()->getUserId())
+        $controller->setReference('author', $this->view->getUserId())
             ->setDate($date)
-            ->setTitle($_POST['title'])
+            ->setTitle($this->request['title'])
             ->setAlias($alias)
-            ->setContent($_POST['content'])
+            ->setContent($this->request['content'])
             ->setPublic($public)
             ->insert([
                 'date' => [],
@@ -37,6 +45,8 @@ class SavePageController extends FrontController
                 'content' => []
             ]);
 
-        Server::headerLocation("admin/page/edit/$alias");
+        Server::headerLocation($this->url('admin-page-edit', [
+                'action' => 'edit', 'alias' => $alias
+        ]));
     }
 }

@@ -13,7 +13,7 @@ class UserSaveController extends FrontController
 
     public function run()
     {
-        $_user = RegistryFactory::start()->get('user');
+        $_user = $this->registry->get('user');
         $this->checkIfUserIsLogged($_user);
 
         $userId = $_user->getUserSession()->getId();
@@ -52,13 +52,17 @@ class UserSaveController extends FrontController
     private function savePassword(Controller $controller)
     {
         $hash = $controller->entity()->getPassword();
-        if (! HashPass::verifyPassword($_POST['userPassword'], $hash)) {
+        if (! HashPass::verifyPassword(
+            $this->http->request->get('userPassword'),
+            $hash
+        )
+        ) {
             Server::setReferData([
                 'error' => ['validPassword' => 1]
             ]);
             Server::headerLocationReferer();
         } else {
-            $controller->setPassword($_POST['userNewPassword'])
+            $controller->setPassword($this->http->request->get('userNewPassword'))
                 ->update(['password' => []]);
         }
     }
@@ -69,7 +73,7 @@ class UserSaveController extends FrontController
      */
     private function saveData(Controller $controller)
     {
-        $controller->setEmail($_POST['userEmail'])
+        $controller->setEmail($this->http->request->get('userEmail'))
             ->update([
                 'email' => [
                     'unique' => [$controller->entity()->getEmail()]

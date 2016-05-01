@@ -1,0 +1,5 @@
+title: Menu
+icon: fa fa-bars
+menu:
+    - {title: Create new menu, url: admin-menu-add, tokens: {action: add}}
+    - {title: View menus, url: admin-menu-list, tokens: {action: view, page: 1}}

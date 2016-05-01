@@ -3,7 +3,6 @@ namespace DataBase\Query;
 
 use Conf\Conf;
 use Conf\DB\DBDoctrine;
-use App\Resource\RouterStatic as Router;
 use Ignaszak\Registry\RegistryFactory;
 
 class QueryController extends IQueryController
@@ -13,14 +12,20 @@ class QueryController extends IQueryController
      *
      * @var \Conf\Conf
      */
-    private $_conf;
+    private $_conf = null;
+
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    private $http = null;
 
     /**
      * Entity name from \Entity\Controller\EntityController
      *
      * @var string
      */
-    private $entityName;
+    private $entityName = '';
 
     /**
      *
@@ -45,13 +50,13 @@ class QueryController extends IQueryController
      *
      * @var integer
      */
-    private $limit;
+    private $limit = null;
 
     /**
      *
      * @var string (public|edit|all)
      */
-    private $status;
+    private $status = '';
 
     /**
      * Used to disable QueryController::orderHandler() when user
@@ -64,6 +69,7 @@ class QueryController extends IQueryController
     public function __construct(string $entityName)
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->http = RegistryFactory::start()->get('http');
         $this->_queryBuilder = new QueryBuilder($this);
         $this->entityName = $entityName;
         $this->createQuery();
@@ -172,7 +178,7 @@ class QueryController extends IQueryController
         // For entities which have getPublic method
         if (method_exists($this->entityName, 'getPublic')) {
             $value = 1;
-            if (Router::getRouteName() == 'admin') { // Check if admin panel is avilable
+            if ($this->http->router->group() == 'admin') { // Check if admin panel is avilable
                 if ($this->status == 'public') {
                     $value = 1;
                 } elseif ($this->status == 'edit') {
@@ -208,7 +214,6 @@ class QueryController extends IQueryController
     private function queryController()
     {
         if ($this->isPaginationEnabled) {
-
             if ($this->isAliasEmptyOrIsResultForced()) {
                 $this->paginateQuery();
             } else {
@@ -227,7 +232,8 @@ class QueryController extends IQueryController
      */
     private function isAliasEmptyOrIsResultForced(): bool
     {
-        return empty(Router::getRoute('alias')) || $this->isResultForced;
+        return empty($this->http->router->get('alias')) ||
+            $this->isResultForced;
     }
 
     /**
@@ -235,9 +241,9 @@ class QueryController extends IQueryController
      */
     private function paginateQuery()
     {
-        $page = Router::getRoute('page');
         $limit = $this->_conf->getViewLimit();
-        $offset = $limit * (($page ? $page : 1) - 1);
+        $page = $this->http->router->get('page', 1);
+        $offset = $limit * ($page - 1);
 
         $query = $this->query->getQuery()
             ->setFirstResult($offset)
@@ -266,7 +272,7 @@ class QueryController extends IQueryController
     private function setAliasIfResultIsNotForced()
     {
         if (! $this->isResultForced) {
-            $this->_queryBuilder->alias(Router::getRoute('alias'));
+            $this->_queryBuilder->alias($this->http->router->get('alias'));
             $this->getQueryAndResult();
         }
     }

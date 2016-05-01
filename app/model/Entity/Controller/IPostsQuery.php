@@ -1,9 +1,8 @@
 <?php
 namespace Entity\Controller;
 
-use App\Resource\RouterStatic as Router;
-use Ignaszak\Registry\RegistryFactory;
 use Format\TextFormat;
+use Ignaszak\Registry\RegistryFactory;
 
 abstract class IPostsQuery
 {
@@ -36,9 +35,14 @@ abstract class IPostsQuery
      */
     public function getLink()
     {
-        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
-        ;
-        return "{$_conf->getBaseUrl()}post/{$this->getAlias()}";
+        return RegistryFactory::start()->get('url')->url('post-alias', [
+            'alias' => $this->getAlias(),
+            'year' => $this->getDate('Y'),
+            'month' => $this->getDate('m'),
+            'day' => $this->getDate('d'),
+            's1' => '/',
+            's2' => '/'
+        ]);
     }
 
     /**
@@ -47,20 +51,25 @@ abstract class IPostsQuery
      */
     public function getCategoryLink()
     {
-        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
-        ;
-        return "{$_conf->getBaseUrl()}category/{$this->getCategory()->getAlias()}";
+        return RegistryFactory::start()->get('url')->url('category-alias', [
+            'alias' => $this->getCategory()->getAlias(), 'page' => 1
+        ]);
     }
 
     /**
      *
      * @return string
      */
-    public function getDateLink($format = 'Y-m-d')
+    public function getDateLink()
     {
-        $_conf = RegistryFactory::start()->register('\\Conf\\Conf');
-        ;
-        return "{$_conf->getBaseUrl()}date/{$this->getDate($format)}";
+        return RegistryFactory::start()->get('url')->url('date', [
+            'year' => $this->getDate('Y'),
+            'month' => $this->getDate('m'),
+            'day' => $this->getDate('d'),
+            's1' => '/',
+            's2' => '/',
+            'page' => 1
+        ]);
     }
 
     /**
@@ -101,7 +110,7 @@ abstract class IPostsQuery
      */
     private function isPostOpen()
     {
-        return Router::getRoute('route1') == 'post' &&
-            ! empty(Router::getRoute('alias'));
+        return RegistryFactory::start()->get('http')
+            ->router->name() == 'post-alias';
     }
 }

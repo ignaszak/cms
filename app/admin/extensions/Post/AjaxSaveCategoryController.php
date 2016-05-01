@@ -4,22 +4,32 @@ namespace AdminController\Post;
 use FrontController\Controller as FrontController;
 use DataBase\Controller\Controller;
 use Entity\Categories;
-use Ignaszak\Registry\RegistryFactory;
 
 class AjaxSaveCategoryController extends FrontController
 {
 
+    /**
+     *
+     * @var array
+     */
     private $categoryArray = [];
+
+    /**
+     *
+     * @var array
+     */
+    private $request = [];
 
     public function __construct()
     {
-        $this->categoryArray = RegistryFactory::start()
+        $this->categoryArray = $this->registry
             ->register('App\Resource\CategoryList')->get();
+        $this->request = $this->http->request->all();
     }
 
     public function run()
     {
-        if ($_POST['id'] == 1) {
+        if ($this->request['id'] == 1) {
             return;
         }
 
@@ -28,18 +38,18 @@ class AjaxSaveCategoryController extends FrontController
         // Find entity by id to update
         $refresh = 'refresh';
 
-        if (is_numeric($_POST['id'])) {
+        if (is_numeric($this->request['id'])) {
             $refresh = '';
-            $controller->find($_POST['id']);
+            $controller->find($this->request['id']);
         }
 
-        if ($_POST['action'] == 'edit') {
-
-            $alias = $controller->getAlias($_POST['title']);
-            $parentId = is_numeric($_POST['parentId']) ? $_POST['parentId'] : 0;
+        if ($this->request['action'] == 'edit') {
+            $alias = $controller->getAlias($this->request['title']);
+            $parentId = is_numeric($this->request['parentId']) ?
+                $this->request['parentId'] : 0;
 
             $controller->setParentId($parentId)
-                ->setTitle($_POST['title'])
+                ->setTitle($this->request['title'])
                 ->setAlias($alias)
                 ->insert([
                     'title' => [],
@@ -47,14 +57,13 @@ class AjaxSaveCategoryController extends FrontController
                 ]);
 
             echo $refresh;
-
-        } elseif ($_POST['action'] == 'delete') {
-
+        } elseif ($this->request['action'] == 'delete') {
             $controller = new Controller(new Categories());
-            $idArray = array_filter($this->getChildCategories($_POST['id']));
+            $idArray = array_filter(
+                $this->getChildCategories($this->request['id'])
+            );
             $controller->findBy(['id' => $idArray])
                 ->remove();
-
         }
 
         exit;

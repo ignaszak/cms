@@ -1,82 +1,66 @@
 <div class="container-fluid">
- <div class="panel panel-default panel-white">
-  <div class="panel-heading">
-   <h3>View pages</h3>
-  </div>
-  <div class="panel-body">
-
-   <table class="table table-hover">
-    <thead>
-     <tr>
-      <th>#</th>
-      <th>Title</th>
-      <th class="visible-xs">Inf</th>
-      <th class="hidden-xs">Alias</th>
-      <th class="hidden-xs">Author</th>
-      <th class="hidden-xs">Date</th>
-      <th></th>
-     </tr>
-    </thead>
-
-    <tbody>
-
-     <?php
-                    $page = $this->getRoute('page');
-
-                    if ($page == 1 || empty($page)) {
-                        $i = 1;
-                    } else {
-                        $i = ($page - 1)*$this->getViewLimit() + 1;
-                    }
-
-                    foreach ($this->getAdminViewPage() as $post) :
-                        $author = $post->getAuthor();
+    <div class="panel panel-default panel-white">
+        <div class="panel-heading">
+            <h3>View pages</h3>
+        </div>
+        <div class="panel-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th class="visible-xs">Inf</th>
+                        <th class="hidden-xs">Alias</th>
+                        <th class="hidden-xs">Author</th>
+                        <th class="hidden-xs">Date</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $page = 1;//$this->getRoute('page');
+                if ($page == 1 || empty($page)) {
+                    $i = 1;
+                } else {
+                    $i = ($page - 1)*$this->getViewLimit() + 1;
+                }
+                foreach ($this->getAdminPage() as $page) :
+                $author = $page->getAuthor();
+                $editLink = $this->getAdminPageLink('edit', $page->getAlias());
                 ?>
-
-     <tr>
-      <th scope="row">
-       <?php echo $i; ?>
-      </th>
-      <td><a
-       href="<?php echo $this->getAdminViewPageLink() . 'edit/' . $post->getAlias(); ?>">
-        <b> <?php echo $post->getTitle(); ?>
-       </b>
-      </a>
-       <p class="visible-xs">
-        <small> <?php echo $post->getDate(); ?>
-        </small>
-       </p></td>
-      <td class="visible-xs"><small> Author: <?php echo $author->getLogin(); ?>
-      </small></td>
-      <td class="hidden-xs">
-       <?php echo $post->getAlias(); ?>
-      </td>
-      <td class="hidden-xs">
-       <?php echo $author->getLogin(); ?>
-      </td>
-      <td class="hidden-xs">
-       <?php echo $post->getDate(); ?>
-      </td>
-      <td><a class="btn btn-xs btn-default"
-       href="<?php echo $this->getAdminViewPageLink(); ?>edit/<?php echo $post->getAlias(); ?>">
-        <i class="fa fa-pencil-square-o"></i>
-      </a> <a class="btn btn-xs btn-danger" data-toggle="a-confirm"
-       href="<?php echo $this->getAdminViewPageLink(); ?>delete/<?php echo $post->getAlias(); ?>">
-        <i class="fa fa-times"></i>
-      </a></td>
-     </tr>
-
-     <?php
+                    <tr>
+                        <th scope="row"><?php echo $i; ?></th>
+                        <td>
+                            <a href="<?php echo $editLink; ?>">
+                                <b><?php echo $page->getTitle(); ?></b>
+                            </a>
+                            <p class="visible-xs">
+                                <small><?php echo $page->getDate(); ?></small>
+                            </p>
+                        </td>
+                        <td class="visible-xs">
+                            <small>Author: <?php echo $author->getLogin(); ?></small>
+                        </td>
+                        <td class="hidden-xs"><?php echo $page->getAlias(); ?></td>
+                        <td class="hidden-xs"><?php echo $author->getLogin(); ?></td>
+                        <td class="hidden-xs"><?php echo $page->getDate(); ?></td>
+                        <td>
+                            <a class="btn btn-xs btn-default" href="<?php echo $editLink; ?>">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </a>
+                            <a class="btn btn-xs btn-danger" data-toggle="a-confirm"
+                            href="<?php echo $this->getAdminPageLink('delete', $page->getAlias()); ?>">
+                                <i class="fa fa-times"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <?php
                     ++$i;
-                    endforeach;
+                endforeach;
                 ?>
-
-    </tbody>
-
-   </table>
-
-   <?php echo $this->getPaginationTheme('pagination'); ?>
-
-  </div>
- </div>
+                </tbody>
+            </table>
+            <?php echo $this->getPaginationTheme('pagination'); ?>
+        </div>
+    </div>
 </div>

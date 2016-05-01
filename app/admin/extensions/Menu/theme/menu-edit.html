@@ -1,210 +1,206 @@
 <script>
-var admin_adress = '<?php echo $this->getAdminThemeUrl(); ?>';
+var admin_adress = 'http://192.168.1.2/~tomek/Eclipse/PHP/cms/admin';
 var edit_adress = '<?php echo $this->getAdminLoadMenuLink(); ?>';
 </script>
-<script
- src="<?php echo $this->getAdminThemeUrl(); ?>/extensions/Menu/theme/js/choose-element.js"></script>
-<link rel="stylesheet"
- href="<?php echo $this->getAdminThemeUrl(); ?>/extensions/Menu/theme/css/style.css">
+<script src="<?php echo $this->getAdminThemeUrl(); ?>/extensions/Menu/theme/js/choose-element.js"></script>
+<link rel="stylesheet" href="<?php echo $this->getAdminThemeUrl(); ?>/extensions/Menu/theme/css/style.css">
 
 <div class="container-fluid">
-
- <div class="panel panel-default panel-white">
-  <div class="panel-heading">
-   <h3>
-    <?php echo $this->getAdminLoadMenuFormTitle(); ?>
-   </h3>
-  </div>
-  <div class="panel-body">
-
-   <form class="form-horizontal"
-    action="<?php echo $this->getAdminAdress(); ?>/menu/save"
-    method="post">
-
-    <input type="hidden" name="id"
-     value="<?php echo $this->getAdminLoadMenuId(); ?>">
-
-    <div class="input-group controls">
-     <button type="submit" class="btn btn-primary">
-      <i class="fa fa-floppy-o"></i> Save
-     </button>
-     <button type="submit" class="btn btn-danger"
-      data-toggle="button-form-confirm"
-      data-href="<?php echo $this->getAdminLoadMenuDelete(); ?>">
-      <i class="fa fa-times"></i> Delete
-     </button>
-    </div>
-
-    <div class="form-group">
-     <label for="name" class="col-sm-2 control-label">Menu name</label>
-     <div class="col-sm-8">
-      <input type="text" class="form-control" name="name"
-       value="<?php echo $this->getAdminLoadMenuName(); ?>"
-       placeholder="Menu name" minlength="3" required>
-     </div>
-    </div>
-
-    <div class="form-group">
-     <label for="name" class="col-sm-2 control-label">Position</label>
-     <div class="col-sm-8">
-      <select class="form-control" name="position" required>
-       <option value="head">head</option>
-      </select>
-     </div>
-    </div>
-
-    <div class="form-group">
-     <label class="col-sm-2 control-label">Choose element</label>
-     <div class="col-sm-8 add-elemnt-buttons">
-
-      <input type="hidden" name="dataAlias" value=""> <input
-       type="hidden" name="dataNumber" value="">
-
-      <!-- PAGE -->
-      <button type="button" id="page" class="btn btn-default"
-       data-toggle="modal" data-target="#addPage">
-       <i class="fa fa fa-book"></i> Add page
-      </button>
-      <div class="modal fade" id="addPage" tabindex="-1" role="dialog"
-       aria-labelledby="addPageLabel">
-       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"
-           aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title" id="addPageLabel">Add page</h4>
-         </div>
-         <div class="modal-body">
-          <input type="text" class="form-control" name="pageTitle"
-           value="" placeholder="Item title">
-          <ul id="page" class="choose-element nav nav-stacked"></ul>
-         </div>
-         <div class="modal-footer">
-
-            <input type="text" id="page" class="form-control"
-             name="search" value="" placeholder="Search">
-            <button type="button" class="btn btn-default"
-             data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="add">Add</button>
-
-         </div>
+    <div class="panel panel-default panel-white">
+        <div class="panel-heading">
+            <h3><?php echo $this->getAdminLoadMenuFormTitle(); ?></h3>
         </div>
-       </div>
-      </div>
-
-      <!-- CATEGORY -->
-      <button type="button" class="btn btn-default" data-toggle="modal"
-       data-target="#addCategory">
-       <i class="fa fa-folder-o"></i> Add category
-      </button>
-      <div class="modal fade" id="addCategory" tabindex="-1"
-       role="dialog" aria-labelledby="addCategoryLabel">
-       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"
-           aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title" id="addPageLabel">Add category</h4>
-         </div>
-         <div class="modal-body">
-          <input type="text" class="form-control" name="categoryTitle"
-           value="" placeholder="Item title">
-          <?php $this->loadFile('category-jstree.html'); ?>
-         </div>
-         <div class="modal-footer">
-          <button type="button" class="btn btn-default"
-           data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="add">Add</button>
-         </div>
+        <div class="panel-body">
+            <form class="form-horizontal"
+            action="<?php echo $this->getAdminAdress(); ?>/menu/save" method="post">
+                <input type="hidden" name="id"
+                value="<?php echo $this->getAdminLoadMenuId(); ?>">
+                <div class="input-group controls">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fa fa-floppy-o"></i> Save
+                    </button>
+                    <button type="submit" class="btn btn-danger"
+                    data-toggle="button-form-confirm"
+                    data-href="<?php echo $this->getAdminLoadMenuDelete(); ?>">
+                        <i class="fa fa-times"></i> Delete
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">
+                        Menu name
+                    </label>
+                    <div class="col-sm-8">
+                        <input type="text" class="form-control" name="name"
+                        value="<?php echo $this->getAdminLoadMenuName(); ?>"
+                        placeholder="Menu name" minlength="3" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="name" class="col-sm-2 control-label">
+                        Position
+                    </label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="position" required>
+                            <option value="head">head</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        Choose element
+                    </label>
+                    <div class="col-sm-8 add-elemnt-buttons">
+                        <!-- PAGE -->
+                        <button type="button" id="page" class="btn btn-default"
+                        data-toggle="modal" data-target="#addPage">
+                            <i class="fa fa fa-book"></i> Add page
+                        </button>
+                        <div class="modal fade" id="addPage" tabindex="-1"
+                        role="dialog" aria-labelledby="addPageLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close"
+                                        data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="addPageLabel">
+                                            Add page
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control"
+                                        name="pageTitle" placeholder="Item title">
+                                        <ul id="page" class="choose-element nav nav-stacked"></ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="text" id="page" class="form-control"
+                                        name="search" value="" placeholder="Search">
+                                        <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <button type="button"
+                                        class="btn btn-primary" id="add">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- CATEGORY -->
+                        <button type="button" class="btn btn-default"
+                        data-toggle="modal" data-target="#addCategory">
+                            <i class="fa fa-folder-o"></i> Add category
+                        </button>
+                        <div class="modal fade" id="addCategory" tabindex="-1"
+                        role="dialog" aria-labelledby="addCategoryLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close"
+                                        data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="addPageLabel">
+                                            Add category
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control"
+                                        name="categoryTitle" placeholder="Item title">
+                                        <?php $this->loadFile('category-jstree.html'); ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                        class="btn btn-default" data-dismiss="modal">
+                                            Close
+                                        </button>
+                                        <button type="button" class="btn btn-primary"
+                                        id="add">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- POST -->
+                        <button type="button" id="post" class="btn btn-default"
+                        data-toggle="modal" data-target="#addPost">
+                            <i class="fa fa-thumb-tack"></i> Add post
+                        </button>
+                        <div class="modal fade" id="addPost" tabindex="-1"
+                        role="dialog" aria-labelledby="addPostLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close"
+                                        data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="addPageLabel">
+                                            Add post
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control"
+                                        name="postTitle" placeholder="Item title">
+                                        <ul id="post" class="choose-element nav nav-stacked"></ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <input type="text" id="post" class="form-control"
+                                        name="search" placeholder="Search">
+                                        <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary"
+                                        id="add">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- LINK -->
+                        <button type="button" class="btn btn-default"
+                        data-toggle="modal" data-target="#addLink">
+                            <i class="fa fa-link"></i> Add custom link
+                        </button>
+                        <div class="modal fade" id="addLink" tabindex="-1"
+                        role="dialog" aria-labelledby="addLinkLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close"
+                                        data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        <h4 class="modal-title" id="addPageLabel">
+                                            Add custom link
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="text" class="form-control"
+                                        name="linkTitle" placeholder="Item title">
+                                        <input type="text" class="form-control"
+                                        name="linkAdress" value="http://"
+                                        placeholder="Link" style="margin-top: 15px;">
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default"
+                                        data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary add-link"
+                                        id="add">Add</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">Menu items</label>
+                    <div class="col-sm-offset-2 col-sm-10" style="margin-left: 0px;">
+                        <div id="menu" class="list-group"></div>
+                    </div>
+                </div>
+            </form>
         </div>
-       </div>
-      </div>
-
-      <!-- POST -->
-      <button type="button" id="post" class="btn btn-default"
-       data-toggle="modal" data-target="#addPost">
-       <i class="fa fa-thumb-tack"></i> Add post
-      </button>
-      <div class="modal fade" id="addPost" tabindex="-1" role="dialog"
-       aria-labelledby="addPostLabel">
-       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"
-           aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title" id="addPageLabel">Add post</h4>
-         </div>
-         <div class="modal-body">
-          <input type="text" class="form-control" name="postTitle"
-           value="" placeholder="Item title">
-          <ul id="post" class="choose-element nav nav-stacked"></ul>
-         </div>
-         <div class="modal-footer">
-
-            <input type="text" id="post" class="form-control"
-             name="search" value="" placeholder="Search">
-            <button type="button" class="btn btn-default"
-             data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" id="add">Add</button>
-
-         </div>
-        </div>
-       </div>
-      </div>
-
-      <!-- LINK -->
-      <button type="button" class="btn btn-default" data-toggle="modal"
-       data-target="#addLink">
-       <i class="fa fa-link"></i> Add custom link
-      </button>
-      <div class="modal fade" id="addLink" tabindex="-1" role="dialog"
-       aria-labelledby="addLinkLabel">
-       <div class="modal-dialog" role="document">
-        <div class="modal-content">
-         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal"
-           aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-          </button>
-          <h4 class="modal-title" id="addPageLabel">Add custom link</h4>
-         </div>
-         <div class="modal-body">
-          <input type="text" class="form-control" name="linkTitle"
-           value="" placeholder="Item title"> <input type="text"
-           class="form-control" name="linkAdress" value="http://"
-           placeholder="Link" style="margin-top: 15px;">
-         </div>
-         <div class="modal-footer">
-          <button type="button" class="btn btn-default"
-           data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary add-link"
-           id="add">Add</button>
-         </div>
-        </div>
-       </div>
-      </div>
-
-     </div>
     </div>
-
-    <div class="form-group">
-     <label class="col-sm-2 control-label">Menu items</label>
-     <div class="col-sm-offset-2 col-sm-10" style="margin-left: 0px;">
-      <div id="menu" class="list-group"></div>
-     </div>
-    </div>
-
-   </form>
-
-  </div>
- </div>
-
 </div>
 <script>
 $().ready(function() {

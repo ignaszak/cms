@@ -6,22 +6,43 @@ use Ignaszak\Registry\RegistryFactory;
 class CategoryList
 {
 
-    private $_conf;
+    /**
+     *
+     * @var \Conf\Conf
+     */
+    private $_conf = null;
 
-    private $categoryList;
+    /**
+     *
+     * @var \App\Resource\CategoryList
+     */
+    private $categoryList = null;
+
+    /**
+     *
+     * @var \Ignaszak\Router\UrlGenerator
+     */
+    private $url = null;
 
     public function __construct()
     {
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->categoryList = RegistryFactory::start()
-            ->register('App\Resource\CategoryList')->get();
+        $registry = RegistryFactory::start();
+        $this->categoryList = $registry->register('App\Resource\CategoryList')->get();
+        $this->url = $registry->get('url');
     }
 
+    /**
+     *
+     * @param string $arg
+     * @param int $parentId
+     * @return string
+     */
     public function getCategoryList(string $arg, int $parentId = 1): string
     {
         $string = "<ul {$arg}>";
         if (array_key_exists(0, $this->categoryList)) {
-            $string .= "<li><a href=\"{$this->_conf->getBaseUrl()}\">";
+            $string .= "<li><a href=\"{$this->url->url('default', ['base' => ''])}\">";
             $string .= "{$this->categoryList[0]->getTitle()}</a>";
             $string .= "</li>";
         }
@@ -29,8 +50,10 @@ class CategoryList
         unset($this->categoryList[0]);
         foreach ($this->categoryList as $cat) {
             if ($parentId == $cat->getParentId()) {
-                $string .= "<li><a href=\"{$this->_conf->getBaseUrl()}" .
-                    "category/{$cat->getAlias()}\">";
+                $url = $this->url->url('category-alias', [
+                    'alias' => $cat->getAlias(), 'page' => 1
+                ]);
+                $string .= "<li><a href=\"{$url}\">";
                 $string .= "{$cat->getTitle()}</a>";
                 $string .= $this->getCategoryList($arg, $cat->getId());
                 $string .= "</li>";

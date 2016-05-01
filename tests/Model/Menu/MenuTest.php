@@ -43,28 +43,6 @@ class MenuTest extends \PHPUnit_Framework_TestCase
         );
     }
 
-    public function testIfAdressIsCorrectUrl()
-    {
-        $anyAdressUrl = 'http://example.com';
-        $adress = MockTest::callMockMethod(
-            self::$_menu,
-            'validAdress',
-            [$anyAdressUrl]
-        );
-        $this->assertEquals($anyAdressUrl, $adress);
-    }
-
-    public function testIfAdressIsCMSRoute()
-    {
-        $anyRoute = 'post/alias';
-        $adress = MockTest::callMockMethod(
-            self::$_menu,
-            'validAdress',
-            [$anyRoute]
-        );
-        $this->assertEquals($anyRoute, $adress);
-    }
-
     public function testCreateMenuFromMenuItemsArray()
     {
         $menuString = MockTest::callMockMethod(

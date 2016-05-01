@@ -1,0 +1,55 @@
+routes:
+
+    admin-post-list:
+        path: '/admin/post/p/{action}/{page}'
+        method: GET
+        controller: AdminController\Post\ViewPostController
+        group: Post
+        tokens:
+            action: view
+
+    admin-post-save:
+        path: '/admin/post/p/{action}'
+        method: POST
+        controller: AdminController\Post\SavePostController
+        group: Post
+        tokens:
+            action: form
+
+    admin-post-add:
+        path: '/admin/post/p/{action}/'
+        method: GET
+        controller: AdminController\Post\EditPostController
+        group: Post
+        tokens:
+            action: add
+
+    admin-post-edit:
+        path: '/admin/post/p/{action}/{alias}'
+        method: GET
+        controller: AdminController\Post\EditPostController
+        group: Post
+        tokens:
+            action: (edit|delete)
+
+    admin-category-list:
+        path: '/admin/post/c/{action}/{page}'
+        method: GET
+        controller: AdminController\Post\ViewCategoryController
+        group: Post
+        tokens:
+            action: view
+
+    admin-cat-ajax-list:
+        path: '/admin/post/c/ajax/{id}/category-list.json'
+        method: GET
+        controller: AdminController\Post\AjaxViewCategoryController
+        group: Post
+
+    admin-cat-save:
+        path: '/admin/post/c/{action}'
+        method: POST
+        controller: AdminController\Post\AjaxSaveCategoryController
+        group: Post
+        tokens:
+            action: form

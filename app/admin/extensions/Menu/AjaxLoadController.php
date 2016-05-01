@@ -8,8 +8,8 @@ class AjaxLoadController extends FrontController
 
     public function run()
     {
-        $alias = $this->view()->getRoute('alias');
-        $page = $this->view()->getRoute('page');
+        $alias = $this->http->router->get('alias');
+        $page = $this->http->router->get('page');
 
         if ($alias != 'category') {
             $content = $this->selectPostOrPage($alias);
@@ -22,7 +22,18 @@ class AjaxLoadController extends FrontController
             $rowArray = [];
             $rowArray['id'] = $row->getId();
             $rowArray['title'] = $row->getTitle();
-            $rowArray['link'] = "{$alias}/{$row->getAlias()}";
+            $rowArray['link'] = str_replace('"', '|', json_encode([
+                'route' => "{$alias}-alias",
+                'alias' => $alias,
+                'tokens' => [
+                    'alias' => $row->getAlias(),
+                    's1' => '/',
+                    's2' => '/',
+                    'year' => $row->getDate('Y'),
+                    'month' => $row->getDate('m'),
+                    'day' => $row->getDate('d')
+                ]
+            ]));
             $rowArray['alias'] = $alias;
             if ($alias == 'post') {
                 $rowArray['category'] = $row->getCategory()->getTitle();
@@ -37,28 +48,30 @@ class AjaxLoadController extends FrontController
 
     /**
      *
+     * @param int $catId
      * @return array
      */
     private function selectCategory(int $catId): array
     {
-        $this->query()->setQuery('category')
+        $this->query->setQuery('category')
             ->id($catId)
             ->limit(1);
-        return $this->query()->getStaticQuery();
+        return $this->query->getStaticQuery();
     }
 
     /**
      *
+     * @param string $alias
      * @return array
      */
     private function selectPostOrPage(string $alias): array
     {
-        if (empty(@$_POST['search'])) {
-            $this->query()->setQuery($alias);
+        $search = $this->http->request->get('search');
+        if (empty($search)) {
+            $this->query->setQuery($alias);
         } else {
-            $this->query()->setQuery($alias)
-                ->titleLike($_POST['search']);
+            $this->query->setQuery($alias)->titleLike($search);
         }
-        return $this->query()->getStaticQuery();
+        return $this->query->getStaticQuery();
     }
 }

@@ -1,0 +1,55 @@
+routes:
+
+    admin-menu-list:
+        path: '/admin/menu/{action}/{page}'
+        method: GET
+        controller: AdminController\Menu\ViewMenuController
+        group: Menu
+        tokens:
+            action: view
+
+    admin-menu-add:
+        path: '/admin/menu/{action}'
+        method: POST|GET
+        controller: AdminController\Menu\EditMenuController
+        group: Menu
+        tokens:
+            action: add
+
+    admin-menu-edit:
+        path: '/admin/menu/{action}/{id}'
+        method: GET
+        controller: AdminController\Menu\EditMenuController
+        group: Menu
+        tokens:
+            action: edit
+
+    admin-menu-save:
+        path: '/admin/menu/{action}'
+        method: POST
+        controller: AdminController\Menu\SaveMenuController
+        group: Menu
+        tokens:
+            action: save
+
+    admin-menu-delete:
+        path: '/admin/menu/{action}/{id}'
+        method: GET
+        controller: AdminController\Menu\SaveMenuController
+        group: Menu
+        tokens:
+            action: delete
+
+    admin-menu-ajax-list:
+        path: '/admin/menu/ajax/{alias}/{page}/load.json'
+        method: POST|GET
+        controller: AdminController\Menu\AjaxLoadController
+        group: Menu
+        tokens:
+            alias: (page|post|category)
+
+    admin-menu-ajax-edit:
+        path: '/admin/menu/ajax/{id}/edit.json'
+        method: GET
+        controller: AdminController\Menu\AjaxEditController
+        group: Menu

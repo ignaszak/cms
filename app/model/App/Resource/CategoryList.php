@@ -1,8 +1,6 @@
 <?php
 namespace App\Resource;
 
-use App\Resource\RouterStatic as Router;
-use DataBase\Query\Query;
 use Ignaszak\Registry\RegistryFactory;
 
 class CategoryList
@@ -10,20 +8,27 @@ class CategoryList
 
     /**
      *
-     * @var Query
+     * @var \DataBase\Query\Query
      */
-    private $_query;
+    private $_query = null;
+
+    /**
+     *
+     * @var Http
+     */
+    private $http = null;
 
     /**
      *
      * @var \Entity\Categories[]
      */
-    private $categoryArray;
+    private $categoryArray = [];
 
     public function __construct()
     {
-        $this->_query = RegistryFactory::start()
-            ->register('DataBase\Query\Query');
+        $registry = RegistryFactory::start();
+        $this->http = $registry->get('http');
+        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
         $this->_query->setQuery('category');
         $this->categoryArray = $this->_query->getStaticQuery();
     }
@@ -35,8 +40,7 @@ class CategoryList
      */
     public function getIdByAlias(string $alias): int
     {
-        $this->_query->setQuery('category')
-            ->alias($alias);
+        $this->_query->setQuery('category')->alias($alias);
         $content = $this->_query->getStaticQuery();
         return $content ? $content[0]->getId() : 0;
     }
@@ -58,7 +62,7 @@ class CategoryList
     public function child(string $alias = null, int $parentId = 0): array
     {
         $array = [];
-        $alias = $alias ?? Router::getRoute('alias');
+        $alias = $alias ?? $this->http->router->get('alias');
         if (! empty($alias)) {
             $parentId = $this->getIdByAlias($alias);
             $array[] = $parentId;

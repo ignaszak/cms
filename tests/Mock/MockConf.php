@@ -32,7 +32,7 @@ class MockConf
 
     public static function setConstants()
     {
-        if (!defined('__BASEDIR__')) {
+        if (! defined('__BASEDIR__')) {
             define('__BASEDIR__', '');
             define('__CONFDIR__', '/app/conf');
             define('__VIEWDIR__', '/app/view');

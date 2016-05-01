@@ -9,8 +9,7 @@ class ViewPostController extends FrontController
 
     public function run()
     {
-        $this->setViewHelperName('AdminViewPost');
-        $this->view()->addView('theme/post-view.html');
+        $this->view->addView('theme/post-view.html');
     }
 
     /**
@@ -22,18 +21,31 @@ class ViewPostController extends FrontController
         return new class($this) extends ViewHelperController
         {
 
-        public function getAdminViewPost()
-        {
-            $this->_controller->query()->setQuery('post')
-                ->status('all');
-            return $this->_controller->query()->getQuery();
-        }
+            /**
+             *
+             * @return array
+             */
+            public function getAdminPostList(): array
+            {
+                $this->_controller->query->setQuery('post')
+                    ->status('all');
+                return $this->_controller->query->getQuery();
+            }
 
-        public function getAdminViewPostLink()
-        {
-            return $this->_controller->view()->getAdminAdress() .
-                "/post/p/edit/";
-        }
+            /**
+             *
+             * @param string $action
+             * @param string $alias
+             * @return string
+             */
+            public function getAdminPostLink(
+                string $action,
+                string $alias
+            ): string {
+                return $this->_controller->url('admin-post-edit', [
+                    'action' => $action, 'alias' => $alias
+                ]);
+            }
         };
     }
 }

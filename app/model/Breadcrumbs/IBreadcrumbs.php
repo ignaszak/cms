@@ -10,19 +10,32 @@ abstract class IBreadcrumbs
      *
      * @var \Conf\Conf
      */
-    protected $_conf;
+    protected $_conf = null;
 
     /**
      *
      * @var \DataBase\Query\Query
      */
-    protected $_query;
+    protected $_query = null;
+
+    /**
+     *
+     * @var \App\Resource\Http
+     */
+    protected $http = null;
+
+    /**
+     *
+     * @var \Ignaszak\Registry\RegistryFactory
+     */
+    protected $registry = null;
 
     public function __construct()
     {
+        $this->registry = RegistryFactory::start();
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->_query = RegistryFactory::start('file')
-            ->register('DataBase\Query\Query');
+        $this->_query = $this->registry->register('DataBase\Query\Query');
+        $this->http = $this->registry->get('http');
     }
 
     /**
@@ -36,7 +49,10 @@ abstract class IBreadcrumbs
     protected function getHome(): array
     {
         return [
-            $this->addBreadcrumb('Home', '')
+            $this->addBreadcrumb(
+                'Home',
+                $this->registry->get('url')->url('default', ['base' => ''])
+            )
         ];
     }
 
@@ -50,7 +66,7 @@ abstract class IBreadcrumbs
     {
         $array = new \stdClass();
         $array->title = $title;
-        $array->link = $this->_conf->getBaseUrl() . $link;
+        $array->link = $link;
         $array->active = '';
         return $array;
     }

@@ -2,7 +2,7 @@
 namespace Test\Model\View;
 
 use View\Conf;
-use Test\Mock\MockRouter;
+use Test\Mock\MockHttp;
 
 class ConfTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,18 +16,15 @@ class ConfTest extends \PHPUnit_Framework_TestCase
 
     public function testAdminThemePath()
     {
-        MockRouter::start('admin');
-        MockRouter::add('admin', 'admin');
-        MockRouter::run();
+        MockHttp::routeGroup('admin');
+        MockHttp::run();
+        $this->_viewConf = new Conf();
         $this->_viewConf->configureThemePath();
-        $this->assertContains('admin', $this->_viewConf->getThemePath());
+        $this->assertContains('/app/view/public/', $this->_viewConf->getThemePath());
     }
 
     public function UserThemePath()
     {
-        MockRouter::start('post');
-        MockRouter::add('post', 'post');
-        MockRouter::run();
         $this->_viewConf->configureThemePath();
         $this->assertNotContains('admin', $this->_viewConf->getThemePath());
     }

@@ -6,7 +6,7 @@ tests/Mock/MockDoctrineSettings.php
 ! app/.htaccess
 
 # Theme
-app/view/themes/CV/
+app/view/public/CV/
 *.less
 
 # Tmp, composer and git

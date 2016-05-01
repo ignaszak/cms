@@ -8,6 +8,6 @@ class ViewPostController extends FrontController
 
     public function run()
     {
-        $this->view()->addView('post.html');
+        $this->view->addView('post.html');
     }
 }

@@ -38,12 +38,15 @@ class Server
         }
     }
 
-    public static function headerLocation(string $location)
+    public static function headerLocation(string $location = '/')
     {
         self::setRefererSession();
         if (! defined('TEST')) {
-            header('Location: ' . RegistryFactory::start('file')
-                ->register('Conf\Conf')->getBaseUrl() . $location);
+            if (strpos($location, 'http') === false) {
+                $location = RegistryFactory::start('file')
+                    ->register('Conf\Conf')->getBaseUrl() . $location;
+            }
+            header('Location: ' . $location);
             exit();
         }
     }

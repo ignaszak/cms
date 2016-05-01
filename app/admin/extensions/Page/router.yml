@@ -1,0 +1,32 @@
+routes:
+
+    admin-page-list:
+        path: '/admin/page/{action}/{page}'
+        method: GET
+        controller: AdminController\Page\ViewPageController
+        group: Page
+        tokens:
+            action: view
+
+    admin-page-add:
+        path: '/admin/page/{action}'
+        method: GET
+        controller: AdminController\Page\EditPageController
+        group: Page
+        tokens:
+            action: add
+
+    admin-page-edit:
+        path: '/admin/page/{action}/{alias}'
+        controller: AdminController\Page\EditPageController
+        group: Page
+        tokens:
+            action: (delete|edit)
+
+    admin-page-save:
+        path: '/admin/page/{action}'
+        method: POST
+        controller: AdminController\Page\SavePageController
+        group: Page
+        tokens:
+            action: save

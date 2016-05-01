@@ -10,13 +10,19 @@ abstract class Group
      *
      * @var \Form\Form
      */
-    protected $_form;
+    protected $_form = null;
 
     /**
      *
      * @var \Conf\Conf
      */
-    protected $_conf;
+    protected $_conf = null;
+
+    /**
+     *
+     * @var \Ignaszak\Router\UrlGenerator
+     */
+    protected $url = null;
 
     /**
      *
@@ -32,6 +38,7 @@ abstract class Group
     {
         $this->_form = $_form;
         $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->url = RegistryFactory::start()->get('url');
         $this->formAction = $this->getFormAction();
     }
 

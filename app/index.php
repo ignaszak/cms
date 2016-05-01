@@ -1,6 +1,6 @@
 <?php
-try {
 
+try {
     require __DIR__ . '/conf/constants.php';
     require __BASEDIR__ . '/vendor/autoload.php';
     $app = new App\App;
