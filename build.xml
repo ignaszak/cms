@@ -12,8 +12,7 @@
         <property name="role" value="admin" override="true" />
         <php expression="define('__BASEDIR__', '${project.basedir}');
 require('${project.basedir}/vendor/davcs86/php-mysqlimporter/php-mysqlimporter.php');
-require('${project.basedir}/app/model/App/Conf/Configuration.php');
-" />
+require('${project.basedir}/app/model/App/Conf/Configuration.php');" />
     </target>
 
     <!-- ============================================ -->
@@ -196,9 +195,10 @@ require('${project.basedir}/app/model/App/Conf/Configuration.php');
     <!-- ============================================ -->
     <target name="create_folders" depends="create_db_conf_file">
         <mkdir dir="${project.basedir}/data/cache/registry" />
+        <mkdir dir="${project.basedir}/data/logs" />
         <exec command="chmod -R 777 ${project.basedir}/data/cache" />
         <exec command="chmod -R 777 ${project.basedir}/data/cache/registry" />
-        <mkdir dir="${project.basedir}/data/cache/tmp" />
+        <exec command="chmod -R 777 ${project.basedir}/data/logs" />
     </target>
 
     <!-- ============================================ -->
@@ -231,7 +231,7 @@ require('${project.basedir}/app/model/App/Conf/Configuration.php');
 require('${project.basedir}/app/model/UserAuth/HashPass.php');" />
         <php expression="\UserAuth\HashPass::hash(${password});" returnProperty="hashPassword" />
         <php expression="date('Y-m-d H:i:s');" returnProperty="regDate" />
-        <copy file="${AppConfDir}/db.sql" tofile="${project.basedir}/data/cache/tmp/tmp_db.sql" overwrite="true">
+        <copy file="${AppConfDir}/db.sql" tofile="${project.basedir}/data/cache/tmp_db.sql" overwrite="true">
             <filterchain>
                 <replacetokens>
                     <token key="dbHost" value="${dbHost}" />
@@ -254,10 +254,10 @@ require('${project.basedir}/app/model/UserAuth/HashPass.php');" />
     </target>
 
     <!-- ============================================ -->
-    <!-- Target: clear_cms_configurator_files         -->
+    <!-- Target: clear_tmp                            -->
     <!-- ============================================ -->
     <target name="clear_tmp" depends="create_sql_query">
-        <delete file="${project.basedir}/data/cache/tmp/tmp_db.sql" />
+        <delete file="${project.basedir}/data/cache/tmp_db.sql" />
     </target>
 
     <!-- ============================================ -->

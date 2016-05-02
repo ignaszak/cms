@@ -151,7 +151,7 @@ class Configuration
             \Conf\DB\DBSettings::DB_PASSWORD
         );
         $mysqlImport->doImport(
-            __BASEDIR__ . "/data/cache/tmp/tmp_db.sql",
+            __BASEDIR__ . "/data/cache/tmp_db.sql",
             \Conf\DB\DBSettings::DB_NAME
         );
     }

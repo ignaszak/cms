@@ -2,6 +2,11 @@
 
 Simple CMS
 
+## System Requirements
+* PHP version 7.0.0 or higher
+* MySQL version 5.5 or higher
+* Apache mod_rewrite module
+
 ## Installing
 
 Via Composer Create-Project:
