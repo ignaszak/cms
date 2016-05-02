@@ -205,10 +205,19 @@ require('${project.basedir}/app/model/App/Conf/Configuration.php');
     <!-- Target: create_htaccess_file                 -->
     <!-- ============================================ -->
     <target name="create_htaccess_file" depends="create_folders">
+        <if>
+            <equals arg1="${rewriteBase}" arg2="" />
+            <then>
+                <property name="rewriteBaseHtaccess" value="/" />
+            </then>
+            <else>
+                <property name="rewriteBaseHtaccess" value="${rewriteBase}" />
+            </else>
+        </if>
         <copy file="${AppConfDir}/htaccess" tofile="${project.basedir}/.htaccess" overwrite="true">
             <filterchain>
                 <replacetokens>
-                    <token key="rewriteBase" value="${rewriteBase}" />
+                    <token key="rewriteBase" value="${rewriteBaseHtaccess}" />
                 </replacetokens>
             </filterchain>
         </copy>
