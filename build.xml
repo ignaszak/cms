@@ -12,7 +12,6 @@
         <property name="role" value="admin" override="true" />
         <php expression="define('__BASEDIR__', '${project.basedir}');
 require('${project.basedir}/vendor/davcs86/php-mysqlimporter/php-mysqlimporter.php');
-require('${project.basedir}/app/model/DataBase/Controller/Validator/Schema/Validation.php');
 require('${project.basedir}/app/model/App/Conf/Configuration.php');
 " />
     </target>

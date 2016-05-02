@@ -11,17 +11,17 @@ class ConfigurationTest extends \PHPUnit_Framework_TestCase
         $siteAdress = 'http://anyAdress.com/with/request/url';
         Configuration::setAdress($siteAdress);
         $this->assertEquals(
-            'http://anyAdress.com/with/request/url/',
+            'http://anyAdress.com/with/request/url',
             Configuration::$siteAdress
         );
-        $this->assertEquals('/with/request/url/', Configuration::$requestUrl);
+        $this->assertEquals('/with/request/url', Configuration::$requestUrl);
     }
 
     public function testSetAdressWithoutRequestUrl()
     {
         $siteAdress = 'http://anyAdress.com/';
         Configuration::setAdress($siteAdress);
-        $this->assertEquals('http://anyAdress.com/', Configuration::$siteAdress);
-        $this->assertEquals('/', Configuration::$requestUrl);
+        $this->assertEquals('http://anyAdress.com', Configuration::$siteAdress);
+        $this->assertEquals('', Configuration::$requestUrl);
     }
 }

@@ -62,16 +62,15 @@ class Configuration
      *
      * @param string $siteAdress
      */
-    public static function setAdress(string $siteAdress)
+    public static function setAdress($siteAdress)
     {
         $siteAdress = substr($siteAdress, - 1) == "/" ?
-            $siteAdress : "{$siteAdress}/";
+            substr($siteAdress, 0, strlen($siteAdress) - 1) : $siteAdress;
         self::$siteAdress = $siteAdress;
         $array = explode('/', $siteAdress);
-        unset($array[0]);
-        unset($array[1]);
-        unset($array[2]);
-        self::$requestUrl = '/' . implode('/', $array);
+        unset($array[0], $array[1], $array[2]);
+        $requestUrl = implode('/', $array);
+        self::$requestUrl = empty($requestUrl) ? '' : "/{$requestUrl}";
     }
 
     /**
@@ -82,12 +81,8 @@ class Configuration
      * @param string $password
      * @return boolean
      */
-    public static function checkDatabase(
-        string $host,
-        string $name,
-        string $user,
-        string $password
-    ): string {
+    public static function checkDatabase($host, $name, $user, $password)
+    {
         try {
             new \PDO(
                 "mysql:host={$host};dbname={$name}",
@@ -109,7 +104,7 @@ class Configuration
      * @param string $adress
      * @return boolean
      */
-    public static function checkAdress(string $adress): bool
+    public static function checkAdress($adress)
     {
         return filter_var($adress, FILTER_VALIDATE_URL);
     }
@@ -119,7 +114,7 @@ class Configuration
      * @param string $login
      * @return string
      */
-    public static function checkLogin(string $login): string
+    public static function checkLogin($login)
     {
         self::$login = $login;
         return (ctype_alnum($login) && strlen($login) >= 2) ? '' : 'login';
@@ -130,7 +125,7 @@ class Configuration
      * @param string $password
      * @return string
      */
-    public static function checkPassword(string $password): string
+    public static function checkPassword($password)
     {
         self::$password = $password;
         return (ctype_alnum($password) && strlen($password) >= 8)
@@ -142,7 +137,7 @@ class Configuration
      * @param string $email
      * @return string
      */
-    public static function checkEmail(string $email): string
+    public static function checkEmail($email)
     {
         self::$email = $email;
         return filter_var($email, FILTER_VALIDATE_EMAIL) ? '' : 'email';

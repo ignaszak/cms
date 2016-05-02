@@ -164,8 +164,12 @@ class PaginationGenerator
         if (! empty($tokens['page'])) {
             unset($tokens['page']);
         }
-        $name = $this->http->router->name() == 'default' ?
-            'post-default' : $this->http->router->name();
+        if (! empty($this->http->router->name())) {
+            $name = $this->http->router->name() == 'default' ?
+                'post-default' : $this->http->router->name();
+        } else {
+            $name = 'post-default';
+        }
         return $this->registry->get('url')->url($name, array_merge($tokens, [
             'page' => $page
         ]));

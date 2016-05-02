@@ -6,7 +6,7 @@ require_once __BASEDIR__ . '/vendor/ircmaxell/password-compat/lib/password.php';
 class HashPass
 {
 
-    private static $optionsArray = [];
+    private static $optionsArray;
 
     public static function configure(array $array)
     {
