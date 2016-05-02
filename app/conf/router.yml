@@ -1,7 +1,7 @@
 routes:
 
     post-default:
-        path: '/{page}/'
+        path: '/{page}/?'
         method: GET
         group: post
         controller: Controller\ViewPostController
@@ -15,7 +15,7 @@ routes:
             month: '@month?'
             day: '@day?'
     post-com-list:
-        path: '/{year}{s1}{month}{s2}{day}/{alias}/{page}/'
+        path: '/{year}{s1}{month}{s2}{day}/{alias}/{page}/?'
         method: GET
         group: post
         controller: Controller\ViewPostController
@@ -25,18 +25,18 @@ routes:
             day: '@day?'
 
     category-list:
-        path: '/category/{page}/'
+        path: '/category/{page}/?'
         method: GET
         group: category
         controller: Controller\ViewPostController
     category-alias:
-        path: '/category/{alias}/{page}/'
+        path: '/category/{alias}/{page}/?'
         method: GET
         group: category
         controller: Controller\ViewPostController
 
     date:
-        path: '/{year}{s1}{month}{s2}{day}/{page}/'
+        path: '/{year}{s1}{month}{s2}{day}/{page}/?'
         method: GET
         group: date
         controller: Controller\ViewPostController
@@ -52,40 +52,40 @@ routes:
         controller: Controller\ViewPageController
 
     user-account:
-        path: /user/
+        path: /user/?
         method: GET
         group: user
         controller: Controller\User\UserViewController
     user-login:
-        path: '/user/{method}/{action}/'
+        path: '/user/{method}/{action}/?'
         method: POST
         group: user
         controller: Controller\User\UserLoginController
         tokens:
             action: login
     user-logout:
-        path: '/user/{method}/{action}/'
+        path: '/user/{method}/{action}/?'
         method: POST|GET
         group: user
         controller: Controller\User\UserLogoutController
         tokens:
             action: logout
     user-registration:
-        path: '/user/{method}/{action}/'
+        path: '/user/{method}/{action}/?'
         method: POST
         group: user
         controller: Controller\User\UserRegistrationController
         tokens:
             action: registration
     user-remind:
-        path: '/user/{method}/{action}/'
+        path: '/user/{method}/{action}/?'
         method: POST
         group: user
         controller: Controller\User\UserRemindController
         tokens:
             action: remind
     user-save:
-        path: '/user/{method}/{action}/'
+        path: '/user/{method}/{action}/?'
         method: POST
         group: user
         controller: Controller\User\UserSaveController
@@ -93,13 +93,13 @@ routes:
             action: save
 
     search:
-        path: '/search/{page}/'
+        path: '/search/{page}/?'
         method: POST|GET
         group: search
         controller: Controller\SearchController
 
     mail:
-        path: '/mail/send/'
+        path: /mail/send/?
         method: GET
         group: mail
         controller: Controller\SendMailController
@@ -109,11 +109,11 @@ routes:
         tokens:
             base : '@base'
     error:
-        path: /@notfound
+        path: '/@notfound'
         controller: Controller\NotFoundController
 
     admin:
-        path: /admin/
+        path: /admin/?
         method: GET
         group: admin
 
