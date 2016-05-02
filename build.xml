@@ -221,7 +221,7 @@ require('${project.basedir}/app/model/App/Conf/Configuration.php');
         <php expression="require('${project.basedir}/app/conf/DB/DBSettings.php');
 require('${project.basedir}/app/model/UserAuth/HashPass.php');" />
         <php expression="\UserAuth\HashPass::hash(${password});" returnProperty="hashPassword" />
-        <php expression="(new \DateTime('now'))->format('Y-m-d H:i:s');" returnProperty="regDate" />
+        <php expression="date('Y-m-d H:i:s');" returnProperty="regDate" />
         <copy file="${AppConfDir}/db.sql" tofile="${project.basedir}/data/cache/tmp/tmp_db.sql" overwrite="true">
             <filterchain>
                 <replacetokens>
