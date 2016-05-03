@@ -30,7 +30,7 @@ class SavePageController extends FrontController
         }
 
         $alias = $controller->getAlias($this->request['title']);
-        $public = @$this->request['public'] === 1 ? 1 : 0;
+        $public = (int) $this->request['public'] ?? 0;
 
         $controller->setReference('author', $this->view->getUserId())
             ->setDate($date)
