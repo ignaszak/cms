@@ -76,7 +76,8 @@ class EditMenuController extends FrontController
             public function getAdminLoadMenuLink(): string
             {
                 return $this->id ? $this->controller->url(
-                    'admin-menu-ajax-edit', ['id' => $this->id]
+                    'admin-menu-ajax-edit',
+                    ['id' => $this->id]
                 ) : '';
             }
 

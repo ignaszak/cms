@@ -62,7 +62,7 @@ class MockHttp
     {
         $stub = \Mockery::mock('Http');
         $stub->shouldReceive('isAdmin')->andReturnUsing(
-            function (): bool {
+            function () : bool {
                 return (bool) preg_match(
                     '/^admin-[a-zA-Z0-9_-]*/',
                     self::$routerResponse['name']
