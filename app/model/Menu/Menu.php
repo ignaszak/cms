@@ -65,19 +65,40 @@ class Menu
         }
     }
 
+    /**
+     *
+     * @param string $class]
+     * @return string
+     */
     private function createMenu(string $class): string
     {
         $string = "<ul {$class}>";
         foreach ($this->menuItemsArray as $item) {
-            $adress = json_decode(str_replace('|', '"', $item->getAdress()), true);
-            $url = $this->url->url(
-                $adress['route'],
-                $adress['tokens']
-            );
-            $string .= "<li><a href=\"{$url}\">";
+            $string .= "<li><a href=\"{$this->generateUrl($item->getAdress())}\">";
             $string .= "{$item->getTitle()}</a></li>";
         }
         $string .= "</ul>";
         return count($this->menuItemsArray) ? $string : "";
+    }
+
+    /**
+     *
+     * @param string $adress
+     * @return string
+     */
+    private function generateUrl(string $adress): string
+    {
+        if (filter_var($adress, FILTER_VALIDATE_URL)) {
+            return $adress;
+        } else {
+            $adress = json_decode(
+                str_replace('|', '"', $adress),
+                true
+            );
+            return $this->url->url(
+                $adress['route'],
+                $adress['tokens']
+            );
+        }
     }
 }
