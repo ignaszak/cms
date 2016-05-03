@@ -65,7 +65,7 @@ class Http
     public function isAdmin(): bool
     {
         return (bool) preg_match(
-            '/^admin-[a-zA-Z0-9_-]*/',
+            '/^admin[a-zA-Z0-9_-]*/',
             $this->router->name()
         );
     }
