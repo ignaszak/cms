@@ -41,7 +41,7 @@ class SaveMenuController extends FrontController
         $this->id = $this->http->router->get('id');
         $this->request = $this->http->request->all();
 
-        if ($this->action == 'save') {
+        if ($this->action === 'save') {
             $this->saveMenuEntityAndSetLastAddedId();
             $this->saveMenuItemsEntity();
             $this->removeMenuItemsEntity();
@@ -50,7 +50,7 @@ class SaveMenuController extends FrontController
                     'action' => 'edit', 'id' => $this->lastId
                 ])
             );
-        } elseif ($this->action == 'delete' && $this->id) {
+        } elseif ($this->action === 'delete' && $this->id) {
             $this->removeMenuWithMenuItems();
         }
 

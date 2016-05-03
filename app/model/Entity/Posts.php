@@ -132,7 +132,7 @@ class Posts extends IPostsQuery
      */
     public function getDate($format = "")
     {
-        if ($format == "DateTime") {
+        if ($format === "DateTime") {
             return $this->date;
         } else {
             $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')

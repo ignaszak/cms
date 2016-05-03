@@ -8,7 +8,11 @@ use DataBase\Controller\Validator\UniqueValidator;
 class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_uniqueValidator;
+    /**
+     *
+     * @var \DataBase\Controller\Validator\UniqueValidator
+     */
+    private $uniqueValidator;
 
     public function setUp()
     {
@@ -18,26 +22,26 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $controller->method('entity')->willReturn($anyEntity);
-        $this->_uniqueValidator = new UniqueValidator($controller);
+        $this->uniqueValidator = new UniqueValidator($controller);
     }
 
     public function testSetQuery()
     {
-        MockTest::callMockMethod($this->_uniqueValidator, 'setQuery');
+        MockTest::callMockMethod($this->uniqueValidator, 'setQuery');
         $_query = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_uniqueValidator,
-            '_query'
+            $this->uniqueValidator,
+            'query'
         );
         $this->assertInstanceOf('DataBase\Query\Query', $_query);
     }
 
     public function testSetEntityKeyByEntityName()
     {
-        MockTest::callMockMethod($this->_uniqueValidator, 'setEntityKey');
+        MockTest::callMockMethod($this->uniqueValidator, 'setEntityKey');
         $this->assertEquals(
             'entityKey',
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_uniqueValidator,
+                $this->uniqueValidator,
                 'entityKey'
             )
         );
@@ -46,12 +50,12 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
     public function testDataNotExistsInDatabase()
     {
         MockTest::inject(
-            $this->_uniqueValidator,
-            '_query',
+            $this->uniqueValidator,
+            'query',
             $this->mockQuery([])
         );
         $result = MockTest::callMockMethod(
-            $this->_uniqueValidator,
+            $this->uniqueValidator,
             'dataNotExistInDatabase',
             ['column', 'value', []]
         );
@@ -61,12 +65,12 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
     public function testDataExistsInDatabase()
     {
         MockTest::inject(
-            $this->_uniqueValidator,
-            '_query',
+            $this->uniqueValidator,
+            'query',
             $this->mockQuery(['value'])
         );
         $result = MockTest::callMockMethod(
-            $this->_uniqueValidator,
+            $this->uniqueValidator,
             'dataNotExistInDatabase',
             ['column', 'value', []]
         );
@@ -77,9 +81,9 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $stub = $this->mockQuery(['value']);
         $stub->shouldReceive('query')->once();
-        MockTest::inject($this->_uniqueValidator, '_query', $stub);
+        MockTest::inject($this->uniqueValidator, 'query', $stub);
         $result = MockTest::callMockMethod(
-            $this->_uniqueValidator,
+            $this->uniqueValidator,
             'dataNotExistInDatabase',
             ['column', 'value', ['exception']]
         );

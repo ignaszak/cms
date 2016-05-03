@@ -29,7 +29,7 @@ class AjaxSaveCategoryController extends FrontController
 
     public function run()
     {
-        if ($this->request['id'] == 1) {
+        if ($this->request['id'] === 1) {
             return;
         }
 
@@ -43,7 +43,7 @@ class AjaxSaveCategoryController extends FrontController
             $controller->find($this->request['id']);
         }
 
-        if ($this->request['action'] == 'edit') {
+        if ($this->request['action'] === 'edit') {
             $alias = $controller->getAlias($this->request['title']);
             $parentId = is_numeric($this->request['parentId']) ?
                 $this->request['parentId'] : 0;
@@ -57,7 +57,7 @@ class AjaxSaveCategoryController extends FrontController
                 ]);
 
             echo $refresh;
-        } elseif ($this->request['action'] == 'delete') {
+        } elseif ($this->request['action'] === 'delete') {
             $controller = new Controller(new Categories());
             $idArray = array_filter(
                 $this->getChildCategories($this->request['id'])
@@ -79,7 +79,7 @@ class AjaxSaveCategoryController extends FrontController
         $array = [];
         $array[] = $parentId;
         foreach ($this->categoryArray as $cat) {
-            if ($parentId == $cat->getParentId()) {
+            if ($parentId === $cat->getParentId()) {
                 $array[] = $cat->getId();
                 $array = array_merge(
                     $array,

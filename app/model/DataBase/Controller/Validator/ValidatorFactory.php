@@ -11,13 +11,13 @@ class ValidatorFactory
      *
      * @var Controller
      */
-    private $_controller;
+    private $controller = null;
 
     /**
      *
      * @var SettersValidator
      */
-    private $_settersValidator;
+    private $settersValidator = null;
 
     /**
      *
@@ -27,13 +27,13 @@ class ValidatorFactory
 
     /**
      *
-     * @param Controller $_controller
-     * @param Schema\Validation $_schema
+     * @param Controller $controller
+     * @param Schema\Validation $schema
      */
-    public function __construct(Controller $_controller, Schema\Validation $_schema)
+    public function __construct(Controller $controller, Schema\Validation $schema)
     {
-        $this->_controller = $_controller;
-        $this->_settersValidator = new SettersValidator($_controller, $_schema);
+        $this->controller = $controller;
+        $this->settersValidator = new SettersValidator($controller, $schema);
     }
 
     /**
@@ -42,8 +42,8 @@ class ValidatorFactory
      */
     public function valid(array $command)
     {
-        $this->_settersValidator->valid($command);
-        $this->addErrors($this->_settersValidator->getErrors());
+        $this->settersValidator->valid($command);
+        $this->addErrors($this->settersValidator->getErrors());
         $this->runValidator(
             $this->transformCommand($command)
         );
@@ -81,7 +81,7 @@ class ValidatorFactory
         foreach ($command as $class => $commandArray) {
             $namespace = !defined('TEST') ? __NAMESPACE__ . '\\' : '';
             $className = $namespace . ucfirst($class) . 'Validator';
-            $validator = new $className($this->_controller);
+            $validator = new $className($this->controller);
             $validator->valid($commandArray);
             $this->addErrors($validator->getErrors());
         }
@@ -90,19 +90,19 @@ class ValidatorFactory
     private function sendErrorsIfExists()
     {
         if (count($this->errorArray)) {
-            foreach ($this->_controller->entitySettersArray as $key => $data) {
+            foreach ($this->controller->entitySettersArray as $key => $data) {
                 // Repleca reference entities instances to its referenced id
                 if (is_object($data)) {
                     if (method_exists($data, 'getId')) {
-                        $this->_controller->entitySettersArray[$key] = $data->getId();
+                        $this->controller->entitySettersArray[$key] = $data->getId();
                     } else {
-                        unset($this->_controller->entitySettersArray[$key]);
+                        unset($this->controller->entitySettersArray[$key]);
                     }
                 }
             }
 
             Server::setReferData(array(
-                'data' => $this->_controller->entitySettersArray,
+                'data' => $this->controller->entitySettersArray,
                 'error' => $this->errorArray
             ));
             Server::headerLocationReferer();

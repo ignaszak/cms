@@ -28,7 +28,7 @@ class AjaxEditController extends FrontController
                 $content = $this->query->getStaticQuery()[0];
                 $arrayItem['title'] = $content->getTitle();
 
-                if ($alias == 'post') {
+                if ($alias === 'post') {
                     $arrayItem['category'] = $content->getCategory()->getTitle();
                 }
             }

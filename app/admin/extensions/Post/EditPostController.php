@@ -28,7 +28,7 @@ class EditPostController extends FrontController
         $this->alias = $this->http->router->get('alias');
         $this->view->addView('theme/post-edit.html');
 
-        if ($this->action == 'delete' && $this->alias) {
+        if ($this->action === 'delete' && $this->alias) {
             $controller = new Controller(new Posts());
             $controller->findOneBy([
                 'alias' => $this->alias
@@ -65,12 +65,12 @@ class EditPostController extends FrontController
 
             /**
              *
-             * @param FrontController $_controller
+             * @param FrontController $controller
              */
-            public function __construct(FrontController $_controller)
+            public function __construct(FrontController $controller)
             {
-                parent::__construct($_controller);
-                $this->returnData = $this->_controller->view
+                parent::__construct($controller);
+                $this->returnData = $this->controller->view
                     ->getFormResponseData('data');
                 $this->setData();
             }
@@ -94,23 +94,23 @@ class EditPostController extends FrontController
                 $data['catId'] = $this->returnData['setCategory'];
                 $data['public'] = $this->returnData['setPublic'];
                 $data['formTitle'] = 'Add new post';
-                $data['formLink'] = $this->_controller->url('admin-post-save', [
+                $data['formLink'] = $this->controller->url('admin-post-save', [
                     'action' => 'form'
                 ]);
 
-                if ($this->_controller->action == 'edit' && $this->_controller->alias) {
+                if ($this->controller->action === 'edit' && $this->controller->alias) {
                     $data['formTitle'] = 'Edit post';
 
-                    $this->_controller->query->setQuery('post')
-                        ->alias($this->_controller->alias);
+                    $this->controller->query->setQuery('post')
+                        ->alias($this->controller->alias);
 
-                    foreach ($this->_controller->query->getQuery() as $post) {
+                    foreach ($this->controller->query->getQuery() as $post) {
                         $data['id'] = $post->getId();
                         $data['catId'] = $post->getCategory()->getId();
                         $data['title'] = $post->getTitle();
                         $data['content'] = $post->getContent();
                         $data['public'] = $post->getPublic();
-                        $data['deleteLink'] = $this->_controller->url(
+                        $data['deleteLink'] = $this->controller->url(
                             'admin-post-edit',
                             ['action' => 'delete', 'alias' => $post->getAlias()]
                         );

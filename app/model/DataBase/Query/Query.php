@@ -10,7 +10,7 @@ class Query
      *
      * @var QueryController
      */
-    private $_queryController;
+    private $queryController = null;
 
     /**
      *
@@ -22,9 +22,9 @@ class Query
         $entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');
         $entityName = $entityController->getEntity($name);
-        $this->_queryController = new QueryController($entityName);
+        $this->queryController = new QueryController($entityName);
 
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -33,8 +33,8 @@ class Query
      */
     public function getQuery(): array
     {
-        $this->_queryController->paginate(true);
-        return $this->_queryController->getQuery();
+        $this->queryController->paginate(true);
+        return $this->queryController->getQuery();
     }
 
     /**
@@ -43,7 +43,7 @@ class Query
      */
     public function getStaticQuery(): array
     {
-        $this->_queryController->force();
-        return $this->_queryController->getQuery();
+        $this->queryController->force();
+        return $this->queryController->getQuery();
     }
 }

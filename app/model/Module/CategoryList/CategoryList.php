@@ -10,7 +10,7 @@ class CategoryList
      *
      * @var \Conf\Conf
      */
-    private $_conf = null;
+    private $conf = null;
 
     /**
      *
@@ -26,7 +26,7 @@ class CategoryList
 
     public function __construct()
     {
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->conf = RegistryFactory::start('file')->register('Conf\Conf');
         $registry = RegistryFactory::start();
         $this->categoryList = $registry->register('App\Resource\CategoryList')->get();
         $this->url = $registry->get('url');
@@ -49,7 +49,7 @@ class CategoryList
         $categoriesExists = count($this->categoryList);
         unset($this->categoryList[0]);
         foreach ($this->categoryList as $cat) {
-            if ($parentId == $cat->getParentId()) {
+            if ($parentId === $cat->getParentId()) {
                 $url = $this->url->url('category-alias', [
                     'alias' => $cat->getAlias(), 'page' => 1
                 ]);

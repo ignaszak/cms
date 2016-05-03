@@ -10,15 +10,15 @@ class Pager extends Theme
      */
     public function getTheme(): string
     {
-        if ($this->_pg->getCountPage() > 1) {
+        if ($this->pg->getCountPage() > 1) {
             return <<<EOT
 <nav>
     <ul class="pager">
-        <li class="{$this->_pg->getPrevDisabled()}">
-            <a href="{$this->_pg->getPrevLink()}">Previous</a>
+        <li class="{$this->pg->getPrevDisabled()}">
+            <a href="{$this->pg->getPrevLink()}">Previous</a>
         </li>
-        <li class="{$this->_pg->getNextDisabled()}">
-            <a href="{$this->_pg->getNextLink()}">Next</a>
+        <li class="{$this->pg->getNextDisabled()}">
+            <a href="{$this->pg->getNextLink()}">Next</a>
         </li>
     </ul>
 </nav>

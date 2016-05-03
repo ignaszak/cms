@@ -11,7 +11,7 @@ class DBDoctrine
      *
      * @var EntityManager
      */
-    private static $_em;
+    private static $em = null;
 
     /**
      *
@@ -19,11 +19,11 @@ class DBDoctrine
      */
     public static function em()
     {
-        if (empty(self::$_em)) {
+        if (empty(self::$em)) {
             self::configure();
         }
 
-        return self::$_em;
+        return self::$em;
     }
 
     private static function configure()
@@ -47,12 +47,12 @@ class DBDoctrine
         ];
 
         $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode, null, null, false);
-        self::$_em = EntityManager::create($dbParams, $config);
+        self::$em = EntityManager::create($dbParams, $config);
     }
 
     private static function registerEnumTypeAsDoctrineVarchar()
     {
-        $platform = self::$_em->getConnection()->getDatabasePlatform();
+        $platform = self::$em->getConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'string');
     }
 }

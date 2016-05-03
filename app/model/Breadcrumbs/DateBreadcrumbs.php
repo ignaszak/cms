@@ -20,12 +20,12 @@ class DateBreadcrumbs extends IBreadcrumbs
         foreach ($paramsArray as $key => $date) {
             if (is_numeric($date)) {
                 $params = $paramsArray;
-                if ($key == 'year') {
+                if ($key === 'year') {
                     $params['s1'] = '';
                     $params['s2'] = '';
                     $params['day'] = '';
                     $params['month'] = '';
-                } elseif ($key == 'month') {
+                } elseif ($key === 'month') {
                     $params['s2'] = '';
                     $params['day'] = '';
                 }

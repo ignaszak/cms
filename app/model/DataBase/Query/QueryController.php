@@ -12,7 +12,7 @@ class QueryController extends IQueryController
      *
      * @var \Conf\Conf
      */
-    private $_conf = null;
+    private $conf = null;
 
     /**
      *
@@ -68,9 +68,9 @@ class QueryController extends IQueryController
 
     public function __construct(string $entityName)
     {
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->http = RegistryFactory::start()->get('http');
-        $this->_queryBuilder = new QueryBuilder($this);
+        $this->queryBuilder = new QueryBuilder($this);
         $this->entityName = $entityName;
         $this->createQuery();
     }
@@ -178,10 +178,10 @@ class QueryController extends IQueryController
         // For entities which have getPublic method
         if (method_exists($this->entityName, 'getPublic')) {
             $value = 1;
-            if ($this->http->router->group() == 'admin') { // Check if admin panel is avilable
-                if ($this->status == 'public') {
+            if ($this->http->isAdmin()) { // Check if admin panel is avilable
+                if ($this->status === 'public') {
                     $value = 1;
-                } elseif ($this->status == 'edit') {
+                } elseif ($this->status === 'edit') {
                     $value = 0;
                 } else {
                     $value = null;
@@ -241,7 +241,7 @@ class QueryController extends IQueryController
      */
     private function paginateQuery()
     {
-        $limit = $this->_conf->getViewLimit();
+        $limit = $this->conf->getViewLimit();
         $page = $this->http->router->get('page', 1);
         $offset = $limit * ($page - 1);
 
@@ -272,7 +272,7 @@ class QueryController extends IQueryController
     private function setAliasIfResultIsNotForced()
     {
         if (! $this->isResultForced) {
-            $this->_queryBuilder->alias($this->http->router->get('alias'));
+            $this->queryBuilder->alias($this->http->router->get('alias'));
             $this->getQueryAndResult();
         }
     }

@@ -8,14 +8,14 @@ abstract class ViewHelperController
      *
      * @var Controller
      */
-    protected $_controller;
+    protected $controller = null;
 
     /**
      *
-     * @param Controller $_controller
+     * @param Controller $controller
      */
-    public function __construct(Controller $_controller)
+    public function __construct(Controller $controller)
     {
-        $this->_controller = $_controller;
+        $this->controller = $controller;
     }
 }

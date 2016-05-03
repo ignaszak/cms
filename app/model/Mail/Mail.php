@@ -12,31 +12,31 @@ class Mail
      *
      * @var \Swift_Transport
      */
-    private $_transport;
+    private $transport = null;
 
     /**
      *
      * @var \Swift_Message
      */
-    private $_swiftMessage;
+    private $swiftMessage = null;
 
     /**
      *
      * @var string
      */
-    private $adminEmail;
+    private $adminEmail = '';
 
     /**
      *
-     * @param \Swift_Transport $_transport
+     * @param \Swift_Transport $transport
      */
-    public function __construct(\Swift_Transport $_transport)
+    public function __construct(\Swift_Transport $transport)
     {
         $this->adminEmail = RegistryFactory::start('file')
             ->register('Conf\Conf')->getAdminEmail();
 
-        $this->_swiftMessage = Swift_Message::newInstance();
-        $this->_transport = $_transport;
+        $this->swiftMessage = Swift_Message::newInstance();
+        $this->transport = $transport;
     }
 
     /**
@@ -47,7 +47,7 @@ class Mail
      */
     public function __call(string $function, array $args)
     {
-        return call_user_func_array([$this->_swiftMessage, $function], $args);
+        return call_user_func_array([$this->swiftMessage, $function], $args);
     }
 
     /**
@@ -60,7 +60,7 @@ class Mail
 
     public function send()
     {
-        $mailer = Swift_Mailer::newInstance($this->_transport);
-        $mailer->send($this->_swiftMessage);
+        $mailer = Swift_Mailer::newInstance($this->transport);
+        $mailer->send($this->swiftMessage);
     }
 }

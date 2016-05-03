@@ -11,7 +11,7 @@ abstract class Validator
      *
      * @var Controller
      */
-    protected $_controller = null;
+    protected $controller = null;
 
     /**
      *
@@ -37,11 +37,11 @@ abstract class Validator
      */
     protected $entityName;
 
-    public function __construct(Controller $_controller)
+    public function __construct(Controller $controller)
     {
-        $this->_controller = $_controller;
+        $this->controller = $controller;
         $this->registry = RegistryFactory::start();
-        $this->entityName = get_class($this->_controller->entity());
+        $this->entityName = get_class($this->controller->entity());
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class Validator
      */
     protected function getSetter(string $name)
     {
-        foreach ($this->_controller->entitySettersArray as $setter => $value) {
+        foreach ($this->controller->entitySettersArray as $setter => $value) {
             if (strpos(strtolower($setter), $name) !== false) {
                 return $value;
             }

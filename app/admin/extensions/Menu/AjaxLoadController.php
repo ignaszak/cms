@@ -35,7 +35,7 @@ class AjaxLoadController extends FrontController
                 ]
             ]));
             $rowArray['alias'] = $alias;
-            if ($alias == 'post') {
+            if ($alias === 'post') {
                 $rowArray['category'] = $row->getCategory()->getTitle();
             }
             $array[] = $rowArray;

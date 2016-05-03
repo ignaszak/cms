@@ -19,12 +19,12 @@ class Conf
      */
     public function __construct(string $entity = 'Entity\Options')
     {
-        $_options = DBDoctrine::em()->find($entity, 1);
+        $options = DBDoctrine::em()->find($entity, 1);
         $optonsMethods = get_class_methods($entity);
 
         foreach ($optonsMethods as $method) {
             if (! preg_match('/^(id|set)/', $method)) {
-                $this->optionsArray[$method] = $_options->$method();
+                $this->optionsArray[$method] = $options->$method();
             }
         }
     }

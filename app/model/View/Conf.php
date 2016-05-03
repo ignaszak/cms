@@ -7,43 +7,43 @@ class Conf
 {
 
     /**
-     * Current theme absolute path
-     *
-     * @var string
-     */
-    private $themePath;
-
-    /**
-     *
-     * @var string
-     */
-    private $themeFolder;
-
-    /**
      *
      * @var \Conf\Conf
      */
-    private $_conf;
+    private $conf = null;
 
     /**
      *
      * @var \App\Resource\Http
      */
-    private $http;
+    private $http = null;
+
+    /**
+     * Current theme absolute path
+     *
+     * @var string
+     */
+    private $themePath = '';
+
+    /**
+     *
+     * @var string
+     */
+    private $themeFolder = '';
 
     public function __construct()
     {
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->http = RegistryFactory::start()->get('http');
     }
 
     public function configureThemePath()
     {
-        if (preg_match('/^admin[a-zA-Z0-9_-]*/', $this->http->router->name())) {
+        if ($this->http->isAdmin()) {
             $this->themeFolder = "view/admin";
             $this->themePath = __VIEWDIR__ . "/admin";
         } else {
-            $themeName = $this->_conf->getTheme();
+            $themeName = $this->conf->getTheme();
             $this->themeFolder = "view/public/{$themeName}";
             $this->themePath = __VIEWDIR__ . "/public/{$themeName}";
         }

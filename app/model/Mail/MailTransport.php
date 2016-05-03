@@ -8,7 +8,7 @@ class MailTransport
      *
      * @var string
      */
-    private $transportClassName;
+    private $transportClassName = '';
 
     /**
      *

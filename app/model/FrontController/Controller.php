@@ -27,7 +27,7 @@ abstract class Controller
      *
      * @var string
      */
-    private $viewHelperName;
+    private $viewHelperName = '';
 
     abstract public function run();
 

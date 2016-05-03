@@ -6,6 +6,10 @@ use View\View;
 class ViewTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     *
+     * @var View\View
+     */
     private $view = null;
 
     public function setUp()

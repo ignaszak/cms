@@ -15,7 +15,7 @@ class UserRemindController extends FrontController
      *
      * @var string
      */
-    private $randomPassword;
+    private $randomPassword = '';
 
     public function run()
     {
@@ -30,7 +30,7 @@ class UserRemindController extends FrontController
             'email' => $this->http->request->get('userEmail')
         ]);
 
-        if ($controller->entity() == null) { // If email not exists
+        if ($controller->entity() === null) { // If email not exists
             Server::setReferData(['error' => ['findEmail' => 1]]);
             Server::headerLocationReferer();
         } else {
@@ -81,7 +81,7 @@ class UserRemindController extends FrontController
         $mail = new Mail($transport->conf());
         $mail->setSubject('Remind password')
             ->setFrom($mail->getAdminEmail())
-            ->setTo($_POST['userEmail'])
+            ->setTo($this->http->request->get('userEmail'))
             ->setBody(
                 "Dear {$login}\n" .
                 "Your new password is: {$this->randomPassword}\n" .

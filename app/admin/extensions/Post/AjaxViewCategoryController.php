@@ -35,11 +35,11 @@ class AjaxViewCategoryController extends FrontController
         $string = "";
         $i = 0;
         foreach ($this->categoryArray as $cat) {
-            if ($parentId == $cat->getParentId()) {
+            if ($parentId === $cat->getParentId()) {
                 $string .= $i > 0 ? ", " : "";
                 $string .= "{\n    \"id\" : {$cat->getId()},";
                 $string .= "\n    \"text\" : \"{$cat->getTitle()}\"";
-                $selected = ($this->http->router->get('id') == $cat->getId()) ?
+                $selected = ($this->http->router->get('id') === $cat->getId()) ?
                     ",\n    \"state\" : { \"selected\" : true }" : "";
                 $string .= $selected;
                 $children = $this->getAdminViewCategoryTreeview($cat->getId());

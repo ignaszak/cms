@@ -3,7 +3,6 @@ namespace FrontController;
 
 use Controller\DefaultController;
 use App\Resource\Http;
-use View\ViewHelper;
 
 class FrontController
 {
@@ -13,14 +12,14 @@ class FrontController
      *
      * @var \ReflectionClass('\FrontController\Controller')
      */
-    private $_base = null;
+    private $base = null;
 
     /**
      * Default controller class
      *
      * @var string
      */
-    private $_default = 'Controller\DefaultController';
+    private $default = 'Controller\DefaultController';
 
     /**
      *
@@ -28,10 +27,10 @@ class FrontController
      */
     public function __construct(Http $http)
     {
-        $this->_base = new \ReflectionClass('\FrontController\Controller');
+        $this->base = new \ReflectionClass('\FrontController\Controller');
         $this->loadController(
             empty($http->router->controller()) ?
-                $this->_default : $http->router->controller()
+                $this->default : $http->router->controller()
         );
     }
 
@@ -47,7 +46,7 @@ class FrontController
         if (class_exists($controllerClass)) {
             $reflectionControllerClass = new \ReflectionClass($controllerClass);
 
-            if ($reflectionControllerClass->isSubclassOf($this->_base)) {
+            if ($reflectionControllerClass->isSubclassOf($this->base)) {
                 $controller = $controllerClass::instance();
                 $controller->run();
                 $controller->runModules();

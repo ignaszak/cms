@@ -15,31 +15,31 @@ class UserLoginController extends FrontController
      *
      * @var \Entity\Users
      */
-    private $_userEntity;
+    private $userEntity = null;
 
     /**
      *
      * @var string
      */
-    private $login;
+    private $login = '';
 
     /**
      *
      * @var string
      */
-    private $column;
+    private $column = '';
 
     /**
      *
      * @var string
      */
-    private $password;
+    private $password = '';
 
     /**
      *
      * @var string
      */
-    private $remember;
+    private $remember = '';
 
     public function run()
     {
@@ -83,8 +83,8 @@ class UserLoginController extends FrontController
 
         if (count($result) === 1 &&
             HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
-            $this->_userEntity = $result[0];
-            return $this->_userEntity->getId();
+            $this->userEntity = $result[0];
+            return $this->userEntity->getId();
         }
         return 0;
     }
@@ -102,9 +102,9 @@ class UserLoginController extends FrontController
     private function setSession()
     {
         if ($this->remember) {
-            RegistryFactory::start('cookie')->set('userSession', $this->_userEntity);
+            RegistryFactory::start('cookie')->set('userSession', $this->userEntity);
         } else {
-            RegistryFactory::start('session')->set('userSession', $this->_userEntity);
+            RegistryFactory::start('session')->set('userSession', $this->userEntity);
         }
     }
 }

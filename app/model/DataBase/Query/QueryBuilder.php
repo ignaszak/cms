@@ -10,15 +10,15 @@ class QueryBuilder implements IQueryBuilder
      *
      * @var IQueryController
      */
-    private $_queryController;
+    private $queryController = null;
 
     /**
      *
-     * @param IQueryController $_queryController
+     * @param IQueryController $queryController
      */
-    public function __construct(IQueryController $_queryController)
+    public function __construct(IQueryController $queryController)
     {
-        $this->_queryController = $_queryController;
+        $this->queryController = $queryController;
     }
 
     /**
@@ -30,7 +30,7 @@ class QueryBuilder implements IQueryBuilder
     public function id($value): IQueryController
     {
         $this->set('c.id', $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -42,7 +42,7 @@ class QueryBuilder implements IQueryBuilder
     public function categoryId($value): IQueryController
     {
         $this->set('c.categoryId', $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -56,7 +56,7 @@ class QueryBuilder implements IQueryBuilder
         $column = 'category.alias';
         $this->join($column);
         $this->set($column, $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -68,7 +68,7 @@ class QueryBuilder implements IQueryBuilder
     public function authorId($value): IQueryController
     {
         $this->set('c.authorId', $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -82,7 +82,7 @@ class QueryBuilder implements IQueryBuilder
         $column = 'user.login';
         $this->join($column);
         $this->set($column, $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -111,7 +111,7 @@ class QueryBuilder implements IQueryBuilder
         }
         $this->set("DATE_FORMAT(c.date, '{$format}')", $value);
 
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -123,7 +123,7 @@ class QueryBuilder implements IQueryBuilder
     public function title(string $value): IQueryController
     {
         $this->set('c.title', $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -135,7 +135,7 @@ class QueryBuilder implements IQueryBuilder
     public function alias(string $value): IQueryController
     {
         $this->set('c.alias', $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -147,7 +147,7 @@ class QueryBuilder implements IQueryBuilder
     public function contentLike(string $value): IQueryController
     {
         $this->like('content', $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -159,7 +159,7 @@ class QueryBuilder implements IQueryBuilder
     public function titleLike(string $value): IQueryController
     {
         $this->like('title', $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -171,7 +171,7 @@ class QueryBuilder implements IQueryBuilder
     public function findBy(string $column, string $value): IQueryController
     {
         $this->set('c.' . $column, $value);
-        return $this->_queryController;
+        return $this->queryController;
     }
 
     /**
@@ -181,13 +181,13 @@ class QueryBuilder implements IQueryBuilder
      */
     public function query(string $query, array $params = null): IQueryController
     {
-        $query = $this->_queryController->query
+        $query = $this->queryController->query
             ->andwhere($query);
         if (is_array($params)) {
             $query->setParameters($params);
         }
-        $this->_queryController->updateQuery($query);
-        return $this->_queryController;
+        $this->queryController->updateQuery($query);
+        return $this->queryController;
     }
 
     /**
@@ -197,10 +197,10 @@ class QueryBuilder implements IQueryBuilder
      */
     private function like(string $column, string $value)
     {
-        $query = $this->_queryController->query
+        $query = $this->queryController->query
             ->andwhere('c.' . $column . ' LIKE :value')
             ->setParameter('value', '%' . $value . '%');
-        $this->_queryController->updateQuery($query);
+        $this->queryController->updateQuery($query);
     }
 
     /**
@@ -211,10 +211,10 @@ class QueryBuilder implements IQueryBuilder
     {
         $reference = $this->getReference($column);
 
-        $query = $this->_queryController->query
+        $query = $this->queryController->query
             ->join('c.' . $reference, $reference);
 
-        $this->_queryController->updateQuery($query);
+        $this->queryController->updateQuery($query);
     }
 
     /**
@@ -224,11 +224,11 @@ class QueryBuilder implements IQueryBuilder
      */
     private function set(string $column, $value)
     {
-        $query = $this->_queryController->query
+        $query = $this->queryController->query
             ->andwhere($column . ' IN(:value)')
             ->setParameter('value', $value);
 
-        $this->_queryController->updateQuery($query);
+        $this->queryController->updateQuery($query);
     }
 
     /**

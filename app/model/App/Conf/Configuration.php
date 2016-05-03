@@ -8,55 +8,55 @@ class Configuration
      *
      * @var string
      */
-    public static $siteAdress;
+    public static $siteAdress = '';
 
     /**
      *
      * @var string
      */
-    public static $requestUrl;
+    public static $requestUrl = '';
 
     /**
      *
      * @var string
      */
-    public static $dbHost;
+    public static $dbHost = '';
 
     /**
      *
      * @var string
      */
-    public static $dbUser;
+    public static $dbUser = '';
 
     /**
      *
      * @var string
      */
-    public static $dbPassword;
+    public static $dbPassword = '';
 
     /**
      *
      * @var string
      */
-    public static $dbName;
+    public static $dbName = '';
 
     /**
      *
      * @var string
      */
-    public static $login;
+    public static $login = '';
 
     /**
      *
      * @var string
      */
-    public static $password;
+    public static $password = '';
 
     /**
      *
      * @var string
      */
-    public static $email;
+    public static $email = '';
 
     /**
      *
@@ -64,7 +64,7 @@ class Configuration
      */
     public static function setAdress($siteAdress)
     {
-        $siteAdress = substr($siteAdress, - 1) == "/" ?
+        $siteAdress = substr($siteAdress, - 1) === "/" ?
             substr($siteAdress, 0, strlen($siteAdress) - 1) : $siteAdress;
         self::$siteAdress = $siteAdress;
         $array = explode('/', $siteAdress);

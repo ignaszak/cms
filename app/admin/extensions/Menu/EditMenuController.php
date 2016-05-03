@@ -29,12 +29,12 @@ class EditMenuController extends FrontController
 
             /**
              *
-             * @param FrontController $_controller
+             * @param FrontController $controller
              */
-            public function __construct(FrontController $_controller)
+            public function __construct(FrontController $controller)
             {
-                parent::__construct($_controller);
-                $this->id = $this->_controller->http->router->get('id', 0);
+                parent::__construct($controller);
+                $this->id = $this->controller->http->router->get('id', 0);
             }
 
             /**
@@ -43,7 +43,7 @@ class EditMenuController extends FrontController
              */
             public function getAdminLoadMenuFormTitle(): string
             {
-                return $this->_controller->http->router->get('action') == 'edit' ?
+                return $this->controller->http->router->get('action') === 'edit' ?
                     "Edit menu" : "Create new menu";
             }
 
@@ -62,10 +62,10 @@ class EditMenuController extends FrontController
              */
             public function getAdminLoadMenuName(): string
             {
-                $this->_controller->query->setQuery('menu')
+                $this->controller->query->setQuery('menu')
                     ->id($this->id)
                     ->limit(1);
-                $content = $this->_controller->query->getStaticQuery();
+                $content = $this->controller->query->getStaticQuery();
                 return count($content) ? $content[0]->getName() : "";
             }
 
@@ -75,8 +75,9 @@ class EditMenuController extends FrontController
              */
             public function getAdminLoadMenuLink(): string
             {
-                return $this->id ?
-                    "{$this->_controller->view->getAdminAdress()}/menu/ajax/{$this->id}/edit.json" : '';
+                return $this->id ? $this->controller->url(
+                    'admin-menu-ajax-edit', ['id' => $this->id]
+                ) : '';
             }
 
             /**
@@ -85,7 +86,9 @@ class EditMenuController extends FrontController
              */
             public function getAdminLoadMenuDelete(): string
             {
-                return "{$this->_controller->view->getAdminAdress()}/menu/delete/{$this->id}";
+                return $this->controller->url('admin-menu-delete', [
+                    'action' => 'delete', 'id' => $this->id
+                ]);
             }
         };
     }

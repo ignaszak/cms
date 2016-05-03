@@ -10,17 +10,17 @@ class Form
      *
      * @var \Form\Message
      */
-    private $_message;
+    private $message = null;
 
     /**
      *
      * @var string
      */
-    private $formName;
+    private $formName = '';
 
     public function __construct()
     {
-        $this->_message = new Message($this);
+        $this->message = new Message($this);
     }
 
     /**
@@ -69,7 +69,7 @@ class Form
      */
     public function getFormMessage(): string
     {
-        return $this->_message->getMessage();
+        return $this->message->getMessage();
     }
 
     /**

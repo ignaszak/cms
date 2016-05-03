@@ -8,25 +8,25 @@ class App
      *
      * @var Message
      */
-    private $_message = null;
+    private $message = null;
 
     /**
      *
      * @var Valid
      */
-    private $_valid = null;
+    private $valid = null;
 
     /**
      *
      * @var Load
      */
-    private $_load = null;
+    private $load = null;
 
     public function __construct()
     {
-        $this->_message = new Message();
-        $this->_valid = new Valid($this->_message);
-        $this->_load = new Load();
+        $this->message = new Message();
+        $this->valid = new Valid($this->message);
+        $this->load = new Load();
     }
 
     /**
@@ -34,9 +34,9 @@ class App
      */
     public function validConf()
     {
-        $this->_valid->validModRewrite();
-        $this->_valid->valid();
-        $this->_message->display();
+        $this->valid->validModRewrite();
+        $this->valid->valid();
+        $this->message->display();
     }
 
     /**
@@ -44,15 +44,15 @@ class App
      */
     public function run()
     {
-        $this->_load->loadExceptionHandler();
-        $this->_load->loadRegistry();
-        $this->_load->loadSession();
-        $this->_load->loadHttp();
-        $this->_load->loadView();
-        $this->_load->loadUser();
-        $this->_load->loadAdmin();
-        $this->_load->loadFrontController();
-        $this->_load->loadTheme();
+        $this->load->loadExceptionHandler();
+        $this->load->loadRegistry();
+        $this->load->loadSession();
+        $this->load->loadHttp();
+        $this->load->loadView();
+        $this->load->loadUser();
+        $this->load->loadAdmin();
+        $this->load->loadFrontController();
+        $this->load->loadTheme();
     }
 
     /**
@@ -63,6 +63,6 @@ class App
      */
     public function catchException($e, $type = E_ERROR)
     {
-        $this->_load->getExceptionHandler()->catchException($e, $type);
+        $this->load->getExceptionHandler()->catchException($e, $type);
     }
 }

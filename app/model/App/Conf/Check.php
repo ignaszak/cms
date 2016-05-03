@@ -8,7 +8,7 @@ class Check
      *
      * @var string
      */
-    private $file;
+    private $file = '';
 
     /**
      *

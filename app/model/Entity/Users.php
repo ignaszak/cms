@@ -182,7 +182,7 @@ class Users
      */
     public function getRegDate($format = "")
     {
-        if ($format == "DateTime") {
+        if ($format === "DateTime") {
             return $this->regDate;
         } else {
             $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')
@@ -212,7 +212,7 @@ class Users
      */
     public function getLogDate($format = "")
     {
-        if ($format == "DateTime") {
+        if ($format === "DateTime") {
             return $this->logDate;
         } else {
             $dateFormat = RegistryFactory::start('file')->register('Conf\Conf')

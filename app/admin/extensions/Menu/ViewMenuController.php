@@ -27,8 +27,8 @@ class ViewMenuController extends FrontController
              */
             public function getAdminMenuList(): array
             {
-                $this->_controller->query->setQuery('menu')->status('all');
-                return $this->_controller->query->getQuery();
+                $this->controller->query->setQuery('menu')->status('all');
+                return $this->controller->query->getQuery();
             }
 
             /**
@@ -37,7 +37,7 @@ class ViewMenuController extends FrontController
              */
             public function getAdminMenuLink(string $action, int $id): string
             {
-                return $this->_controller->url("admin-menu-{$action}", [
+                return $this->controller->url("admin-menu-{$action}", [
                     'action' => $action, 'id' => $id
                 ]);
             }

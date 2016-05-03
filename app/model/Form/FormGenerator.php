@@ -13,7 +13,7 @@ class FormGenerator
      *
      * @var string
      */
-    private static $formContent;
+    private static $formContent = '';
 
     /**
      *

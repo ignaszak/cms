@@ -20,18 +20,18 @@ class SaveSettingsController extends FrontController
         $this->request = $this->http->request->all();
 
         $this->query->setQuery('options');
-        $_option = $this->query->getQuery()[0];
+        $option = $this->query->getQuery()[0];
 
         $controller = new ConfDecorator(new Options());
         $controller->find(1)
-            ->setSiteTitle($this->request['title'] ?? $_option->getSiteTitle())
-            ->setSiteDescription($this->request['description'] ?? $_option->getSiteDescription())
-            ->setAdminEmail($this->request['email'] ?? $_option->getAdminEmail())
-            ->setViewLimit($this->request['viewLimit'] ?? $_option->getViewLimit())
-            ->setDateFormat($this->request['dateFormat'] ?? $_option->getDateFormat())
-            ->setBaseUrl($this->getBaseUrl() ?? $_option->getBaseUrl())
-            ->setRequestUri($this->request['requestURI'] ?? $_option->getRequestUri())
-            ->setTheme($this->request['theme'] ?? $_option->getTheme())
+            ->setSiteTitle($this->request['title'] ?? $option->getSiteTitle())
+            ->setSiteDescription($this->request['description'] ?? $option->getSiteDescription())
+            ->setAdminEmail($this->request['email'] ?? $option->getAdminEmail())
+            ->setViewLimit($this->request['viewLimit'] ?? $option->getViewLimit())
+            ->setDateFormat($this->request['dateFormat'] ?? $option->getDateFormat())
+            ->setBaseUrl($this->getBaseUrl() ?? $option->getBaseUrl())
+            ->setRequestUri($this->request['requestURI'] ?? $option->getRequestUri())
+            ->setTheme($this->request['theme'] ?? $option->getTheme())
             ->insert();
 
         Server::headerLocationReferer();
@@ -44,7 +44,7 @@ class SaveSettingsController extends FrontController
     private function getBaseUrl(): string
     {
         if (! empty(@$this->request['adress'])) {
-            return (substr($this->request['adress'], - 1) == "/" ?
+            return (substr($this->request['adress'], - 1) === "/" ?
                 substr(
                     $this->request['adress'],
                     0,

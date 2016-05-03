@@ -10,7 +10,7 @@ class CategoryList
      *
      * @var \DataBase\Query\Query
      */
-    private $_query = null;
+    private $query = null;
 
     /**
      *
@@ -28,9 +28,9 @@ class CategoryList
     {
         $registry = RegistryFactory::start();
         $this->http = $registry->get('http');
-        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
-        $this->_query->setQuery('category');
-        $this->categoryArray = $this->_query->getStaticQuery();
+        $this->query = RegistryFactory::start()->register('DataBase\Query\Query');
+        $this->query->setQuery('category');
+        $this->categoryArray = $this->query->getStaticQuery();
     }
 
     /**
@@ -40,8 +40,8 @@ class CategoryList
      */
     public function getIdByAlias(string $alias): int
     {
-        $this->_query->setQuery('category')->alias($alias);
-        $content = $this->_query->getStaticQuery();
+        $this->query->setQuery('category')->alias($alias);
+        $content = $this->query->getStaticQuery();
         return $content ? $content[0]->getId() : 0;
     }
 
@@ -68,7 +68,7 @@ class CategoryList
             $array[] = $parentId;
         }
         foreach ($this->categoryArray as $cat) {
-            if ($parentId == $cat->getParentId()) {
+            if ($parentId === $cat->getParentId()) {
                 $array[] = $cat->getId();
                 $array = array_merge($this->child("", $cat->getId()), $array);
             }

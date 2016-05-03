@@ -11,7 +11,11 @@ use Test\Mock\MockQuery;
 class MenuTest extends \PHPUnit_Framework_TestCase
 {
 
-    private static $_menu;
+    /**
+     *
+     * @var \Menu\Menu
+     */
+    private static $menu;
 
     public static function setUpBeforeClass()
     {
@@ -26,7 +30,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase
         MockDoctrine::queryBuilderResult([null]);
         MockDoctrine::getRepositoryResult([null]);
         MockConf::run(); // Sets site adress as '';
-        self::$_menu = new Menu();
+        self::$menu = new Menu();
     }
 
     public function tearDown()
@@ -37,7 +41,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase
     public function testLoadMenuItemsArrayToProperty()
     {
         MockTest::callMockMethod(
-            self::$_menu,
+            self::$menu,
             'loadMenuItmsByPosition',
             ['head']
         );
@@ -46,7 +50,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase
     public function testCreateMenuFromMenuItemsArray()
     {
         $menuString = MockTest::callMockMethod(
-            self::$_menu,
+            self::$menu,
             'createMenu',
             ['']
         );

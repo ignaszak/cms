@@ -11,21 +11,21 @@ class MultiPage extends Theme
      */
     public function getTheme(): string
     {
-        if ($this->_pg->getCountPage() > 1) {
-            $prevLink = $this->_pg->getPrevLink();
-            $nextLink = $this->_pg->getNextLink();
+        if ($this->pg->getCountPage() > 1) {
+            $prevLink = $this->pg->getPrevLink();
+            $nextLink = $this->pg->getNextLink();
 
             $pagination = <<<EOT
 <nav>
     <ul class="pagination">
-        <li class="{$this->_pg->getPrevDisabled()}">
+        <li class="{$this->pg->getPrevDisabled()}">
             <a href="{$prevLink}" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
         </li>
 EOT;
-            foreach ($this->_pg->getPaginationArray() as $page) {
-                $class = $page['number'] == $this->_pg->getCurrentPage() ? "active" : "";
+            foreach ($this->pg->getPaginationArray() as $page) {
+                $class = $page['number'] === $this->pg->getCurrentPage() ? "active" : "";
                 $pagination .= <<<EOT
         <li class="$class">
             <a href="{$page['link']}">{$page['number']}</a>
@@ -34,7 +34,7 @@ EOT;
             }
 
             $pagination .= <<<EOT
-        <li class="{$this->_pg->getNextDisabled()}">
+        <li class="{$this->pg->getNextDisabled()}">
             <a href="{$nextLink}" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>

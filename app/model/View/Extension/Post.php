@@ -10,7 +10,7 @@ class Post
      *
      * @var \DataBase\Query\Query
      */
-    private $_query = null;
+    private $query = null;
 
     /**
      *
@@ -22,12 +22,12 @@ class Post
      *
      * @var \DataBase\Query\Entity[]
      */
-    private $_post = [];
+    private $post = [];
 
     public function __construct()
     {
         $registry = RegistryFactory::start();
-        $this->_query = $registry->register('DataBase\Query\Query');
+        $this->query = $registry->register('DataBase\Query\Query');
         $this->http = $registry->get('http');
     }
 
@@ -37,10 +37,10 @@ class Post
      */
     public function havePost(): bool
     {
-        if (empty($this->_post)) {
+        if (empty($this->post)) {
             $this->selectPosts();
         }
-        return count($this->_post);
+        return count($this->post);
     }
 
     /**
@@ -49,34 +49,34 @@ class Post
      */
     public function getPosts(): array
     {
-        if (empty($this->_post)) {
+        if (empty($this->post)) {
             $this->selectPosts();
         }
-        return $this->_post;
+        return $this->post;
     }
 
     private function selectPosts()
     {
         switch ($this->http->router->group()) {
             case 'post':
-                $this->_query->setQuery('post');
+                $this->query->setQuery('post');
                 break;
             case 'category':
                 $catIdArray = RegistryFactory::start()
                     ->register('App\Resource\CategoryList')->child();
-                $this->_query->setQuery('post')
+                $this->query->setQuery('post')
                     ->categoryId($catIdArray)
                     ->force();
                 break;
             case 'date':
-                $this->_query->setQuery('post')
+                $this->query->setQuery('post')
                     ->date($this->getDate())
                     ->force();
                 break;
             default:
-                $this->_query->setQuery('post');
+                $this->query->setQuery('post');
         }
-        $this->_post = $this->_query->getQuery();
+        $this->post = $this->query->getQuery();
     }
 
     /**

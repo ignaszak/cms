@@ -10,15 +10,15 @@ abstract class Theme
      *
      * @var PaginationGenerator
      */
-    protected $_pg;
+    protected $pg = null;
 
     /**
      *
-     * @param PaginationGenerator $_pg
+     * @param PaginationGenerator $pg
      */
-    public function __construct(PaginationGenerator $_pg)
+    public function __construct(PaginationGenerator $pg)
     {
-        $this->_pg = $_pg;
+        $this->pg = $pg;
     }
 
     /**

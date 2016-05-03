@@ -8,13 +8,17 @@ use Test\Mock\MockTest;
 class MailTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_mail;
+    /**
+     *
+     * @var \Mail\Mail
+     */
+    private $mail;
 
     public function setUp()
     {
         MockConf::run(['getAdminEmail' => 'admin@email.com']);
-        $stub = \Mockery::mock('alias:Swift_Transport');
-        $this->_mail = new Mail($stub);
+        $stub = \Mockery::mock('alias:Swift_transport');
+        $this->mail = new Mail($stub);
     }
 
     public function testConstructor()
@@ -26,12 +30,12 @@ class MailTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf(
             'Swift_Message',
-            $this->getAttribute('_swiftMessage')
+            $this->getAttribute('swiftMessage')
         );
 
         $this->assertInstanceOf(
-            'Swift_Transport',
-            $this->getAttribute('_transport')
+            'Swift_transport',
+            $this->getAttribute('transport')
         );
     }
 
@@ -39,22 +43,22 @@ class MailTest extends \PHPUnit_Framework_TestCase
     {
         $stub = \Mockery::mock('SwiftMessage');
         $stub->shouldReceive('setSubject');
-        MockTest::inject($this->_mail, '_swiftMessage', $stub);
-        $this->_mail->setSubject();
+        MockTest::inject($this->mail, 'swiftMessage', $stub);
+        $this->mail->setSubject();
     }
 
     public function testGetAdminEmail()
     {
         $this->assertEquals(
             'admin@email.com',
-            $this->_mail->getAdminEmail()
+            $this->mail->getAdminEmail()
         );
     }
 
     private function getAttribute(string $attribute)
     {
         return \PHPUnit_Framework_Assert::readAttribute(
-            $this->_mail,
+            $this->mail,
             $attribute
         );
     }

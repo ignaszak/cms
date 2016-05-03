@@ -10,19 +10,19 @@ class SettersValidator extends Validator
      *
      * @var Schema\Validation
      */
-    private $_validation;
+    private $validation = null;
 
     /**
      *
-     * @param Controller $_controller
-     * @param Schema\Validation $_schema
+     * @param Controller $controller
+     * @param Schema\Validation $schema
      */
     public function __construct(
-        Controller $_controller,
-        Schema\Validation $_schema
+        Controller $controller,
+        Schema\Validation $schema
     ) {
-        parent::__construct($_controller);
-        $this->_validation = $_schema;
+        parent::__construct($controller);
+        $this->validation = $schema;
     }
 
     /**
@@ -39,7 +39,7 @@ class SettersValidator extends Validator
     {
         foreach ($this->commandArray as $column => $value) {
             $value = $this->getSetter($column);
-            if (! $this->_validation->$column($value)) {
+            if (! $this->validation->$column($value)) {
                 $this->setError('valid' . ucfirst($column));
             }
         }

@@ -11,7 +11,7 @@ class PaginationGenerator
      *
      * @var \Conf\Conf
      */
-    private $_conf = null;
+    private $conf = null;
 
     /**
      *
@@ -30,14 +30,14 @@ class PaginationGenerator
      *
      * @var integer
      */
-    private $limit;
+    private $limit = 0;
 
     /**
      * Number of pages
      *
      * @var integer
      */
-    private $countPage;
+    private $countPage = 0;
 
     /**
      *
@@ -48,7 +48,7 @@ class PaginationGenerator
     public function __construct()
     {
         $this->registry = RegistryFactory::start();
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->conf = RegistryFactory::start('file')->register('Conf\Conf');
         $this->http = $this->registry->get('http');
         $this->setParams();
         $this->createPaginationArray();
@@ -85,7 +85,7 @@ class PaginationGenerator
      */
     public function getPrevDisabled(): string
     {
-        return $this->getCurrentPage() == 1 ? "disabled" : "";
+        return $this->getCurrentPage() === 1 ? "disabled" : "";
     }
 
     /**
@@ -94,7 +94,7 @@ class PaginationGenerator
      */
     public function getNextDisabled(): string
     {
-        return $this->getCurrentPage() == $this->countPage ? "disabled" : "";
+        return $this->getCurrentPage() === $this->countPage ? "disabled" : "";
     }
 
     /**
@@ -118,7 +118,7 @@ class PaginationGenerator
 
     private function setParams()
     {
-        $this->limit = $this->_conf->getViewLimit();
+        $this->limit = $this->conf->getViewLimit();
         $this->countPage = $this->getSitesNumber();
     }
 
@@ -144,10 +144,10 @@ class PaginationGenerator
         $this->paginationArray = [
             'array' => $paginationArray,
             'prevLink' => $this->getLink(
-                $currentPage == 1 ? 1 : $currentPage - 1
+                $currentPage === 1 ? 1 : $currentPage - 1
             ),
             'nextLink' => $this->getLink(
-                $currentPage == $this->countPage ?
+                $currentPage === $this->countPage ?
                     $currentPage : ($currentPage + 1)
             )
         ];
@@ -165,7 +165,7 @@ class PaginationGenerator
             unset($tokens['page']);
         }
         if (! empty($this->http->router->name())) {
-            $name = $this->http->router->name() == 'default' ?
+            $name = $this->http->router->name() === 'default' ?
                 'post-default' : $this->http->router->name();
         } else {
             $name = 'post-default';

@@ -11,23 +11,31 @@ class User
      *
      * @var \Entity\Users
      */
-    private $userSession;
+    private $userSession = null;
 
     public function __construct()
     {
         $this->catchUserSession();
     }
 
-    public function isUserLoggedIn()
+    /**
+     *
+     * @return boolean
+     */
+    public function isUserLoggedIn(): bool
     {
         return isset($this->userSession) && DBDoctrine::em()
             ->getRepository('Entity\Users')->findBy([
-            'login' => $this->userSession->getLogin(),
-            'password' => $this->userSession->getPassword()
+                'login' => $this->userSession->getLogin(),
+                'password' => $this->userSession->getPassword()
             ]);
     }
 
-    public function getUserSession()
+    /**
+     *
+     * @return \Entity\Users
+     */
+    public function getUserSession(): \Entity\Users
     {
         return $this->userSession;
     }

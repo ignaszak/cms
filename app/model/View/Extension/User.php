@@ -6,45 +6,79 @@ use Ignaszak\Registry\RegistryFactory;
 class User
 {
 
-    private $_user;
+    /**
+     *
+     * @var \UserAuth\User
+     */
+    private $user = null;
 
     public function __construct()
     {
-        $this->_user = RegistryFactory::start()->get('user');
+        $this->user = RegistryFactory::start()->get('user');
     }
 
-    public function isUserLoggedIn()
+    /**
+     *
+     * @return boolean
+     */
+    public function isUserLoggedIn(): bool
     {
-        return $this->_user->isUserLoggedIn();
+        return $this->user->isUserLoggedIn();
     }
 
-    public function getUserId()
+    /**
+     *
+     * @return integer
+     */
+    public function getUserId(): int
     {
-        return $this->_user->getUserSession()->getId();
+        return $this->user->getUserSession()->getId();
     }
 
-    public function getUserLogin()
+    /**
+     *
+     * @return string
+     */
+    public function getUserLogin(): string
     {
-        return $this->_user->getUserSession()->getLogin();
+        return $this->user->getUserSession()->getLogin();
     }
 
-    public function getUserEmail()
+    /**
+     *
+     * @return string
+     */
+    public function getUserEmail(): string
     {
-        return $this->_user->getUserSession()->getEmail();
+        return $this->user->getUserSession()->getEmail();
     }
 
-    public function getUserRegistrationDate($format = "")
+    /**
+     *
+     * @param string $format
+     * @return DateTime|string
+     */
+    public function getUserRegistrationDate(string $format = '')
     {
-        return $this->_user->getUserSession()->getRegDate($format);
+        return $this->user->getUserSession()->getRegDate($format);
     }
 
-    public function getUserLoginDate($format = "")
+    /**
+     *
+     * @param string $format
+     * @return DateTime|string
+     */
+    public function getUserLoginDate(string $format = '')
     {
-        return $this->_user->getUserSession()->getLogDate($format);
+        return $this->user->getUserSession()->getLogDate($format);
     }
 
-    public function getUserRole()
+    /**
+     *
+     * @return string
+     */
+    public function getUserRole(): string
     {
-        return $this->_user->getUserSession()->getRole();
+        return $this->user->getUserSession()->getRole();
     }
 }

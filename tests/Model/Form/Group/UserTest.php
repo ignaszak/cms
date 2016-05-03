@@ -8,12 +8,16 @@ use Test\Mock\MockTest;
 class UserTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_user;
+    /**
+     *
+     * @var \Form\Group\User
+     */
+    private $user;
 
     public function setUp()
     {
         MockConf::run();
-        $this->_user = new User($this->mockForm('registration'));
+        $this->user = new User($this->mockForm('registration'));
     }
 
     public function tearDown()
@@ -25,18 +29,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
     {
         $stub = \Mockery::mock('UrlGenerator');
         $stub->shouldReceive('url')->andReturn('')->once();
-        MockTest::inject($this->_user, 'url', $stub);
-        $this->_user->getFormActionAdress();
+        MockTest::inject($this->user, 'url', $stub);
+        $this->user->getFormActionAdress();
     }
 
     public function testGetEmptyFormMessage()
     {
-        $this->assertEmpty($this->_user->getFormMessage());
+        $this->assertEmpty($this->user->getFormMessage());
     }
 
     public function testGetInputLogin()
     {
-        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2" value="">', $this->_user->inputLogin());
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2" value="">', $this->user->inputLogin());
     }
 
     public function testGetInputLoginWithReferLoginData()
@@ -47,7 +51,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ]
         ];
         $this->referData($refer);
-        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2" value="AnyLogin">', $this->_user->inputLogin());
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2" value="AnyLogin">', $this->user->inputLogin());
     }
 
     public function testGetInputLoginWithInccorectLogin()
@@ -61,7 +65,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ]
         ];
         $this->referData($refer);
-        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2">', $this->_user->inputLogin());
+        $this->assertEquals('<input type="text" name="userLogin" required class="form-control" id="userLogin" minlength="2">', $this->user->inputLogin());
     }
 
     public function testGetInputEmailWithReferEmailData()
@@ -72,7 +76,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ]
         ];
         $this->referData($refer);
-        $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail" value="any@email.com">', $this->_user->inputEmail());
+        $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail" value="any@email.com">', $this->user->inputEmail());
     }
 
     public function testGetInputEmailWithInccorectEmail()
@@ -86,7 +90,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ]
         ];
         $this->referData($refer);
-        $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail">', $this->_user->inputEmail());
+        $this->assertEquals('<input type="email" name="userEmail" required class="form-control" id="userEmail">', $this->user->inputEmail());
     }
 
     public function testAddAccountValue()
@@ -95,15 +99,15 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $stub->shouldReceive('getUserSession')->andReturnSelf()->once();
         $stub->shouldReceive('getLogin')->once();
         $stub->shouldReceive('getEmail')->once();
-        $this->_user = new User($this->mockForm('accountData'));
-        MockTest::inject($this->_user, '_user', $stub);
+        $this->user = new User($this->mockForm('accountData'));
+        MockTest::inject($this->user, 'user', $stub);
         MockTest::callMockMethod(
-            $this->_user,
+            $this->user,
             'addAccountValue',
             ['userLogin']
         );
         MockTest::callMockMethod(
-            $this->_user,
+            $this->user,
             'addAccountValue',
             ['userEmail']
         );
@@ -114,7 +118,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'getLogin',
             MockTest::callMockMethod(
-                $this->_user,
+                $this->user,
                 'getEntityGetter',
                 ['userLogin']
             )
@@ -126,7 +130,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             'getEmail',
             MockTest::callMockMethod(
-                $this->_user,
+                $this->user,
                 'getEntityGetter',
                 ['userEmail']
             )

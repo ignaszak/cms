@@ -22,11 +22,11 @@ class Message
 
     /**
      *
-     * @param Form $_form
+     * @param Form $form
      */
-    public function __construct(Form $_form)
+    public function __construct(Form $form)
     {
-        $this->errorArray = $_form->getFormResponseData('error');
+        $this->errorArray = $form->getFormResponseData('error');
     }
 
     /**

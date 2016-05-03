@@ -6,7 +6,11 @@ use Test\Mock\MockTest;
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_validator;
+    /**
+     *
+     * @var \DataBase\Controller\Validator\Validator
+     */
+    private $validator;
 
     public function setUp()
     {
@@ -20,17 +24,17 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = $this->getMockBuilder(
             'DataBase\Controller\Validator\Validator'
         )->setConstructorArgs([$controller])->getMockForAbstractClass();
-        $this->_validator = $validator;
+        $this->validator = $validator;
     }
 
     public function testConstructor()
     {
         $_controller = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_validator,
-            '_controller'
+            $this->validator,
+            'controller'
         );
         $entityName = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_validator,
+            $this->validator,
             'entityName'
         );
 
@@ -42,14 +46,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testGetSetterValue()
     {
         $_controller = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_validator,
-            '_controller'
+            $this->validator,
+            'controller'
         );
         MockTest::inject($_controller, 'entitySettersArray', [
             'setTitle' => 'value of setter'
         ]);
         $setter = MockTest::callMockMethod(
-            $this->_validator,
+            $this->validator,
             'getSetter',
             ['title']
         );
@@ -59,7 +63,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testGetNoExitingSetter()
     {
         $setter = MockTest::callMockMethod(
-            $this->_validator,
+            $this->validator,
             'getSetter',
             ['noExistingSetter']
         );
@@ -68,14 +72,14 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function testSetError()
     {
-        MockTest::callMockMethod($this->_validator, 'setError', ['anyError1']);
-        MockTest::callMockMethod($this->_validator, 'setError', ['anyError2']);
+        MockTest::callMockMethod($this->validator, 'setError', ['anyError1']);
+        MockTest::callMockMethod($this->validator, 'setError', ['anyError2']);
         $this->assertEquals(
             [
                 'anyError1' => 1,
                 'anyError2' => 1
             ],
-            $this->_validator->getErrors()
+            $this->validator->getErrors()
         );
     }
 }

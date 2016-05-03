@@ -33,12 +33,12 @@ class CategoryBreadcrumbs extends IBreadcrumbs
         $group = $this->http->router->group();
         $alias = $this->http->router->get('alias');
         if (! empty($alias)) {
-            $this->_query->setQuery($group)
+            $this->query->setQuery($group)
                 ->limit(1)
                 ->alias($alias);
-            $content = $this->_query->getStaticQuery();
+            $content = $this->query->getStaticQuery();
             if (count($content)) {
-                return ($group == 'category') ?
+                return ($group === 'category') ?
                     $content[0]->getId() : $content[0]->getCategory()->getId();
             }
         }
@@ -63,7 +63,7 @@ class CategoryBreadcrumbs extends IBreadcrumbs
     {
         $result = [];
         foreach ($this->breadcrumbsArray as $cat) {
-            if ($cat->getId() == $catId) {
+            if ($cat->getId() === $catId) {
                 $result[] = $this->addBreadcrumb(
                     $cat->getTitle(),
                     $this->registry->get('url')->url('category-alias', [

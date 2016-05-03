@@ -10,19 +10,19 @@ class Menu
      *
      * @var \DataBase\Query\Query
      */
-    private $_query;
+    private $query = null;
 
     /**
      *
      * @var \Conf\Conf
      */
-    private $_conf;
+    private $conf = null;
 
     /**
      *
      * @var \Ignaszak\Router\UrlGenerator
      */
-    private $url;
+    private $url = null;
 
     /**
      *
@@ -32,9 +32,9 @@ class Menu
 
     public function __construct()
     {
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->conf = RegistryFactory::start('file')->register('Conf\Conf');
         $registry = RegistryFactory::start();
-        $this->_query = $registry->register('DataBase\Query\Query');
+        $this->query = $registry->register('DataBase\Query\Query');
         $this->url = $registry->get('url');
     }
 
@@ -55,10 +55,10 @@ class Menu
      */
     private function loadMenuItmsByPosition(string $position)
     {
-        $this->_query->setQuery('menu')
+        $this->query->setQuery('menu')
             ->findBy('position', $position)
             ->limit(1);
-        $content = $this->_query->getStaticQuery();
+        $content = $this->query->getStaticQuery();
 
         if (array_key_exists(0, $content)) {
             $this->menuItemsArray = $content[0]->getMenuItems();

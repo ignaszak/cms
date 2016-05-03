@@ -8,7 +8,11 @@ use Test\Mock\MockConf;
 class ValidTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_valid;
+    /**
+     *
+     * @var \App\Valid
+     */
+    private $valid;
 
     public static function setUpBeforeClass()
     {
@@ -17,29 +21,29 @@ class ValidTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->_valid = new Valid($this->mockMessage());
+        $this->valid = new Valid($this->mockMessage());
     }
 
     public function testConstructor()
     {
         $message = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_valid,
-            '_message'
+            $this->valid,
+            'message'
         );
         $this->assertInstanceOf('App\Message', $message);
 
         $check = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_valid,
-            '_check'
+            $this->valid,
+            'check'
         );
         $this->assertInstanceOf('App\Conf\Check', $check);
     }
 
     public function testAdd()
     {
-        MockTest::callMockMethod($this->_valid, 'add');
+        MockTest::callMockMethod($this->valid, 'add');
         $validArray = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_valid,
+            $this->valid,
             'validArray'
         );
         $this->assertNotEmpty($validArray);
@@ -56,7 +60,7 @@ class ValidTest extends \PHPUnit_Framework_TestCase
         $stub->expects($this->never())->method('isReadable');
         $stub->expects($this->never())->method('isWritable');
         $this->mockCheck($stub);
-        $this->_valid->valid();
+        $this->valid->valid();
     }
 
     public function testValidReadOnly()
@@ -70,7 +74,7 @@ class ValidTest extends \PHPUnit_Framework_TestCase
         $stub->expects($this->once())->method('isReadable');
         $stub->expects($this->never())->method('isWritable');
         $this->mockCheck($stub);
-        $this->_valid->valid();
+        $this->valid->valid();
     }
 
     public function testValidReadAndWrite()
@@ -84,13 +88,13 @@ class ValidTest extends \PHPUnit_Framework_TestCase
         $stub->expects($this->once())->method('isReadable');
         $stub->expects($this->once())->method('isWritable');
         $this->mockCheck($stub);
-        $this->_valid->valid();
+        $this->valid->valid();
     }
 
     public function testModRewriteDisable()
     {
         $this->assertFalse(MockTest::callMockMethod(
-            $this->_valid,
+            $this->valid,
             'isModRewriteEnabled'
         ));
     }
@@ -107,7 +111,7 @@ class ValidTest extends \PHPUnit_Framework_TestCase
     {
         putenv("HTTP_MOD_REWRITE=On");
         $this->assertTrue(MockTest::callMockMethod(
-            $this->_valid,
+            $this->valid,
             'isModRewriteEnabled'
         ));
     }
@@ -122,12 +126,12 @@ class ValidTest extends \PHPUnit_Framework_TestCase
 
     private function mockCheck($stub)
     {
-        MockTest::inject($this->_valid, '_check', $stub);
+        MockTest::inject($this->valid, 'check', $stub);
     }
 
     private function mockValidArray(array $array)
     {
-        MockTest::inject($this->_valid, 'validArray', $array);
+        MockTest::inject($this->valid, 'validArray', $array);
     }
 
     private function mockMessage(): \App\Message

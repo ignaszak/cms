@@ -10,13 +10,13 @@ abstract class IBreadcrumbs
      *
      * @var \Conf\Conf
      */
-    protected $_conf = null;
+    protected $conf = null;
 
     /**
      *
      * @var \DataBase\Query\Query
      */
-    protected $_query = null;
+    protected $query = null;
 
     /**
      *
@@ -33,8 +33,8 @@ abstract class IBreadcrumbs
     public function __construct()
     {
         $this->registry = RegistryFactory::start();
-        $this->_conf = RegistryFactory::start('file')->register('Conf\Conf');
-        $this->_query = $this->registry->register('DataBase\Query\Query');
+        $this->conf = RegistryFactory::start('file')->register('Conf\Conf');
+        $this->query = $this->registry->register('DataBase\Query\Query');
         $this->http = $this->registry->get('http');
     }
 

@@ -111,6 +111,6 @@ abstract class IPostsQuery
     private function isPostOpen()
     {
         return RegistryFactory::start()->get('http')
-            ->router->name() == 'post-alias';
+            ->router->name() === 'post-alias';
     }
 }

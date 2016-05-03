@@ -47,12 +47,12 @@ class MockDoctrine
             null,
             false
         );
-        $_em = EntityManager::create($dbParams, $config);
-        $platform = $_em->getConnection()->getDatabasePlatform();
+        $em = EntityManager::create($dbParams, $config);
+        $platform = $em->getConnection()->getDatabasePlatform();
         $platform->registerDoctrineTypeMapping('enum', 'string');
 
         // Insert Entity Manager to DBDoctrine
-        self::mock($_em);
+        self::mock($em);
     }
 
     /**
@@ -91,7 +91,7 @@ return [
      */
     public static function mock($stub)
     {
-        MockTest::injectStatic('Conf\DB\DBDoctrine', '_em', $stub);
+        MockTest::injectStatic('Conf\DB\DBDoctrine', 'em', $stub);
     }
 
     /**
@@ -99,7 +99,7 @@ return [
      */
     public static function clear()
     {
-        MockTest::injectStatic('Conf\DB\DBDoctrine', '_em');
+        MockTest::injectStatic('Conf\DB\DBDoctrine', 'em');
     }
 
     /**

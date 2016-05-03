@@ -11,14 +11,14 @@ class AdminTest extends \PHPUnit_Framework_TestCase
 
     /**
      *
-     * @var AdminMenu
+     * @var Admin
      */
-    private $_adminMenu = null;
+    private $admin = null;
 
     public function setUp()
     {
         RegistryFactory::start()->set('http', $this->mockHttp());
-        $this->_adminMenu = new Admin(
+        $this->admin = new Admin(
             $this->mockAdminExtension(),
             $this->mockYaml()
         );
@@ -30,22 +30,22 @@ class AdminTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(
             'App\Admin\AdminExtension',
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_adminMenu,
-                '_adminExtension'
+                $this->admin,
+                'adminExtension'
             )
         );
         $this->assertInstanceOf(
             'App\Yaml',
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_adminMenu,
-                '_yaml'
+                $this->admin,
+                'yaml'
             )
         );
         $this->assertInstanceOf(
             'Ignaszak\Registry\Registry',
             \PHPUnit_Framework_Assert::readAttribute(
-                $this->_adminMenu,
-                '_registry'
+                $this->admin,
+                'registry'
             )
         );
     }
@@ -66,7 +66,7 @@ menu:
 EOT
             ]
         ];
-        $this->_adminMenu = new Admin(
+        $this->admin = new Admin(
             $this->mockAdminExtension(
                 MockTest::mockFileSystem($structure),
                 ['Post']
@@ -94,7 +94,7 @@ EOT
                     ]
                 ]
             ],
-            $this->_adminMenu->getAdminMenu()
+            $this->admin->getAdminMenu()
         );
     }
 
@@ -116,7 +116,7 @@ menu:
 EOT
             ]
         ];
-        $this->_adminMenu = new Admin(
+        $this->admin = new Admin(
             $this->mockAdminExtension(
                 MockTest::mockFileSystem($structure),
                 ['Post', 'Page']
@@ -144,7 +144,7 @@ EOT
                     ]
                 ]
             ],
-            $this->_adminMenu->getAdminMenu()
+            $this->admin->getAdminMenu()
         );
     }
 

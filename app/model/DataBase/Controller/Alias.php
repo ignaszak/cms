@@ -10,36 +10,36 @@ class Alias
      *
      * @var \Doctrine\ORM\EntityManager
      */
-    private $_em;
+    private $em = null;
 
     /**
      *
      * @var Entity
      */
-    private $_entity;
+    private $entity = null;
 
     /**
      *
      * @var string
      */
-    private $entityName;
+    private $entityName = '';
 
     /**
      *
-     * @param Entity $_entity
+     * @param Entity $entity
      * @throws \DomainException
      */
-    public function __construct($_entity)
+    public function __construct($entity)
     {
-        if (! is_object($_entity)) {
+        if (! is_object($entity)) {
             throw new \DomainException(
                 'Second argument passed to ' . __CLASS__ .
                 '::aliasNotExistsInDB() must be an Entity instance'
             );
         } else {
-            $this->_em = DBDoctrine::em();
-            $this->_entity = $_entity;
-            $this->entityName = get_class($_entity);
+            $this->em = DBDoctrine::em();
+            $this->entity = $entity;
+            $this->entityName = get_class($entity);
         }
     }
 
@@ -50,11 +50,11 @@ class Alias
      */
     public function getAlias(string $string): string
     {
-        if (empty($this->_entity->getAlias())) {
+        if (empty($this->entity->getAlias())) {
             $alias = $this->createAliasFromString($string);
             return $this->renameAliasIfExistsInDB($alias);
         } else {
-            return $this->_entity->getAlias();
+            return $this->entity->getAlias();
         }
     }
 
@@ -90,12 +90,12 @@ class Alias
     /**
      *
      * @param string $alias
-     * @param Entity $_entity
+     * @param Entity $entity
      * @return boolean
      */
     private function isAliasNotExistsInDB(string $alias): bool
     {
-        $query = $this->_em->getRepository($this->entityName)->findBy([
+        $query = $this->em->getRepository($this->entityName)->findBy([
             'alias' => $alias
         ]);
         return count($query) ? false : true;

@@ -10,17 +10,17 @@ class Page
      *
      * @var \DataBase\Query\Query
      */
-    private $_query;
+    private $query = null;
 
     /**
      *
-     * @var \Entity\Pages[0]
+     * @var \Entity\Pages[]
      */
-    private $_page;
+    private $page = [];
 
     public function __construct()
     {
-        $this->_query = RegistryFactory::start()->register('DataBase\Query\Query');
+        $this->query = RegistryFactory::start()->register('DataBase\Query\Query');
     }
 
     /**
@@ -30,7 +30,7 @@ class Page
     public function havePage(): bool
     {
         $this->setPageFromDB();
-        return array_key_exists(0, $this->_page);
+        return array_key_exists(0, $this->page);
     }
 
     /**
@@ -39,10 +39,10 @@ class Page
      */
     public function getPage(): \Entity\Pages
     {
-        if (empty($this->_page)) {
+        if (empty($this->page)) {
             $this->setPageFromDB();
         }
-        return (array_key_exists(0, $this->_page)) ? $this->_page[0] : new \Entity\Pages();
+        return (array_key_exists(0, $this->page)) ? $this->page[0] : new \Entity\Pages();
     }
 
     /**
@@ -51,13 +51,13 @@ class Page
      */
     public function getPages(): array
     {
-        $this->_query->setQuery('page')->paginate(true);
-        return $this->_query->getStaticQuery();
+        $this->query->setQuery('page')->paginate(true);
+        return $this->query->getStaticQuery();
     }
 
     private function setPageFromDB()
     {
-        $this->_query->setQuery('page');
-        $this->_page = $this->_query->getQuery();
+        $this->query->setQuery('page');
+        $this->page = $this->query->getQuery();
     }
 }

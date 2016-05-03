@@ -13,13 +13,13 @@ class Valid
      *
      * @var Message
      */
-    private $_message;
+    private $message = null;
 
     /**
      *
      * @var Conf\Check
      */
-    private $_check;
+    private $check = null;
 
     /**
      *
@@ -29,12 +29,12 @@ class Valid
 
     /**
      *
-     * @param Message $_message
+     * @param Message $message
      */
-    public function __construct(Message $_message)
+    public function __construct(Message $message)
     {
-        $this->_message = $_message;
-        $this->_check = new Check;
+        $this->message = $message;
+        $this->check = new Check();
         $this->add();
     }
 
@@ -55,24 +55,24 @@ class Valid
     public function valid()
     {
         foreach ($this->validArray as $valid) {
-            $this->_check->add($valid[0]);
-            if ($this->_check->exists()) {
-                if ($valid[1] == "r") {
-                    $this->_check->isReadable();
+            $this->check->add($valid[0]);
+            if ($this->check->exists()) {
+                if ($valid[1] === "r") {
+                    $this->check->isReadable();
                 }
-                if ($valid[1] == "r+") {
-                    $this->_check->isReadable();
-                    $this->_check->isWritable();
+                if ($valid[1] === "r+") {
+                    $this->check->isReadable();
+                    $this->check->isWritable();
                 }
             }
         }
-        $this->_message->catch($this->_check);
+        $this->message->catch($this->check);
     }
 
     public function validModRewrite()
     {
         if (!$this->isModRewriteEnabled()) {
-            $this->_message->catchMessage("Mod rwerite is disabled");
+            $this->message->catchMessage("Mod rwerite is disabled");
         }
     }
 
@@ -84,7 +84,7 @@ class Valid
         if (function_exists('apache_get_modules')) {
             return in_array('mod_rewrite', apache_get_modules());
         } else {
-            return getenv('HTTP_MOD_REWRITE') == 'On' ? true : false;
+            return getenv('HTTP_MOD_REWRITE') === 'On' ? true : false;
         }
     }
 }

@@ -12,13 +12,13 @@ class Message
 
     /**
      *
-     * @param Conf\Check $_check
+     * @param Conf\Check $check
      */
-    public function catch(Conf\Check $_check)
+    public function catch(Conf\Check $check)
     {
         $this->messageArray = array_merge(
             $this->messageArray,
-            $_check->getMessage()
+            $check->getMessage()
         );
     }
 

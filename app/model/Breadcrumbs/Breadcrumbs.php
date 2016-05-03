@@ -8,7 +8,7 @@ class Breadcrumbs extends IBreadcrumbs
      *
      * @var IBreadcrumbs
      */
-    private $_breadcrumbs;
+    private $breadcrumbs = null;
 
     /**
      *
@@ -19,19 +19,19 @@ class Breadcrumbs extends IBreadcrumbs
         switch ($this->http->router->group()) {
             case 'post':
             case 'category':
-                $this->_breadcrumbs = new CategoryBreadcrumbs();
+                $this->breadcrumbs = new CategoryBreadcrumbs();
                 break;
             case 'date':
-                $this->_breadcrumbs = new DateBreadcrumbs();
+                $this->breadcrumbs = new DateBreadcrumbs();
                 break;
             case 'search':
-                $this->_breadcrumbs = new SearchBreadcrumbs();
+                $this->breadcrumbs = new SearchBreadcrumbs();
                 break;
             default:
                 return $this->getHome();
         }
 
-        $breadcrumbs = $this->_breadcrumbs->createBreadcrumbs();
+        $breadcrumbs = $this->breadcrumbs->createBreadcrumbs();
         return $this->addActiveClass($breadcrumbs);
     }
 

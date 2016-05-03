@@ -8,12 +8,16 @@ use Test\Mock\MockConf;
 class AppTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_app;
+    /**
+     *
+     * @var \App\App
+     */
+    private $app;
 
     public function setUp()
     {
         MockConf::setConstants();
-        $this->_app = (new \ReflectionClass('App\App'))
+        $this->app = (new \ReflectionClass('App\App'))
             ->newInstanceWithoutConstructor();
     }
 
@@ -22,11 +26,11 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $stub = \Mockery::mock('Valid');
         $stub->shouldReceive('validModRewrite')->once();
         $stub->shouldReceive('valid')->once();
-        MockTest::inject($this->_app, '_valid', $stub);
+        MockTest::inject($this->app, 'valid', $stub);
         $stub = \Mockery::mock('Message');
         $stub->shouldReceive('display')->once();
-        MockTest::inject($this->_app, '_message', $stub);
-        $this->_app->validConf();
+        MockTest::inject($this->app, 'message', $stub);
+        $this->app->validConf();
     }
 
     public function testRun()
@@ -41,8 +45,8 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $stub->shouldReceive('loadAdmin')->once();
         $stub->shouldReceive('loadFrontController')->once();
         $stub->shouldReceive('loadTheme')->once();
-        MockTest::inject($this->_app, '_load', $stub);
-        $this->_app->run();
+        MockTest::inject($this->app, 'load', $stub);
+        $this->app->run();
     }
 
     public function testCatchException()
@@ -50,7 +54,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $stub = \Mockery::mock('Load');
         $stub->shouldReceive('getExceptionHandler')->once()->andReturnSelf();
         $stub->shouldReceive('catchException')->once();
-        MockTest::inject($this->_app, '_load', $stub);
-        $this->_app->catchException(null);
+        MockTest::inject($this->app, 'load', $stub);
+        $this->app->catchException(null);
     }
 }

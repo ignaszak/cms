@@ -9,19 +9,23 @@ use Ignaszak\Registry\RegistryFactory;
 class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_bc;
+    /**
+     *
+     * @var \Breadcrumbs\Breadcrumbs
+     */
+    private $bc;
 
     public function setUp()
     {
         $stub = \Mockery::mock('UrlGenerator');
         $stub->shouldReceive(['url' => '']);
         RegistryFactory::start()->set('url', $stub);
-        $this->_bc = new Breadcrumbs();
+        $this->bc = new Breadcrumbs();
     }
 
     public function testCreateBreadcrumbs()
     {
-        $this->assertEmpty($this->_bc->createBreadcrumbs());
+        $this->assertEmpty($this->bc->createBreadcrumbs());
     }
 
     public function testGetCategoryBreadcrumbs()
@@ -49,7 +53,7 @@ class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
             $object
         ];
         $addActiveClass = MockTest::callMockMethod(
-            $this->_bc,
+            $this->bc,
             'addActiveClass',
             [$breadcrumbs]
         );
@@ -62,9 +66,9 @@ class BreadcrumbsTest extends \PHPUnit_Framework_TestCase
         MockHttp::routeGroup($routeName);
         MockHttp::routeName($routeName);
         MockHttp::run();
-        $this->_bc = new Breadcrumbs();
-        $this->_bc->getBreadcrumbs();
-        $bc = \PHPUnit_Framework_Assert::readAttribute($this->_bc, '_breadcrumbs');
+        $this->bc = new Breadcrumbs();
+        $this->bc->getBreadcrumbs();
+        $bc = \PHPUnit_Framework_Assert::readAttribute($this->bc, 'breadcrumbs');
         $this->assertInstanceOf($className, $bc);
     }
 }

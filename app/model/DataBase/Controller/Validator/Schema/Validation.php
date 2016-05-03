@@ -9,32 +9,32 @@ class Validation
 
     /**
      *
-     * @param \Entity\Categories $_category
+     * @param \Entity\Categories $category
      * @return boolean
      */
-    public function category($_category): bool
+    public function category($category): bool
     {
-        return $this->validEntityController($_category, 'category');
+        return $this->validEntityController($category, 'category');
     }
 
     /**
      *
-     * @param \Entity\Users $_author
+     * @param \Entity\Users $author
      * @return boolean
      */
-    public function author($_author): bool
+    public function author($author): bool
     {
-        return $this->validEntityController($_author, 'author');
+        return $this->validEntityController($author, 'author');
     }
 
     /**
      *
-     * @param \DateTime $_date
+     * @param \DateTime $date
      * @return boolean
      */
-    public function date($_date): bool
+    public function date($date): bool
     {
-        return V::instance('DateTime')->validate($_date);
+        return V::instance('DateTime')->validate($date);
     }
 
     /**
@@ -126,22 +126,22 @@ class Validation
 
     /**
      *
-     * @param \DateTime $_regDate
+     * @param \DateTime $regDate
      * @return boolean
      */
-    public function regDate($_regDate): bool
+    public function regDate($regDate): bool
     {
-        return V::instance('DateTime')->validate($_regDate);
+        return V::instance('DateTime')->validate($regDate);
     }
 
     /**
      *
-     * @param \DateTime $_logDate
+     * @param \DateTime $logDate
      * @return boolean
      */
-    public function logDate($_logDate): bool
+    public function logDate($logDate): bool
     {
-        return V::instance('DateTime')->validate($_logDate);
+        return V::instance('DateTime')->validate($logDate);
     }
 
     /**
@@ -160,14 +160,14 @@ class Validation
 
     /**
      *
-     * @param \Entity $_object
+     * @param \Entity $object
      * @param string $name
      * @return boolean
      */
-    private function validEntityController($_object, $name): bool
+    private function validEntityController($object, $name): bool
     {
-        $_entityController = RegistryFactory::start()->register('Entity\Controller\EntityController');
-        $class = $_entityController->getEntity($name);
-        return $_object instanceof $class;
+        $entityController = RegistryFactory::start()->register('Entity\Controller\EntityController');
+        $class = $entityController->getEntity($name);
+        return $object instanceof $class;
     }
 }

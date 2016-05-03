@@ -8,7 +8,6 @@ use App\Resource\Server;
 use FrontController\FrontController;
 use UserAuth\User;
 use View\View;
-use ViewHelper\ViewHelperExtension;
 use Ignaszak\Exception\Start as ExceptionHandler;
 use Ignaszak\Registry\Conf as RegistryConf;
 use Ignaszak\Registry\RegistryFactory;
@@ -175,7 +174,7 @@ class Load
     }
 
     /**
-     * Start session and loads refer data from session
+     * Start $_SESSION and loads refer data from $_SESSION
      * and pass their into System\Server::getReferData().
      * This method is used e.g. to show message about
      * invalid login or password
@@ -237,7 +236,7 @@ class Load
      */
     public function loadAdmin()
     {
-        if (preg_match('/^admin[a-zA-Z0-9_-]*/', $this->http->router->name())) {
+        if ($this->http->isAdmin()) {
             // If not logged open login panel
             if (! $this->user->isUserLoggedIn()) {
                 //$this->view->loadFile('../../extensions/Index/login.html');

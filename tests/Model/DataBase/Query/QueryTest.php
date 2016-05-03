@@ -9,8 +9,16 @@ use DataBase\Query\Query;
 class QueryTest extends \PHPUnit_Framework_TestCase
 {
 
-    private $_query;
+    /**
+     *
+     * @var \DataBase\Query\Query
+     */
+    private $query;
 
+    /**
+     *
+     * @var string
+     */
     private $result;
 
     public function setUp()
@@ -18,7 +26,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         MockConf::run();
         $this->result = 'anyResult';
         MockDoctrine::queryBuilderResult([$this->result]);
-        $this->_query = new Query();
+        $this->query = new Query();
     }
 
     public function tearDown()
@@ -31,7 +39,7 @@ class QueryTest extends \PHPUnit_Framework_TestCase
         $stub = \Mockery::mock('Entity\Posts');
         MockEntityController::mock('post', $stub);
         $entityName = \PHPUnit_Framework_Assert::readAttribute(
-            $this->_query->setQuery('post'),
+            $this->query->setQuery('post'),
             'entityName'
         );
         $this->assertEquals('Entity\Posts', $entityName);

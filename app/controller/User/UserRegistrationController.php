@@ -15,19 +15,19 @@ class UserRegistrationController extends FrontController
      *
      * @var string
      */
-    private $login;
+    private $login = '';
 
     /**
      *
      * @var string
      */
-    private $email;
+    private $email = '';
 
     /**
      *
      * @var string
      */
-    private $password;
+    private $password = '';
 
     public function run()
     {

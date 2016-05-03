@@ -27,9 +27,8 @@ class ViewPostController extends FrontController
              */
             public function getAdminPostList(): array
             {
-                $this->_controller->query->setQuery('post')
-                    ->status('all');
-                return $this->_controller->query->getQuery();
+                $this->controller->query->setQuery('post')->status('all');
+                return $this->controller->query->getQuery();
             }
 
             /**
@@ -42,7 +41,7 @@ class ViewPostController extends FrontController
                 string $action,
                 string $alias
             ): string {
-                return $this->_controller->url('admin-post-edit', [
+                return $this->controller->url('admin-post-edit', [
                     'action' => $action, 'alias' => $alias
                 ]);
             }

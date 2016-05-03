@@ -10,13 +10,13 @@ class System
      *
      * @var \Conf\Conf
      */
-    private $_conf = null;
+    private $conf = null;
 
     /**
      *
      * @var \DataBase\Query\Query
      */
-    private $_query = null;
+    private $query = null;
 
     /**
      *
@@ -26,9 +26,9 @@ class System
 
     public function __construct()
     {
-        $this->_conf = RegistryFactory::start('file')
+        $this->conf = RegistryFactory::start('file')
             ->register('Conf\Conf');
-        $this->_query = RegistryFactory::start()
+        $this->query = RegistryFactory::start()
             ->register('DataBase\Query\Query');
         $this->registry = RegistryFactory::start();
     }
@@ -39,7 +39,7 @@ class System
      */
     public function getSiteTitle(): string
     {
-        return $this->_conf->getSiteTitle();
+        return $this->conf->getSiteTitle();
     }
 
     /**
@@ -48,7 +48,7 @@ class System
      */
     public function getSiteDescription(): string
     {
-        return $this->_conf->getSiteDescription() ?? "";
+        return $this->conf->getSiteDescription() ?? "";
     }
 
     /**
@@ -57,7 +57,7 @@ class System
      */
     public function getSiteAdress(): string
     {
-        return $this->_conf->getBaseUrl();
+        return $this->conf->getBaseUrl();
     }
 
     /**
@@ -66,7 +66,7 @@ class System
      */
     public function getThemeUrl(): string
     {
-        return $this->_conf->getBaseUrl() . '/app/' .
+        return $this->conf->getBaseUrl() . '/app/' .
             $this->registry->get('view')->getThemeFolder();
     }
 
@@ -76,7 +76,7 @@ class System
      */
     public function getViewLimit(): int
     {
-        return $this->_conf->getViewLimit();
+        return $this->conf->getViewLimit();
     }
 
     /**
@@ -85,7 +85,7 @@ class System
      */
     public function getResult(): array
     {
-        return $this->_query->getQuery();
+        return $this->query->getQuery();
     }
 
     /**

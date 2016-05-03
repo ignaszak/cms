@@ -12,16 +12,16 @@ class User extends Group
      *
      * @var \Entity\Users
      */
-    private $_user;
+    private $user = null;
 
     /**
      *
-     * @param \Form\Form $_form
+     * @param \Form\Form $form
      */
-    public function __construct(\Form\Form $_form)
+    public function __construct(\Form\Form $form)
     {
-        parent::__construct($_form);
-        $this->_user = RegistryFactory::start()->get('user');
+        parent::__construct($form);
+        $this->user = RegistryFactory::start()->get('user');
     }
 
     /**
@@ -147,7 +147,7 @@ class User extends Group
      */
     private function addResponseInputValue(string $name)
     {
-        if ($this->formAction == 'registration') {
+        if ($this->formAction === 'registration') {
             $response = Server::getReferData();
             $field = str_replace('user', '', $name);
             if (! @$response['error']['valid' . $field] &&
@@ -165,10 +165,10 @@ class User extends Group
      */
     private function addAccountValue(string $name)
     {
-        if ($this->formAction == 'accountData') {
+        if ($this->formAction === 'accountData') {
             $entityGetter = $this->getEntityGetter($name);
             FormGenerator::addItem([
-                'value' => $this->_user->getUserSession()->$entityGetter()
+                'value' => $this->user->getUserSession()->$entityGetter()
             ]);
         }
     }

@@ -61,6 +61,14 @@ class MockHttp
     public static function run()
     {
         $stub = \Mockery::mock('Http');
+        $stub->shouldReceive('isAdmin')->andReturnUsing(
+            function (): bool {
+                return (bool) preg_match(
+                    '/^admin-[a-zA-Z0-9_-]*/',
+                    self::$routerResponse['name']
+                );
+            }
+        );
         $stub->router = self::mockRouter();
         RegistryFactory::start()->set('http', $stub);
     }

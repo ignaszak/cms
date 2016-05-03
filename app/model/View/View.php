@@ -36,7 +36,7 @@ class View
      *
      * @var string
      */
-    private $viewFileName;
+    private $viewFileName = '';
 
     /**
      *
@@ -82,7 +82,7 @@ class View
     public function loadView()
     {
         if (! empty($this->viewFileName)) {
-            if (preg_match('/^admin[a-zA-Z0-9_-]*/', $this->http->router->name())) {
+            if ($this->http->isAdmin()) {
                 $this->loadAdminExtensionThemeFile($this->viewFileName);
             } else {
                 $this->loadFile($this->viewFileName);

@@ -13,14 +13,14 @@ class UserSaveController extends FrontController
 
     public function run()
     {
-        $_user = $this->registry->get('user');
-        $this->checkIfUserIsLogged($_user);
+        $user = $this->registry->get('user');
+        $this->checkIfUserIsLogged($user);
 
-        $userId = $_user->getUserSession()->getId();
+        $userId = $user->getUserSession()->getId();
         $controller = new Controller(new Users());
         $controller->find($userId);
 
-        if (!empty($_POST['userPassword'])) {
+        if (!empty($this->http->request->get('userPassword'))) {
             Server::setReferData(['form' => 'accountPassword']);
             $this->savePassword($controller);
         } else {
@@ -36,11 +36,11 @@ class UserSaveController extends FrontController
 
     /**
      *
-     * @param \UserAuth\User $_user
+     * @param \UserAuth\User $user
      */
-    private function checkIfUserIsLogged(\UserAuth\User $_user)
+    private function checkIfUserIsLogged(\UserAuth\User $user)
     {
-        if (! $_user->isUserLoggedIn()) {
+        if (! $user->isUserLoggedIn()) {
             Server::headerLocationReferer();
         }
     }
@@ -83,14 +83,14 @@ class UserSaveController extends FrontController
 
     /**
      *
-     * @param \Entity\Users $_userEntity
+     * @param \Entity\Users $userEntity
      */
-    private function reloadUserSession(\Entity\Users $_userEntity)
+    private function reloadUserSession(\Entity\Users $userEntity)
     {
         if (RegistryFactory::start('session')->get('userSession')) {
-            RegistryFactory::start('session')->set('userSession', $_userEntity);
+            RegistryFactory::start('session')->set('userSession', $userEntity);
         } else {
-            RegistryFactory::start('cookie')->set('userSession', $_userEntity);
+            RegistryFactory::start('cookie')->set('userSession', $userEntity);
         }
     }
 }

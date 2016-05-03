@@ -8,13 +8,13 @@ class UniqueValidator extends Validator
      *
      * @var \DataBase\Query\Query
      */
-    private $_query = null;
+    private $query = null;
 
     /**
      *
      * @var string
      */
-    private $entityKey;
+    private $entityKey = '';
 
     /**
      *
@@ -31,7 +31,7 @@ class UniqueValidator extends Validator
 
     private function setQuery()
     {
-        $this->_query = $this->registry->register('DataBase\Query\Query');
+        $this->query = $this->registry->register('DataBase\Query\Query');
     }
 
     private function setEntityKey()
@@ -66,12 +66,12 @@ class UniqueValidator extends Validator
      */
     private function dataNotExistInDatabase(string $column, $value, array $exception): bool
     {
-        $query = $this->_query->setQuery($this->entityKey);
+        $query = $this->query->setQuery($this->entityKey);
         if (! empty($exception)) {
             $query->query("c.{$column} NOT IN(?0)", [$exception]);
         }
         $query->findBy($column, $value);
-        $result = $this->_query->getStaticQuery();
+        $result = $this->query->getStaticQuery();
         return count($result) === 0 ? true : false;
     }
 }

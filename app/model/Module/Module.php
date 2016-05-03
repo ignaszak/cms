@@ -6,9 +6,14 @@ use Ignaszak\Registry\RegistryFactory;
 class Module
 {
 
-    public function getCategoryListModule(string $arg = ""): string
+    /**
+     *
+     * @param string $arg
+     */
+    public function getCategoryListModule(string $arg = ''): string
     {
-        $_categoryList = RegistryFactory::start()->register('Module\CategoryList\CategoryList');
-        return $_categoryList->getCategoryList($arg);
+        $categoryList = RegistryFactory::start()
+            ->register('Module\CategoryList\CategoryList');
+        return $categoryList->getCategoryList($arg);
     }
 }

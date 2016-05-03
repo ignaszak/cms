@@ -5,23 +5,23 @@ abstract class IQueryController
 {
 
     /**
-     *
-     * @var QueryBuilder
-     */
-    protected $_queryBuilder;
-
-    /**
      * Contains query rows count
      *
      * @var integer
      */
-    protected static $countQuery;
+    protected static $countQuery = 0;
+
+    /**
+     *
+     * @var QueryBuilder
+     */
+    protected $queryBuilder = null;
 
     /**
      *
      * @var \Doctrine\ORM\QueryBuilder
      */
-    protected $query;
+    protected $query = null;
 
     /**
      *
@@ -97,9 +97,9 @@ abstract class IQueryController
      */
     public function __call(string $name, array $arguments)
     {
-        if (method_exists($this->_queryBuilder, $name)) {
+        if (method_exists($this->queryBuilder, $name)) {
             return call_user_func_array(
-                [$this->_queryBuilder, $name],
+                [$this->queryBuilder, $name],
                 $arguments
             );
         } else {

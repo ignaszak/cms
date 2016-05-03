@@ -27,8 +27,8 @@ class ViewPageController extends FrontController
              */
             public function getAdminPage(): array
             {
-                $this->_controller->query->setQuery('page')->status('all');
-                return $this->_controller->query->getQuery();
+                $this->controller->query->setQuery('page')->status('all');
+                return $this->controller->query->getQuery();
             }
 
             /**
@@ -41,7 +41,7 @@ class ViewPageController extends FrontController
                 string $action,
                 string $alias
             ): string {
-                return $this->_controller->url('admin-page-edit', [
+                return $this->controller->url('admin-page-edit', [
                     'action' => $action, 'alias' => $alias
                 ]);
             }

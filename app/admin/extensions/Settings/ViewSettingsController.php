@@ -25,17 +25,17 @@ class ViewSettingsController extends FrontController
              *
              * @var \Entity\Options
              */
-            private $_options;
+            private $options;
 
             /**
              *
-             * @param Controller $_controller
+             * @param Controller $controller
              */
-            public function __construct(FrontController $_controller)
+            public function __construct(FrontController $controller)
             {
-                parent::__construct($_controller);
-                $this->_controller->query->setQuery('options');
-                $this->_options = $this->_controller->query->getQuery()[0];
+                parent::__construct($controller);
+                $this->controller->query->setQuery('options');
+                $this->options = $this->controller->query->getQuery()[0];
             }
 
             /**
@@ -44,7 +44,7 @@ class ViewSettingsController extends FrontController
              */
             public function getAdminSettingsFormAction(): string
             {
-                return $this->_controller->url('admin-settings-save', []);
+                return $this->controller->url('admin-settings-save', []);
             }
 
             /**
@@ -53,7 +53,7 @@ class ViewSettingsController extends FrontController
              */
             public function getAdminSettings(): \Entity\Options
             {
-                return $this->_options;
+                return $this->options;
             }
 
             /**

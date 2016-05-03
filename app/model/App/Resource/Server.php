@@ -6,8 +6,16 @@ use Ignaszak\Registry\RegistryFactory;
 class Server
 {
 
+    /**
+     *
+     * @var array
+     */
     private static $sendReferDataArray = [];
 
+    /**
+     *
+     * @var array
+     */
     private static $readReferDataArray = [];
 
     public static function getHttpReferer()
@@ -38,6 +46,10 @@ class Server
         }
     }
 
+    /**
+     *
+     * @param string $location
+     */
     public static function headerLocation(string $location = '/')
     {
         self::setRefererSession();
@@ -51,6 +63,10 @@ class Server
         }
     }
 
+    /**
+     *
+     * @param array $data
+     */
     public static function setReferData(array $data)
     {
         self::$sendReferDataArray = array_merge(self::$sendReferDataArray, $data);

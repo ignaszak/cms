@@ -2,6 +2,7 @@
 namespace Test\Model\App\Resource;
 
 use App\Resource\Http;
+use Test\Mock\MockHttp;
 
 class HttpTest extends \PHPUnit_Framework_TestCase
 {
@@ -40,10 +41,25 @@ class HttpTest extends \PHPUnit_Framework_TestCase
         $this->http->invalidProperty;
     }
 
-    private function mockResponse()
+    public function testIsAdmin()
+    {
+        $this->http = new Http(
+            $this->mockResponse('admin-anyName'),
+            $this->mockRequest()
+        );
+        $this->assertTrue($this->http->isAdmin());
+        $this->http = new Http(
+            $this->mockResponse('anyName'),
+            $this->mockRequest()
+        );
+        $this->assertFalse($this->http->isAdmin());
+    }
+
+    private function mockResponse(string $name = '')
     {
         $stub = $this->getMockBuilder('Ignaszak\Router\Response')
             ->disableOriginalConstructor()->getMock();
+        $stub->method('name')->willReturn($name);
         return $stub;
     }
 

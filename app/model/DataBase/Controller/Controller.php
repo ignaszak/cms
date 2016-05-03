@@ -17,50 +17,51 @@ class Controller
      *
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $_em;
+    protected $em = null;
 
     /**
      *
      * @var \Entity
      */
-    protected $_entity;
+    protected $entity = null;
 
     /**
      *
      * @var \Entity\Controller\EntityController
      */
-    private $_entityController;
+    private $entityController = null;
 
     /**
      *
      * @var SettersValidator
      */
-    private $_validatorFactory;
+    private $validatorFactory = null;
 
     /**
      *
      * @var string
      */
-    private $entityName;
+    private $entityName = '';
 
     /**
      *
-     * @param \Entity $_entity
+     * @param \Entity $entity
+     * @param Validator\Schema\Validation $schema
      */
     public function __construct(
-        $_entity,
-        Validator\Schema\Validation $_schema = null
+        $entity,
+        Validator\Schema\Validation $schema = null
     ) {
-        $this->_entity = $_entity;
-        $this->entityName = get_class($this->_entity);
-        $this->_em = DBDoctrine::em();
-        $this->_entityController = RegistryFactory::start()
+        $this->entity = $entity;
+        $this->entityName = get_class($this->entity);
+        $this->em = DBDoctrine::em();
+        $this->entityController = RegistryFactory::start()
             ->register('Entity\Controller\EntityController');
 
-        if (is_null($_schema)) {
-            $_schema = new Validator\Schema\Validation();
+        if (is_null($schema)) {
+            $schema = new Validator\Schema\Validation();
         }
-        $this->_validatorFactory = new Validator\ValidatorFactory($this, $_schema);
+        $this->validatorFactory = new Validator\ValidatorFactory($this, $schema);
     }
 
     /**
@@ -83,8 +84,8 @@ class Controller
      */
     public function getAlias(string $string): string
     {
-        $_alias = new Alias($this->_entity);
-        return $_alias->getAlias($string);
+        $alias = new Alias($this->entity);
+        return $alias->getAlias($string);
     }
 
     /**
@@ -93,7 +94,7 @@ class Controller
      */
     public function entity()
     {
-        return $this->_entity;
+        return $this->entity;
     }
 
     /**
@@ -104,8 +105,8 @@ class Controller
      */
     public function setReference(string $entityName, int $by): Controller
     {
-        $entityClass = $this->_entityController->getEntity($entityName);
-        $entityObject = $this->_em->find($entityClass, $by);
+        $entityClass = $this->entityController->getEntity($entityName);
+        $entityObject = $this->em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
         $this->saveEntitySetter($name, [$entityObject]);
 
@@ -119,7 +120,7 @@ class Controller
      */
     public function find(int $id): Controller
     {
-        $this->_entity = $this->_em->getReference($this->entityName, $id);
+        $this->entity = $this->em->getReference($this->entityName, $id);
 
         return $this;
     }
@@ -131,7 +132,7 @@ class Controller
      */
     public function findOneBy(array $array): Controller
     {
-        $this->_entity = $this->_em->getRepository($this->entityName)
+        $this->entity = $this->em->getRepository($this->entityName)
             ->findOneBy($array);
 
         return $this;
@@ -144,7 +145,7 @@ class Controller
      */
     public function findBy(array $array): Controller
     {
-        $this->_entity = $this->_em->getRepository($this->entityName)
+        $this->entity = $this->em->getRepository($this->entityName)
             ->findBy($array);
 
         return $this;
@@ -157,10 +158,10 @@ class Controller
      */
     public function insert(array $array = []): Controller
     {
-        $this->_validatorFactory->valid($array);
+        $this->validatorFactory->valid($array);
         $this->callEntitySettersFromArray();
-        $this->_em->persist($this->_entity);
-        $this->_em->flush();
+        $this->em->persist($this->entity);
+        $this->em->flush();
 
         return $this;
     }
@@ -172,10 +173,10 @@ class Controller
      */
     public function update(array $array = []): Controller
     {
-        $this->_validatorFactory->valid($array);
+        $this->validatorFactory->valid($array);
         $this->callEntitySettersFromArray();
-        $this->_em->persist($this->_entity);
-        $this->_em->flush();
+        $this->em->persist($this->entity);
+        $this->em->flush();
 
         return $this;
     }
@@ -185,14 +186,14 @@ class Controller
      */
     public function remove(): Controller
     {
-        if (is_array($this->_entity)) {
-            foreach ($this->_entity as $entity) {
-                $this->_em->remove($entity);
+        if (is_array($this->entity)) {
+            foreach ($this->entity as $entity) {
+                $this->em->remove($entity);
             }
-            $this->_em->flush();
+            $this->em->flush();
         } else {
-            $this->_em->remove($this->_entity);
-            $this->_em->flush($this->_entity);
+            $this->em->remove($this->entity);
+            $this->em->flush($this->entity);
         }
 
         return $this;
@@ -206,7 +207,7 @@ class Controller
      */
     protected function saveEntitySetter(string $name, array $arguments)
     {
-        if (method_exists($this->_entity, $name)) {
+        if (method_exists($this->entity, $name)) {
             $this->entitySettersArray[$name] = @$arguments[0];
         } else {
             throw new \BadMethodCallException("Method '$name' does not exist");
@@ -216,7 +217,7 @@ class Controller
     protected function callEntitySettersFromArray()
     {
         foreach ($this->entitySettersArray as $name => $arguments) {
-            $this->_entity->$name($arguments);
+            $this->entity->$name($arguments);
         }
     }
 }

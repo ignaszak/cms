@@ -8,17 +8,17 @@ class Pagination
      *
      * @var Theme\Theme
      */
-    private $_theme;
+    private $theme = null;
 
     /**
      *
      * @var PaginationGenerator
      */
-    private $_pg;
+    private $pg = null;
 
     public function __construct()
     {
-        $this->_pg = new PaginationGenerator();
+        $this->pg = new PaginationGenerator();
     }
 
     /**
@@ -27,7 +27,7 @@ class Pagination
      */
     public function customPagination(): PaginationGenerator
     {
-        return $this->_pg;
+        return $this->pg;
     }
 
     /**
@@ -39,16 +39,16 @@ class Pagination
     {
         switch ($theme) {
             case "pagination":
-                $this->_theme = new Theme\MultiPage($this->_pg);
+                $this->theme = new Theme\MultiPage($this->pg);
                 break;
             case "pager":
-                $this->_theme = new Theme\Pager($this->_pg);
+                $this->theme = new Theme\Pager($this->pg);
                 break;
             case "pager-align":
-                $this->_theme = new Theme\PagerAlign($this->_pg);
+                $this->theme = new Theme\PagerAlign($this->pg);
                 break;
         }
 
-        return $this->_theme->getTheme();
+        return $this->theme->getTheme();
     }
 }
