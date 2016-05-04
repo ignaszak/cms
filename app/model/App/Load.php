@@ -239,7 +239,7 @@ class Load
         if ($this->http->isAdmin()) {
             // If not logged open login panel
             if (! $this->user->isUserLoggedIn()) {
-                //$this->view->loadFile('../../extensions/Index/login.html');
+                $this->view->loadFile('../../admin/extensions/Index/login.html');
                 exit;
             }
             // Check permissions
