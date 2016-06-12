@@ -94,7 +94,7 @@ class System
      */
     public function getUserAccountLink(): string
     {
-        return $this->registry->get('url')->url('user-account', []);
+        return $this->registry->get('url')->url('user-account');
     }
 
     /**
@@ -103,6 +103,6 @@ class System
      */
     public function getAdminLink(): string
     {
-        return $this->registry->get('url')->url('admin', []);
+        return $this->registry->get('url')->url('admin');
     }
 }

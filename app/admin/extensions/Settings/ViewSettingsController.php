@@ -44,7 +44,7 @@ class ViewSettingsController extends FrontController
              */
             public function getAdminSettingsFormAction(): string
             {
-                return $this->controller->url('admin-settings-save', []);
+                return $this->controller->url('admin-settings-save');
             }
 
             /**

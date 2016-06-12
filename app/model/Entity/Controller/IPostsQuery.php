@@ -52,7 +52,7 @@ abstract class IPostsQuery
     public function getCategoryLink()
     {
         return RegistryFactory::start()->get('url')->url('category-alias', [
-            'alias' => $this->getCategory()->getAlias(), 'page' => 1
+            'alias' => $this->getCategory()->getAlias()
         ]);
     }
 
@@ -67,8 +67,7 @@ abstract class IPostsQuery
             'month' => $this->getDate('m'),
             'day' => $this->getDate('d'),
             's1' => '/',
-            's2' => '/',
-            'page' => 1
+            's2' => '/'
         ]);
     }
 

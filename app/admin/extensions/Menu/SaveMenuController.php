@@ -55,7 +55,7 @@ class SaveMenuController extends FrontController
         }
 
         Server::headerLocation(
-            $this->url('admin-menu-list', ['action' => 'view', 'page' => 1])
+            $this->url('admin-menu-list', ['action' => 'view'])
         );
     }
 

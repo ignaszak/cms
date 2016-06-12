@@ -35,9 +35,7 @@ class EditPostController extends FrontController
             ])->remove();
 
             Server::headerLocation(
-                $this->url('admin-post-list', [
-                    'action' => 'view', 'page' => 1
-                ])
+                $this->url('admin-post-list', ['action' => 'view'])
             );
         }
     }

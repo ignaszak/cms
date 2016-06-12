@@ -170,8 +170,8 @@ class PaginationGenerator
         } else {
             $name = 'post-default';
         }
-        return $this->registry->get('url')->url($name, array_merge($tokens, [
-            'page' => $page
-        ]));
+        return $this->registry->get('url')->url(
+            $name, $tokens + ['page' => $page]
+        );
     }
 }

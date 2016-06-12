@@ -42,7 +42,7 @@ class CategoryList
     {
         $string = "<ul {$arg}>";
         if (array_key_exists(0, $this->categoryList)) {
-            $string .= "<li><a href=\"{$this->url->url('default', ['base' => ''])}\">";
+            $string .= "<li><a href=\"{$this->url->url('default')}\">";
             $string .= "{$this->categoryList[0]->getTitle()}</a>";
             $string .= "</li>";
         }
@@ -51,7 +51,7 @@ class CategoryList
         foreach ($this->categoryList as $cat) {
             if ($parentId === $cat->getParentId()) {
                 $url = $this->url->url('category-alias', [
-                    'alias' => $cat->getAlias(), 'page' => 1
+                    'alias' => $cat->getAlias()
                 ]);
                 $string .= "<li><a href=\"{$url}\">";
                 $string .= "{$cat->getTitle()}</a>";

@@ -107,7 +107,7 @@ routes:
     default:
         path: '/{base}'
         tokens:
-            base : '@base'
+            base: '@base'
     error:
         path: '/@notfound'
         controller: Controller\NotFoundController
@@ -129,6 +129,11 @@ tokens:
     day: '@day'
     s1: '(/)?'
     s2: '(/)?'
+
+defaults:
+    page: 1
+    base: |
+
 
 patterns:
     year: '(\d{4})'

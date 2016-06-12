@@ -13,7 +13,7 @@ class Search extends Group
      */
     public function getFormActionAdress(): string
     {
-        return $this->url->url('search', ['page' => 1]);
+        return $this->url->url('search');
     }
 
     /**

@@ -51,7 +51,7 @@ abstract class IBreadcrumbs
         return [
             $this->addBreadcrumb(
                 'Home',
-                $this->registry->get('url')->url('default', ['base' => ''])
+                $this->registry->get('url')->url('default')
             )
         ];
     }
