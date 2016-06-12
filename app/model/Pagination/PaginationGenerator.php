@@ -171,7 +171,8 @@ class PaginationGenerator
             $name = 'post-default';
         }
         return $this->registry->get('url')->url(
-            $name, $tokens + ['page' => $page]
+            $name,
+            $tokens + ['page' => $page]
         );
     }
 }
