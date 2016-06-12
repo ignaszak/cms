@@ -1,5 +1,5 @@
 <?php
-namespace DataBase\Controller;
+namespace DataBase\Command;
 
 use Conf\DB\DBDoctrine;
 

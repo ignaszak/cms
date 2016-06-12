@@ -3,7 +3,7 @@ namespace AdminController\Page;
 
 use FrontController\Controller as FrontController;
 use FrontController\ViewHelperController;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Pages;
 use App\Resource\Server;
 
@@ -29,7 +29,7 @@ class EditPageController extends FrontController
         $this->view->addView('theme/page-edit.html');
 
         if ($this->action === 'delete' && $this->alias) {
-            $controller = new Controller(new Pages());
+            $controller = new Command(new Pages());
             $controller->findOneBy([
                 'alias' => $this->alias
             ])->remove();

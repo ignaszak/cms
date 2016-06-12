@@ -3,7 +3,7 @@ namespace Controller\User;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Mail\Mail;
 use Mail\MailTransport;
 use Entity\Users;
@@ -42,7 +42,7 @@ class UserRegistrationController extends FrontController
         $this->email = $this->http->request->get('userEmail');
         $this->password = $this->http->request->get('userPassword');
 
-        $controller = new Controller(new Users());
+        $controller = new Command(new Users());
         $controller->setLogin($this->login)
             ->setEmail($this->email)
             ->setPassword($this->password)

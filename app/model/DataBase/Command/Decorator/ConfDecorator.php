@@ -1,13 +1,13 @@
 <?php
-namespace DataBase\Controller\Decorator;
+namespace DataBase\Command\Decorator;
 
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Ignaszak\Registry\RegistryFactory;
 
-class ConfDecorator extends Controller
+class ConfDecorator extends Command
 {
 
-    public function insert(array $array = []): Controller
+    public function insert(array $array = []): Command
     {
         parent::insert($array);
         RegistryFactory::start('file')->remove('Conf\Conf');
@@ -19,9 +19,9 @@ class ConfDecorator extends Controller
      * Disable remove
      *
      * {@inheritDoc}
-     * @see \Content\Controller\Controller::remove()
+     * @see \Content\Controller\Command::remove()
      */
-    public function remove(): Controller
+    public function remove(): Command
     {
         return $this;
     }

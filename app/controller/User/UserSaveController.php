@@ -4,7 +4,7 @@ namespace Controller\User;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use UserAuth\HashPass;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
 
@@ -17,7 +17,7 @@ class UserSaveController extends FrontController
         $this->checkIfUserIsLogged($user);
 
         $userId = $user->getUserSession()->getId();
-        $controller = new Controller(new Users());
+        $controller = new Command(new Users());
         $controller->find($userId);
 
         if (!empty($this->http->request->get('userPassword'))) {
@@ -47,11 +47,11 @@ class UserSaveController extends FrontController
 
     /**
      *
-     * @param Controller $controller
+     * @param Command $command
      */
-    private function savePassword(Controller $controller)
+    private function savePassword(Command $command)
     {
-        $hash = $controller->entity()->getPassword();
+        $hash = $command->entity()->getPassword();
         if (! HashPass::verifyPassword(
             $this->http->request->get('userPassword'),
             $hash
@@ -62,21 +62,21 @@ class UserSaveController extends FrontController
             ]);
             Server::headerLocationReferer();
         } else {
-            $controller->setPassword($this->http->request->get('userNewPassword'))
+            $command->setPassword($this->http->request->get('userNewPassword'))
                 ->update(['password' => []]);
         }
     }
 
     /**
      *
-     * @param Controller $controller
+     * @param Command $command
      */
-    private function saveData(Controller $controller)
+    private function saveData(Command $command)
     {
-        $controller->setEmail($this->http->request->get('userEmail'))
+        $command->setEmail($this->http->request->get('userEmail'))
             ->update([
                 'email' => [
-                    'unique' => [$controller->entity()->getEmail()]
+                    'unique' => [$command->entity()->getEmail()]
                 ]
             ]);
     }

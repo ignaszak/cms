@@ -1,35 +1,35 @@
 <?php
-namespace Test\Model\DataBase\Controller\Validator;
+namespace Test\Model\DataBase\Command\Validator;
 
 use Test\Mock\MockTest;
 use Test\Mock\MockSystem;
-use DataBase\Controller\Validator\ValidatorFactory;
+use DataBase\Command\Validator\ValidatorFactory;
 
 class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     /**
      *
-     * @var \DataBase\Controller\Validator\ValidatorFactory
+     * @var \DataBase\Command\Validator\ValidatorFactory
      */
     private $validatorFactory;
 
     /**
      *
-     * @var \DataBase\Controller\Controller
+     * @var \DataBase\Command\Command
      */
-    private $controller;
+    private $command;
 
     public function setUp()
     {
-        $this->controller = $this->getMockBuilder(
-            '\DataBase\Controller\Controller'
+        $this->command = $this->getMockBuilder(
+            '\DataBase\Command\Command'
         )->disableOriginalConstructor()->getMock();
         $schema = $this->getMockBuilder(
-            '\DataBase\Controller\Validator\Schema\Validation'
+            '\DataBase\Command\Validator\Schema\Validation'
         )->getMock();
         $this->validatorFactory = new ValidatorFactory(
-            $this->controller,
+            $this->command,
             $schema
         );
     }
@@ -90,7 +90,7 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
             $this->validatorFactory,
             'runValidator',
             [
-                ['Test\Model\DataBase\Controller\Validator\Test'
+                ['Test\Model\DataBase\Command\Validator\Test'
                     => ['test command']]
             ]
         );
@@ -117,9 +117,9 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
         MockTest::inject($this->validatorFactory, 'errorArray', $error);
         $stub = $this->getMockBuilder('Entity\Posts')->getMock();
         $stub->method('getId')->willReturn(5);
-        $controller = \Mockery::mock('Controller');
-        $controller->entitySettersArray = ['reference' => $stub];
-        MockTest::inject($this->validatorFactory, 'controller', $controller);
+        $command = \Mockery::mock('Command');
+        $command->entitySettersArray = ['reference' => $stub];
+        MockTest::inject($this->validatorFactory, 'command', $command);
         MockTest::callMockMethod($this->validatorFactory, 'sendErrorsIfExists');
 
         $this->assertEquals(

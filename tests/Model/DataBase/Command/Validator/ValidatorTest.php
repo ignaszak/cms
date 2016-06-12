@@ -1,5 +1,5 @@
 <?php
-namespace Test\Model\DataBase\Controller\Validator;
+namespace Test\Model\DataBase\Command\Validator;
 
 use Test\Mock\MockTest;
 
@@ -14,42 +14,42 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $controller = $this->getMockBuilder('DataBase\Controller\Controller')
+        $command = $this->getMockBuilder('DataBase\Command\Command')
             ->disableOriginalConstructor()
             ->getMock();
-        $controller->method('entity')->willReturn(
+        $command->method('entity')->willReturn(
             \Mockery::mock('alias:Entity\EntityName')
         );
 
         $validator = $this->getMockBuilder(
-            'DataBase\Controller\Validator\Validator'
-        )->setConstructorArgs([$controller])->getMockForAbstractClass();
+            'DataBase\Command\Validator\Validator'
+        )->setConstructorArgs([$command])->getMockForAbstractClass();
         $this->validator = $validator;
     }
 
     public function testConstructor()
     {
-        $_controller = \PHPUnit_Framework_Assert::readAttribute(
+        $command = \PHPUnit_Framework_Assert::readAttribute(
             $this->validator,
-            'controller'
+            'command'
         );
         $entityName = \PHPUnit_Framework_Assert::readAttribute(
             $this->validator,
             'entityName'
         );
 
-        $this->assertInstanceOf('DataBase\Controller\Controller', $_controller);
+        $this->assertInstanceOf('DataBase\Command\Command', $command);
         $this->assertEquals('Entity\EntityName', $entityName);
 
     }
 
     public function testGetSetterValue()
     {
-        $_controller = \PHPUnit_Framework_Assert::readAttribute(
+        $command = \PHPUnit_Framework_Assert::readAttribute(
             $this->validator,
-            'controller'
+            'command'
         );
-        MockTest::inject($_controller, 'entitySettersArray', [
+        MockTest::inject($command, 'entitySettersArray', [
             'setTitle' => 'value of setter'
         ]);
         $setter = MockTest::callMockMethod(

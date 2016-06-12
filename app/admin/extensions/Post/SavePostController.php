@@ -3,7 +3,7 @@ namespace AdminController\Post;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Posts;
 
 class SavePostController extends FrontController
@@ -20,7 +20,7 @@ class SavePostController extends FrontController
         $this->request = $this->http->request->all();
 
         // Initialize
-        $controller = new Controller(new Posts());
+        $controller = new Command(new Posts());
         $date = new \DateTime();
 
         // Find entity by id to update

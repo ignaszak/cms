@@ -1,5 +1,5 @@
 <?php
-namespace Test\Model\DataBase\Controller\Validator;
+namespace Test\Model\DataBase\Command\Validator;
 
 class TestValidator
 {

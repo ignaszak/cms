@@ -41,7 +41,7 @@ class ViewTest extends \PHPUnit_Framework_TestCase
 
     private function mockViewHelper(array $methods = [])
     {
-        $stub = $this->getMock('View\ViewHelper');
+        $stub = $this->createMock('View\ViewHelper');
         $stub->method('getMethods')->willReturn($methods);
         return $stub;
     }

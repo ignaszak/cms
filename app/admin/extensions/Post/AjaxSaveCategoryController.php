@@ -2,7 +2,7 @@
 namespace AdminController\Post;
 
 use FrontController\Controller as FrontController;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Categories;
 
 class AjaxSaveCategoryController extends FrontController
@@ -34,7 +34,7 @@ class AjaxSaveCategoryController extends FrontController
         }
 
         // Initialize
-        $controller = new Controller(new Categories());
+        $controller = new Command(new Categories());
         // Find entity by id to update
         $refresh = 'refresh';
 
@@ -58,7 +58,7 @@ class AjaxSaveCategoryController extends FrontController
 
             echo $refresh;
         } elseif ($this->request['action'] === 'delete') {
-            $controller = new Controller(new Categories());
+            $controller = new Command(new Categories());
             $idArray = array_filter(
                 $this->getChildCategories($this->request['id'])
             );

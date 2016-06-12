@@ -1,7 +1,7 @@
 <?php
-namespace DataBase\Controller\Validator;
+namespace DataBase\Command\Validator;
 
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Ignaszak\Registry\RegistryFactory;
 
 abstract class Validator
@@ -9,9 +9,9 @@ abstract class Validator
 
     /**
      *
-     * @var Controller
+     * @var Command
      */
-    protected $controller = null;
+    protected $command = null;
 
     /**
      *
@@ -37,11 +37,11 @@ abstract class Validator
      */
     protected $entityName;
 
-    public function __construct(Controller $controller)
+    public function __construct(Command $command)
     {
-        $this->controller = $controller;
+        $this->command = $command;
         $this->registry = RegistryFactory::start();
-        $this->entityName = get_class($this->controller->entity());
+        $this->entityName = get_class($this->command->entity());
     }
 
     /**
@@ -66,7 +66,7 @@ abstract class Validator
      */
     protected function getSetter(string $name)
     {
-        foreach ($this->controller->entitySettersArray as $setter => $value) {
+        foreach ($this->command->entitySettersArray as $setter => $value) {
             if (strpos(strtolower($setter), $name) !== false) {
                 return $value;
             }

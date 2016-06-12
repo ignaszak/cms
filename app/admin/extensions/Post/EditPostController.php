@@ -4,7 +4,7 @@ namespace AdminController\Post;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use FrontController\ViewHelperController;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Posts;
 
 class EditPostController extends FrontController
@@ -29,7 +29,7 @@ class EditPostController extends FrontController
         $this->view->addView('theme/post-edit.html');
 
         if ($this->action === 'delete' && $this->alias) {
-            $controller = new Controller(new Posts());
+            $controller = new Command(new Posts());
             $controller->findOneBy([
                 'alias' => $this->alias
             ])->remove();

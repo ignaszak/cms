@@ -3,7 +3,7 @@ namespace Controller\User;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Users;
 use Mail\Mail;
 use Mail\MailTransport;
@@ -25,7 +25,7 @@ class UserRemindController extends FrontController
             Server::headerLocationReferer();
         }
 
-        $controller = new Controller(new Users());
+        $controller = new Command(new Users());
         $controller->findOneBy([
             'email' => $this->http->request->get('userEmail')
         ]);
@@ -44,11 +44,11 @@ class UserRemindController extends FrontController
 
     /**
      *
-     * @param Controller $controller
+     * @param Command $command
      */
-    private function updatePassword(Controller $controller)
+    private function updatePassword(Command $command)
     {
-        $controller->setPassword($this->randomPassword)
+        $command->setPassword($this->randomPassword)
             ->update(['password' => []]);
     }
 
@@ -72,11 +72,11 @@ class UserRemindController extends FrontController
 
     /**
      *
-     * @param Controller $controller
+     * @param Command $command
      */
-    private function sendMail(Controller $controller)
+    private function sendMail(Command $command)
     {
-        $login = $controller->entity()->getLogin();
+        $login = $command->entity()->getLogin();
         $transport = new MailTransport('mail');
         $mail = new Mail($transport->conf());
         $mail->setSubject('Remind password')

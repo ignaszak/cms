@@ -1,5 +1,5 @@
 <?php
-namespace DataBase\Controller\Validator\Schema;
+namespace DataBase\Command\Validator\Schema;
 
 use Ignaszak\Registry\RegistryFactory;
 use Respect\Validation\Validator as V;

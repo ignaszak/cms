@@ -2,7 +2,7 @@
 namespace AdminController\Menu;
 
 use FrontController\Controller as FrontController;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Menus;
 use Entity\MenuItems;
 use App\Resource\Server;
@@ -61,7 +61,7 @@ class SaveMenuController extends FrontController
 
     private function saveMenuEntityAndSetLastAddedId()
     {
-        $controller = new Controller(new Menus());
+        $controller = new Command(new Menus());
         $unique = ['unique'];
         if (! empty($this->request['id'])) {
             $controller->find($this->request['id']);
@@ -81,7 +81,7 @@ class SaveMenuController extends FrontController
         $idArray = $this->request['menuId'] ?? [];
         $countAdress = count($this->request['menuAdress']);
         for ($i = 0; $i < $countAdress; ++ $i) {
-            $controller = new Controller(new MenuItems());
+            $controller = new Command(new MenuItems());
             if (! empty($idArray[$i])) {
                 $controller->find($idArray[$i]);
             }
@@ -100,14 +100,14 @@ class SaveMenuController extends FrontController
         $removeIdArray = $this->request['menuRemove'] ?? [];
         $count = count($removeIdArray);
         for ($i = 0; $i < $count; ++ $i) {
-            $controller = new Controller(new MenuItems());
+            $controller = new Command(new MenuItems());
             $controller->find($removeIdArray[$i])->remove();
         }
     }
 
     private function removeMenuWithMenuItems()
     {
-        $controller = new Controller(new Menus());
+        $controller = new Command(new Menus());
         $controller->find($this->id)->remove();
     }
 }

@@ -65,8 +65,8 @@ class HttpTest extends \PHPUnit_Framework_TestCase
 
     private function mockRequest()
     {
-        $stub = $this->getMock('Symfony\Component\HttpFoundation\Request');
-        $stub->request = $this->getMock(
+        $stub = $this->createMock('Symfony\Component\HttpFoundation\Request');
+        $stub->request = $this->createMock(
             'Symfony\Component\HttpFoundation\ParameterBag'
         );
         return $stub;

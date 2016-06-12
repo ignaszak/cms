@@ -2,7 +2,7 @@
 namespace AdminController\Settings;
 
 use FrontController\Controller as FrontController;
-use DataBase\Controller\Decorator\ConfDecorator;
+use DataBase\Command\Decorator\ConfDecorator;
 use Entity\Options;
 use App\Resource\Server;
 

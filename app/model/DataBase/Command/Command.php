@@ -1,10 +1,10 @@
 <?php
-namespace DataBase\Controller;
+namespace DataBase\Command;
 
 use Conf\DB\DBDoctrine;
 use Ignaszak\Registry\RegistryFactory;
 
-class Controller
+class Command
 {
 
     /**
@@ -70,7 +70,7 @@ class Controller
      * @param array $arguments
      * @return Controller
      */
-    public function __call(string $name, array $arguments): Controller
+    public function __call(string $name, array $arguments): Command
     {
         $this->saveEntitySetter($name, $arguments);
 
@@ -103,7 +103,7 @@ class Controller
      * @param int $by
      * @return Controller
      */
-    public function setReference(string $entityName, int $by): Controller
+    public function setReference(string $entityName, int $by): Command
     {
         $entityClass = $this->entityController->getEntity($entityName);
         $entityObject = $this->em->find($entityClass, $by);
@@ -118,7 +118,7 @@ class Controller
      * @param int $id
      * @return Controller
      */
-    public function find(int $id): Controller
+    public function find(int $id): Command
     {
         $this->entity = $this->em->getReference($this->entityName, $id);
 
@@ -130,7 +130,7 @@ class Controller
      * @param array $array
      * @return Controller
      */
-    public function findOneBy(array $array): Controller
+    public function findOneBy(array $array): Command
     {
         $this->entity = $this->em->getRepository($this->entityName)
             ->findOneBy($array);
@@ -143,7 +143,7 @@ class Controller
      * @param array $array
      * @return Controller
      */
-    public function findBy(array $array): Controller
+    public function findBy(array $array): Command
     {
         $this->entity = $this->em->getRepository($this->entityName)
             ->findBy($array);
@@ -156,7 +156,7 @@ class Controller
      * @param array $array
      * @return Controller
      */
-    public function insert(array $array = []): Controller
+    public function insert(array $array = []): Command
     {
         $this->validatorFactory->valid($array);
         $this->callEntitySettersFromArray();
@@ -171,7 +171,7 @@ class Controller
      * @param array $array
      * @return Controller
      */
-    public function update(array $array = []): Controller
+    public function update(array $array = []): Command
     {
         $this->validatorFactory->valid($array);
         $this->callEntitySettersFromArray();
@@ -184,7 +184,7 @@ class Controller
     /**
      * @return Controller
      */
-    public function remove(): Controller
+    public function remove(): Command
     {
         if (is_array($this->entity)) {
             foreach ($this->entity as $entity) {

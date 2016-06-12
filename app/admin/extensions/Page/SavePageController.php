@@ -3,7 +3,7 @@ namespace AdminController\Page;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 use Entity\Pages;
 
 class SavePageController extends FrontController
@@ -20,7 +20,7 @@ class SavePageController extends FrontController
         $this->request = $this->http->request->all();
 
         // Initialize
-        $controller = new Controller(new Pages());
+        $controller = new Command(new Pages());
         $date = new \DateTime();
 
         // Find entity by id to update

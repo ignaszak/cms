@@ -1,7 +1,7 @@
 <?php
-namespace DataBase\Controller\Validator;
+namespace DataBase\Command\Validator;
 
-use DataBase\Controller\Controller;
+use DataBase\Command\Command;
 
 class SettersValidator extends Validator
 {
@@ -18,10 +18,10 @@ class SettersValidator extends Validator
      * @param Schema\Validation $schema
      */
     public function __construct(
-        Controller $controller,
+        Command $command,
         Schema\Validation $schema
     ) {
-        parent::__construct($controller);
+        parent::__construct($command);
         $this->validation = $schema;
     }
 

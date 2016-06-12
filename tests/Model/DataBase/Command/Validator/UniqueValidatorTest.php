@@ -1,9 +1,9 @@
 <?php
-namespace Test\Model\DataBase\Controller\Validator;
+namespace Test\Model\DataBase\Command\Validator;
 
 use Test\Mock\MockTest;
 use Test\Mock\MockEntityController;
-use DataBase\Controller\Validator\UniqueValidator;
+use DataBase\Command\Validator\UniqueValidator;
 
 class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,7 +18,7 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
     {
         $anyEntity = \Mockery::mock('alias:Entity\AnyEntity');
         MockEntityController::mock('entityKey', $anyEntity);
-        $controller = $this->getMockBuilder('\DataBase\Controller\Controller')
+        $controller = $this->getMockBuilder('\DataBase\Command\Command')
             ->disableOriginalConstructor()
             ->getMock();
         $controller->method('entity')->willReturn($anyEntity);

@@ -1,5 +1,5 @@
 <?php
-namespace DataBase\Controller\Validator;
+namespace DataBase\Command\Validator;
 
 class UniqueValidator extends Validator
 {
@@ -64,8 +64,11 @@ class UniqueValidator extends Validator
      * @param mixed $value
      * @return boolean
      */
-    private function dataNotExistInDatabase(string $column, $value, array $exception): bool
-    {
+    private function dataNotExistInDatabase(
+        string $column,
+        $value,
+        array $exception
+    ): bool {
         $query = $this->query->setQuery($this->entityKey);
         if (! empty($exception)) {
             $query->query("c.{$column} NOT IN(?0)", [$exception]);

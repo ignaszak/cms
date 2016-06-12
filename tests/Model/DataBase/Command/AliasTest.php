@@ -1,9 +1,9 @@
 <?php
-namespace Test\Model\DataBase\Controller;
+namespace Test\Model\DataBase\Command;
 
 use Test\Mock\MockTest;
 use Test\Mock\MockDoctrine;
-use DataBase\Controller\Alias;
+use DataBase\Command\Alias;
 
 class AliasTest extends \PHPUnit_Framework_TestCase
 {
