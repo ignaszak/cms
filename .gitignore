@@ -23,6 +23,7 @@ nbproject/
 .project
 .settings
 .buildpath
+.idea
 
 # Other
 sonar-project.properties

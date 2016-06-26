@@ -1,6 +1,7 @@
 <?php
 namespace Controller\User;
 
+use Auth\Auth;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use DataBase\Command\Command;
@@ -42,18 +43,13 @@ class UserRegistrationController extends FrontController
         $this->email = $this->http->request->get('userEmail');
         $this->password = $this->http->request->get('userPassword');
 
-        $controller = new Command(new Users());
-        $controller->setLogin($this->login)
+        $command = new Command(new Users());
+        $command->setLogin($this->login)
             ->setEmail($this->email)
             ->setPassword($this->password)
-            ->setRegDate(new \DateTime('now'))
-            ->setLogDate(new \DateTime('now'))
-            ->setRole('user')
-            ->insert([
-                'login' => ['unique'],
-                'email' => ['unique'],
-                'password' => []
-            ]);
+            ->setRole('user');
+        $auth = new Auth($command);
+        $auth->register();
 
         $this->sendMail();
 

@@ -66,7 +66,7 @@ abstract class Validator
      */
     protected function getSetter(string $name)
     {
-        foreach ($this->command->entitySettersArray as $setter => $value) {
+        foreach ($this->command->entityMethodsArray as $setter => $value) {
             if (strpos(strtolower($setter), $name) !== false) {
                 return $value;
             }

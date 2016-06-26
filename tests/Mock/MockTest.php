@@ -35,6 +35,17 @@ class MockTest
     }
 
     /**
+     * 
+     * @param $object
+     * @param string $name
+     * @return mixed
+     */
+    public function property($object, string $name)
+    {
+        return \PHPUnit_Framework_Assert::readAttribute($object, $name);
+    }
+
+    /**
      *
      * @param string $file
      * @param string $content

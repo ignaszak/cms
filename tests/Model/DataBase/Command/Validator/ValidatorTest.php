@@ -49,7 +49,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
             $this->validator,
             'command'
         );
-        MockTest::inject($command, 'entitySettersArray', [
+        MockTest::inject($command, 'entityMethodsArray', [
             'setTitle' => 'value of setter'
         ]);
         $setter = MockTest::callMockMethod(

@@ -118,7 +118,7 @@ class ValidatorFactoryTest extends \PHPUnit_Framework_TestCase
         $stub = $this->getMockBuilder('Entity\Posts')->getMock();
         $stub->method('getId')->willReturn(5);
         $command = \Mockery::mock('Command');
-        $command->entitySettersArray = ['reference' => $stub];
+        $command->entityMethodsArray = ['reference' => $stub];
         MockTest::inject($this->validatorFactory, 'command', $command);
         MockTest::callMockMethod($this->validatorFactory, 'sendErrorsIfExists');
 

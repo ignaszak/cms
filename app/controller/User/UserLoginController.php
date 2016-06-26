@@ -1,9 +1,10 @@
 <?php
 namespace Controller\User;
 
+use Auth\Auth;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use UserAuth\HashPass;
+use Auth\HashPass;
 use DataBase\Command\Command;
 use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
@@ -21,24 +22,6 @@ class UserLoginController extends FrontController
      *
      * @var string
      */
-    private $login = '';
-
-    /**
-     *
-     * @var string
-     */
-    private $column = '';
-
-    /**
-     *
-     * @var string
-     */
-    private $password = '';
-
-    /**
-     *
-     * @var string
-     */
     private $remember = '';
 
     public function run()
@@ -47,12 +30,22 @@ class UserLoginController extends FrontController
             Server::headerLocationReferer();
         }
 
-        $this->login = $this->http->request->get('userLogin');
-        $this->column = $this->isEmail($this->login) ? 'email' : 'login';
-        $this->password = $this->http->request->get('userPassword');
-        $this->remember = $this->http->request->get('userRemember', null);
-
-        $userId = $this->getUserId();
+        $command = new Command(new Users());
+        $login = $this->http->request->get('userLogin');
+        if ($this->isEmail($login)) {
+            $command->setEmail($login);
+        } else {
+            $command->setLogin($login);
+        }
+        $command->setPassword($this->http->request->get('userPassword'));
+        $auth = new Auth($command);
+        if ($this->http->request->get('userRemember', null)) {
+            $auth->remember();
+        }
+        $auth->login();
+        var_dump($auth->isUserLoggedIn());
+        var_dump($auth->getUser());
+        /*$userId = $this->getUserId();
 
         if ($userId === 0) {
             Server::setReferData([
@@ -68,25 +61,7 @@ class UserLoginController extends FrontController
 
             $this->setSession();
             Server::headerLocationReferer();
-        }
-    }
-
-    /**
-     *
-     * @return integer
-     */
-    private function getUserId(): int
-    {
-        $this->query->setQuery('user')
-            ->findBy($this->column, $this->login);
-        $result = $this->query->getStaticQuery();
-
-        if (count($result) === 1 &&
-            HashPass::verifyPassword($this->password, $result[0]->getPassword())) {
-            $this->userEntity = $result[0];
-            return $this->userEntity->getId();
-        }
-        return 0;
+        }*/
     }
 
     /**
@@ -97,14 +72,5 @@ class UserLoginController extends FrontController
     private function isEmail(string $value): bool
     {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
-    }
-
-    private function setSession()
-    {
-        if ($this->remember) {
-            RegistryFactory::start('cookie')->set('userSession', $this->userEntity);
-        } else {
-            RegistryFactory::start('session')->set('userSession', $this->userEntity);
-        }
     }
 }

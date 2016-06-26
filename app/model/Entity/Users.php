@@ -3,7 +3,7 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use UserAuth\HashPass;
+use Auth\HashPass;
 use Ignaszak\Registry\RegistryFactory;
 
 /**

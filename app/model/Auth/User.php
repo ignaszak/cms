@@ -1,5 +1,5 @@
 <?php
-namespace UserAuth;
+namespace Auth;
 
 use Conf\DB\DBDoctrine;
 use Ignaszak\Registry\RegistryFactory;

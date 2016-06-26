@@ -90,19 +90,19 @@ class ValidatorFactory
     private function sendErrorsIfExists()
     {
         if (count($this->errorArray)) {
-            foreach ($this->command->entitySettersArray as $key => $data) {
+            foreach ($this->command->entityMethodsArray as $key => $data) {
                 // Repleca reference entities instances to its referenced id
                 if (is_object($data)) {
                     if (method_exists($data, 'getId')) {
-                        $this->command->entitySettersArray[$key] = $data->getId();
+                        $this->command->entityMethodsArray[$key] = $data->getId();
                     } else {
-                        unset($this->command->entitySettersArray[$key]);
+                        unset($this->command->entityMethodsArray[$key]);
                     }
                 }
             }
 
             Server::setReferData(array(
-                'data' => $this->command->entitySettersArray,
+                'data' => $this->command->entityMethodsArray,
                 'error' => $this->errorArray
             ));
             Server::headerLocationReferer();

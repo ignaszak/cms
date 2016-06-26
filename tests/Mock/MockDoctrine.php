@@ -123,6 +123,8 @@ return [
             'orderBy' => $queryBuilder,
             'setContentQuery' => $queryBuilder,
             'findBy' => $queryBuilder,
+            'prepare' => $queryBuilder,
+            'execute' => $queryBuilder,
             'getResult' => $result
         ]);
         return $queryBuilder;
@@ -134,12 +136,22 @@ return [
      */
     public static function queryBuilderResult(array $result)
     {
-        $em = \Mockery::mock('EntityManager');
-        $em->shouldReceive([
-            'createQueryBuilder' => self::queryBuilder($result),
-            'find' => self::queryBuilder($result)
-        ]);
-        self::mock($em);
+        $mock = new class () extends \PHPUnit_Framework_TestCase
+        {
+            public function em(array $result)
+            {
+                $qb = MockDoctrine::queryBuilder($result);
+                $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+                    ->setMethods(['getConnection', 'createQueryBuilder', 'find'])
+                    ->disableOriginalConstructor()
+                    ->getMock();
+                $em->method('getConnection')->willReturn($qb);
+                $em->method('createQueryBuilder')->willReturn($qb);
+                $em->method('find')->willReturn($qb);
+                return $em;
+            }
+        };
+        self::mock($mock->em($result));
     }
 
     public static function repository(array $result)
@@ -161,5 +173,13 @@ return [
         $em = \Mockery::mock('EntityManager');
         $em->shouldReceive('getRepository')->andReturn(self::repository($result));
         self::mock($em);
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public static function getEM()
+    {
+        return DBDoctrine::em();
     }
 }

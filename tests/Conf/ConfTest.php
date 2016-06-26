@@ -7,7 +7,7 @@ class ConfTest extends \PHPUnit_Framework_TestCase
 {
 
     private $_conf;
-
+    
     public function setUp()
     {
         $this->_conf = new Conf();

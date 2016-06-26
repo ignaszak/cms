@@ -71,7 +71,7 @@ abstract class Controller
      * @param string[] $tokens
      * @return string
      */
-    public function url(string $name, array $tokens): string
+    public function url(string $name, array $tokens = []): string
     {
         return self::$instances['registry']->get('url')->url($name, $tokens);
     }

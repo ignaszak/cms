@@ -6,7 +6,7 @@ namespace App;
 use App\Resource\Http;
 use App\Resource\Server;
 use FrontController\FrontController;
-use UserAuth\User;
+use Auth\User;
 use View\View;
 use Ignaszak\Exception\Start as ExceptionHandler;
 use Ignaszak\Registry\Conf as RegistryConf;
@@ -33,7 +33,7 @@ class Load
 
     /**
      *
-     * @var \UserAuth\User
+     * @var \Auth\User
      */
     private $user = null;
 

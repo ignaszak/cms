@@ -70,9 +70,11 @@ class SearchController extends FrontController
 
     private function setSearchToReferData()
     {
-        Server::setReferData([
-            'search' => $this->search
-        ]);
+        Server::setReferData(
+            [
+                'search' => $this->search
+            ]
+        );
         Server::setRefererSession();
     }
 }

@@ -2,6 +2,7 @@
 namespace DataBase\Command;
 
 use Conf\DB\DBDoctrine;
+use Doctrine\ORM\EntityManager;
 use Ignaszak\Registry\RegistryFactory;
 
 class Command
@@ -11,7 +12,7 @@ class Command
      *
      * @var string[]
      */
-    public $entitySettersArray = [];
+    public $entityMethodsArray = [];
 
     /**
      *
@@ -68,13 +69,11 @@ class Command
      *
      * @param string $name
      * @param array $arguments
-     * @return Controller
+     * @return mixed
      */
-    public function __call(string $name, array $arguments): Command
+    public function __call(string $name, array $arguments)
     {
-        $this->saveEntitySetter($name, $arguments);
-
-        return $this;
+        return $this->initEntityMethod($name, $arguments);
     }
 
     /**
@@ -86,6 +85,14 @@ class Command
     {
         $alias = new Alias($this->entity);
         return $alias->getAlias($string);
+    }
+
+    /**
+     * @return EntityManager
+     */
+    public function em(): EntityManager
+    {
+        return $this->em;
     }
 
     /**
@@ -108,7 +115,7 @@ class Command
         $entityClass = $this->entityController->getEntity($entityName);
         $entityObject = $this->em->find($entityClass, $by);
         $name = "set" . ucfirst($entityName);
-        $this->saveEntitySetter($name, [$entityObject]);
+        $this->initEntityMethod($name, [$entityObject]);
 
         return $this;
     }
@@ -204,19 +211,28 @@ class Command
      * @param string $name
      * @param array $arguments
      * @throws \BadMethodCallException
+     * @return mixed
      */
-    protected function saveEntitySetter(string $name, array $arguments)
+    protected function initEntityMethod(string $name, array $arguments)
     {
+        $prefix = substr($name, 0, 3);
+        $key = substr($name, 3);
         if (method_exists($this->entity, $name)) {
-            $this->entitySettersArray[$name] = @$arguments[0];
+            if ($prefix === 'set') {
+                $this->entityMethodsArray[$key] = @$arguments[0];
+                return $this;
+            } else {
+                return $this->entityMethodsArray[$key] ?? null;
+            }
         } else {
-            throw new \BadMethodCallException("Method '$name' does not exist");
+            throw new \BadMethodCallException("Method '{$name}' does not exist");
         }
     }
 
     protected function callEntitySettersFromArray()
     {
-        foreach ($this->entitySettersArray as $name => $arguments) {
+        foreach ($this->entityMethodsArray as $name => $arguments) {
+            $name = "set{$name}";
             $this->entity->$name($arguments);
         }
     }

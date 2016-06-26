@@ -3,7 +3,7 @@ namespace Controller\User;
 
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use UserAuth\HashPass;
+use Auth\HashPass;
 use DataBase\Command\Command;
 use Entity\Users;
 use Ignaszak\Registry\RegistryFactory;
@@ -36,9 +36,9 @@ class UserSaveController extends FrontController
 
     /**
      *
-     * @param \UserAuth\User $user
+     * @param \Auth\User $user
      */
-    private function checkIfUserIsLogged(\UserAuth\User $user)
+    private function checkIfUserIsLogged(\Auth\User $user)
     {
         if (! $user->isUserLoggedIn()) {
             Server::headerLocationReferer();

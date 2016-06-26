@@ -8,7 +8,7 @@ class User
 
     /**
      *
-     * @var \UserAuth\User
+     * @var \Auth\User
      */
     private $user = null;
 
