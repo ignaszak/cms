@@ -45,11 +45,9 @@ class App
     public function run()
     {
         $this->load->loadExceptionHandler();
-        $this->load->loadRegistry();
         $this->load->loadSession();
         $this->load->loadHttp();
         $this->load->loadView();
-        $this->load->loadUser();
         $this->load->loadAdmin();
         $this->load->loadFrontController();
         $this->load->loadTheme();

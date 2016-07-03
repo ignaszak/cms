@@ -35,7 +35,7 @@ class MockTest
     }
 
     /**
-     * 
+     *
      * @param $object
      * @param string $name
      * @return mixed

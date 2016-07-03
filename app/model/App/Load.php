@@ -5,8 +5,8 @@ namespace App;
 
 use App\Resource\Http;
 use App\Resource\Server;
+use Auth\Auth;
 use FrontController\FrontController;
-use Auth\User;
 use View\View;
 use Ignaszak\Exception\Start as ExceptionHandler;
 use Ignaszak\Registry\Conf as RegistryConf;
@@ -27,15 +27,9 @@ class Load
 
     /**
      *
-     * @var \Ignaszak\Exception\Start
+     * @var \Auth\Auth
      */
-    private $exception = null;
-
-    /**
-     *
-     * @var \Auth\User
-     */
-    private $user = null;
+    private $auth = null;
 
     /**
      *
@@ -122,12 +116,16 @@ class Load
             'viewHelper' => $this->yaml->parse($this->viewHelperYaml),
             'adminViewHelper' => $this->yaml->parse($this->adminViewHelperYaml)
         ];
+        RegistryConf::setTmpPath(
+            $this->dir($this->conf['conf']['tmp']['registry'] ?? '')
+        );
         $this->adminExtension = new AdminExtension(
             $this->dir($this->conf['conf']['admin']['extensionDir'] ?? '')
         );
         $this->exceptionHandler = new ExceptionHandler();
         $this->registry = RegistryFactory::start();
         $this->viewHelper = new ViewHelper();
+        $this->auth = new Auth();
     }
 
     /**
@@ -160,17 +158,6 @@ class Load
     public function getExceptionHandler(): ExceptionHandler
     {
         return $this->exceptionHandler;
-    }
-
-    /**
-     * Configures Registry tmp path
-     * @link https://github.com/ignaszak/php-registry
-     */
-    public function loadRegistry()
-    {
-        RegistryConf::setTmpPath(
-            $this->dir($this->conf['conf']['tmp']['registry'] ?? '')
-        );
     }
 
     /**
@@ -222,15 +209,6 @@ class Load
     }
 
     /**
-     * Sets instance of User class
-     */
-    public function loadUser()
-    {
-        $this->registry->set('user', new User());
-        $this->user = $this->registry->get('user');
-    }
-
-    /**
      * Method checks if admin panel route is open and then valid permission to
      * stay there. If user is admin (or moderator) method loads necessary extensions
      */
@@ -238,12 +216,12 @@ class Load
     {
         if ($this->http->isAdmin()) {
             // If not logged open login panel
-            if (! $this->user->isUserLoggedIn()) {
+            if (! $this->auth->isUserLoggedIn()) {
                 $this->view->loadFile('../../admin/extensions/Index/login.html');
                 exit;
             }
             // Check permissions
-            if ($this->user->getUserSession()->getRole() != 'admin') {
+            if ($this->auth->getUser()->getRole() != 'admin') {
                 Server::headerLocation(); // Go to main page
             }
             // Admin view helper classes

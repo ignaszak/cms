@@ -23,7 +23,7 @@ class QueryBuilder implements IQueryBuilder
 
     /**
      * {@inheritDoc}
-     * 
+     *
      * @see \DataBase\Query\IQueryBuilder::id($value)
      */
     public function id($value): IQueryController

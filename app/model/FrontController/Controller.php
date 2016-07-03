@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace FrontController;
 
+use Auth\Auth;
 use Ignaszak\Registry\RegistryFactory;
 
 /**
@@ -13,6 +14,7 @@ use Ignaszak\Registry\RegistryFactory;
  * @property-read \App\Resource\Http $http
  * @property-read \View\View $view
  * @property-read \DataBase\Query\Query $query
+ * @property-read \Auth\Auth $auth
  */
 abstract class Controller
 {
@@ -22,12 +24,6 @@ abstract class Controller
      * @var mixed[]
      */
     private static $instances = [];
-
-    /**
-     *
-     * @var string
-     */
-    private $viewHelperName = '';
 
     abstract public function run();
 
@@ -42,7 +38,8 @@ abstract class Controller
             'registry' => $registry,
             'http' => $registry->get('http'),
             'view' => $registry->get('view'),
-            'query' => $registry->register('DataBase\Query\Query')
+            'query' => $registry->register('DataBase\Query\Query'),
+            'auth' => new Auth()
         ];
         return new static();
     }

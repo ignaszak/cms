@@ -35,7 +35,7 @@ class User
      *
      * @return \Entity\Users
      */
-    public function getUserSession(): \Entity\Users
+    public function getUser(): \Entity\Users
     {
         return $this->userSession;
     }

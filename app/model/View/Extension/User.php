@@ -1,6 +1,7 @@
 <?php
 namespace View\Extension;
 
+use Auth\Auth;
 use Ignaszak\Registry\RegistryFactory;
 
 class User
@@ -10,11 +11,11 @@ class User
      *
      * @var \Auth\User
      */
-    private $user = null;
+    private $auth = null;
 
     public function __construct()
     {
-        $this->user = RegistryFactory::start()->get('user');
+        $this->auth = new Auth();
     }
 
     /**
@@ -23,7 +24,7 @@ class User
      */
     public function isUserLoggedIn(): bool
     {
-        return $this->user->isUserLoggedIn();
+        return $this->auth->isUserLoggedIn();
     }
 
     /**
@@ -32,7 +33,7 @@ class User
      */
     public function getUserId(): int
     {
-        return $this->user->getUserSession()->getId();
+        return $this->auth->getUser()->getId();
     }
 
     /**
@@ -41,7 +42,7 @@ class User
      */
     public function getUserLogin(): string
     {
-        return $this->user->getUserSession()->getLogin();
+        return $this->auth->getUser()->getLogin();
     }
 
     /**
@@ -50,7 +51,7 @@ class User
      */
     public function getUserEmail(): string
     {
-        return $this->user->getUserSession()->getEmail();
+        return $this->auth->getUser()->getEmail();
     }
 
     /**
@@ -60,7 +61,7 @@ class User
      */
     public function getUserRegistrationDate(string $format = '')
     {
-        return $this->user->getUserSession()->getRegDate($format);
+        return $this->auth->getUser()->getRegDate($format);
     }
 
     /**
@@ -70,7 +71,7 @@ class User
      */
     public function getUserLoginDate(string $format = '')
     {
-        return $this->user->getUserSession()->getLogDate($format);
+        return $this->auth->getUser()->getLogDate($format);
     }
 
     /**
@@ -79,6 +80,6 @@ class User
      */
     public function getUserRole(): string
     {
-        return $this->user->getUserSession()->getRole();
+        return $this->auth->getUser()->getRole();
     }
 }

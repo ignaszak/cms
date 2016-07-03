@@ -1,7 +1,7 @@
 <?php
 namespace Form\Group;
 
-use Ignaszak\Registry\RegistryFactory;
+use Auth\Auth;
 use Form\FormGenerator;
 use App\Resource\Server;
 
@@ -21,7 +21,8 @@ class User extends Group
     public function __construct(\Form\Form $form)
     {
         parent::__construct($form);
-        $this->user = RegistryFactory::start()->get('user');
+        $auth = new Auth();
+        $this->user = $auth->getUser();
     }
 
     /**
@@ -168,7 +169,7 @@ class User extends Group
         if ($this->formAction === 'accountData') {
             $entityGetter = $this->getEntityGetter($name);
             FormGenerator::addItem([
-                'value' => $this->user->getUserSession()->$entityGetter()
+                'value' => $this->user->$entityGetter()
             ]);
         }
     }

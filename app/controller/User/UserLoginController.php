@@ -1,32 +1,18 @@
 <?php
 namespace Controller\User;
 
-use Auth\Auth;
-use FrontController\Controller as FrontController;
 use App\Resource\Server;
-use Auth\HashPass;
+use FrontController\Controller as FrontController;
 use DataBase\Command\Command;
 use Entity\Users;
-use Ignaszak\Registry\RegistryFactory;
 
 class UserLoginController extends FrontController
 {
 
-    /**
-     *
-     * @var \Entity\Users
-     */
-    private $userEntity = null;
-
-    /**
-     *
-     * @var string
-     */
-    private $remember = '';
-
     public function run()
     {
-        if ($this->registry->get('user')->isUserLoggedIn()) {
+
+        if ($this->auth->isUserLoggedIn()) {
             Server::headerLocationReferer();
         }
 
@@ -34,34 +20,30 @@ class UserLoginController extends FrontController
         $login = $this->http->request->get('userLogin');
         if ($this->isEmail($login)) {
             $command->setEmail($login);
+            $column  = 'email';
         } else {
             $command->setLogin($login);
+            $column = 'login';
         }
         $command->setPassword($this->http->request->get('userPassword'));
-        $auth = new Auth($command);
+        $authCommand = $this->auth->command($command);
+
         if ($this->http->request->get('userRemember', null)) {
-            $auth->remember();
+            $authCommand->remember();
         }
-        $auth->login();
-        var_dump($auth->isUserLoggedIn());
-        var_dump($auth->getUser());
-        /*$userId = $this->getUserId();
 
-        if ($userId === 0) {
-            Server::setReferData([
-                'form' => 'login',
-                'error' => ['valid'.ucfirst($this->column).'_or_password' => 1]
-            ]);
-            Server::headerLocationReferer();
-        } else {
-            $controller = new Command(new Users());
-            $controller->find($userId)
-                ->setLogDate(new \DateTime('now'))
-                ->update();
+        $authCommand->login();
 
-            $this->setSession();
-            Server::headerLocationReferer();
-        }*/
+        if (! $this->auth->isUserLoggedIn()) {
+            Server::setReferData(
+                [
+                    'form' => 'login',
+                    'error' => ['valid'.ucfirst($column).'_or_password' => 1]
+                ]
+            );
+        }
+
+        Server::headerLocationReferer();
     }
 
     /**

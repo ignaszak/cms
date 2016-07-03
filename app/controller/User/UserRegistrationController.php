@@ -1,7 +1,6 @@
 <?php
 namespace Controller\User;
 
-use Auth\Auth;
 use FrontController\Controller as FrontController;
 use App\Resource\Server;
 use DataBase\Command\Command;
@@ -34,7 +33,7 @@ class UserRegistrationController extends FrontController
     {
         Server::setReferData(['form' => 'registration']);
 
-        if ($this->registry->get('user')->isUserLoggedIn()) {
+        if ($this->auth->isUserLoggedIn()) {
             Server::setReferData(['error' => ['userMustBeLogout' => 1]]);
             Server::headerLocationReferer();
         }
@@ -48,8 +47,8 @@ class UserRegistrationController extends FrontController
             ->setEmail($this->email)
             ->setPassword($this->password)
             ->setRole('user');
-        $auth = new Auth($command);
-        $auth->register();
+        $authCommand = $this->auth->command($command);
+        $authCommand->register();
 
         $this->sendMail();
 

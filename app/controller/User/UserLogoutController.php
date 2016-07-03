@@ -10,9 +10,8 @@ class UserLogoutController extends FrontController
 
     public function run()
     {
-        if ($this->registry->get('user')->isUserLoggedIn()) {
-            RegistryFactory::start('cookie')->remove('userSession');
-            RegistryFactory::start('session')->remove('userSession');
+        if ($this->auth->isUserLoggedIn()) {
+            $this->auth->logout();
         }
         Server::setReferData([
             'search' => Server::getReferData()['search']
