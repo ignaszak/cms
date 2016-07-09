@@ -46,6 +46,7 @@ class App
     {
         $this->load->loadExceptionHandler();
         $this->load->loadSession();
+        $this->load->loadAuth();
         $this->load->loadHttp();
         $this->load->loadView();
         $this->load->loadAdmin();

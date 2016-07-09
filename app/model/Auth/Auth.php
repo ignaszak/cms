@@ -11,7 +11,6 @@ use Entity\Users;
 class Auth
 {
 
-
     /**
      * @var Query
      */
@@ -39,6 +38,7 @@ class Auth
 
     /**
      * @param Command $command
+     * @return AuthCommand
      */
     public function command(Command $command): AuthCommand
     {

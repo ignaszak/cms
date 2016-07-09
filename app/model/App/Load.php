@@ -105,8 +105,7 @@ class Load
     private $adminViewHelperYaml = __CONFDIR__ . '/admin-view-helper.yml';
 
     /**
-     *
-     * @param array $array
+     * Load constructor.
      */
     public function __construct()
     {
@@ -125,7 +124,7 @@ class Load
         $this->exceptionHandler = new ExceptionHandler();
         $this->registry = RegistryFactory::start();
         $this->viewHelper = new ViewHelper();
-        $this->auth = new Auth();
+
     }
 
     /**
@@ -170,6 +169,11 @@ class Load
     {
         session_start();
         Server::readReferData();
+    }
+
+    public function loadAuth()
+    {
+        $this->auth = new Auth();
     }
 
     /**
