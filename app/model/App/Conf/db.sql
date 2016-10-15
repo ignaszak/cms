@@ -252,6 +252,19 @@ INSERT INTO `users` VALUES (
 UNLOCK TABLES;
 
 --
+-- Table structure for table `users_session`
+--
+
+CREATE TABLE `users_session` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `log_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `ip` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `key` varchar(255) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
 -- Dumping events for database '@dbName@'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
